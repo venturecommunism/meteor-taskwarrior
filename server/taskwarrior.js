@@ -14,35 +14,8 @@ var org = 'Public'
 var user = 'USER'
 //replace key with your user's key e.g. ddea9923-fgg3-3922-c958-23cgdeaa0584
 var key = 'ddea9923-fgg3-3922-c958-23cgdeaa0584'
-//replace key with your client.key.pem (note the newlines, plus signs and single quotations)
-var myClientPrivateKey =
-  '-----BEGIN RSA PRIVATE KEY-----\n' +
-  'MIIEpAIBAAKCAQEAzWSJl+Z9Bqv00FVL5N3+JCUoqmQPjIlya1BbeqQroNQ5yG1i\n' +
-  'VbYTTnMRa1zQtR6r2fNvWeg94DvxivxIG9diDMnrzijAnYlTLOl84CK2vOxkj5b6\n' +
-  '8zrLH9b/Gd6NOHsywo8IjvXvCeTfca5WUHcuVi2lT9VjygFs1ILG4RyeX1BXUumu\n' +
-  'Y8fzmposxLYdMxCqUTzAn0u9Saq2H2OVj5u114wS7OQPigu6G99dpn/iPHa3zBm8\n' +
-  '7baBWDbqZWRW0BP3K6eqq8sut1+NLhNW8ADPTdnO/SO+kvXy7fqd8atSn+HlQcx6\n' +
-  'tW42dhXf3E9uE7K78eZtW0KvfyNGAjsI1Fft2QIDAQABAoIBAG1exe3/LEBrPLfb\n' +
-  'U8iRdY0lxFvHYIhDgIwohC3wUdMYb5SMurpNdEZn+7Sh/fkUVgp/GKJViu1mvh52\n' +
-  'bKd2r52DwG9NQBQjVgkqY/auRYSglIPpr8PpYNSZlcneunCDGeqEY9hMmXc5Ssqs\n' +
-  'PQYoEKKPN+IlDTg6PguDgAfLR4IUvt9KXVvmB/SSgV9tSeTy35LECt1Lq3ozbUgu\n' +
-  '30HZI3U6/7H+X22Pxxf8vzBtzkg5rRCLgv+OeNPo16xMnqbutt4TeqEkxRv5rtOo\n' +
-  '/A1i9khBeki0OJAFJsE82qnaSZodaRsxic59VnN8sWBwEKAt87tEu5A3K3j4XSDU\n' +
-  '/avZxAECgYEA+pS3DvpiQLtHlaO3nAH6MxHRrREOARXWRDe5nUQuUNpS1xq9wte6\n' +
-  'DkFtba0UCvDLic08xvReTCbo9kH0y6zEy3zMpZuJlKbcWCkZf4S5miYPI0RTZtF8\n' +
-  'yps6hWqzYFSiO9hMYws9k4OJLxX0x3sLK7iNZ32ujcSrkPBSiBr0gxkCgYEA0dWl\n' +
-  '637K41AJ/zy0FP0syq+r4eIkfqv+/t6y2aQVUBvxJYrj9ci6XHBqoxpDV8lufVYj\n' +
-  'fUAfeI9/MZaWvQJRbnYLre0I6PJfLuCBIL5eflO77BGso165AF7QJZ+fwtgKv3zv\n' +
-  'ZX75eudCSS/cFo0po9hlbcLMT4B82zEkgT8E2MECgYEAnz+3/wrdOmpLGiyL2dff\n' +
-  '3GjsqmJ2VfY8z+niSrI0BSpbD11tT9Ct67VlCBjA7hsOH6uRfpd6/kaUMzzDiFVq\n' +
-  'VDAiFvV8QD6zNkwYalQ9aFvbrvwTTPrBpjl0vamMCiJ/YC0cjq1sGr2zh3sar1Ph\n' +
-  'S43kP+s97dcZeelhaiJHVrECgYEAsx61q/loJ/LDFeYzs1cLTVn4V7I7hQY9fkOM\n' +
-  'WM0AhInVqD6PqdfXfeFYpjJdGisQ7l0BnoGGW9vir+nkcyPvb2PFRIr6+B8tsU5j\n' +
-  '7BeVgjDoUfQkcrEBK5fEBtnj/ud9BUkY8oMZZBjVNLRuI7IMwZiPvMp0rcj4zAN/\n' +
-  'LfUlpgECgYArBvFcBxSkNAzR3Rtteud1YDboSKluRM37Ey5plrn4BS0DD0jm++aD\n' +
-  '0pG2Hsik000hibw92lCkzvvBVAqF8BuAcnPlAeYfsOaa97PGEjSKEN5bJVWZ9/om\n' +
-  '9FV1axotRN2XWlwrhixZLEaagkREXhgQc540FS5O8IaI2Vpa80Atzg==\n' +
-  '-----END RSA PRIVATE KEY-----'
+
+var myClientPrivateKey = ''
 
 Meteor.methods({
   tlstest: function () {
