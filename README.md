@@ -17,7 +17,6 @@ Open up the meteor-taskwarrior/server/taskwarrior.js file in an editor and edit 
 - org (org/group your task user belongs to)
 - user (user name of your task user)
 - key (shared key looks something like 'ddea9923-fgg3-3922-c958-23cgdeaa0584')
-- myClientPrivateKey (your client.key.pem private key for your task user)
 
 Then do:
 
