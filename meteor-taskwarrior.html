@@ -2,10 +2,20 @@
   <input type="button" value="TlsTest" />
 </template>
 
+<template name="tasklist">
+<h2>task list</h2>
+ <ul>
+  {{#each tasks}}
+    <li>{{description}}</li>
+  {{/each}}
+</ul>
+</template>
+
 <head>
   <title>meteor-taskwarrior</title>
 </head>
 
 <body>
+  {{> tasklist}}
   {{> tlstest}}
 </body>

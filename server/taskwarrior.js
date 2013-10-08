@@ -2,26 +2,23 @@
 // some required NPM packages
 var forge = Meteor.require('node-forge')
   , net = Meteor.require('net')
+  , DDPClient = Meteor.require('ddp')
+  , Fiber = Meteor.require('fibers')
 ;
 
-//replace with your task server's ip
-var taskserver = '127.0.0.1'
-//replace with your task server's port (default 6544)
-var port = 6544
-//replace org with your user's organization e.g. Public
-var org = 'Public'
-//replace user with your user e.g. USER
-var user = 'USER'
-//replace key with your user's key e.g. ddea9923-fgg3-3922-c958-23cgdeaa0584
-var key = 'ddea9923-fgg3-3922-c958-23cgdeaa0584'
+Meteor.publish("tasks", function () {
+  return Tasks.find()
+});
 
-var myClientPrivateKey = ''
+Meteor.publish("taskspending", function () {
+  return Taskspending.find()
+});
 
 Meteor.methods({
   tlstest: function () {
-var socket = new net.Socket();
+  var socket = new net.Socket();
 
-var client = forge.tls.createConnection({
+  var client = forge.tls.createConnection({
   server: false,
   cipherSuites: [
     forge.tls.CipherSuites.TLS_RSA_WITH_AES_128_CBC_SHA,
@@ -48,8 +45,7 @@ var client = forge.tls.createConnection({
     var buffermessage = forge.util.createBuffer(wholeMessage, 'utf8');
     var buffer = forge.util.createBuffer();
     buffer.putInt32(buffermessage.length() + 4);
-    var hex = buffer.toHex();
-    client.prepare(forge.util.hexToBytes(hex))
+    client.prepare(buffer.getBytes())
     client.prepare(wholeMessage);
   },
   getPrivateKey: function(connection, cert) {
@@ -63,7 +59,31 @@ var client = forge.tls.createConnection({
   dataReady: function(connection) {
     // clear data from the server is ready
     var data = connection.data.getBytes();
-    console.log('[tls] data received from the server: ' + data);
+//    console.log('[tls] data received from the server: ' + data);
+    var dataslice = data.slice(0,4)
+    var hex = forge.util.bytesToHex(dataslice)
+    var decimal = parseInt(hex, 16)
+    var mainData = data.split(dataslice)
+//    console.log('decimal is ' + decimal)
+    var line = mainData[1].split('\n')
+    var newline = '\n'
+    var linetosplit = line[0] + newline + line[1] + newline + line[2] + newline + newline
+    var taskdata = mainData[1].replace(linetosplit,'')
+    console.log('taskdata is ' + taskdata)
+    var tasklines = taskdata.split('\n')
+    var synckeynum = tasklines.length - 3
+    console.log('the sync key is ' + tasklines[synckeynum])
+
+    for (var i=0; i < synckeynum; i++) {
+      var parsedtask = JSON.parse(tasklines[i])
+      Tasks.insert(parsedtask)
+      if (undefined != Taskspending.findOne({uuid: parsedtask.uuid})) {
+        Taskspending.update({uuid: parsedtask.uuid}, parsedtask)
+      }
+      else {
+        Taskspending.insert(parsedtask)
+      }
+    }
   },
   closed: function() {
     console.log('[tls] disconnected');
@@ -73,21 +93,25 @@ var client = forge.tls.createConnection({
   }
 });
 
-//console.log('dataholder is ' + dataholder)
-
 socket.on('connect', function() {
   console.log('[socket] connected');
   client.handshake();
 });
-socket.on('data', function(data) {
+
+socket.on('data', Meteor.bindEnvironment(function(data) {
   client.process(data.toString('binary')); // encoding should be 'binary'
-});
+}, function(e) {
+  console.log(e);
+}));
+
+
 socket.on('end', function() {
   console.log('[socket] disconnected');
 });
 
 // connect to task server
 socket.connect(port, taskserver);
+
 
 }
 })
