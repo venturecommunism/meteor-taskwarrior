@@ -1,3 +1,5 @@
+A [meteor](http://meteor.com) client for [task warrior](http://taskwarrior.com). Still in early development but you can sync your tasks to this client and see them in the browser including mobile.
+
 ### Install script
 
 To install you could use the [install script](https://raw.github.com/venturecommunism/meteor-taskwarrior/master/install.sh) using cURL:
@@ -30,4 +32,4 @@ or port 3000:
 
     mrt &
 
-When you click the TlsTest button you should see your tasks on the terminal. More coming.
+When you click the TlsTest button you should see your tasks in the app. The changeset is stored in another collection. More coming.
