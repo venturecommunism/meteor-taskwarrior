@@ -2,8 +2,6 @@
 // some required NPM packages
 var forge = Meteor.require('node-forge')
   , net = Meteor.require('net')
-  , DDPClient = Meteor.require('ddp')
-  , Fiber = Meteor.require('fibers')
 ;
 
 bigdata = ''
