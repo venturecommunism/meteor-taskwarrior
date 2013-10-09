@@ -1,1 +1,83 @@
 /* CSS declarations go here */
+body {
+background-image: url(/texturetastic_gray.png);
+}
+#add-newtask, #btnNewTask {
+margin: 15px 0px 15px 10px;
+}
+#btngroup {
+clear: all;
+}
+#btnNewTask, .category {
+width: 180px;
+height:30px; 
+float: left; 
+padding: 40px 0;
+font-size: 40px;
+}
+.btn-group .category.btn{
+font-size:40px;
+}
+.title {
+width: 130px; 
+float: left;
+font-size:4em;
+}
+#lendlib{
+width:835px;
+margin:0 auto;
+}
+#categorybuttons{
+width:100%;
+}
+#lending_list{
+list-style:none;
+margin:0;
+padding:0;
+}
+#lending_list li{
+list-style:none;
+margin:5px;
+}
+#lending_list li.lending_item:hover{
+background-color:#fc6;
+color:#630;
+}
+#lending_item{
+vertical-align:middle;
+}
+#add_item{
+padding-left:5px;
+}
+#btnAddItem{
+padding:10px;
+border-radius:5px;
+}
+#btnAddItem:hover{
+background-color:#B7F099;
+}
+#edit_lendee{
+padding-top:0;
+margin-top:-2px;
+}
+#sync{
+margin:0;
+padding:0;
+}
+#sync .btn{
+float: left;
+clear: both;
+margin: 0px 40%;
+}
+#categories-container{
+height:160px;
+}
+#categories{
+margin:15px 15px 15px 10px;
+}
+#loginButtons{
+float: right;
+margin-right:20px;
+width: 700px;
+height:40px;
+}

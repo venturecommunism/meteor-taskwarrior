@@ -6,16 +6,62 @@ var forge = Meteor.require('node-forge')
   , Fiber = Meteor.require('fibers')
 ;
 
+bigdata = ''
+
+function adminUser(userId) {
+  var adminUser = Meteor.users.findOne({username:"admin"});
+  return (userId && adminUser && userId === adminUser._id);
+}
+
+Tasks.allow({
+  insert: function(userId, doc){
+    return (adminUser (userId) || (userId && doc.owner === userId));
+  },
+  update: function (userId, docs, fields, modifier){
+    return _.all(docs, function(doc) {
+      return doc.owner === userId;
+    });
+  },
+  remove: function (userId, docs){
+    return _.all(docs, function(doc) {
+      return doc.owner === userId;
+    });
+  }
+});
+
+Taskspending.allow({
+  insert: function(userId, doc){
+    return (adminUser (userId) || (userId && doc.owner === userId));
+  },
+  update: function (userId, docs, fields, modifier){
+    return _.all(docs, function(doc) {
+      return doc.owner === userId;
+    });
+  },
+  remove: function (userId, docs){
+    return _.all(docs, function(doc) {
+      return doc.owner === userId;
+    });
+  }
+});
+
+
 Meteor.publish("tasks", function () {
-  return Tasks.find()
+  var userId = this.userId
+  if (adminUser(userId)) {
+    return Tasks.find()
+  }
 });
 
 Meteor.publish("taskspending", function () {
-  return Taskspending.find()
+  var userId = this.userId
+  if (adminUser(userId)) {
+    return Taskspending.find()
+  }
 });
 
 Meteor.methods({
-  tlstest: function () {
+  sync: function () {
   var socket = new net.Socket();
 
   var client = forge.tls.createConnection({
@@ -59,6 +105,8 @@ Meteor.methods({
   dataReady: function(connection) {
     // clear data from the server is ready
     var data = connection.data.getBytes();
+    bigdata += data
+/*
 //    console.log('[tls] data received from the server: ' + data);
     var dataslice = data.slice(0,4)
     var hex = forge.util.bytesToHex(dataslice)
@@ -72,8 +120,9 @@ Meteor.methods({
     console.log('taskdata is ' + taskdata)
     var tasklines = taskdata.split('\n')
     var synckeynum = tasklines.length - 3
-    console.log('the sync key is ' + tasklines[synckeynum])
-
+    console.log('tasklines.length is ' + tasklines.length + ' and the sync key is ' + tasklines[synckeynum])
+*/
+/*
     for (var i=0; i < synckeynum; i++) {
       var parsedtask = JSON.parse(tasklines[i])
       Tasks.insert(parsedtask)
@@ -84,9 +133,40 @@ Meteor.methods({
         Taskspending.insert(parsedtask)
       }
     }
+*/
   },
   closed: function() {
     console.log('[tls] disconnected');
+
+    var data = bigdata
+    var dataslice = data.slice(0,4)
+    var hex = forge.util.bytesToHex(dataslice)
+    var decimal = parseInt(hex, 16)
+    var mainData = data.split(dataslice)
+    console.log('decimal is ' + decimal)
+    var line = mainData[1].split('\n')
+    var newline = '\n'
+    var linetosplit = line[0] + newline + line[1] + newline + line[2] + newline + newline
+    var taskdata = mainData[1].replace(linetosplit,'')
+    console.log('taskdata is ' + taskdata)
+    var tasklines = taskdata.split('\n')
+    var synckeynum = tasklines.length - 3
+    console.log('tasklines.length is ' + tasklines.length + ' and the sync key is ' + tasklines[synckeynum])
+
+  
+    for (var i=0; i < synckeynum; i++) {
+      var parsedtask = JSON.parse(tasklines[i])
+      Tasks.insert(parsedtask)
+      if (undefined != Taskspending.findOne({uuid: parsedtask.uuid})) {
+        Taskspending.update({uuid: parsedtask.uuid}, parsedtask)
+      }
+      else {
+        Taskspending.insert(parsedtask)
+      }
+    }
+
+
+
   },
   error: function(connection, error) {
     console.log('[tls] error', error);
@@ -105,9 +185,11 @@ socket.on('data', Meteor.bindEnvironment(function(data) {
 }));
 
 
-socket.on('end', function() {
+socket.on('end', Meteor.bindEnvironment(function() {
   console.log('[socket] disconnected');
-});
+}, function (e) {
+  console.log(e);
+}));
 
 // connect to task server
 socket.connect(port, taskserver);

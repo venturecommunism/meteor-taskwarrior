@@ -1,21 +1,125 @@
-<template name="tlstest">
-  <input type="button" value="TlsTest" />
-</template>
-
-<template name="tasklist">
-<h2>task list</h2>
- <ul>
-  {{#each tasks}}
-    <li>{{description}}</li>
-  {{/each}}
-</ul>
-</template>
-
 <head>
   <title>meteor-taskwarrior</title>
 </head>
 
 <body>
-  {{> tasklist}}
-  {{> tlstest}}
+  <div id="loginButtons">
+    {{loginButtons align="right"}}
+  </div>
+
+  <div id="lendlib">
+    <div id="categories-container">
+      {{> categories}}
+    </div>
+    <div id="list">
+      {{> list}}
+    </div>
+    <div id="sync">
+      {{> sync}}
+    </div>
+  {{> processingdialog}}
+  </div>
 </body>
+
+<template name="categories">
+  <h2 class="title"">my stuff</h2>
+  {{#if new_task}}
+    <div class="newtask">
+      <input type="text" id="add-newtask" value="" />
+    </div>
+  {{else}}
+  <div class="newtask btn btn-inverse" id="btnNewTask">+ Collect</div>
+  {{/if}}
+  <div id="categories" class="btn-group">
+  {{#if new_cat}}
+    <div class="category">
+      <input type="text" id="add-category" value="" />
+    </div>
+    {{else}}
+  <div class="category btn btn-inverse" id="btnNewCat">+</div>
+  {{/if}}
+    {{#each lists}}
+    <div class="category btn {{list_status}}" id="{{_id}}">
+      {{name}}
+    </div>
+    {{/each}}
+  </div>
+
+</template>
+
+<template name="list">
+  <ul id="lending_list">
+    {{#each tasks}}
+      <li class="lending_item alert">
+        <button type="button" class="close delete_item" id="{{_id}}">x</button>
+
+        {{description}}
+    {{#if process}}
+      <button type="button" style="float:right;" class="processing-button">process</button>
+    {{/if}}
+      </li>
+    {{/each}}
+    {{#if list_selected}}
+      <li class="alert-success" id="btnAddItem">+
+        {{#if list_adding}}
+          <input class="span4" id="item_to_add" size="32" type="text">
+        {{/if}}
+      </li>
+    {{/if}}
+  </ul>
+</template>
+
+<template name="processingdialog">
+{{#if processing_task}}
+<div class="processingdialog">
+ <div class="mask"> </div>
+  <div class="modal">
+    <div class="modal-header">
+      <button type="button" class="close cancel">&times;</button>
+      <h3>Process task</h3>
+    </div>
+
+    <div class="modal-body">
+      {{#if processing_task}}
+        <div class="alert alert-error">Errors go here</div>
+      {{/if}}
+
+
+  <h2>Is this actionable?</h2>
+  <div id="actionable-group" class="btn-group">
+  <div class="option btn">Yes</div>
+  <div class="option btn btn-inverse">No</div>
+  <div class="option btn btn-inverse">Someday/Maybe</div>
+  </div>
+
+      <h2>Is it part of a project or multi-step?</h2>
+      <input type="text" class="title span5">
+
+      <label>Description</label>
+      <textarea class="description span5"></textarea>
+
+      <label class="checkbox">
+        <input type="checkbox" class="private">
+        Some text
+      </label>
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Add party</a>
+    </div>
+  </div>
+</div>
+{{/if}}
+</template>
+
+
+
+
+<template name="sync">
+  <div id="sync-inner">
+    <div class="category btn btn-inverse">
+      Sync
+    </div>
+  </div>
+</template>
