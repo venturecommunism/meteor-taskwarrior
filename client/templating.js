@@ -10,9 +10,12 @@ Accounts.ui.config({
 });
 
 
+now = moment()
+var formattednow = now.format('YYYYMMDD') + 'T' + now.format('HHmmss') + 'Z'
+console.log('formatted is ' + formattednow)
 
 Template.list.tasks = function () {
-  return Taskspending.find({status: "pending"}, {sort: {due: -1}})
+  return Taskspending.find({status: "pending", tags: "inbox", waiting: { $lt: formattednow}}, {sort: {due: -1}})
 }
 Template.categories.new_cat = function () {
   return Session.equals('adding_category',true);

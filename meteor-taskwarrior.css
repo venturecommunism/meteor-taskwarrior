@@ -2,6 +2,16 @@
 body {
 background-image: url(/texturetastic_gray.png);
 }
+#task_list .task_item{
+font-size:40px;
+line-height:1.5em;
+}
+#task_list li.task_item{
+padding:40px;
+}
+#task_list li.task_item p, #task_list li.task_item:hover p{
+overflow-wrap: break-word;
+}
 #add-newtask, #btnNewTask {
 margin: 15px 0px 15px 10px;
 }
@@ -10,9 +20,9 @@ clear: all;
 }
 #btnNewTask, .category {
 width: 180px;
-height:30px; 
+height:22px; 
 float: left; 
-padding: 40px 0;
+padding: 25px 0;
 font-size: 40px;
 }
 .btn-group .category.btn{
@@ -30,20 +40,20 @@ margin:0 auto;
 #categorybuttons{
 width:100%;
 }
-#lending_list{
+#task_list{
 list-style:none;
 margin:0;
 padding:0;
 }
-#lending_list li{
+#task_list li{
 list-style:none;
 margin:5px;
 }
-#lending_list li.lending_item:hover{
+#task_list li.task_item:hover{
 background-color:#fc6;
 color:#630;
 }
-#lending_item{
+#task_item{
 vertical-align:middle;
 }
 #add_item{
@@ -76,8 +86,7 @@ height:160px;
 margin:15px 15px 15px 10px;
 }
 #loginButtons{
-float: right;
+font-size:40px;
 margin-right:20px;
-width: 700px;
-height:40px;
+height:50px;
 }
