@@ -2,7 +2,7 @@ A [meteor](http://meteor.com) client for [task warrior](http://taskwarrior.com).
 
 ### Requirements
 
-You need to have your own [taskd server](http://taskwarrior.org/projects/taskwarrior/wiki/Server_setup) or an account on one.
+You need to have your own [taskd server](http://taskwarrior.org/projects/taskwarrior/wiki/Server_setup) or an account on one. This has been tested on Ubuntu 12.04
 
 ### Install script
 
