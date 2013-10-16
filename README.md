@@ -32,4 +32,4 @@ or port 3000:
 
     mrt &
 
-When you click the TlsTest button you should see your tasks in the app. The changeset is stored in another collection. More coming.
+When you click the Sync button you should see your tasks in the app. The changeset is stored in another collection. More coming.
