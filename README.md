@@ -1,5 +1,9 @@
 A [meteor](http://meteor.com) client for [task warrior](http://taskwarrior.com). Still in early development but you can sync your tasks to this client and see them in the browser including mobile.
 
+### Requirements
+
+You need to have your own [taskd server](http://taskwarrior.org/projects/taskwarrior/wiki/Server_setup) or an account on one.
+
 ### Install script
 
 To install you could use the [install script](https://raw.github.com/venturecommunism/meteor-taskwarrior/master/install.sh) using cURL:
