@@ -1,5 +1,6 @@
 Meteor.subscribe("tasks")
 Meteor.subscribe("taskspending")
+Meteor.subscribe("tasksbacklog")
 
 Session.set('adding_category', false);
 Session.set('adding_newtask', false);

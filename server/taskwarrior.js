@@ -43,6 +43,22 @@ Taskspending.allow({
   }
 });
 
+Tasksbacklog.allow({
+  insert: function(userId, doc){
+    return (adminUser (userId) || (userId && doc.owner === userId));
+  },
+  update: function (userId, docs, fields, modifier){
+    return _.all(docs, function(doc) {
+      return doc.owner === userId;
+    });
+  },
+  remove: function (userId, docs){
+    return _.all(docs, function(doc) {
+      return doc.owner === userId;
+    });
+  }
+});
+
 
 Meteor.publish("tasks", function () {
   var userId = this.userId
@@ -55,6 +71,13 @@ Meteor.publish("taskspending", function () {
   var userId = this.userId
   if (adminUser(userId)) {
     return Taskspending.find()
+  }
+});
+
+Meteor.publish("tasksbacklog", function () {
+  var userId = this.userId
+  if (adminUser(userId)) {
+    return Tasksbacklog.find()
   }
 });
 
@@ -89,6 +112,13 @@ Meteor.methods({
     wholeMessage = ''
     if (synckey != null) {
       wholeMessage = part1 + part2 + newline + part3 + org + newline + part5 + user + newline + part7 + key + newline + part9 + part10 + newline + part11 + part12 + newline + newline + synckey + newline
+      if (Tasksbacklog.find() != null) {
+         var payload = Tasksbacklog.find()
+         payload.forEach(function (task) {
+           delete task._id
+           wholeMessage += JSON.stringify(task) + '\n'
+         })
+       }
     } else {
       wholeMessage = part1 + part2 + newline + part3 + org + newline + part5 + user + newline + part7 + key + newline + part9 + part10 + newline + part11 + part12 + newline + newline
     }
@@ -131,20 +161,32 @@ Meteor.methods({
       var parsedtask = JSON.parse(tasklines[i])
       console.log('i is ' + i + ' and synckeynum is ' + synckeynum)
       console.log(tasklines[i])
-      Tasks.insert(parsedtask)
-      if (undefined != Taskspending.findOne({uuid: parsedtask.uuid})) {
-        Taskspending.update({uuid: parsedtask.uuid}, parsedtask)
+      console.log('blooppeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+      if (Tasks.find(parsedtask) == null) {
+        Tasks.insert(parsedtask)
+      }
+      console.log('wuuuuuuuuuuuuuuuuud')
+
+//      Taskspending.upsert({uuid: parsedtask.uuid}, parsedtask)
+
+      console.log('parsedtask is ' + JSON.stringify(parsedtask))
+      console.log('taskspending findone ' + Taskspending.findOne({uuid: parsedtask.uuid}))
+      if (Taskspending.findOne({uuid: parsedtask.uuid}) != null) {
+        console.log('updated ' + parsedtask.uuid)
+        Taskspending.update({uuid: parsedtask.uuid}, {$set: JSON.stringify(parsedtask)})
       }
       else {
+        console.log('inserted ' + parsedtask)
         Taskspending.insert(parsedtask)
       }
+
+
     }
     console.log('synckey is ' + tasklines[synckeynum])
-    if (Tasks.findOne({synckey: {$exists: 1}}) != null) {
-      Tasks.update({synckey: {$exists: 1}}, {synckey: tasklines[synckeynum]})
-    } else {
-      Tasks.insert({synckey: tasklines[synckeynum]})
-    }
+    Tasks.upsert({synckey: {$exists: 1}}, {synckey: tasklines[synckeynum]})
+    // have to make sure to only remove backlog on success
+    Tasksbacklog.remove({})
+    bigdata = ''
   },
   error: function(connection, error) {
     console.log('[tls] error', error);
