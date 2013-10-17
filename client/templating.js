@@ -16,7 +16,7 @@ var formattednow = now.format('YYYYMMDD') + 'T' + now.format('HHmmss') + 'Z'
 console.log('formatted is ' + formattednow)
 
 Template.list.tasks = function () {
-  return Taskspending.find({status: "pending", tags: "inbox", waiting: { $lt: formattednow}}, {sort: {due: -1}})
+  return Taskspending.find({status: {$in: ["waiting", "pending"]}, tags: "inbox", waiting: { $lt: formattednow}}, {sort: {due: -1}})
 }
 Template.categories.new_cat = function () {
   return Session.equals('adding_category',true);
@@ -24,6 +24,24 @@ Template.categories.new_cat = function () {
 Template.categories.new_task = function () {
   return Session.equals('adding_newtask',true);
 };
+
+Template.list.waiting = function () {
+  if (!this.wait) {
+    return false
+  }
+  now = moment()
+  var formattednow = now.format('YYYYMMDD') + now.format('HHmmss')
+  string = this.wait
+  string = string.split("T")[0] + string.split("T")[1]
+  string = string.split("Z")[0]
+  if (string > formattednow) {
+    console.log(string)    
+    console.log(string + 'str was greater than formattednow for ' + this.description)
+  }
+  console.log(this.description + string > formattednow)
+  return (string > formattednow)
+}
+
 
 Template.categories.events({
   'click #btnNewCat': function (e, t) {
