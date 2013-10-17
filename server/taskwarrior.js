@@ -161,30 +161,16 @@ Meteor.methods({
       var parsedtask = JSON.parse(tasklines[i])
       console.log('i is ' + i + ' and synckeynum is ' + synckeynum)
       console.log(tasklines[i])
-      console.log('blooppeeeeeeeeeeeeeeeeeeeeeeeeeeee')
-      if (Tasks.find(parsedtask) == null) {
-        Tasks.insert(parsedtask)
-      }
-      console.log('wuuuuuuuuuuuuuuuuud')
-
-//      Taskspending.upsert({uuid: parsedtask.uuid}, parsedtask)
-
-      console.log('parsedtask is ' + JSON.stringify(parsedtask))
-      console.log('taskspending findone ' + Taskspending.findOne({uuid: parsedtask.uuid}))
-      if (Taskspending.findOne({uuid: parsedtask.uuid}) != null) {
-        console.log('updated ' + parsedtask.uuid)
-        Taskspending.update({uuid: parsedtask.uuid}, {$set: JSON.stringify(parsedtask)})
-      }
-      else {
-        console.log('inserted ' + parsedtask)
-        Taskspending.insert(parsedtask)
-      }
-
+      Tasks.insert(parsedtask)
+      var uuident = parsedtask.uuid
+      Taskspending.upsert({uuid: uuident}, parsedtask)
 
     }
+    Tasks.update({synckey: {$exists: 1}}, {synckey: tasklines[synckeynum]})
+
     console.log('synckey is ' + tasklines[synckeynum])
-    Tasks.upsert({synckey: {$exists: 1}}, {synckey: tasklines[synckeynum]})
-    // have to make sure to only remove backlog on success
+//    Tasks.update({_issynckey: "true"}, {synckey: tasklines[synckeynum]})
+// have to make sure to only remove backlog on success. this is also a problem if tasks were collected after the payload is already sent but before the backlog is deleted
     Tasksbacklog.remove({})
     bigdata = ''
   },
