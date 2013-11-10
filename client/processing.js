@@ -128,6 +128,9 @@ Template.list.events({
   'keyup .title': function (e,t){
     if (e.which === 13)
       {
+        projecttask = Taskspending.findOne({_id: Session.get('current_processedtask')})
+        projecttask.project = e.target.value
+        Tasksbacklog.insert(projecttask)
         Taskspending.update({_id: this._id},{$set:{project:e.target.value}})     
       }
   },
