@@ -16,10 +16,9 @@
     <div id="sync">
       {{> sync}}
     </div>
-  {{> processingdialog}}
   </div>
 </body>
-
+ 
 <template name="categories">
   <h2 class="title"">my stuff</h2>
   {{#if new_task}}
@@ -47,16 +46,22 @@
 </template>
 
 <template name="list">
+{{> processingdialog}}
   <ul id="task_list">
     {{#each tasks}}
+
+{{#if waiting}}
+{{else}}
       <li class="task_item alert">
-        <button type="button" class="close delete_item" id="{{_id}}">x</button>
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
 
        <p>{{description}}</p>
     {{#if process}}
       <button type="button" style="float:right;" class="processing-button">process</button>
     {{/if}}
       </li>
+
+{{/if}}
     {{/each}}
     {{#if list_selected}}
       <li class="alert-success" id="btnAddItem">+
@@ -67,53 +72,6 @@
     {{/if}}
   </ul>
 </template>
-
-<template name="processingdialog">
-{{#if processing_task}}
-<div class="processingdialog">
- <div class="mask"> </div>
-  <div class="modal">
-    <div class="modal-header">
-      <button type="button" class="close cancel">&times;</button>
-      <h3>Process task</h3>
-    </div>
-
-    <div class="modal-body">
-      {{#if processing_task}}
-        <div class="alert alert-error">Errors go here</div>
-      {{/if}}
-
-
-  <h2>Is this actionable?</h2>
-  <div id="actionable-group" class="btn-group">
-  <div class="option btn">Yes</div>
-  <div class="option btn btn-inverse">No</div>
-  <div class="option btn btn-inverse">Someday/Maybe</div>
-  </div>
-
-      <h2>Is it part of a project or multi-step?</h2>
-      <input type="text" class="title span5">
-
-      <label>Description</label>
-      <textarea class="description span5"></textarea>
-
-      <label class="checkbox">
-        <input type="checkbox" class="private">
-        Some text
-      </label>
-    </div>
-
-    <div class="modal-footer">
-      <a href="#" class="btn cancel">Cancel</a>
-      <a href="#" class="btn btn-primary save">Add party</a>
-    </div>
-  </div>
-</div>
-{{/if}}
-</template>
-
-
-
 
 <template name="sync">
   <div id="sync-inner">
