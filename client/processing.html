@@ -1,0 +1,51 @@
+<template name="processingdialog">
+{{#if processing_task}}
+{{#with tasks}}
+<div class="processingdialog">
+ <div class="mask"> </div>
+  <div class="modal">
+    <div class="modal-header">
+      <button type="button" class="close cancel">&times;</button>
+      <h3>{{description}}</h3>
+    </div>
+
+    <div class="modal-body">
+
+      <div class="btn btn-primary trash">Trash/Done</div>
+      <div class="btn btn-primary archive">Archive</div>
+      <div class="btn btn-primary somedaymaybe">Someday/Maybe</div>
+      <hr />
+      <div class="btn btn-primary project">Project</div>
+      <h2>Is it part of a project or multi-step?</h2>
+{{#if has_project}}
+<input type="text" class="title span5" placeholder="{{project}}"/>
+{{else}}
+      <input type="text" class="title span5"/>
+{{/if}}
+      <hr />
+      <div class="btn btn-primary do">Do it!</div>
+      <div class="btn btn-primary delegate">Delegate/Waiting for</div>
+      <div class="btn btn-primary defer">Defer</div>
+      <hr />
+      <div class="btn btn-primary context">Context</div>
+      <div class="btn btn-primary duedate">Due date</div>
+      <div class="btn btn-primary wait">Wait (amt of time)</div>
+
+
+
+
+      {{#if error}}
+        <div class="alert alert-error">Errors go here</div>
+      {{/if}}
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Add party</a>
+    </div>
+  </div>
+</div>
+{{/with}}
+{{/if}}
+</template>
+
