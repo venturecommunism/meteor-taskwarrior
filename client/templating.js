@@ -43,6 +43,7 @@ Template.list.waiting = function () {
 }
 
 
+
 Template.categories.events({
   'click #btnNewCat': function (e, t) {
     Session.set('adding_category', true);
@@ -85,11 +86,11 @@ Template.categories.events({
   'focusout #add-category': function(e,t){
     Session.set('adding_category',false);
   },
-  'click .category': selectCategory
+//  'click .category': selectCategory
 });
 
 Template.processingdialog.events({
-  'focusout .processingdialog': function(e,t) {
+  'click .modal .cancel': function(e,t) {
      Session.set('processing_task',false);
    }
 });
