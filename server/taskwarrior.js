@@ -17,12 +17,12 @@ Tasks.allow({
   },
   update: function (userId, docs, fields, modifier){
     return _.all(docs, function(doc) {
-      return doc.owner === userId;
+      return (adminUser (userId) || doc.owner === userId);
     });
   },
   remove: function (userId, docs){
     return _.all(docs, function(doc) {
-      return doc.owner === userId;
+      return (adminUser (userId) || doc.owner === userId);
     });
   }
 });
@@ -33,12 +33,12 @@ Taskspending.allow({
   },
   update: function (userId, docs, fields, modifier){
     return _.all(docs, function(doc) {
-      return doc.owner === userId;
+      return (adminUser (userId) || doc.owner === userId);
     });
   },
   remove: function (userId, docs){
     return _.all(docs, function(doc) {
-      return doc.owner === userId;
+      return (adminUser (userId) || doc.owner === userId);
     });
   }
 });
@@ -49,12 +49,12 @@ Tasksbacklog.allow({
   },
   update: function (userId, docs, fields, modifier){
     return _.all(docs, function(doc) {
-      return doc.owner === userId;
+      return (adminUser (userId) || doc.owner === userId);
     });
   },
   remove: function (userId, docs){
     return _.all(docs, function(doc) {
-      return doc.owner === userId;
+      return (adminUser (userId) || doc.owner === userId);
     });
   }
 });
@@ -152,6 +152,10 @@ Meteor.methods({
     var line = mainData[1].split('\n')
     var newline = '\n'
     var linetosplit = line[0] + newline + line[1] + newline + line[2] + newline + newline
+    console.log(line[0])
+    console.log(line[1])
+    console.log(line[2])
+    console.log(line[3])
     var taskdata = mainData[1].replace(linetosplit,'')
     console.log('taskdata is ' + taskdata)
     var tasklines = taskdata.split('\n')
