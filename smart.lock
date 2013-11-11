@@ -3,7 +3,10 @@
   "dependencies": {
     "basePackages": {
       "npm": {},
-      "moment": {}
+      "moment": {},
+      "Bootstrap3-Typeahead": {},
+      "autocomplete": {},
+      "typeahead-js": {}
     },
     "packages": {
       "npm": {
@@ -15,6 +18,11 @@
         "git": "https://github.com/acreeger/meteor-moment.git",
         "tag": "v2.2.1",
         "commit": "9ee12e714afe56b189f53076447b7b54f3012065"
+      },
+      "typeahead-js": {
+        "git": "https://github.com/olragon/meteor-typeahead-js.git",
+        "tag": "v0.9.3",
+        "commit": "9241c6c68f39cf37699b5de7b03d60a5434a5d21"
       }
     }
   }

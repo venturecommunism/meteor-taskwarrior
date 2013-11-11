@@ -1,6 +1,7 @@
 {
   "packages": {
     "npm": {},
-    "moment": {}
+    "moment": {},
+    "typeahead-js": {}
   }
 }

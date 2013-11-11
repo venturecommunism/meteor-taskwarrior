@@ -11,3 +11,5 @@ accounts-password
 bootstrap
 accounts-ui
 moment
+
+typeahead-js

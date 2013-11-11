@@ -71,6 +71,33 @@ margin:15px 15px 15px 10px;
 margin-right:20px;
 }
 
+.tt-dropdown-menu {
+width: 422px;
+margin-top: 12px;
+padding: 8px 0;
+background-color: #fff;
+border: 1px solid #ccc;
+border: 1px solid rgba(0, 0, 0, 0.2);
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+border-radius: 8px;
+-webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+-moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+.tt-suggestion p {
+padding: 9px;
+margin:0px;
+background: #FFFD90;
+}
+.tt-is-under-cursor p {
+background: #007F00;
+color: #FFB;
+}
+.modal-body{
+overflow:visible;
+}
+
 /* mobile css 
 #task_list .task_item{
 font-size:40px;
