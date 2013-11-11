@@ -18,9 +18,21 @@
       <div class="btn btn-primary project">Project</div>
       <h2>Is it part of a project or multi-step?</h2>
 {{#if has_project}}
-<input type="text" class="title span5" placeholder="{{project}}"/>
+
+<form class="form-inline" role="form">
+    <div class="form-group">
+      <input class="form-control title span5" type="text" id="typeahead" placeholder="{{project}}">
+    </div>
+</form>
+
 {{else}}
-      <input type="text" class="title span5"/>
+
+<form class="form-inline" role="form">
+    <div class="form-group">
+      <input class="form-control title span5" type="text" id="typeahead">
+    </div>
+</form>
+
 {{/if}}
       <hr />
       <div class="btn btn-primary do">Do it!</div>
