@@ -24,7 +24,7 @@ Template.list.tasks = function () {
   return Taskspending.find({status: {$in: ["waiting", "pending"]}, tags: "inbox", waiting: { $lt: formattednow}}, {sort: {due: -1}})
 }
 Template.organize.tasks = function () {
-  return Taskspending.find({status: {$in: ["waiting", "pending"]}, tags: "somedaymaybe", waiting: { $lt: formattednow}}, {sort: {due: -1}})
+  return Taskspending.find({status: {$in: ["waiting", "pending"]}, tags: {$not: "inbox"}, waiting: { $lt: formattednow}}, {sort: {due: -1}})
 }
 Template.categories.process_status = function () {
   return Session.equals('process_status',true) ? 'active' : ''
