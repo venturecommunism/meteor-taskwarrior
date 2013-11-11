@@ -1,3 +1,4 @@
+
 Session.set('processing_task', false);
 
 Template.processingdialog.tasks = function () {
@@ -45,7 +46,7 @@ Template.processingdialog.events({
       trashtask.tags.splice(i, 1);
     }
     if (trashtask.tags.length == 0) {
-      trashtask.tags.delete
+      delete trashtask.tags
     }
     Tasksbacklog.insert(trashtask)
     Taskspending.remove(Session.get('current_processedtask'))
@@ -59,10 +60,8 @@ Template.processingdialog.events({
     if(i != -1) {
       archivetask.tags.splice(i, 1);
     }
-    if (archivetask.tags.length == 0) {
-      archivetask.tags.delete
-    }
     archivetask.tags.push("archive")
+    delete archivetask._id
     Tasksbacklog.insert(archivetask)
     Taskspending.remove(Session.get('current_processedtask'))
     Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
@@ -74,16 +73,51 @@ Template.processingdialog.events({
     if(i != -1) {
       somedaymaybetask.tags.splice(i, 1);
     }
-    if (somedaymaybetask.tags.length == 0) {
-      somedaymaybetask.tags.delete
-    }
+    id = somedaymaybetask._id
+    delete somedaymaybetask._id
     somedaymaybetask.tags.push("somedaymaybe")
     Tasksbacklog.insert(somedaymaybetask)
+    Taskspending.update({_id: id},{$set: somedaymaybetask})
+    Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
+    selectTaskProcessing
+  },
+  'click .do': function() {
+    trashtask = Taskspending.findOne({_id: Session.get('current_processedtask')})
+    trashtask.status = 'completed'
+    var i = trashtask.tags.indexOf("inbox");
+    if(i != -1) {
+      trashtask.tags.splice(i, 1);
+    }
+    if (trashtask.tags.length == 0) {
+      delete trashtask.tags
+    }
+    Tasksbacklog.insert(trashtask)
     Taskspending.remove(Session.get('current_processedtask'))
     Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
     selectTaskProcessing
-
   },
+  'click .defer': function() {
+    defertask = Taskspending.findOne({_id: Session.get('current_processedtask')})
+    var i = defertask.tags.indexOf("inbox");
+    if(i != -1) {
+      defertask.tags.splice(i, 1);
+      console.log(defertask.tags)
+    }
+    if (defertask.tags.length == 0) {
+      delete defertask.tags
+      console.log(defertask)
+    }
+    console.log(defertask._id + 'is the _id')
+    id = defertask._id
+    delete defertask._id
+    console.log(defertask)
+    Tasksbacklog.insert(defertask)
+    Taskspending.update({_id: id},{$set: defertask})
+    Taskspending.update({_id: id},{$unset: {tags: ""}})
+    Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
+    selectTaskProcessing
+  },
+
 
 });
 
@@ -142,3 +176,23 @@ Template.list.events({
 });
 
 
+Template.processingdialog.rendered = function () {
+
+var projectnames = Taskspending.find();
+var count = 0;
+projects = []
+projectnames.forEach(function (task) {
+  if (task.project && (projects.indexOf(task.project) == -1)) {
+    projects.push(task.project)
+  }
+  console.log(task.project)
+  console.log("Title of post " + count + ": ");
+  count += 1;
+});
+
+console.log(projects)
+  $('#typeahead').typeahead({
+    name: 'accounts',
+    local: ["process", "organize", "project1", "project2", "project3", "project4"]
+  });
+};
