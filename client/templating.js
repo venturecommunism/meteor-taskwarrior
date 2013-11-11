@@ -2,7 +2,6 @@ Meteor.subscribe("tasks")
 Meteor.subscribe("taskspending")
 Meteor.subscribe("tasksbacklog")
 
-Session.set('adding_category', false);
 Session.set('adding_newtask', false);
 Session.set('processing_task', false);
 
@@ -32,9 +31,6 @@ Template.categories.process_status = function () {
 Template.categories.organize_status = function () {
   return Session.equals('organize_status',true) ? 'active' : ''
 }
-Template.categories.new_cat = function () {
-  return Session.equals('adding_category',true);
-};
 Template.categories.new_task = function () {
   return Session.equals('adding_newtask',true);
 };
@@ -88,30 +84,11 @@ Template.categories.events({
     Session.set('do_status', true);
     Session.set('process_status', false)
   },
-
-  'click #btnNewCat': function (e, t) {
-    Session.set('adding_category', true);
-    Meteor.flush();
-    focusText(t.find("#add-category"));
-  },
   'click #btnNewTask': function (e, t) {
     Session.set('adding_newtask', true);
     Meteor.flush();
     focusText(t.find("#add-newtask"));
   },
-
-  'keyup #add-category': function (e,t) {
-    if (e.which === 13)
-    {
-      var catVal = String(e.target.value || "");
-      if (catVal)
-      {
-        lists.insert({name:catVal,owner:Meteor.userId()});
-        Session.set('adding_category', false);
-      }
-    }
-  },
-
   'keyup #add-newtask': function (e,t) {
     if (e.which === 13)
     {
@@ -126,9 +103,6 @@ Template.categories.events({
 
   'focusout #add-newtask' : function(e,t){
     Session.set('adding_newtask',false);
-  },
-  'focusout #add-category': function(e,t){
-    Session.set('adding_category',false);
   },
 //  'click .category': selectCategory
 });
