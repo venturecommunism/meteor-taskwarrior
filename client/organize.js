@@ -1,3 +1,28 @@
+Session.set('processing_task', false);
+
+
+//////////Generic Helper Functions///////////
+//this function puts our cursor where it needs to be.
+function focusText(i,val) {
+  i.focus();
+  i.value = val ? val : "";
+  i.select();
+};
+
+
+function selectTaskProcessing(e,t){
+  Session.set('current_processedtask',this._id);
+  Session.set('processing_task',true);
+  Meteor.flush()
+console.log(t.find(".modal .title"))
+  focusText(t.find(".modal .title"));
+};
+
+Template.processingdialog.tasks = function () {
+  return Taskspending.findOne({_id: Session.get('current_processedtask')})
+}
+
+
 Template.organize.events({
   'click #btnAddItem': function (e,t){
     Session.set('list_adding',true);  

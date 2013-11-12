@@ -1,4 +1,3 @@
-
 Session.set('processing_task', false);
 
 Template.processingdialog.tasks = function () {
