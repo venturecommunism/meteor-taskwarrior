@@ -97,6 +97,9 @@ color: #FFB;
 .modal-body{
 overflow:visible;
 }
+.btn-inverse:active, .btn-inverse.active {
+background-color: #008000;
+}
 
 /* mobile css 
 #task_list .task_item{
