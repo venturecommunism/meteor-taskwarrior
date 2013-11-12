@@ -1,5 +1,8 @@
 <template name="organize">
 {{#if is_organizing}}
+  <div id="top-project-filter">
+    {{> project_filter}}
+  </div>
 {{> processingdialog}}
   <ul id="task_list">
     {{#each tasks}}
@@ -52,3 +55,13 @@
 {{/if}}
 </template>
 
+<template name="project_filter">
+  <div id="project-filter" class="project-list">
+    <div class="label">Show:</div>
+    {{#each projects}}
+      <div class="project {{selected}}">
+        {{project_text}} <span class="count">({{count}})</span>
+      </div>
+    {{/each}}
+  </div>
+</template>
