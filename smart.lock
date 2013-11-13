@@ -4,8 +4,6 @@
     "basePackages": {
       "npm": {},
       "moment": {},
-      "Bootstrap3-Typeahead": {},
-      "autocomplete": {},
       "typeahead-js": {}
     },
     "packages": {
