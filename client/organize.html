@@ -9,7 +9,7 @@
 
 {{#if waiting}}
 {{else}}
-      <li class="task_item alert">
+      <li class="task_item alert bluechangeme">
         <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
 
        <p>{{description}}</p>
@@ -21,6 +21,20 @@
       <li class="alert-success" id="btnAddItem">+
       </li>
     {{/if}}
+
+    {{#each tasks2}}
+
+{{#if waiting}}
+{{else}}
+      <li class="task_item alert">
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+
+       <p>{{description}}</p>
+      </li>
+
+{{/if}}
+    {{/each}}
+
   </ul>
 {{/if}}
 </template>

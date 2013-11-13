@@ -1,4 +1,8 @@
 /* CSS declarations go here */
+.bluechangeme{
+background:blue;
+}
+
 body {
 background-image: url(/texturetastic_gray.png);
 }

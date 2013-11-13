@@ -25,10 +25,16 @@ Template.list.tasks = function () {
 Template.organize.tasks = function () {
   var project_filter = Session.get('project_filter');
   if (project_filter)
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, tags: {$not: "inbox"}, waiting: { $lt: formattednow}}, {sort: {due: -1}})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$not: "inbox"}}, {tags: "mit"}], waiting: { $lt: formattednow}}, {sort: {due: -1}})
+}
+Template.organize.tasks2 = function () {
+  var project_filter = Session.get('project_filter');
+  if (project_filter)
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$not: "inbox"}}, {tags: {$not: "mit"}}], waiting: { $lt: formattednow}}, {sort: {due: -1}})
+//      Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, tags: {$ne: "inbox"}, tags: "mit", waiting: { $lt: formattednow}}, {sort: {due: -1}}),
+//      Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, tags: {$ne: ["inbox", "mit"]}, waiting: { $lt: formattednow}}, {sort: {due: -1}}),
   else
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, tags: {$not: "inbox"}, waiting: { $lt: formattednow}}, {sort: {due: -1}})
-
 }
 Template.categories.process_status = function () {
   return Session.equals('process_status',true) ? 'active' : ''
