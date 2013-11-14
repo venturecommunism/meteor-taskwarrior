@@ -104,6 +104,14 @@ overflow:visible;
 .btn-inverse:active, .btn-inverse.active {
 background-color: #008000;
 }
+#doing-project{
+float: right;
+height: 20px;
+background-color: gray;
+padding: 5px;
+position: relative;
+top: -30px;
+}
 
 /* mobile css 
 #task_list .task_item{

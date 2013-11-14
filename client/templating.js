@@ -36,11 +36,21 @@ Template.organize.tasks2 = function () {
   else
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, tags: {$not: "inbox"}, waiting: { $lt: formattednow}}, {sort: {due: -1}})
 }
+Template.do.tasks = function () {
+console.log(Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "mit"}], waiting: { $lt: formattednow}}, {sort: {due: -1}}) + "this is some text")
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "mit"}], waiting: { $lt: formattednow}}, {sort: {due: -1}})
+}
 Template.categories.process_status = function () {
   return Session.equals('process_status',true) ? 'active' : ''
 }
 Template.categories.organize_status = function () {
   return Session.equals('organize_status',true) ? 'active' : ''
+}
+Template.categories.review_status = function () {
+  return Session.equals('review_status',true) ? 'active' : ''
+}
+Template.categories.do_status = function () {
+  return Session.equals('do_status',true) ? 'active' : ''
 }
 Template.categories.new_task = function () {
   return Session.equals('adding_newtask',true);
@@ -68,6 +78,9 @@ Template.list.is_processing = function () {
 }
 Template.organize.is_organizing = function () {
   return Session.get('organize_status')
+}
+Template.do.is_doing = function () {
+  return Session.get('do_status')
 }
 
 Template.categories.events({
