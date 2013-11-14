@@ -39,36 +39,6 @@
 {{/if}}
 </template>
 
-<template name="bleddle">
-{{#if is_organizing}}
-{{> processingdialog}}
-  <ul id="task_list">
-    {{#each tasks}}
-
-{{#if waiting}}
-{{else}}
-      <li class="task_item alert">
-        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
-
-       <p>{{description}}</p>
-    {{#if process}}
-      <button type="button" style="float:right;" class="processing-button">process</button>
-    {{/if}}
-      </li>
-
-{{/if}}
-    {{/each}}
-    {{#if list_selected}}
-      <li class="alert-success" id="btnAddItem">+
-        {{#if list_adding}}
-          <input class="span4" id="item_to_add" size="32" type="text">
-        {{/if}}
-      </li>
-    {{/if}}
-  </ul>
-{{/if}}
-</template>
-
 <template name="project_filter">
   <div id="project-filter" class="project-list">
     <div class="label">Show:</div>
