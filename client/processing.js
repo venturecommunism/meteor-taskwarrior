@@ -192,8 +192,6 @@ projectnames.forEach(function (task) {
   if (task.project && (projects.indexOf(task.project) == -1)) {
     projects.push(task.project)
   }
-  console.log(task.project)
-  console.log("Title of post " + count + ": ");
   count += 1;
 });
 
