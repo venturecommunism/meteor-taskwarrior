@@ -57,7 +57,6 @@ Template.project_filter.events({
 });
 
 Template.project_filter.selected = function () {
-console.log('the project filter is ' + Session.get('project_filter'))
   return Session.equals('project_filter', this.project) ? 'active btn-danger' : '';
 };
 
