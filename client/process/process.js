@@ -140,11 +140,6 @@ function focusText(i,val) {
   i.select();
 };
 
-
-Template.processingdialog.processing_task = function () {
-  return (Session.equals('processing_task',true));
-};
-
 Template.process.events({
   'click #btnAddItem': function (e,t){
     Session.set('list_adding',true);

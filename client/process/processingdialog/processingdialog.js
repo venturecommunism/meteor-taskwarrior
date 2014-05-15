@@ -8,3 +8,7 @@ Template.processingdialog.tasks = function () {
   return Taskspending.findOne({_id: Session.get('current_processedtask')})
 }
 
+Template.processingdialog.processing_task = function () {
+  return (Session.equals('processing_task',true));
+};
+
