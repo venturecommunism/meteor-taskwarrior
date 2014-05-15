@@ -4,10 +4,6 @@ now = moment()
 var formattednow = now.format('YYYYMMDD') + 'T' + now.format('HHmmss') + 'Z'
 console.log('formatted is ' + formattednow)
 
-Template.categories.new_task = function () {
-  return Session.equals('adding_newtask',true);
-};
-
 Template.categories.events({ 
   'click #btnNewTask': function (e, t) {
     Session.set('adding_newtask', true);
