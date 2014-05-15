@@ -141,7 +141,7 @@ Template.processingdialog.processing_task = function () {
   return (Session.equals('processing_task',true));
 };
 
-Template.list.events({
+Template.process.events({
   'click #btnAddItem': function (e,t){
     Session.set('list_adding',true);
     Meteor.flush();

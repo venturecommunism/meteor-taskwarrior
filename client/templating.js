@@ -19,7 +19,7 @@ now = moment()
 var formattednow = now.format('YYYYMMDD') + 'T' + now.format('HHmmss') + 'Z'
 console.log('formatted is ' + formattednow)
 
-Template.list.tasks = function () {
+Template.process.tasks = function () {
   return Taskspending.find({status: {$in: ["waiting", "pending"]}, tags: "inbox", waiting: { $lt: formattednow}}, {sort: {due: -1}})
 }
 Template.organize.tasks = function () {
@@ -56,7 +56,7 @@ Template.categories.new_task = function () {
   return Session.equals('adding_newtask',true);
 };
 
-Template.list.waiting = function () {
+Template.process.waiting = function () {
   if (!this.wait) {
     return false
   }
@@ -73,7 +73,7 @@ Template.list.waiting = function () {
   return (string > formattednow)
 }
 
-Template.list.is_processing = function () {
+Template.process.is_processing = function () {
   return Session.get('process_status')
 }
 Template.organize.is_organizing = function () {
