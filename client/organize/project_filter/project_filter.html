@@ -1,0 +1,11 @@
+<template name="project_filter">
+  <div id="project-filter" class="project-list">
+    <div class="label">Show:</div>
+    {{#each projects}}
+      <div class="project btn btn-inverse {{selected}}">
+        {{project_text}} <span class="count">({{count}})</span>
+      </div>
+    {{/each}}
+  </div>
+</template>
+

@@ -1,0 +1,40 @@
+<template name="organize">
+{{#if is_organizing}}
+  <div id="top-project-filter">
+    {{> project_filter}}
+  </div>
+{{> processingdialog}}
+  <ul id="task_list">
+    {{#each tasks}}
+
+{{#if waiting}}
+{{else}}
+      <li class="task_item alert bluechangeme">
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+
+       <p>{{description}}</p>
+      </li>
+
+{{/if}}
+    {{/each}}
+    {{#if list_selected}}
+      <li class="alert-success" id="btnAddItem">+
+      </li>
+    {{/if}}
+
+    {{#each tasks2}}
+
+{{#if waiting}}
+{{else}}
+      <li class="task_item alert">
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+
+       <p>{{description}}</p>
+      </li>
+
+{{/if}}
+    {{/each}}
+
+  </ul>
+{{/if}}
+</template>

@@ -1,0 +1,30 @@
+<template name="categories">
+  <h2 class="title"">my stuff</h2>
+  {{#if new_task}}
+    <div class="newtask">
+      <input type="text" id="add-newtask" value="" />
+    </div>
+  {{else}}
+  <div class="newtask btn btn-inverse" id="btnNewTask">+ Collect</div>
+  {{/if}}
+  <div id="categories" class="btn-group">
+  {{#if new_cat}}
+    <div class="category">
+      <input type="text" id="add-category" value="" />
+    </div>
+    {{else}}
+  <div class="category btn btn-inverse" id="btnNewCat">+</div>
+  {{/if}}
+
+<div class="category btn {{process_status}}" id="process">Process</div>
+<div class="category btn {{organize_status}}" id="organize">Organize</div>
+<div class="category btn {{review_status}}" id="review">Review</div>
+<div class="category btn {{do_status}}" id="do">Do</div>
+
+    {{#each lists}}
+    <div class="category btn {{list_status}}" id="{{_id}}">
+      {{name}}
+    </div>
+    {{/each}}
+  </div>
+</template>

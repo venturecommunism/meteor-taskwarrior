@@ -1,0 +1,21 @@
+<template name="list">
+{{#if is_processing}}
+{{> processingdialog}}
+  <ul id="task_list">
+    {{#each tasks}}
+
+{{#if waiting}}
+{{else}}
+  {{> todo_item}}
+{{/if}}
+    {{/each}}
+    {{#if list_selected}}
+      <li class="alert-success" id="btnAddItem">+
+        {{#if list_adding}}
+          <input class="span4" id="item_to_add" size="32" type="text">
+        {{/if}}
+      </li>
+    {{/if}}
+  </ul>
+{{/if}}
+</template>
