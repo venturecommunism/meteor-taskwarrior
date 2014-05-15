@@ -131,4 +131,8 @@ Template.categories.events({
 //  'click .category': selectCategory
 });
 
-
+Template.processingdialog.events({
+  'click .modal .cancel': function(e,t) {
+     Session.set('processing_task',false);
+   }
+});
