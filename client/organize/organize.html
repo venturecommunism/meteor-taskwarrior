@@ -19,11 +19,7 @@
     {{#each tasks2}}
       {{#if waiting}}
       {{else}}
-        <li class="task_item alert">
-          <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
-
-          <p>{{description}}</p>
-        </li>
+        {{> task2_todo_item}}
       {{/if}}
     {{/each}}
   </ul>
