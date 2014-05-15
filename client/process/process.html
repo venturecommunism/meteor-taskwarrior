@@ -9,14 +9,6 @@
           {{> todo_item}}
         {{/if}}
       {{/each}}
-
-      {{#if list_selected}}
-        <li class="alert-success" id="btnAddItem">+
-          {{#if list_adding}}
-            <input class="span4" id="item_to_add" size="32" type="text">
-          {{/if}}
-        </li>
-      {{/if}}
     </ul>
 
   {{/if}}
