@@ -8,6 +8,10 @@ function focusText(i,val) {
   i.select();
 };
 
+now = moment()
+var formattednow = now.format('YYYYMMDD') + 'T' + now.format('HHmmss') + 'Z'
+console.log('formatted is ' + formattednow)
+
 
 function selectTaskProcessing(e,t){
   Session.set('current_processedtask',this._id);
@@ -151,3 +155,21 @@ Template.organize.events({
 
 });
 
+Template.organize.is_organizing = function () {
+  return Session.get('organize_status')
+}
+
+Template.organize.tasks = function () {
+  var project_filter = Session.get('project_filter');
+  if (project_filter)
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$not: "inbox"}}, {tags: "mit"}], waiting: { $lt: formattednow}}, {sort: {due: -1}})
+}
+Template.organize.tasks2 = function () {
+  var project_filter = Session.get('project_filter');
+  if (project_filter)
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$not: "inbox"}}, {tags: {$not: "mit"}}], waiting: { $lt: formattednow}}, {sort: {due: -1}})
+// Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, tags: {$ne: "inbox"}, tags: "mit", waiting: { $lt: formattednow}}, {sort: {due: -1}}),
+// Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, tags: {$ne: ["inbox", "mit"]}, waiting: { $lt: formattednow}}, {sort: {due: -1}}),
+  else
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, tags: {$not: "inbox"}, waiting: { $lt: formattednow}}, {sort: {due: -1}})
+}

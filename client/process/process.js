@@ -1,5 +1,9 @@
 Session.set('processing_task', false);
 
+now = moment()
+var formattednow = now.format('YYYYMMDD') + 'T' + now.format('HHmmss') + 'Z'
+console.log('formatted is ' + formattednow)
+
 Template.processingdialog.tasks = function () {
   return Taskspending.findOne({_id: Session.get('current_processedtask')})
 }
@@ -201,3 +205,28 @@ console.log(projects)
     local: ["process", "organize", "project1", "project2", "project3", "project4"]
   });
 };
+
+Template.process.is_processing = function () {
+  return Session.get('process_status')
+}
+
+Template.process.waiting = function () {
+  if (!this.wait) {
+    return false
+  }
+  now = moment()
+  var formattednow = now.format('YYYYMMDD') + now.format('HHmmss')
+  string = this.wait
+  string = string.split("T")[0] + string.split("T")[1]
+  string = string.split("Z")[0]
+  if (string > formattednow) {
+    console.log(string)
+    console.log(string + 'str was greater than formattednow for ' + this.description)
+  }
+  console.log(this.description + string > formattednow)
+  return (string > formattednow)
+}
+
+Template.process.tasks = function () {
+  return Taskspending.find({status: {$in: ["waiting", "pending"]}, tags: "inbox", waiting: { $lt: formattednow}}, {sort: {due: -1}})
+}

@@ -1,5 +1,9 @@
 Session.set('editing_itemname', null);
 
+now = moment()
+var formattednow = now.format('YYYYMMDD') + 'T' + now.format('HHmmss') + 'Z'
+console.log('formatted is ' + formattednow)
+
 Template.todo_item.editing = function () {
   return Session.equals('editing_itemname', this._id);
 };
