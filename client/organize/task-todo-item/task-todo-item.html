@@ -1,0 +1,17 @@
+<template name="task_todo_item">
+      <li class="task_item alert bluechangeme">
+<div class="btn btn-inverse" id="kickstart">make this my kickstart task</div>
+        <button type="button" class="close startprocessing-buttonw" id="{{_id}}">x</button>
+
+    {{#if editing}}
+      <div class="edit">
+        <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
+      </div>
+{{else}}
+<div class="todo-item">       <p>{{description}}</p> </div>
+{{/if}}}
+    {{#if process}}
+      <button type="button" style="float:right;" class="processing-button">process</button>
+    {{/if}}
+      </li>
+</template>

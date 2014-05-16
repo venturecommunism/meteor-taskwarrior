@@ -1,10 +1,11 @@
 <template name="task2_todo_item">
       <li class="task_item alert">
+<div class="btn btn-inverse" id="kickstart">kickstart</div>
         <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
 
     {{#if editing}}
       <div class="edit">
-        <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
+        <input style="width:83%" id="todo-input" type="text" value="{{description}}" />
       </div>
 {{else}}
 <div class="todo-item">       <p>{{description}}</p> </div>
