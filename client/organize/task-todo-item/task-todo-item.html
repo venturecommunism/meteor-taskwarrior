@@ -1,7 +1,8 @@
 <template name="task_todo_item">
       <li class="task_item alert bluechangeme">
 <div class="btn" id="kickstart">kickstart</div>
-        <button type="button" class="close startprocessing-buttonw" id="{{_id}}">x</button>
+        <button type="button" class="close dep-button" id="{{_id}}">D</button>
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
 
     {{#if editing}}
       <div class="edit">

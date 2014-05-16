@@ -33,12 +33,3 @@ Template.collect.events({
     Session.set('adding_newtask',false);
   }
 })
-
-//////////Generic Helper Functions///////////
-//this function puts our cursor where it needs to be.
-function focusText(i,val) {
-  i.focus();
-  i.value = val ? val : "";
-  i.select();
-};
-

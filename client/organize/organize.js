@@ -1,13 +1,5 @@
 Session.set('processing_task', false);
 
-//////////Generic Helper Functions///////////
-//this function puts our cursor where it needs to be.
-function focusText(i,val) {
-  i.focus();
-  i.value = val ? val : "";
-  i.select();
-};
-
 now = moment()
 var formattednow = now.format('YYYYMMDD') + 'T' + now.format('HHmmss') + 'Z'
 console.log('formatted is ' + formattednow)
@@ -18,6 +10,13 @@ function selectTaskProcessing(e,t){
   Session.set('processing_task',true);
   Meteor.flush()
 console.log(t.find(".modal .title"))
+  focusText(t.find(".modal .title"));
+};
+
+function selectDepProcessing(e,t){
+  Session.set('current_deppingtask',this._id);
+  Session.set('depping_task',true);
+  Meteor.flush()
   focusText(t.find(".modal .title"));
 };
 
@@ -96,7 +95,11 @@ Template.organize.events({
         Taskspending.update({_id: this._id},{$set:{project:e.target.value}})
       }
   },
-  'click .startprocessing-button': selectTaskProcessing
+  'click #kickstart.btn-inverse': function (e,t) {
+    Taskspending.update({_id: this._id}, {$set:{tags:"mit"}})
+  },
+  'click .startprocessing-button': selectTaskProcessing,
+  'click .dep-button': selectDepProcessing
 });
 
 

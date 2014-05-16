@@ -132,14 +132,6 @@ if (!Session.get('organize_status')){
 
 });
 
-//////////Generic Helper Functions///////////
-//this function puts our cursor where it needs to be.
-function focusText(i,val) {
-  i.focus();
-  i.value = val ? val : "";
-  i.select();
-};
-
 Template.process.events({
   'click #btnAddItem': function (e,t){
     Session.set('list_adding',true);

@@ -8,13 +8,15 @@ width: 775px;
 position: relative;
 top: 3px;
 float: left;
-right: -787px;
+right: -755px;
+padding-left: 7px;
 }
 
 #kickstart {
 float: right;
 width: 50px;
 height: 20px;
+margin-right: 24px;
 }
 
 .bluechangeme{

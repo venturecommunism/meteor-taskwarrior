@@ -63,11 +63,3 @@ Template.categories.do_status = function () {
 Template.categories.new_task = function () {
   return Session.equals('adding_newtask',true);
 };
-
-//////////Generic Helper Functions///////////
-//this function puts our cursor where it needs to be.
-function focusText(i,val) {
-  i.focus();
-  i.value = val ? val : "";
-  i.select();
-};
