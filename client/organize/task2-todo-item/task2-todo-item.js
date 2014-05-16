@@ -8,6 +8,10 @@ Template.task2_todo_item.editing = function () {
   return Session.equals('editing_itemname', this._id);
 };
 
+Template.task2_todo_item.nokickstart = function () {
+  return true;
+};
+
 Template.task2_todo_item.events({
   'dblclick .todo-item': function (e, t) {
 //    alert('Hi');

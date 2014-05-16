@@ -1,4 +1,22 @@
 /* CSS declarations go here */
+#task_list .task_item {
+position: relative;
+width: 775px;
+}
+
+#task_list .close {
+position: relative;
+top: 3px;
+float: left;
+right: -787px;
+}
+
+#kickstart {
+float: right;
+width: 50px;
+height: 20px;
+}
+
 .bluechangeme{
 background:blue;
 }

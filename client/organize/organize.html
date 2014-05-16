@@ -8,11 +8,6 @@
       {{#if waiting}}
       {{else}}
         {{> task_todo_item}}
-        <li class="task_item alert bluechangeme">
-          <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
-
-          <div class="todo-item">       <p>{{description}}</p>  </div>
-        </li>
       {{/if}}
     {{/each}}
 
