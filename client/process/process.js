@@ -125,8 +125,13 @@ if (!Session.get('organize_status')){
     Tasksbacklog.insert(defertask)
     Taskspending.update({_id: id},{$set: defertask})
     Taskspending.update({_id: id},{$unset: {tags: ""}})
-    Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
-    selectTaskProcessing
+    if (Taskspending.findOne({tags:"inbox"})) {
+      Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
+      selectTaskProcessing
+    }
+    else {
+      Session.set('processing_task', false);
+    }
   },
 
 
