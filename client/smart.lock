@@ -1,0 +1,15 @@
+{
+  "meteor": {},
+  "dependencies": {
+    "basePackages": {
+      "notifications": {}
+    },
+    "packages": {
+      "notifications": {
+        "git": "https://github.com/gfk-ba/meteor-notifications.git",
+        "tag": "v0.4.8",
+        "commit": "ed16633ce4996522907a41138b3ebc6134e15063"
+      }
+    }
+  }
+}

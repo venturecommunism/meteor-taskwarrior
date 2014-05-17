@@ -9,7 +9,7 @@ Template.task2_todo_item.editing = function () {
 };
 
 Template.task2_todo_item.nokickstart = function () {
-  return true;
+  return !Taskspending.findOne({project: Session.get('project_filter'), tags:"mit"});
 };
 
 Template.task2_todo_item.events({

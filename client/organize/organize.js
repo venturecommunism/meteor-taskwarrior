@@ -95,8 +95,14 @@ Template.organize.events({
         Taskspending.update({_id: this._id},{$set:{project:e.target.value}})
       }
   },
-  'click #kickstart.btn-inverse': function (e,t) {
-    Taskspending.update({_id: this._id}, {$set:{tags:"mit"}})
+  'click .kickstart.active': function (e,t) {
+    Taskspending.update({_id: this._id}, {$set:{tags:"mit"}});
+    Meteor.flush()
+    console.log('tmp test')
+  },
+  'click .kickstart.btn': function (e,t) {
+    Taskspending.update({_id: this._id}, {$unset:{tags:"mit"}})
+    Meteor.flush()
   },
   'click .startprocessing-button': selectTaskProcessing,
   'click .dep-button': selectDepProcessing

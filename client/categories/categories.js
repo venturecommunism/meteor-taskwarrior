@@ -13,12 +13,6 @@ Template.categories.events({
     Session.set('do_status', false);
     Session.set('process_status', false)
   },
-  'click #review': function (e, t) {
-    Session.set('organize_status', false);
-    Session.set('review_status', true);
-    Session.set('do_status', false);
-    Session.set('process_status', false)
-  },
   'click #do': function (e, t) {
     Session.set('organize_status', false);
     Session.set('review_status', false);

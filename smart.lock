@@ -4,23 +4,29 @@
     "basePackages": {
       "npm": {},
       "moment": {},
-      "typeahead-js": {}
+      "toastjs": {},
+      "typeahead": {}
     },
     "packages": {
       "npm": {
         "git": "https://github.com/arunoda/meteor-npm.git",
-        "tag": "v0.2.2",
-        "commit": "ad83acff83385d5ea05997c8bbc2d7493ba4c04e"
+        "tag": "v0.2.6",
+        "commit": "177ab6118de5bf8cffb19481343d5762ff7a2aaf"
       },
       "moment": {
         "git": "https://github.com/acreeger/meteor-moment.git",
-        "tag": "v2.2.1",
-        "commit": "9ee12e714afe56b189f53076447b7b54f3012065"
+        "tag": "v2.6.0",
+        "commit": "26156df681750fd6e6ed77043eef32b6653ebbdf"
       },
-      "typeahead-js": {
-        "git": "https://github.com/olragon/meteor-typeahead-js.git",
-        "tag": "v0.9.3",
-        "commit": "9241c6c68f39cf37699b5de7b03d60a5434a5d21"
+      "toastjs": {
+        "git": "https://github.com/srackham/toast.js.git",
+        "tag": "v2.0.6",
+        "commit": "a81915d9df2f432486ac6ce8d6981419119e7007"
+      },
+      "typeahead": {
+        "git": "https://github.com/sergeyt/meteor-typeahead.git",
+        "tag": "v0.0.9",
+        "commit": "6aa2228a7cc93e89e94520bd60f1af4e7542dfcf"
       }
     }
   }

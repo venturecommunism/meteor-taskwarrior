@@ -12,15 +12,11 @@ right: -755px;
 padding-left: 7px;
 }
 
-#kickstart {
+.kickstart {
 float: right;
 width: 50px;
 height: 20px;
 margin-right: 24px;
-}
-
-.bluechangeme{
-background:blue;
 }
 
 body {
