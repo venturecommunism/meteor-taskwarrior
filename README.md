@@ -1,5 +1,9 @@
 A [meteor](http://meteor.com) client for [task warrior](http://taskwarrior.com). Still in early development but you can sync your tasks to this client and see them in the browser including mobile.
 
+### WARNING
+
+This is Beta software. Expect your taskwarrior data to be lost and gone forever or otherwise corrupted until further notice.
+
 ### Requirements
 
 You need to have your own [taskd server](http://taskwarrior.org/projects/taskwarrior/wiki/Server_setup) or an account on one. This has been tested on Ubuntu 12.04
