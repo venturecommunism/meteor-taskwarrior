@@ -4,22 +4,6 @@ now = moment()
 var formattednow = now.format('YYYYMMDD') + 'T' + now.format('HHmmss') + 'Z'
 console.log('formatted is ' + formattednow)
 
-
-function selectTaskProcessing(e,t){
-  Session.set('current_processedtask',this._id);
-  Session.set('processing_task',true);
-  Meteor.flush()
-console.log(t.find(".modal .title"))
-  focusText(t.find(".modal .title"));
-};
-
-function selectDepProcessing(e,t){
-  Session.set('current_deppingtask',this._id);
-  Session.set('depping_task',true);
-  Meteor.flush()
-  focusText(t.find(".modal .title"));
-};
-
 Template.organize.events({
   'click #btnAddItem': function (e,t){
     Session.set('list_adding',true);  
@@ -64,62 +48,6 @@ Template.organize.events({
   },
   'click .startprocessing-button': selectTaskProcessing,
   'click .dep-button': selectDepProcessing
-});
-
-
-Template.organize.events({
-  'focusout .processingdialog': function(e,t) {
-//     Session.set('processing_task',false);
-  },
-  'click .trash': function() {
-    trashtask = Taskspending.findOne({_id: Session.get('current_processedtask')})
-    trashtask.status = 'completed'
-    Tasksbacklog.insert(trashtask)
-    Taskspending.remove(Session.get('current_processedtask'))
-    Session.set('current_processedtask',Taskspending.findOne({tags: {$not: "inbox"}})._id)
-    selectTaskProcessing
-  },
-  'click .archive': function() {
-    archivetask = Taskspending.findOne({_id: Session.get('current_processedtask')})
-    archivetask.status = 'completed'
-    archivetask.tags.push("archive")
-    delete archivetask._id
-    Tasksbacklog.insert(archivetask)
-    Taskspending.remove(Session.get('current_processedtask'))
-    Session.set('current_processedtask',Taskspending.findOne({tags: {$not: "inbox"}})._id)
-    selectTaskProcessing
-  },
-  'click .somedaymaybe': function() {
-    somedaymaybetask = Taskspending.findOne({_id: Session.get('current_processedtask')})
-    id = somedaymaybetask._id
-    delete somedaymaybetask._id
-    somedaymaybetask.tags.push("somedaymaybe")
-    Tasksbacklog.insert(somedaymaybetask)
-    Taskspending.update({_id: id},{$set: somedaymaybetask})
-    Session.set('current_processedtask',Taskspending.findOne({tags: {$not: "inbox"}})._id)
-    selectTaskProcessing
-  },
-  'click .do': function() {
-    trashtask = Taskspending.findOne({_id: Session.get('current_processedtask')})
-    trashtask.status = 'completed'
-    Tasksbacklog.insert(trashtask)
-    Taskspending.remove(Session.get('current_processedtask'))
-    Session.set('current_processedtask',Taskspending.findOne({tags: {$not: "inbox"}})._id)
-    selectTaskProcessing
-  },
-  'click .defer': function() {
-    defertask = Taskspending.findOne({_id: Session.get('current_processedtask')})
-    id = defertask._id
-    delete defertask._id
-    console.log(defertask)
-    Tasksbacklog.insert(defertask)
-    Taskspending.update({_id: id},{$set: defertask})
-//not sure if should keep the $unset for tags
-    Taskspending.update({_id: id},{$unset: {tags: ""}})
-    Session.set('current_processedtask',Taskspending.findOne({tags: {$not: "inbox"}})._id)
-    selectTaskProcessing
-  },
-
 });
 
 Template.organize.is_organizing = function () {
