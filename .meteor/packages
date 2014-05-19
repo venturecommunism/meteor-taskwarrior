@@ -4,13 +4,5 @@
 # but you can also edit it by hand.
 
 standard-app-packages
+autopublish
 insecure
-preserve-inputs
-npm
-accounts-password
-bootstrap
-accounts-ui
-moment
-toastjs
-jquery
-typeahead
