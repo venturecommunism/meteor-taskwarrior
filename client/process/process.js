@@ -1,9 +1,5 @@
 Session.set('processing_task', false);
 
-now = moment()
-var formattednow = now.format('YYYYMMDD') + 'T' + now.format('HHmmss') + 'Z'
-console.log('formatted is ' + formattednow)
-
 Template.process.events({
   'click #btnAddItem': function (e,t){
     Session.set('list_adding',true);
@@ -49,11 +45,10 @@ Template.process.waiting = function () {
   if (!this.wait) {
     return false
   }
-  now = moment()
-  var formattednow = now.format('YYYYMMDD') + now.format('HHmmss')
-  string = this.wait
-  string = string.split("T")[0] + string.split("T")[1]
-  string = string.split("Z")[0]
+  var formattednow = formattedNow()
+  var string = this.wait
+  var string = string.split("T")[0] + string.split("T")[1]
+  var string = string.split("Z")[0]
   if (string > formattednow) {
     console.log(string)
     console.log(string + 'str was greater than formattednow for ' + this.description)
@@ -63,5 +58,6 @@ Template.process.waiting = function () {
 }
 
 Template.process.tasks = function () {
+  formattednow = formattedNow()
   return Taskspending.find({status: {$in: ["waiting", "pending"]}, tags: "inbox", waiting: { $lt: formattednow}}, {sort: {due: -1}})
 }

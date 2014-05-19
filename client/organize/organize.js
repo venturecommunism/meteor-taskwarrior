@@ -1,9 +1,5 @@
 Session.set('processing_task', false);
 
-now = moment()
-var formattednow = now.format('YYYYMMDD') + 'T' + now.format('HHmmss') + 'Z'
-console.log('formatted is ' + formattednow)
-
 Template.organize.events({
   'click #btnAddItem': function (e,t){
     Session.set('list_adding',true);  
@@ -55,11 +51,13 @@ Template.organize.is_organizing = function () {
 }
 
 Template.organize.tasks = function () {
+  var formattednow = formattedNow()
   var project_filter = Session.get('project_filter');
   if (project_filter)
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$not: "inbox"}}, {tags: "mit"}], waiting: { $lt: formattednow}}, {sort: {due: -1}})
 }
 Template.organize.tasks2 = function () {
+  var formattednow = formattedNow()
   var project_filter = Session.get('project_filter');
   if (project_filter)
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$not: "inbox"}}, {tags: {$not: "mit"}}], waiting: { $lt: formattednow}}, {sort: {due: -1}})

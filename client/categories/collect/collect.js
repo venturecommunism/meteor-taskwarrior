@@ -1,7 +1,3 @@
-now = moment()
-var formattednow = now.format('YYYYMMDD') + 'T' + now.format('HHmmss') + 'Z'
-console.log('formatted is ' + formattednow)
-
 Template.collect.new_task = function () {
   return Session.equals('adding_newtask',true);
 };
@@ -18,8 +14,7 @@ Template.collect.events({
       var taskVal = String(e.target.value || "");
       if (taskVal)
       {
-        var now = moment()
-        var formattednow = now.format('YYYYMMDD') + 'T' + now.format('HHmmss') + 'Z'
+        var formattednow = formattedNow()
         Meteor.call("uuid",function(error,result){
           var uuid = result
           Tasksbacklog.insert({description: e.target.value, entry: formattednow, status: "pending", tags: ['inbox'], uuid: uuid})

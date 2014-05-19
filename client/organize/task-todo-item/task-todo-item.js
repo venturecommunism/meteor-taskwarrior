@@ -1,9 +1,5 @@
 Session.set('editing_itemname', null);
 
-now = moment()
-var formattednow = now.format('YYYYMMDD') + 'T' + now.format('HHmmss') + 'Z'
-console.log('formatted is ' + formattednow)
-
 Template.task_todo_item.editing = function () {
   return Session.equals('editing_itemname', this._id);
 };
@@ -25,8 +21,7 @@ Template.task_todo_item.events({
       var taskVal = String(e.target.value || "");
       if (taskVal)
       {
-        var now = moment()
-        var formattednow = now.format('YYYYMMDD') + 'T' + now.format('HHmmss') + 'Z'
+        var formattednow = formattedNow()
         var uuid = this.uuid
 console.log(uuid)
         console.log(Tasksbacklog.insert({description: taskVal, entry: formattednow, uuid:uuid}))
