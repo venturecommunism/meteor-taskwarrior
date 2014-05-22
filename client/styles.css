@@ -175,7 +175,12 @@ font-size: 40px;
 font-size: 14px;
 }
 
-#categories input {
+#categories .twitter-typeahead {
 position: relative;
 left: 67px;
+}
+
+.tt-dropdown-menu {
+margin-top:-10px;
+width:230px;
 }
