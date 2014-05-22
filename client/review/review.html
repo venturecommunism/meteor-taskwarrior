@@ -1,0 +1,15 @@
+<template name="review">
+  {{#if is_reviewing}}
+    {{> processingdialog}}
+
+    <ul id="task_list">
+      {{#each tasks}}
+        {{#if waiting}}
+        {{else}}
+          {{> project_item}}
+        {{/if}}
+      {{/each}}
+    </ul>
+
+  {{/if}}
+</template>

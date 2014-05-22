@@ -1,0 +1,99 @@
+<template name="processingdialog">
+{{#if processing_task}}
+{{#with tasks}}
+<div class="processingdialog">
+ <div class="mask"> </div>
+  <div class="modal">
+    <div class="modal-header">
+      <button type="button" class="close cancel">&times;</button>
+      <h3>{{description}}</h3>
+    </div>
+
+    <div class="modal-body">
+
+      <div class="btn btn-primary trash">Trash/Done</div>
+      <div class="btn btn-primary archive">Archive</div>
+      <div class="btn btn-primary somedaymaybe">Someday/Maybe</div>
+      <hr />
+      <h6>Is it part of a project or multi-step?</h6>
+{{#if has_project}}
+
+<form class="form-inline" role="form">
+    <div class="form-group">
+      <input class="form-control title span5" type="text" id="typeahead" placeholder="{{project}}">
+    </div>
+</form>
+
+{{else}}
+
+<form class="form-inline" role="form">
+    <div class="form-group">
+      <input class="form-control title span5" type="text" id="typeahead">
+    </div>
+</form>
+
+{{/if}}
+      <hr />
+      <div class="btn btn-primary do">Do it!</div>
+      <div class="btn btn-primary delegate">Delegate/Waiting for</div>
+      <div class="btn btn-primary defer">Defer</div>
+      <hr />
+      <h6>Is it a task to be done in a specific context?</h6>
+{{#if has_context}}
+
+<form class="form-inline" role="form">
+    <div class="form-group">
+      <input class="form-control context span5" type="text" id="context" placeholder="{{context}}">
+    </div>
+</form>
+
+{{else}}
+
+<form class="form-inline" role="form">
+    <div class="form-group">
+      <input class="form-control context span5" type="text" id="context">
+    </div>
+</form>
+
+{{/if}}
+
+      <h6>Is it due on a specific date and can't be rescheduled?</h6>
+{{#if has_duedate}}
+
+<form class="form-inline" role="form">
+    <div class="form-group">
+      <input class="form-control duedate span5" type="text" id="duedate" placeholder="{{due}}">
+    </div>
+</form>
+
+{{else}}
+
+<form class="form-inline" role="form">
+    <div class="form-group">
+      <input class="form-control duedate span5" type="text" id="duedate">
+    </div>
+</form>
+
+{{/if}}
+
+
+      <div class="btn btn-primary wait">Wait (amt of time)</div>
+
+
+
+
+      {{#if error}}
+        <div class="alert alert-error">Errors go here</div>
+      {{/if}}
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Add party</a>
+    </div>
+  </div>
+</div>
+{{/with}}
+{{/if}}
+</template>
+

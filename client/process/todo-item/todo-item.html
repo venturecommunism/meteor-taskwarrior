@@ -1,0 +1,16 @@
+<template name="todo_item">
+      <li class="task_item alert">
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+
+    {{#if editing}}
+      <div class="edit">
+        <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
+      </div>
+{{else}}
+<div class="todo-item">       <p>{{description}}</p> </div>
+{{/if}}
+    {{#if process}}
+      <button type="button" style="float:right;" class="processing-button">process</button>
+    {{/if}}
+      </li>
+</template>

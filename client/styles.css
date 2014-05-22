@@ -170,3 +170,12 @@ font-size: 40px;
 /* temporary fix for css select problem */
 #top-project-filter *::-moz-selection { color: white;  background: transparent; }
 #top-project-filter *::selection      { color: white;  background: transparent; }
+
+.tt-suggestion p {
+font-size: 14px;
+}
+
+#categories input {
+position: relative;
+left: 67px;
+}

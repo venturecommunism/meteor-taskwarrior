@@ -1,0 +1,34 @@
+<template name="do">
+{{#if is_doing}}
+{{> processingdialog}}
+  <ul id="task_list">
+    {{#each tasks}}
+
+{{#if waiting}}
+{{else}}
+      <li class="task_item alert">
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+
+       <p>{{description}}</p>
+      </li>
+
+{{/if}}
+    {{/each}}
+
+    {{#each tasks2}}
+
+{{#if waiting}}
+{{else}}
+      <li class="task_item alert">
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+
+       <p>{{description}}</p><p id="doing-project">{{project}}</p>
+      </li>
+
+{{/if}}
+    {{/each}}
+
+
+  </ul>
+{{/if}}
+</template>

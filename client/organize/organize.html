@@ -1,0 +1,23 @@
+<template name="organize">
+{{#if is_organizing}}
+  {{> project_filter}}
+  {{> processingdialog}}
+
+  <ul id="task_list">
+    {{#each tasks}}
+      {{#if waiting}}
+      {{else}}
+        {{> task_todo_item}}
+      {{/if}}
+    {{/each}}
+
+    {{#each tasks2}}
+      {{#if waiting}}
+      {{else}}
+        {{> task2_todo_item}}
+      {{/if}}
+    {{/each}}
+  </ul>
+
+{{/if}}
+</template>

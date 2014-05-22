@@ -1,0 +1,9 @@
+<template name="collect">
+ {{#if new_task}}
+    <div class="newtask">
+      <input type="text" id="add-newtask" value="" />
+    </div>
+  {{else}}
+  <div class="newtask btn btn-inverse" id="btnNewTask">+ Collect</div>
+  {{/if}}
+</template>

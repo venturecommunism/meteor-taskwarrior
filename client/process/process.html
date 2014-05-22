@@ -1,0 +1,15 @@
+<template name="process">
+  {{#if is_processing}}
+    {{> processingdialog}}
+
+    <ul id="task_list">
+      {{#each tasks}}
+        {{#if waiting}}
+        {{else}}
+          {{> todo_item}}
+        {{/if}}
+      {{/each}}
+    </ul>
+
+  {{/if}}
+</template>
