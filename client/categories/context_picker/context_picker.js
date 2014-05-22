@@ -1,5 +1,5 @@
 Template.context_picker.contexts = function(){
-  var myArray = Taskspending.find({context: {$exists: 1}}).fetch();
+  var myArray = Taskspending.find({tags:{$ne: "inbox"}, context: {$exists: 1}}).fetch();
   var distinctArray = _.uniq(myArray, false, function(d) {return d.context});
   var distinctValues = _.pluck(distinctArray, 'context');
   return distinctValues

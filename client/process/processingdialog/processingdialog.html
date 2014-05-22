@@ -33,6 +33,27 @@
 </form>
 
 {{/if}}
+
+      <h6>Is it due on a specific date and can't be rescheduled?</h6>
+{{#if has_duedate}}
+
+<form class="form-inline" role="form">
+    <div class="form-group">
+      <input class="form-control duedate span5" type="text" id="duedate" placeholder="{{due}}">
+    </div>
+</form>
+
+{{else}}
+
+<form class="form-inline" role="form">
+    <div class="form-group">
+      <input class="form-control duedate span5" type="text" id="duedate">
+    </div>
+</form>
+
+{{/if}}
+
+
       <hr />
       <div class="btn btn-primary do">Do it!</div>
       <div class="btn btn-primary delegate">Delegate/Waiting for</div>
@@ -56,26 +77,6 @@
 </form>
 
 {{/if}}
-
-      <h6>Is it due on a specific date and can't be rescheduled?</h6>
-{{#if has_duedate}}
-
-<form class="form-inline" role="form">
-    <div class="form-group">
-      <input class="form-control duedate span5" type="text" id="duedate" placeholder="{{due}}">
-    </div>
-</form>
-
-{{else}}
-
-<form class="form-inline" role="form">
-    <div class="form-group">
-      <input class="form-control duedate span5" type="text" id="duedate">
-    </div>
-</form>
-
-{{/if}}
-
 
       <div class="btn btn-primary wait">Wait (amt of time)</div>
 

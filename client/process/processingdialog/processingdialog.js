@@ -19,6 +19,11 @@ return false;
     e.stopPropagation();
     return false;
   },
+  'keyup input.context': function(e,t) {
+    if (e.which === 13) {
+      Taskspending.update({_id: this._id},{$set:{context:e.target.value}})
+    }
+  },
 });
 
 Template.processingdialog.has_context = function () {
