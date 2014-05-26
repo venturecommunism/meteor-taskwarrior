@@ -19,3 +19,7 @@ Template.do.tasks2 = function () {
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "mit"}]})
   }
 }
+
+Template.do.events({
+  'click .startprocessing-button': selectTaskProcessing,
+});
