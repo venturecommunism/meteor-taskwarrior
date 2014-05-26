@@ -54,7 +54,7 @@ Template.processingdialog.events({
   'click .trash': function() {
     trashtask = Taskspending.findOne({_id: Session.get('current_processedtask')})
     trashtask.status = 'completed'
-if (!Session.get('organize_status')){
+if (!Session.get('organize_status') && !Session.get('do_status')){
     var i = trashtask.tags.indexOf("inbox");
     if(i != -1) {
       trashtask.tags.splice(i, 1);
@@ -67,7 +67,7 @@ if (!Session.get('organize_status')){
     delete trashtask._id
     Tasksbacklog.insert(trashtask)
     Taskspending.remove(Session.get('current_processedtask'))
-if (!Session.get('organize_status')){
+if (!Session.get('organize_status') && !Session.get('do_status')){
     Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
 } else {
     Session.set('current_processedtask',Taskspending.findOne({tags: {$not: "inbox"}})._id)
