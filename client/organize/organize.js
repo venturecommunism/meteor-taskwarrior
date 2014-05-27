@@ -35,7 +35,7 @@ Template.organize.events({
       }
   },
   'click .kickstart.choosekickstart': function (e,t) {
-    Taskspending.update({_id: this._id}, {$set:{tags:"mit"}});
+    Taskspending.update({_id: this._id}, {$set:{tags:["mit"]}});
     Meteor.flush()
   },
   'click .kickstart.btn-danger': function (e,t) {

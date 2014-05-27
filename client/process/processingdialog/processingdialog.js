@@ -77,11 +77,19 @@ if (!Session.get('organize_status') && !Session.get('do_status')){
   'click .archive': function() {
     archivetask = Taskspending.findOne({_id: Session.get('current_processedtask')})
     archivetask.status = 'completed'
+if (!Session.get('organize_status') && !Session.get('do_status')){
     var i = archivetask.tags.indexOf("inbox");
     if(i != -1) {
       archivetask.tags.splice(i, 1);
     }
+}
+if (archivetask.tags) {
+console.log(archivetask.tags)
     archivetask.tags.push("archive")
+}
+else {
+archivetask.tags = ["archive"]
+}
     delete archivetask._id
     Tasksbacklog.insert(archivetask)
     Taskspending.remove(Session.get('current_processedtask'))
