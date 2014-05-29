@@ -32,3 +32,7 @@ Template.do.largeroutcome = function () {
     return ''
   }
 };
+
+Template.do.somedaymaybeproject = function () {
+  return Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})
+}

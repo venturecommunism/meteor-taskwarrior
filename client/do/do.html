@@ -19,12 +19,14 @@
 
 {{#if waiting}}
 {{else}}
+{{#if somedaymaybeproject}}
+{{else}}
       <li class="task_item alert">
         <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
 
        <p>{{description}}</p><p title="{{largeroutcome}}" id="doing-project">{{project}}</p>
       </li>
-
+{{/if}}
 {{/if}}
     {{/each}}
 
