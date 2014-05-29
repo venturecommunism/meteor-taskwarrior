@@ -49,21 +49,6 @@ Template.process.waiting = function () {
 }
 
 Template.review.tasks = function () {
-console.log(project_infos())
-console.log(Taskspending.find({status: {$in: ["waiting", "pending"]}, tags: "largeroutcome"}))
-var project_names = project_infos()
-var index = project_names.indexOf('null')
-console.log('index is ' +index)
-if (index > -1) {
-project_names.splice(index,1)
-}
-var index = project_names.indexOf('undefined')
-if (index > -1) {
-project_names.splice(index,2)
-}
-console.log('project names is ' + project_names)
-return project_infos()
-  formattednow = formattedNow()
-  return Taskspending.find({status: {$in: ["waiting", "pending"]}, tags: {$not: "inbox"}})
+  return project_infos()
 }
 
