@@ -23,6 +23,7 @@ Template.collect.events({
         Tasksbacklog.insert({description: e.target.value, entry: formattednow, status: "pending", tags: ['inbox'], uuid: uuid})
         Taskspending.insert({description: e.target.value, entry: formattednow, status: "pending", tags: ['inbox'], uuid: uuid})
         Session.set('adding_newtask', false);
+        Toast.success('Collected a task', 'Daily Review', {displayDuration: 5000});
        }
      }
   },
