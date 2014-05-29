@@ -23,3 +23,12 @@ Template.do.tasks2 = function () {
 Template.do.events({
   'click .startprocessing-button': selectTaskProcessing,
 });
+
+Template.do.largeroutcome = function () {
+  if (Taskspending.findOne({project: this.project, tags: "largeroutcome"})) {
+    return Taskspending.findOne({project: this.project, tags: "largeroutcome"}).description;
+  }
+  else {
+    return ''
+  }
+};
