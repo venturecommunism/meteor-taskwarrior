@@ -173,3 +173,6 @@ projectnames.forEach(function (task) {
 };
 
 
+Template.processingdialog.taskcounter = function () {
+  return project_infos()[0].count
+}
