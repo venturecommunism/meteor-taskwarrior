@@ -1,0 +1,26 @@
+<template name="project_item2">
+{{#if project}}
+      <li class="task_item alert">
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+
+<div class="project-item">      
+    {{#if editing}}
+      <div class="edit">
+        <input style="width:70%" id="project-input" type="text" value="{{#if project_has_largeroutcome}}{{project_has_largeroutcome}}{{else}}{{/if}}" />
+      </div>
+{{else}}
+{{#if project_has_largeroutcome}}
+ <p> {{project_has_largeroutcome}}</p>
+{{else}}
+<span style="color: blue;"><p>What is the larger outcome of this project? </p></span>
+{{/if}}
+
+{{/if}}
+ <div class="btn btn-inverse btn-danger reviewproject">{{project}}</div>
+</div>
+    {{#if process}}
+      <button type="button" style="float:right;" class="processing-button">process</button>
+    {{/if}}
+      </li>
+{{/if}}
+</template>
