@@ -28,6 +28,22 @@ Template.process.events({
   'click .startprocessing-button': selectTaskProcessing
 });
 
+Template.review.events({
+  'click .close': function (e,t){
+var tasktest = Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})
+var taskid = tasktest ? tasktest._id : ''
+    if (taskid != '') {
+      Taskspending.update({_id: taskid}, {$pull: {tags: "somedaymaybeproj"}})
+    }
+    else {
+console.log(this + ' is this')
+taskid = Taskspending.findOne({project: this.project, tags:"largeroutcome"})._id
+console.log('taskid is ' + taskid)
+      Taskspending.update({_id: taskid}, {$push: {tags: "somedaymaybeproj"}})
+    }
+  },
+});
+
 Template.review.is_reviewing = function () {
   return Session.get('review_status')
 }
@@ -49,27 +65,36 @@ Template.process.waiting = function () {
 }
 
 Template.review.tasks = function () {
+  var active_projects = []
   var all_projects = project_infos()
-console.log(all_projects)
   var somedaymaybe_projects = somedaymaybe_infos()
-var shortened_active_projects = []
-for (i=0; i < all_projects.length; i++) {
-  shortened_active_projects[i] = all_projects[i].project
-}
-console.log(shortened_active_projects + ' is shortened_active_projects')
-var shortened_somedaymaybe_projects = []
-for (i=0; i < somedaymaybe_projects.length; i++) {
-  shortened_somedaymaybe_projects[i] = somedaymaybe_projects[i].project
-}
-var active_projects = []
-for(var i = 0; i<shortened_active_projects.length; i++){
-    for(var j=0; j<shortened_somedaymaybe_projects.length; j++){
-        if(shortened_active_projects[i] != shortened_somedaymaybe_projects[j]){
-          active_projects.push({project: shortened_active_projects[i]})
-        }
+  var shortened_all_projects = []
+  if (somedaymaybe_projects != '') {
+    var shortened_active_projects = []
+    for (i=0; i < all_projects.length; i++) {
+      shortened_all_projects[i] = all_projects[i].project
     }
-}
-console.log("active_projects is " + active_projects)
+    var shortened_somedaymaybe_projects = []
+    for (i=0; i < somedaymaybe_projects.length; i++) {
+      shortened_somedaymaybe_projects[i] = somedaymaybe_projects[i].project
+    }
+
+    shortened_active_projects = shortened_all_projects.filter(function(n) {
+      return (shortened_somedaymaybe_projects.indexOf(n) == -1)
+    })
+
+    console.log("in tha und " + shortened_all_projects)
+
+    for (var i = 0; i < shortened_active_projects.length; i++) {
+      active_projects.push({project: shortened_active_projects[i]})
+    }
+  }
+  else {
+    active_projects = all_projects
+    console.log(active_projects + ' yoyoyo')
+  }
+  console.log("active_projects is " + active_projects)
+  console.log("somedaymaybe_projects is " + somedaymaybe_projects)
   return active_projects
 }
 
