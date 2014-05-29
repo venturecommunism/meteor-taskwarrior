@@ -30,8 +30,20 @@ Template.organize.events({
       { 
         projecttask = Taskspending.findOne({_id: Session.get('current_processedtask')})
         projecttask.project = e.target.value
-        Tasksbacklog.insert(projecttask)
+console.log(projecttask._id)
+        delete projecttask._id
+console.log(projecttask._id + ' yo this thing')
+// removing Tasksbacklog.insert for now but should put it back in keeping in mind Taskwarrior specs
+//        Tasksbacklog.insert(projecttask)
+        var largeroutcome_old = Taskspending.findOne({project: this.project, tags: "largeroutcome"})
+        var largeroutcome_testexisting = Taskspending.findOne({project: e.target.value, tags: "largeroutcome"})
+        if (Taskspending.find({project: this.project, tags: {$ne: "largeroutcome"}}).count == 1 && largeroutcome_old && !largeroutcome_testexisting) {
+          Taskspending.insert({description: largeroutcome_old.description, project: e.target.value, tags: "largeroutcome"})
+          Taskspending.remove({_id: largeroutcome_old._id})
+        }
         Taskspending.update({_id: this._id},{$set:{project:e.target.value}})
+      
+
       }
   },
   'click .kickstart.choosekickstart': function (e,t) {
