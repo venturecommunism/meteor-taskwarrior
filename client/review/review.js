@@ -49,6 +49,31 @@ Template.process.waiting = function () {
 }
 
 Template.review.tasks = function () {
-  return project_infos()
+  var all_projects = project_infos()
+console.log(all_projects)
+  var somedaymaybe_projects = somedaymaybe_infos()
+var shortened_active_projects = []
+for (i=0; i < all_projects.length; i++) {
+  shortened_active_projects[i] = all_projects[i].project
+}
+console.log(shortened_active_projects + ' is shortened_active_projects')
+var shortened_somedaymaybe_projects = []
+for (i=0; i < somedaymaybe_projects.length; i++) {
+  shortened_somedaymaybe_projects[i] = somedaymaybe_projects[i].project
+}
+var active_projects = []
+for(var i = 0; i<shortened_active_projects.length; i++){
+    for(var j=0; j<shortened_somedaymaybe_projects.length; j++){
+        if(shortened_active_projects[i] != shortened_somedaymaybe_projects[j]){
+          active_projects.push({project: shortened_active_projects[i]})
+        }
+    }
+}
+console.log("active_projects is " + active_projects)
+  return active_projects
 }
 
+Template.review.tasks2 = function () {
+  console.log(somedaymaybe_infos())
+  return somedaymaybe_infos()
+}
