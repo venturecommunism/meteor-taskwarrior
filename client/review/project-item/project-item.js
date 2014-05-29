@@ -33,12 +33,12 @@ console.log("did something")
         var formattednow = formattedNow()
         var uuid = Taskspending.findOne({project: this.project, tags: "largeroutcome"}) ? Taskspending.findOne({project: this.project, tags: "largeroutcome"}).uuid : guid()
 console.log(uuid)
-        console.log(Tasksbacklog.insert({project: this.project, description: largerOutcomeVal, tags: "largeroutcome", entry: formattednow, uuid:uuid}))
+        console.log(Tasksbacklog.insert({project: this.project, description: largerOutcomeVal, tags: ["largeroutcome"], entry: formattednow, uuid:uuid}))
 if (Taskspending.findOne({uuid: uuid})) {
         console.log(Taskspending.update({_id:Taskspending.findOne({project: this.project, tags: "largeroutcome"})._id},{$set:{description: largerOutcomeVal, entry: formattednow}}))
 }
 else {
-console.log(Taskspending.insert({project: this.project, description: largerOutcomeVal, tags:"largeroutcome", entry: formattednow}))
+console.log(Taskspending.insert({project: this.project, description: largerOutcomeVal, tags:["largeroutcome"], entry: formattednow}))
 }
         Session.set('editing_item_largeroutcome', null);
        }
