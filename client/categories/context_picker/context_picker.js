@@ -6,7 +6,8 @@ Template.context_picker.contexts = function(){
 };
 
 Template.context_picker.rendered = function() {
-  Meteor.typeahead.inject('.typeahead');
+$('.typeahead').data({hint:true})
+Meteor.typeahead('.typeahead');
 }
 
 Template.context_picker.context = function () {
@@ -21,4 +22,5 @@ Template.context_picker.events({
       }
   },
 });
+
 
