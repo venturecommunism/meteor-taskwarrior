@@ -1,10 +1,5 @@
 <template name="do">
 {{#if is_doing}}
-<ul>
-{{#each contexts}}
-<li>{{context}} ({{count}})</li>
-{{/each}}
-</ul>
 {{> processingdialog}}
   <ul id="task_list">
     {{#each tasks}}
@@ -37,5 +32,10 @@
 
 
   </ul>
+<ul>
+{{#each contexts}}
+<li>{{context}} ({{count}})</li>
+{{/each}}
+</ul>
 {{/if}}
 </template>
