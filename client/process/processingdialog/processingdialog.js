@@ -11,7 +11,12 @@ console.log("keyup 13")
         projecttask.project = e.target.value
 // TODO: have to fix all these backlog inserts
 //        Tasksbacklog.insert(projecttask)
+if (e.target.value == '') {
+        Taskspending.update({_id: this._id},{$unset:{project:""}})
+}
+else {
         Taskspending.update({_id: this._id},{$set:{project:e.target.value}})
+}
       }
 return false;
   },

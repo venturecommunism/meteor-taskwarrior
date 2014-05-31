@@ -41,8 +41,12 @@ console.log(projecttask._id + ' yo this thing')
           Taskspending.insert({description: largeroutcome_old.description, project: e.target.value, tags: "largeroutcome"})
           Taskspending.remove({_id: largeroutcome_old._id})
         }
+if (e.target.value == '') {
+        Taskspending.update({_id: this._id},{$unset:{project:e.target.value}})
+}
+else {
         Taskspending.update({_id: this._id},{$set:{project:e.target.value}})
-      
+}
 
       }
   },
