@@ -7,7 +7,7 @@ Template.do.tasks = function () {
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$exists: false}}, {context: Session.get('do_context')}]})
   }
   else {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$exists: false}}]})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]})
   }
 }
 
@@ -16,7 +16,7 @@ Template.do.tasks2 = function () {
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "mit"}, {context: Session.get('do_context')}]})
   }
   else {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "mit"}]})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "mit"}, {context: {$exists: false}}]})
   }
 }
 
@@ -36,3 +36,9 @@ Template.do.largeroutcome = function () {
 Template.do.somedaymaybeproject = function () {
   return Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})
 }
+
+Template.do.contexts = function () {
+  return context_infos()
+}
+
+
