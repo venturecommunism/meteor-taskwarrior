@@ -9,7 +9,8 @@ console.log("keyup")
 console.log("keyup 13")
         projecttask = Taskspending.findOne({_id: Session.get('current_processedtask')})
         projecttask.project = e.target.value
-        Tasksbacklog.insert(projecttask)
+// TODO: have to fix all these backlog inserts
+//        Tasksbacklog.insert(projecttask)
         Taskspending.update({_id: this._id},{$set:{project:e.target.value}})
       }
 return false;
