@@ -34,6 +34,9 @@ background-image: url(/texturetastic_gray.png);
 #task_list li.task_item p, #task_list li.task_item:hover p{
 overflow-wrap: break-word;
 }
+#task_list li.task_item:hover #doing-project {
+visibility: visible;
+}
 #add-newtask, #btnNewTask {
 margin: 15px 0px 15px 10px;
 float: left;
@@ -137,6 +140,7 @@ background-color: gray;
 padding: 5px;
 position: relative;
 top: -30px;
+visibility: hidden;
 }
 
 /* mobile css 
