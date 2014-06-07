@@ -29,6 +29,9 @@ Template.process.events({
 });
 
 Template.review.events({
+  'click .review-btn': function(e,t) {
+     Session.set('review_dialog_1',true);
+   },
   'click .close': function (e,t){
 var tasktest = Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})
 var taskid = tasktest ? tasktest._id : ''
