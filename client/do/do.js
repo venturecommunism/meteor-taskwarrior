@@ -7,7 +7,7 @@ Template.do.tasks = function () {
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$exists: false}}, {context: Session.get('do_context')}]})
   }
   else {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due:1}})
   }
 }
 
@@ -16,7 +16,7 @@ Template.do.tasks2 = function () {
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "mit"}, {context: Session.get('do_context')}]})
   }
   else {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "mit"}, {context: {$exists: false}}]})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "mit"}, {context: {$exists: false}}]}, {sort: {due:1}})
   }
 }
 
@@ -42,3 +42,14 @@ Template.do.contexts = function () {
 }
 
 
+Template.do.duedate = function () {
+if (this.due) {
+var newstringpartsT = this.due.split("T")
+var newstringpartsZ = newstringpartsT[1].split("Z")
+var newstringwhole = newstringpartsT[0] + newstringpartsZ[0]
+  return newstringpartsT[0].substring(4,6) +'/'+ newstringpartsT[0].substring(6,8) +'/'+ newstringpartsT[0].substring(0,4)
+}
+else {
+return false
+}
+}
