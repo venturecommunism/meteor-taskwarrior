@@ -30,10 +30,19 @@ return false;
       Taskspending.update({_id: this._id},{$set:{context:e.target.value}})
     }
   },
+  'keyup input#duedate': function(e,t) {
+    if (e.which === 13) {
+      Taskspending.update({_id: this._id},{$set:{due:e.target.value}})
+    }
+  },
 });
 
 Template.processingdialog.has_context = function () {
   return this.context
+}
+
+Template.processingdialog.has_duedate = function () {
+  return this.due
 }
 
 Template.processingdialog.tasks = function () {
