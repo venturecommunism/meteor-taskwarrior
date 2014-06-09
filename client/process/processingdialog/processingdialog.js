@@ -27,7 +27,12 @@ return false;
   },
   'keyup input.context': function(e,t) {
     if (e.which === 13) {
+if (e.target.value == '') {
+        Taskspending.update({_id: this._id},{$unset:{context:""}})
+}
+else {
       Taskspending.update({_id: this._id},{$set:{context:e.target.value}})
+}
     }
   },
   'keyup input#duedate': function(e,t) {
