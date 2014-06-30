@@ -20,8 +20,41 @@ Template.do.tasks2 = function () {
   }
 }
 
+Template.do.editing = function () {
+  return Session.equals('editing_itemname', this._id);
+};
+
+
 Template.do.events({
   'click .startprocessing-button': selectTaskProcessing,
+
+  'dblclick .todo-item': function (e, t) {
+//    alert('Hi');
+    Session.set('editing_itemname', this._id);
+    Meteor.flush(); // update DOM before focus
+    focus_field_by_id("todo-input");
+  },
+  'focusout #todo-input': function (e, t) {
+    Session.set('editing_itemname', null);
+    Meteor.flush();
+  },
+  'keyup #todo-input': function (e,t) {
+    if (e.which === 13)
+    {
+      var taskVal = String(e.target.value || "");
+      if (taskVal)
+      {
+        var formattednow = formattedNow()
+        var uuid = this.uuid
+console.log(uuid)
+        console.log(Tasksbacklog.insert({description: taskVal, entry: formattednow, uuid:uuid}))
+        console.log(Taskspending.update({_id:this._id},{$set:{description: taskVal, entry: formattednow}}))
+        Session.set('editing_itemname', null);
+       }
+     }
+  },
+
+
 });
 
 Template.do.largeroutcome = function () {
@@ -63,3 +96,13 @@ var day = dt.getDate();
 var year = dt.getFullYear();
 return 'Today is ' + month + '/' + day + '/' + year;
 }
+
+// Finds a text input in the DOM by id and focuses it.
+var focus_field_by_id = function (id) {
+  var input = document.getElementById(id);
+  if (input) {
+    input.focus();
+    input.select();
+  }
+};
+

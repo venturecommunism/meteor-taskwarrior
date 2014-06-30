@@ -10,7 +10,17 @@
       <li class="task_item alert">
         <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
 
-       <p>{{description}}</p>
+
+    {{#if editing}}
+      <div class="edit">
+        <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
+      </div>
+{{else}}
+
+
+<div class="todo-item">       <p>{{description}}</p>  </div>
+
+{{/if}}
 
 {{#if duedate}}
 <p>{{duedate}}</p>
@@ -31,7 +41,18 @@
       <li class="task_item alert">
         <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
 
-       <p>{{description}}</p><p title="{{largeroutcome}}" id="doing-project">{{project}}</p>
+
+
+    {{#if editing}}
+      <div class="edit">
+        <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
+      </div>
+
+{{else}}
+
+
+<div class="todo-item">       <p>{{description}}</p> </div> <p title="{{largeroutcome}}" id="doing-project">{{project}}</p>
+{{/if}}
       </li>
 {{/if}}
 {{/if}}
