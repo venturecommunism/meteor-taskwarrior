@@ -94,7 +94,9 @@ var dt = new Date();
 var month = dt.getMonth()+1;
 var day = dt.getDate();
 var year = dt.getFullYear();
-return 'Today is ' + month + '/' + day + '/' + year;
+var time = dt.getTime();
+var date = new Date(time);
+return 'Date and time is ' + date.toString();
 }
 
 // Finds a text input in the DOM by id and focuses it.
