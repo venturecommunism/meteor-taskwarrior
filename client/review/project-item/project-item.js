@@ -1,4 +1,9 @@
 Session.set('editing_item_largeroutcome', null);
+Session.set('projopen', null);
+
+Template.project_item.projopen = function () {
+  return Session.equals('projopen', this.project)
+}
 
 Template.project_item.project_has_largeroutcome = function () {
   var largeroutcome_systemtask = Taskspending.findOne({project: this.project, tags: "largeroutcome"})

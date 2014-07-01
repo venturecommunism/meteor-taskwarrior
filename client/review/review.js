@@ -45,6 +45,11 @@ console.log('taskid is ' + taskid)
       Taskspending.update({_id: taskid}, {$push: {tags: "somedaymaybeproj"}})
     }
   },
+  'click .reviewproject': function (e,t) {
+    console.log(e.target.innerText)
+    console.log(this.project)
+    Session.set('projopen', this.project);
+  },
 });
 
 Template.review.is_reviewing = function () {
