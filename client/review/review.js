@@ -44,7 +44,7 @@ var taskid = tasktest ? tasktest._id : ''
     }
   },
   'click .reviewproject': function (e,t) {
-    Session.set('projopen', this.project);
+    Session.equals('projopen', this.project) ? Session.set('projopen',false) : Session.set('projopen', this.project);
   },
 });
 
