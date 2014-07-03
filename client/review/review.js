@@ -39,15 +39,11 @@ var taskid = tasktest ? tasktest._id : ''
       Taskspending.update({_id: taskid}, {$pull: {tags: "somedaymaybeproj"}})
     }
     else {
-console.log(this + ' is this')
-taskid = Taskspending.findOne({project: this.project, tags:"largeroutcome"})._id
-console.log('taskid is ' + taskid)
+      taskid = Taskspending.findOne({project: this.project, tags:"largeroutcome"})._id
       Taskspending.update({_id: taskid}, {$push: {tags: "somedaymaybeproj"}})
     }
   },
   'click .reviewproject': function (e,t) {
-    console.log(e.target.innerText)
-    console.log(this.project)
     Session.set('projopen', this.project);
   },
 });
@@ -64,11 +60,6 @@ Template.process.waiting = function () {
   var string = this.wait
   var string = string.split("T")[0] + string.split("T")[1]
   var string = string.split("Z")[0]
-  if (string > formattednow) {
-    console.log(string)
-    console.log(string + 'str was greater than formattednow for ' + this.description)
-  }
-  console.log(this.description + string > formattednow)
   return (string > formattednow)
 }
 
@@ -91,22 +82,16 @@ Template.review.tasks = function () {
       return (shortened_somedaymaybe_projects.indexOf(n) == -1)
     })
 
-    console.log("in tha und " + shortened_all_projects)
-
     for (var i = 0; i < shortened_active_projects.length; i++) {
       active_projects.push({project: shortened_active_projects[i]})
     }
   }
   else {
     active_projects = all_projects
-    console.log(active_projects + ' yoyoyo')
   }
-  console.log("active_projects is " + active_projects)
-  console.log("somedaymaybe_projects is " + somedaymaybe_projects)
   return active_projects
 }
 
 Template.review.tasks2 = function () {
-  console.log(somedaymaybe_infos())
   return somedaymaybe_infos()
 }
