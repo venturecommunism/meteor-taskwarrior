@@ -24,6 +24,21 @@
 
 {{#if projopen}}
 <p>projopen</p>
+ {{#if new_document}}
+    <div class="newdocument">
+      <input type="text" id="add-newdocument" value="" />
+    </div>
+  {{else}}
+  <div class="newdocument btn btn-inverse" id="btnNewDocument">+ Document</div>
+  {{/if}}
+ {{#if new_checklist}}
+    <div class="newtask">
+      <input type="text" id="add-newchecklist" value="" />
+    </div>
+  {{else}}
+  <div class="newchecklist btn btn-inverse" id="btnNewChecklist">+ Checklist</div>
+  {{/if}}
+
 {{/if}}
 
       </li>

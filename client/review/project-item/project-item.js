@@ -1,5 +1,15 @@
 Session.set('editing_item_largeroutcome', null);
 Session.set('projopen', null);
+Session.set('newdocument', null);
+Session.set('newchecklist', null);
+
+Template.project_item.new_document = function () {
+  return Session.equals('newdocument', this.project)
+}
+
+Template.project_item.new_checklist = function () {
+  return Session.equals('newchecklist', this.project)
+}
 
 Template.project_item.projopen = function () {
   return Session.equals('projopen', this.project)
@@ -48,6 +58,12 @@ console.log(Taskspending.insert({project: this.project, description: largerOutco
         Session.set('editing_item_largeroutcome', null);
        }
      }
+  },
+  'click #btnNewDocument': function (e,t) {
+    Session.set('newdocument', this.project);
+  },
+  'click #btnNewChecklist': function (e,t) {
+    Session.set('newchecklist', this.project);
   },
 
 });
