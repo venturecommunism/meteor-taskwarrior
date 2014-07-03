@@ -61,10 +61,49 @@ console.log(Taskspending.insert({project: this.project, description: largerOutco
   },
   'click #btnNewDocument': function (e,t) {
     Session.set('newdocument', this.project);
+    Meteor.flush();
+    focusText(t.find("#add-newdocument"));
+  },
+  'keyup #add-newdocument': function (e,t) {
+    if (e.which === 13)
+    {
+      var documentVal = String(e.target.value || "");
+      if (documentVal)
+      {
+        var formattednow = formattedNow()
+        var uuid = guid()
+//        Tasksbacklog.insert({description: e.target.value, entry: formatted$
+//        Taskspending.insert({description: e.target.value, entry: formatted$
+        Session.set('newdocument', false);
+       }
+     }
+  },
+  'focusout #add-newdocument' : function(e,t){
+    Session.set('newdocument',false);
   },
   'click #btnNewChecklist': function (e,t) {
     Session.set('newchecklist', this.project);
+    Meteor.flush();
+    focusText(t.find("#add-newchecklist"));
   },
+  'keyup #add-newchecklist': function (e,t) {
+    if (e.which === 13)
+    {
+      var checklistVal = String(e.target.value || "");
+      if (checklistVal)
+      {
+        var formattednow = formattedNow()
+        var uuid = guid()
+//        Tasksbacklog.insert({description: e.target.value, entry: formatted$
+//        Taskspending.insert({description: e.target.value, entry: formatted$
+        Session.set('newchecklist', false);
+       }
+     }
+  },
+  'focusout #add-newchecklist' : function(e,t){
+    Session.set('newchecklist',false);
+  },
+
 
 });
 
