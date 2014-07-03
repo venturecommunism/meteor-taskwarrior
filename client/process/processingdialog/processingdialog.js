@@ -3,10 +3,8 @@ Template.processingdialog.events({
      Session.set('processing_task',false);
    },
   'keyup .title': function (e,t){
-console.log("keyup")
     if (e.which === 13)
       {
-console.log("keyup 13")
         projecttask = Taskspending.findOne({_id: Session.get('current_processedtask')})
         projecttask.project = e.target.value
 // TODO: have to fix all these backlog inserts
@@ -150,16 +148,12 @@ archivetask.tags = ["archive"]
     var i = defertask.tags.indexOf("inbox");
     if(i != -1) {
       defertask.tags.splice(i, 1);
-      console.log(defertask.tags)
     }
     if (defertask.tags.length == 0) {
       delete defertask.tags
-      console.log(defertask)
     }
-    console.log(defertask._id + 'is the _id')
     id = defertask._id
     delete defertask._id
-    console.log(defertask)
     Tasksbacklog.insert(defertask)
     Taskspending.update({_id: id},{$set: defertask})
     Taskspending.update({_id: id},{$unset: {tags: ""}})
