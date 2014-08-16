@@ -53,9 +53,34 @@ console.log(uuid)
        }
      }
   },
-
+  'click #contextpicker li input': function (e,t) {
+    tempcontext = Session.get("multicontext")
+    if (!tempcontext) {
+      Session.set("multicontext", [this.context])
+    }
+    else if (tempcontext.length == 0) {
+      Session.set("multicontext", [this.context])
+    }
+    else if (Session.get("multicontext").indexOf(this.context) < 0) {
+      tempcontext.push(this.context)
+      Session.set("multicontext", tempcontext)
+    }    
+    else {
+      var tempcontextindex = tempcontext.indexOf(this.context)
+      var splicedtempcontext = tempcontext.splice(tempcontextindex,1)
+      Session.set("multicontext", tempcontext)
+    }
+  },
 
 });
+
+Template.do.checkedcontext = function () {
+  if (Session.get("multicontext")) {
+    if (Session.get("multicontext").indexOf(this.context) > -1) {
+      return 'checked';
+    }
+  }
+}
 
 Template.do.largeroutcome = function () {
   if (Taskspending.findOne({project: this.project, tags: "largeroutcome"})) {

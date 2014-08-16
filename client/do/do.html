@@ -60,9 +60,9 @@
 
 
   </ul>
-<ul>
+<ul id="contextpicker">
 {{#each contexts}}
-<li>{{context}} ({{count}})</li>
+{{#if context}}<li><input type="checkbox" {{checkedcontext}}> {{context}} ({{count}})</li>{{/if}}
 {{/each}}
 </ul>
 {{/if}}
