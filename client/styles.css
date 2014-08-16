@@ -193,3 +193,8 @@ left: 67px;
 margin-top:-10px;
 width:230px;
 }
+
+.modal textarea {
+width: 520px;
+min-height: 500px;
+}

@@ -1,4 +1,15 @@
 Session.set('processing_task', false);
+Session.set('documentediting', false);
+
+Template.documenteditingdialog.documenteditingdialog = function () {
+  return Session.get('documentediting');
+}
+
+Template.project_item.events({
+  'click .task_item li': function (e,t) {
+    Session.set('documentediting', this._id)
+  }
+});
 
 Template.process.events({
   'click #btnAddItem': function (e,t){

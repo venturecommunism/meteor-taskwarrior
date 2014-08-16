@@ -23,6 +23,11 @@
     {{/if}}
 
 {{#if projopen}}
+<ul>
+{{#each documents}}
+<li>{{description}}</li>
+{{/each}}
+</ul>
  {{#if new_document}}
     <div class="newdocument">
       <input type="text" id="add-newdocument" value="" />

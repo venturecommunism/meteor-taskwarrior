@@ -3,6 +3,10 @@ Session.set('projopen', null);
 Session.set('newdocument', null);
 Session.set('newchecklist', null);
 
+Template.project_item.documents = function () {
+  return Taskspending.find({type: "textfile", project: this.project});
+}
+
 Template.project_item.new_document = function () {
   return Session.equals('newdocument', this.project)
 }
@@ -29,8 +33,6 @@ Template.project_item.events({
   'dblclick .project-item': function (e, t) {
 //    alert('Hi');
     Session.set('editing_item_largeroutcome', this.project);
-console.log('id was set to ' + this.project)
-console.log('this is actually: ' + this)
     Meteor.flush(); // update DOM before focus
     focus_field_by_id("todo-input");
   },
@@ -72,8 +74,8 @@ console.log(Taskspending.insert({project: this.project, description: largerOutco
       {
         var formattednow = formattedNow()
         var uuid = guid()
-//        Tasksbacklog.insert({description: e.target.value, entry: formatted$
-//        Taskspending.insert({description: e.target.value, entry: formatted$
+        Tasksbacklog.insert({description: e.target.value, entry: formattednow, status: "pending", type: "textfile", project: this.project, uuid: uuid})
+        Taskspending.insert({description: e.target.value, entry: formattednow, status: "pending", type: "textfile", project: this.project, uuid: uuid})
         Session.set('newdocument', false);
        }
      }
