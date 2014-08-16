@@ -4,9 +4,6 @@
 {{> processingdialog}}
   <ul id="task_list">
     {{#each tasks}}
-
-{{#if waiting}}
-{{else}}
       <li class="task_item alert">
         <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
 
@@ -16,32 +13,19 @@
         <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
       </div>
 {{else}}
-
-
 <div class="todo-item">       <p>{{description}}</p>  </div>
-
 {{/if}}
 
 {{#if duedate}}
 <p>{{duedate}}</p>
 {{/if}}
-
-
       </li>
 
-{{/if}}
     {{/each}}
 
     {{#each tasks2}}
-
-{{#if waiting}}
-{{else}}
-{{#if somedaymaybeproject}}
-{{else}}
       <li class="task_item alert">
         <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
-
-
 
     {{#if editing}}
       <div class="edit">
@@ -50,12 +34,9 @@
 
 {{else}}
 
-
 <div class="todo-item">       <p>{{description}}</p> </div> <p title="{{largeroutcome}}" id="doing-project">{{project}}</p>
 {{/if}}
       </li>
-{{/if}}
-{{/if}}
     {{/each}}
 
 
@@ -66,4 +47,7 @@
 {{/each}}
 </ul>
 {{/if}}
+
+{{> multicontext}}
+
 </template>

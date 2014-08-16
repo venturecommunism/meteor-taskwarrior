@@ -1,0 +1,19 @@
+<template name="documenteditingdialog">
+{{#if documenteditingdialog}}
+<div class="processingdialog">
+ <div class="mask"> </div>
+  <div class="modal">
+    <div class="modal-header">
+      <button type="button" class="doceditclose cancel">&times;</button>
+      <h3>{{doctitle}}</h3>
+    </div>
+
+    <div class="modal-body">
+<textarea>{{payload}}</textarea>
+<div class="savebutton btn btn-inverse" id="savebutton">Save</div>
+</div>
+</div>
+</div>
+{{/if}}
+</template>
+
