@@ -1,0 +1,50 @@
+<template name="multicontext">
+{{#each multicontext}}
+<h3>{{multicontext}}</h3>
+  <ul id="task_list">
+    {{#each multitasks}}
+      <li class="task_item alert">
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+
+
+    {{#if editing}}
+      <div class="edit">
+        <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
+      </div>
+{{else}}
+<div class="todo-item">       <p>{{description}}</p>  </div>
+{{/if}}
+
+{{#if duedate}}
+<p>{{duedate}}</p>
+{{/if}}
+      </li>
+
+    {{/each}}
+
+    {{#each multitasks2}}
+      <li class="task_item alert">
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+
+    {{#if editing}}
+      <div class="edit">
+        <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
+      </div>
+
+{{else}}
+
+<div class="todo-item">       <p>{{description}}</p> </div> <p title="{{largeroutcome}}" id="doing-project">{{project}}</p>
+{{/if}}
+      </li>
+    {{/each}}
+
+
+  </ul>
+<ul id="contextpicker">
+{{#each contexts}}
+{{#if context}}<li><input type="checkbox" {{checkedcontext}}> {{context}} ({{count}})</li>{{/if}}
+{{/each}}
+</ul>
+{{/each}}
+</template>
+
