@@ -1,6 +1,6 @@
 <template name="multicontext">
 {{#each multicontext}}
-<h3>{{multicontext}}</h3>
+<h3>{{this}}</h3>
   <ul id="task_list">
     {{#each multitasks}}
       <li class="task_item alert">
@@ -40,11 +40,6 @@
 
 
   </ul>
-<ul id="contextpicker">
-{{#each contexts}}
-{{#if context}}<li><input type="checkbox" {{checkedcontext}}> {{context}} ({{count}})</li>{{/if}}
-{{/each}}
-</ul>
 {{/each}}
 </template>
 
