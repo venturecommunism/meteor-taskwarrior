@@ -4,6 +4,10 @@
 {{> processingdialog}}
   <ul id="task_list">
     {{#each tasks}}
+
+{{#if somedaymaybeproject}}
+{{else}}
+
       <li class="task_item alert">
         <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
 
@@ -20,6 +24,8 @@
 <p>{{duedate}}</p>
 {{/if}}
       </li>
+
+{{/if}}
 
     {{/each}}
 

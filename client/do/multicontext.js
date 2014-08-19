@@ -1,3 +1,7 @@
+Template.multicontext.somedaymaybeproject = function () {
+  return Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})
+}
+
 Template.multicontext.multicontext = function () {
   var multicontext = Session.get("multicontext")
   return multicontext

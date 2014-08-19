@@ -23,6 +23,8 @@
     {{/each}}
 
     {{#each multitasks2}}
+{{#if somedaymaybeproject}}
+{{else}}
       <li class="task_item alert">
         <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
 
@@ -36,6 +38,7 @@
 <div class="todo-item">       <p>{{description}}</p> </div> <p title="{{largeroutcome}}" id="doing-project">{{project}}</p>
 {{/if}}
       </li>
+{{/if}}
     {{/each}}
 
 
