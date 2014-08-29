@@ -1,3 +1,11 @@
+// putting the clock code into a Meteor.subscribe ready() callback
+
+Template.do.dueclock = function () {
+
+console.log(this.uuid)
+  return Session.get("timer-" + this.uuid)
+}
+
 Template.do.is_doing = function () {
   return Session.get('do_status')
 }
