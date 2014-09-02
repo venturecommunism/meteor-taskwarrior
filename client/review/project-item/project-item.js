@@ -7,6 +7,10 @@ Template.project_item.documents = function () {
   return Taskspending.find({type: "textfile", project: this.project});
 }
 
+Template.project_item.checklists = function () {
+  return Taskspending.find({type: "checklist", project: this.project});
+}
+
 Template.project_item.new_document = function () {
   return Session.equals('newdocument', this.project)
 }
@@ -96,8 +100,8 @@ console.log(Taskspending.insert({project: this.project, description: largerOutco
       {
         var formattednow = formattedNow()
         var uuid = guid()
-//        Tasksbacklog.insert({description: e.target.value, entry: formatted$
-//        Taskspending.insert({description: e.target.value, entry: formatted$
+        Tasksbacklog.insert({description: e.target.value, entry: formattednow, status: "pending", type: "checklist", project: this.project, uuid: uuid})
+        Taskspending.insert({description: e.target.value, entry: formattednow, status: "pending", type: "checklist", project: this.project, uuid: uuid})
         Session.set('newchecklist', false);
        }
      }

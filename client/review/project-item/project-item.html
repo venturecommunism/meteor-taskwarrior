@@ -25,7 +25,10 @@
 {{#if projopen}}
 <ul>
 {{#each documents}}
-<li>{{description}}</li>
+<li>{{description}} (document)</li>
+{{/each}}
+{{#each checklists}}
+<li>{{description}} (checklist)</li>
 {{/each}}
 </ul>
  {{#if new_document}}
