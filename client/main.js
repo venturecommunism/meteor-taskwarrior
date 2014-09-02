@@ -35,11 +35,11 @@ console.log(moment())
   timeLeft = function() {
     if (clock > 0) {
       clock--;
-var days = parseInt(clock / 86400)
-var hours = parseInt((clock - days * 86400) / 3600)
-var minutes = parseInt((clock - days * 86400 - hours * 3600) / 60)
+var days = Math.floor(clock / 86400)
+var hours = Math.floor((clock - days * 86400) / 3600)
+var minutes = Math.floor((clock - days * 86400 - hours * 3600) / 60)
 var seconds = clock % 60
-      Session.set("timer-" + uuid, days + " days " + hours + ":" + minutes + ":" + seconds);
+      Session.set("timer-" + uuid, days + " days " + (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
       return console.log(clock);
     } else {
       console.log("That's All Folks");
