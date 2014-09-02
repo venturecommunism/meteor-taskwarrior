@@ -39,7 +39,7 @@ var days = Math.floor(clock / 86400)
 var hours = Math.floor((clock - days * 86400) / 3600)
 var minutes = Math.floor((clock - days * 86400 - hours * 3600) / 60)
 var seconds = clock % 60
-      Session.set("timer-" + uuid, days + " days " + (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
+      Session.set("timer-" + uuid, (days == 0 ? "" : days + " days ") + ((days == 0 && hours == 0) ? "" : (hours < 10 ? "0" : "") + hours + ":") + ((days == 0 && hours == 0 && minutes == 0) ? "" : ((days == 0 && hours == 0 && minutes < 10) ? "" : (minutes < 10 ? "0" : "")) + minutes + ":") + ((days == 0 && hours == 0 && minutes == 0) ? "" : (seconds < 10 ? "0" : "")) + seconds);
       return console.log(clock);
     } else {
       console.log("That's All Folks");
