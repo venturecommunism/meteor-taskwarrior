@@ -1,5 +1,6 @@
 <template name="checklisteditingdialog">
 {{#if checklisteditingdialog}}
+  {{> processingdialog}}
 <div class="processingdialog">
  <div class="mask"> </div>
   <div class="modal">
@@ -13,11 +14,18 @@
       <input type="text" id="add-newtask-checklist" value="" />
       <input type="text" id="add-newtask-context-checklist" value="" />
     </div>
-<textarea>{{payload}}</textarea>
-<div class="savebutton btn btn-inverse" id="savebutton">Save</div>
+
+  <ul id="task_list">
+    {{#each tasks}}
+      {{#if waiting}}
+      {{else}}
+        {{> task_checklist_item}}
+      {{/if}}
+    {{/each}}
+  </ul>
+
 </div>
 </div>
 </div>
 {{/if}}
 </template>
-

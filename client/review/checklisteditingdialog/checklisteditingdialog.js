@@ -1,5 +1,8 @@
 Template.checklisteditingdialog.checklisttitle = function () {
-  return Taskspending.findOne({_id: Session.get('checklistediting')}).description
+  var checklisttitle = Taskspending.findOne({_id: Session.get('checklistediting')})
+  if (checklisttitle) {
+  return checklisttitle.description
+  }
 }
 
 Template.checklisteditingdialog.payload = function () {
@@ -14,3 +17,12 @@ Template.checklisteditingdialog.events({
     Session.set('checklistediting',false)
   }
 });
+
+Template.checklisteditingdialog.tasks = function () {
+  var project = Taskspending.findOne({_id: Session.get('checklistediting')})
+  if (project) {
+    return Taskspending.find({project: project.project, type: "checklistitem"})
+  }
+}
+
+
