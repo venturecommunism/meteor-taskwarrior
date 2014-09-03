@@ -198,3 +198,11 @@ width:230px;
 width: 520px;
 min-height: 500px;
 }
+
+#task_list.checklist .task_item {
+width: 450px;
+}
+
+#task_list.checklist .close {
+right: -432px;
+}

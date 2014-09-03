@@ -10,12 +10,18 @@ Template.checklisteditingdialog.payload = function () {
 }
 
 Template.checklisteditingdialog.events({
-  'click .modal .savebutton': function (e,t) {
-    Taskspending.update({_id: Session.get('checklistediting')}, {$set: {payload: t.findAll('.modal textarea')[0].value}})
-  },
   'click .checklisteditclose': function (e,t) {
-    Session.set('checklistediting',false)
+  },
+  'keyup .newtask-checklist #add-newtask-checklist': function (e,t) {
+    if (e.which === 13) {
+      var project = Taskspending.findOne({_id: Session.get('checklistediting')}).project
+      Taskspending.insert({type: "checklistitem", description: e.target.value, project: project})
+    }  
+  },
+  'keyup .newtask-checklist #add-newtask-context-checklist': function (e,t) {
   }
+
+
 });
 
 Template.checklisteditingdialog.tasks = function () {
