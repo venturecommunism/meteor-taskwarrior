@@ -5,9 +5,17 @@ Template.documenteditingdialog.documenteditingdialog = function () {
   return Session.get('documentediting');
 }
 
+Template.checklisteditingdialog.checklisteditingdialog = function () {
+  return Session.get('checklistediting');
+}
+
 Template.project_item.events({
   'click .task_item li': function (e,t) {
-    Session.set('documentediting', this._id)
+    if (this.type == 'textfile') {
+      Session.set('documentediting', this._id)
+    } else {
+      Session.set('checklistediting', this._id)
+    }
   }
 });
 
