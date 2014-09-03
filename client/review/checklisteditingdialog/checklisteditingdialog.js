@@ -11,6 +11,7 @@ Template.checklisteditingdialog.payload = function () {
 
 Template.checklisteditingdialog.events({
   'click .checklisteditclose': function (e,t) {
+    Session.set('checklistediting',false)
   },
   'keyup .newtask-checklist #add-newtask-checklist': function (e,t) {
     if (e.which === 13) {
