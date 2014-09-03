@@ -123,7 +123,7 @@ background: #007F00;
 color: #FFB;
 }
 .modal-body{
-overflow:visible;
+overflow:scroll;
 max-height:550px;
 }
 .btn-inverse:active, .btn-inverse.active {
