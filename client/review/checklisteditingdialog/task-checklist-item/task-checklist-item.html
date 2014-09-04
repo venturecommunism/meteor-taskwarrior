@@ -1,6 +1,7 @@
 <template name="task_checklist_item">
       <li class="task_item alert">
         <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+<input type="checkbox" class="checklistcheckbox" {{checkedchecklistitem}}>
 
     {{#if editing}}
       <div class="edit">

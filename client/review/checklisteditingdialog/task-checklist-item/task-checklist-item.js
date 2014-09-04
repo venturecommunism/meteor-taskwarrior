@@ -54,3 +54,12 @@ var focus_field_by_id = function (id) {
     input.select();
   }
 };
+
+Template.task_checklist_item.checkedcontext = function () {
+  if (Session.get("multicontext")) {
+    if (Session.get("multicontext").indexOf(this.context) > -1) {
+      return 'checked';
+    }
+  }
+}
+

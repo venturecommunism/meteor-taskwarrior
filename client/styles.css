@@ -206,3 +206,15 @@ width: 450px;
 #task_list.checklist .close {
 right: -432px;
 }
+
+.task_item input.checklistcheckbox {
+float: right;
+position: relative;
+left: 27px;
+top: 4px;
+}
+
+.overallchecklistcheckbox {
+position: relative;
+left: 481px;
+}
