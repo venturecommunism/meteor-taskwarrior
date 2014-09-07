@@ -11,12 +11,20 @@ Template.project_item.checklists = function () {
   return Taskspending.find({type: "checklist", project: this.project});
 }
 
+Template.project_item.alarmsets = function () {
+  return Taskspending.find({type: "alarmset", project: this.project});
+}
+
 Template.project_item.new_document = function () {
   return Session.equals('newdocument', this.project)
 }
 
 Template.project_item.new_checklist = function () {
   return Session.equals('newchecklist', this.project)
+}
+
+Template.project_item.new_alarmset = function () {
+  return Session.equals('newalarmset', this.project)
 }
 
 Template.project_item.projopen = function () {
@@ -92,6 +100,11 @@ console.log(Taskspending.insert({project: this.project, description: largerOutco
     Meteor.flush();
     focusText(t.find("#add-newchecklist"));
   },
+  'click #btnNewAlarmset': function (e,t) {
+    Session.set('newalarmset', this.project);
+    Meteor.flush();
+    focusText(t.find("#add-newalarmset"));
+  },
   'keyup #add-newchecklist': function (e,t) {
     if (e.which === 13)
     {
@@ -106,9 +119,26 @@ console.log(Taskspending.insert({project: this.project, description: largerOutco
        }
      }
   },
+  'keyup #add-newalarmset': function (e,t) {
+    if (e.which === 13)
+    {
+      var alarmsetVal = String(e.target.value || "");
+      if (alarmsetVal)
+      {
+        var formattednow = formattedNow()
+        var uuid = guid()
+        Tasksbacklog.insert({description: e.target.value, entry: formattednow, status: "pending", type: "alarmset", project: this.project, uuid: uuid})
+        Taskspending.insert({description: e.target.value, entry: formattednow, status: "pending", type: "alarmset", project: this.project, uuid: uuid})
+        Session.set('newalarmset', false);
+       }
+     }
+  },
   'focusout #add-newchecklist' : function(e,t){
     Session.set('newchecklist',false);
   },
+  'focusout #add-newalarmset' : function(e,t){
+    Session.set('newalarmset', false);
+  }
 
 
 });
