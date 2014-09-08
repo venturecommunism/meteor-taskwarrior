@@ -9,12 +9,18 @@ Template.checklisteditingdialog.checklisteditingdialog = function () {
   return Session.get('checklistediting');
 }
 
+Template.alarmseteditingdialog.alarmseteditingdialog = function () {
+  return Session.get('alarmsetediting');
+}
+
 Template.project_item.events({
   'click .task_item li': function (e,t) {
     if (this.type == 'textfile') {
       Session.set('documentediting', this._id)
-    } else {
+    } else if (this.type == 'checklist') {
       Session.set('checklistediting', this._id)
+    } else {
+      Session.set('alarmsetediting', this._id)
     }
   }
 });

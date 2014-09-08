@@ -199,22 +199,30 @@ width: 520px;
 min-height: 500px;
 }
 
-#task_list.checklist .task_item {
+#task_list.checklist .task_item, #task_list.alarmset .task_item {
 width: 450px;
 }
 
-#task_list.checklist .close {
+#task_list.checklist .close, #task_list.alarmset .close {
 right: -432px;
 }
 
-.task_item input.checklistcheckbox {
+.task_item input.checklistcheckbox, .task_item input.alarmsetcheckbox {
 float: right;
 position: relative;
 left: 27px;
 top: 4px;
 }
 
-.overallchecklistcheckbox {
+.overallchecklistcheckbox, .overallalarmsetcheckbox {
 position: relative;
 left: 481px;
+}
+
+.processingdialog.alarmprocessingdialog .modal {
+z-index: 3;
+}
+
+.processingdialog .modal {
+z-index: 2;
 }

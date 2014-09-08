@@ -1,15 +1,20 @@
+Template.task_alarmset_item.dueclock = function () {
+  return Session.get("timer-" + this.uuid)
+}
+
+
 Session.set('editing_itemname', null);
 
-Template.task_checklist_item.editing = function () {
+Template.task_alarmset_item.editing = function () {
   return Session.equals('editing_itemname', this._id);
 };
 
-Template.task_checklist_item.events({
+Template.task_alarmset_item.events({
   'dblclick .todo-item': function (e, t) {
 //    alert('Hi');
-    Session.set('editing_itemname', this._id);
-    Meteor.flush(); // update DOM before focus
-    focus_field_by_id("todo-input");
+//    Session.set('editing_itemname', this._id);
+//    Meteor.flush(); // update DOM before focus
+//    focus_field_by_id("todo-input");
   },
   'focusout #todo-input': function (e, t) {
     Session.set('editing_itemname', null);
@@ -30,6 +35,8 @@ console.log(uuid)
        }
      }
   },
+  'click .startprocessing-button': selectTaskProcessing,
+
 
 });
 
@@ -55,7 +62,7 @@ var focus_field_by_id = function (id) {
   }
 };
 
-Template.task_checklist_item.checkedcontext = function () {
+Template.task_alarmset_item.checkedcontext = function () {
   if (Session.get("multicontext")) {
     if (Session.get("multicontext").indexOf(this.context) > -1) {
       return 'checked';

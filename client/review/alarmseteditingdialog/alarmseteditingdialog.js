@@ -20,7 +20,7 @@ Template.alarmseteditingdialog.events({
     }  
   },
   'keyup .newtask-alarmset #add-newtask-timer-alarmset': function (e,t) {
-  }
+  },
 
 
 });
