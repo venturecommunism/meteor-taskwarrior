@@ -1,7 +1,26 @@
 Template.task_alarmset_item.dueclock = function () {
+  if (Notification.permission !== "granted") {
+    Notification.requestPermission(function (status) {
+      if (Notification.permission !== status) {
+        Notification.permission = status;
+      }
+    });
+  }
+    if (Session.equals("timer-" + this.uuid, '0') && Notification.permission === "granted") {
+        var n = new Notification(this.description);
+    }
   return Session.get("timer-" + this.uuid)
 }
 
+Template.task_alarmset_item.rendered = function () {
+  if (Notification.permission !== "granted") {
+    Notification.requestPermission(function (status) {
+      if (Notification.permission !== status) {
+        Notification.permission = status;
+      }
+    });
+  }
+}
 
 Session.set('editing_itemname', null);
 

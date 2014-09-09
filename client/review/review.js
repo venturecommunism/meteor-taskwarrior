@@ -19,7 +19,7 @@ Template.project_item.events({
       Session.set('documentediting', this._id)
     } else if (this.type == 'checklist') {
       Session.set('checklistediting', this._id)
-    } else {
+    } else if (this.type == 'alarmset') {
       Session.set('alarmsetediting', this._id)
     }
   }
