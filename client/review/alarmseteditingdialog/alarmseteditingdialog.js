@@ -15,8 +15,9 @@ Template.alarmseteditingdialog.events({
   },
   'keyup .newtask-alarmset #add-newtask-alarmset': function (e,t) {
     if (e.which === 13) {
+      var uuid = guid()
       var project = Taskspending.findOne({_id: Session.get('alarmsetediting')}).project
-      Taskspending.insert({type: "alarmsetitem", description: e.target.value, project: project})
+      Taskspending.insert({type: "alarmsetitem", uuid: uuid, description: e.target.value, project: project})
     }  
   },
   'keyup .newtask-alarmset #add-newtask-timer-alarmset': function (e,t) {

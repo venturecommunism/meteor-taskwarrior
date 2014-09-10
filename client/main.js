@@ -3,7 +3,7 @@ Meteor.subscribe("taskspending", function () {
 
 if (!Session.get("do_context")) {
 
-cursor = Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {due: {$exists: true}}, {context: {$exists: false}}]}, {sort: {due:1}})
+cursor = Taskspending.find({status: {$ne: "completed"}, $and: [{tags: {$ne: "inbox"}}, {due: {$exists: true}}, {context: {$exists: false}}]}, {sort: {due:1}})
 
 cursor.forEach(function (entry) {
   var clock, interval, timeLeft;
