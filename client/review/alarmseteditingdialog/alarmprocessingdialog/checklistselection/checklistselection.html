@@ -1,0 +1,19 @@
+<template name="checklistselection">
+{{#if checklistitems}}
+<input type="checkbox" class="overallchecklistcheckbox" checked>
+  <ul id="task_list" class="checklist">
+    {{#each tasks_notinpayload}}
+      {{#if waiting}}
+      {{else}}
+        {{> alarmset_checklist_item}}
+      {{/if}}
+    {{/each}}
+    {{#each tasks_inpayload}}
+      {{#if waiting}}
+      {{else}}
+        {{> alarmset_checklist_item2}}
+      {{/if}}
+    {{/each}}
+  </ul>
+{{/if}}
+</template>

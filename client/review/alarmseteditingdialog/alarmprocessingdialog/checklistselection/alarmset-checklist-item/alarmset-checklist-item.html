@@ -1,14 +1,14 @@
-<template name="task_alarmset_item">
+<template name="alarmset_checklist_item">
       <li class="task_item alert">
-        <button type="button" class="close startprocessing-button-foralarms startprocessing-butto2" id="{{_id}}">x</button>
-<input type="checkbox" class="checklistcheckbox" {{checkedchecklistitem}}>
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+<input type="checkbox" class="checklistcheckbox">
 
     {{#if editing}}
       <div class="edit">
         <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
       </div>
 {{else}}
-<div class="todo-item">       <p>{{description}} {{dueclock}}</p> </div>
+<div class="todo-item">       <p>{{description}}</p> </div>
 {{/if}}
     {{#if process}}
       <button type="button" style="float:right;" class="processing-button">process</button>

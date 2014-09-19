@@ -63,7 +63,13 @@ console.log(uuid)
        }
      }
   },
-  'click .startprocessing-button': selectTaskProcessing,
+  'click .startprocessing-butto2': selectTaskProcessing,
+// trying to figure out how to get this event to fire along with selectTaskProcessing therefore including 'div'
+//  'click .startprocessing-button-foralarms': function (e,t) {
+//console.log('it werked')
+//    Session.set('alarmbeingprocessed', this._id)
+//selectTaskProcessing(e,t)
+//  }
 
 
 });
