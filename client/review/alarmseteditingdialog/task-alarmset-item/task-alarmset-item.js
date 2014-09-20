@@ -26,6 +26,7 @@ var seconds = clock % 60
       Session.set("timer-" + uuid, (days == 0 ? "" : days + " days ") + ((days == 0 && hours == 0) ? "" : (hours < 10 ? "0" : "") + hours + ":") + ((days == 0 && hours == 0 && minutes == 0) ? "" : ((days == 0 && hours == 0 && minutes < 10) ? "" : (minutes < 10 ? "0" : "")) + minutes + ":") + ((days == 0 && hours == 0 && minutes == 0) ? "" : (seconds < 10 ? "0" : "")) + seconds);
     } else {
       console.log("That's All Folks");
+      Session.set("timer-" + uuid, undefined)
       return Meteor.clearInterval(interval);
     }
   };
