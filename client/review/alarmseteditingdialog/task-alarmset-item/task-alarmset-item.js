@@ -7,15 +7,22 @@ Template.task_alarmset_item.dueclock = function () {
     });
   }
     if (Session.equals("timer-" + this.uuid, '0') && Notification.permission === "granted") {
+var options = {body: ''}
+if (this.payload) {
+        var n = new Notification("ALARM: " + this.description, options);
+} else {
+        var n = new Notification(this.description, options);
+}
         var todolist = Taskspending.find({_id: {$in: this.payload}}).fetch()
 var todoliststring = ""
 for (var i=0; i < todolist.length; i++) {
 console.log(todolist[i])
+var n = new Notification(todolist[i].description, options);
   todoliststring += todolist[i].description + ","
 }
 console.log(todoliststring)
-var options = {body: todoliststring}
-        var n = new Notification(this.description, options);
+//var options = {body: ''}
+//        var n = new Notification(this.description, options);
     }
 console.log(this.uuid)
   return Session.get("timer-" + this.uuid)
