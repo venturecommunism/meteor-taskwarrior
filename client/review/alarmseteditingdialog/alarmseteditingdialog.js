@@ -27,6 +27,14 @@ Template.alarmseteditingdialog.events({
 });
 
 Template.alarmseteditingdialog.tasks = function () {
+  if (Notification.permission !== "granted") {
+    Notification.requestPermission(function (status) {
+      if (Notification.permission !== status) {
+        Notification.permission = status;
+      }
+    });
+  }
+
   var project = Taskspending.findOne({_id: Session.get('alarmsetediting')})
   if (project) {
     return Taskspending.find({project: project.project, type: "alarmsetitem"})

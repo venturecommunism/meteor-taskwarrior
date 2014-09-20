@@ -25,6 +25,43 @@ var minutes = Math.floor((clock - days * 86400 - hours * 3600) / 60)
 var seconds = clock % 60
       Session.set("timer-" + uuid, (days == 0 ? "" : days + " days ") + ((days == 0 && hours == 0) ? "" : (hours < 10 ? "0" : "") + hours + ":") + ((days == 0 && hours == 0 && minutes == 0) ? "" : ((days == 0 && hours == 0 && minutes < 10) ? "" : (minutes < 10 ? "0" : "")) + minutes + ":") + ((days == 0 && hours == 0 && minutes == 0) ? "" : (seconds < 10 ? "0" : "")) + seconds);
     } else {
+
+
+  if (Session.equals("timer-" + entry.uuid, '0') && Notification.permission === "granted") {
+    var options = {body: ''}
+    if (!entry.payload) {
+      var n = new Notification(entry.description, options);
+      n.onclose = function () {
+        alert('hi')
+      }
+    }
+    var todolist = Taskspending.find({_id: {$in: entry.payload}}).fetch()
+    var mathrand = Math.floor((Math.random() * 100000) + 1);
+    var c = {}
+    c[mathrand] = 0
+    for (var i=0; i < todolist.length; i++) {
+      console.log(todolist[i])
+      var options = {body: todolist[i].description}
+      var n = new Notification(entry.description, options);
+      c[mathrand] += 1
+      if (c[mathrand] == todolist.length) {
+        var thisalarm = entry
+        n.onclose = function () {
+          if (thisalarm.nextalarm) {
+            var nextalarm = Taskspending.findOne({_id: thisalarm.nextalarm})
+            var formattednow = formattedNow()
+            var newformattednow = formattednow.substring(0,4) + "-" + formattednow.substring(4,6) + "-" + formattednow.substring(6,8) + "-" + formattednow.substring(9,11) + "-" + formattednow.substring(11,13) + " " + formattednow.substring(13,15)
+            var momentone = moment(newformattednow, "YYYY-MM-DD-HH-mm-ss")
+            var momenttwo = momentone.add('m', nextalarm.timer)
+            var formattedmomenttwo = momenttwo.format('YYYYMMDD') + 'T' + momenttwo.format('HHmmss') + 'Z'
+            Taskspending.update({_id: nextalarm._id}, {$set: {due:formattedmomenttwo}})
+          }
+        }
+      }
+    }
+  }
+
+
       console.log("That's All Folks");
       Session.set("timer-" + uuid, undefined)
       return Meteor.clearInterval(interval);
@@ -39,58 +76,41 @@ var seconds = clock % 60
 
 
 Template.task_alarmset_item.dueclock = function () {
-  if (Notification.permission !== "granted") {
-    Notification.requestPermission(function (status) {
-      if (Notification.permission !== status) {
-        Notification.permission = status;
+/*
+  if (Session.equals("timer-" + this.uuid, '0') && Notification.permission === "granted") {
+    var options = {body: ''}
+    if (!this.payload) {
+      var n = new Notification(this.description, options);
+      n.onclose = function () {
+        alert('hi')
       }
-    });
-  }
-    if (Session.equals("timer-" + this.uuid, '0') && Notification.permission === "granted") {
-var options = {body: ''}
-if (this.payload) {
-//        var n = new Notification("ALARM: " + this.description, options);
-} else {
-        var n = new Notification(this.description, options);
+    }
+    var todolist = Taskspending.find({_id: {$in: this.payload}}).fetch()
+    var mathrand = Math.floor((Math.random() * 100000) + 1);
+    var c = {}
+    c[mathrand] = 0
+    for (var i=0; i < todolist.length; i++) {
+      console.log(todolist[i])
+      var options = {body: todolist[i].description}
+      var n = new Notification(this.description, options);
+      c[mathrand] += 1
+      if (c[mathrand] == todolist.length) {
+        var thisalarm = this
         n.onclose = function () {
-          alert('hi')
+          if (thisalarm.nextalarm) {
+            var nextalarm = Taskspending.findOne({_id: thisalarm.nextalarm})
+            var formattednow = formattedNow()
+            var newformattednow = formattednow.substring(0,4) + "-" + formattednow.substring(4,6) + "-" + formattednow.substring(6,8) + "-" + formattednow.substring(9,11) + "-" + formattednow.substring(11,13) + " " + formattednow.substring(13,15)
+            var momentone = moment(newformattednow, "YYYY-MM-DD-HH-mm-ss")
+            var momenttwo = momentone.add('m', nextalarm.timer)
+            var formattedmomenttwo = momenttwo.format('YYYYMMDD') + 'T' + momenttwo.format('HHmmss') + 'Z'
+            Taskspending.update({_id: nextalarm._id}, {$set: {due:formattedmomenttwo}})
+          }
         }
-}
-        var todolist = Taskspending.find({_id: {$in: this.payload}}).fetch()
-var todoliststring = ""
-var mathrand = Math.floor((Math.random() * 100000) + 1);
-var c = {}
-c[mathrand] = 0
-for (var i=0; i < todolist.length; i++) {
-console.log(todolist[i])
-var options = {body: todolist[i].description}
-var n = new Notification(this.description, options);
-  todoliststring += todolist[i].description + ","
-  c[mathrand] += 1
-  if (c[mathrand] == todolist.length) {
-var thisalarm = this
-    n.onclose = function () {
-      if (thisalarm.nextalarm) {
-var nextalarm = Taskspending.findOne({_id: thisalarm.nextalarm})
-
-var formattednow = formattedNow()
-var newformattednow = formattednow.substring(0,4) + "-" + formattednow.substring(4,6) + "-" + formattednow.substring(6,8) + "-" + formattednow.substring(9,11) + "-" + formattednow.substring(11,13) + " " + formattednow.substring(13,15)
-var momentone = moment(newformattednow, "YYYY-MM-DD-HH-mm-ss")
-var momenttwo = momentone.add('m', nextalarm.timer)
-var formattedmomenttwo = momenttwo.format('YYYYMMDD') + 'T' + momenttwo.format('HHmmss') + 'Z'
-Taskspending.update({_id: nextalarm._id}, {$set: {due:formattedmomenttwo}})
-Tracker.flush()
-
       }
     }
   }
-}
- 
-console.log(todoliststring)
-//var options = {body: ''}
-//        var n = new Notification(this.description, options);
-    }
-console.log(this.uuid)
+*/
   return Session.get("timer-" + this.uuid)
 }
 
