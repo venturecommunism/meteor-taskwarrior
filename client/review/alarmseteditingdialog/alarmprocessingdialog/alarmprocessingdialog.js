@@ -188,6 +188,7 @@ var momenttwo = momentone.add('m', this.timer)
 var formattedmomenttwo = momenttwo.format('YYYYMMDD') + 'T' + momenttwo.format('HHmmss') + 'Z'
 
     Taskspending.update({_id: this._id}, {$set: {due:formattedmomenttwo}})
+Tracker.flush()
   },
 
 });

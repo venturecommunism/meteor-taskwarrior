@@ -1,3 +1,42 @@
+Deps.autorun(function () {
+if (Session.get('taskspending_dataloaded')) {
+console.log('this one works')
+cursor = Taskspending.find({status: {$ne: "completed"}, $and: [{tags: {$ne: "inbox"}}, {due: {$exists: true}}, {context: {$exists: false}}]}, {sort: {due:1}})
+
+cursor.forEach(function (entry) {
+  var clock, interval, timeLeft;
+
+var formattednow = formattedNow()
+var newstringparts = entry.due.substring(0,4) + "-" + entry.due.substring(4,6) + "-" + entry.due.substring(6,8) + "-" + entry.due.substring(9,11) + "-" + entry.due.substring(11,13) + "-" + entry.due.substring(13,15)
+var newformattednow = formattednow.substring(0,4) + "-" + formattednow.substring(4,6) + "-" + formattednow.substring(6,8) + "-" + formattednow.substring(9,11) + "-" + formattednow.substring(11,13) + " " + formattednow.substring(13,15)
+var momentone = moment(newstringparts, "YYYY-MM-DD-HH-mm-ss")
+var momenttwo = moment(newformattednow, "YYYY-MM-DD-HH-mm-ss")
+var diff = momentone.diff(momenttwo, 'seconds')
+  clock = diff;
+
+  var uuid = entry.uuid
+
+  timeLeft = function() {
+    if (clock > 0) {
+      clock--;
+var days = Math.floor(clock / 86400)
+var hours = Math.floor((clock - days * 86400) / 3600)
+var minutes = Math.floor((clock - days * 86400 - hours * 3600) / 60)
+var seconds = clock % 60
+      Session.set("timer-" + uuid, (days == 0 ? "" : days + " days ") + ((days == 0 && hours == 0) ? "" : (hours < 10 ? "0" : "") + hours + ":") + ((days == 0 && hours == 0 && minutes == 0) ? "" : ((days == 0 && hours == 0 && minutes < 10) ? "" : (minutes < 10 ? "0" : "")) + minutes + ":") + ((days == 0 && hours == 0 && minutes == 0) ? "" : (seconds < 10 ? "0" : "")) + seconds);
+    } else {
+      console.log("That's All Folks");
+      return Meteor.clearInterval(interval);
+    }
+  };
+
+  interval = Meteor.setInterval(timeLeft, 1000);
+})
+
+}
+})
+
+
 Template.task_alarmset_item.dueclock = function () {
   if (Notification.permission !== "granted") {
     Notification.requestPermission(function (status) {
@@ -9,17 +48,43 @@ Template.task_alarmset_item.dueclock = function () {
     if (Session.equals("timer-" + this.uuid, '0') && Notification.permission === "granted") {
 var options = {body: ''}
 if (this.payload) {
-        var n = new Notification("ALARM: " + this.description, options);
+//        var n = new Notification("ALARM: " + this.description, options);
 } else {
         var n = new Notification(this.description, options);
+        n.onclose = function () {
+          alert('hi')
+        }
 }
         var todolist = Taskspending.find({_id: {$in: this.payload}}).fetch()
 var todoliststring = ""
+var mathrand = Math.floor((Math.random() * 100000) + 1);
+var c = {}
+c[mathrand] = 0
 for (var i=0; i < todolist.length; i++) {
 console.log(todolist[i])
-var n = new Notification(todolist[i].description, options);
+var options = {body: todolist[i].description}
+var n = new Notification(this.description, options);
   todoliststring += todolist[i].description + ","
+  c[mathrand] += 1
+  if (c[mathrand] == todolist.length) {
+var thisalarm = this
+    n.onclose = function () {
+      if (thisalarm.nextalarm) {
+var nextalarm = Taskspending.findOne({_id: thisalarm.nextalarm})
+
+var formattednow = formattedNow()
+var newformattednow = formattednow.substring(0,4) + "-" + formattednow.substring(4,6) + "-" + formattednow.substring(6,8) + "-" + formattednow.substring(9,11) + "-" + formattednow.substring(11,13) + " " + formattednow.substring(13,15)
+var momentone = moment(newformattednow, "YYYY-MM-DD-HH-mm-ss")
+var momenttwo = momentone.add('m', nextalarm.timer)
+var formattedmomenttwo = momenttwo.format('YYYYMMDD') + 'T' + momenttwo.format('HHmmss') + 'Z'
+Taskspending.update({_id: nextalarm._id}, {$set: {due:formattedmomenttwo}})
+Tracker.flush()
+
+      }
+    }
+  }
 }
+ 
 console.log(todoliststring)
 //var options = {body: ''}
 //        var n = new Notification(this.description, options);
