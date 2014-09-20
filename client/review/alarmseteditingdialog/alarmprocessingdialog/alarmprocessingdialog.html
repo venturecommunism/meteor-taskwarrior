@@ -14,6 +14,16 @@
       <div class="btn btn-primary trash">Trash/Done</div>
       <div class="btn btn-primary archive">Archive</div>
       <div class="btn btn-primary somedaymaybe">Someday/Maybe</div>
+<hr />
+{{#if alarmitemsexist}}
+{{#each alarmitems}}
+<ul>
+<li>{{description}}</li>
+</ul>
+{{/each}}
+{{else}}
+<p style="color: red;">no items!</p>
+{{/if}}
       <hr />
 
 <form class="form-inline" role="form">

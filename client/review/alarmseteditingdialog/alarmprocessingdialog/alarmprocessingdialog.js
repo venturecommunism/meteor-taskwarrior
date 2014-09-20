@@ -1,3 +1,17 @@
+Template.alarmprocessingdialog.alarmitemsexist = function () {
+  var payload = Taskspending.findOne({_id: Session.get('current_processedtask')}).payload
+  if (payload.length > 0) {
+    return true
+  } else {
+    return false
+  }
+}
+
+Template.alarmprocessingdialog.alarmitems = function () {
+  var payload = Taskspending.findOne({_id: Session.get('current_processedtask')}).payload
+  return Taskspending.find({_id: {$in: payload}})
+}
+
 Template.alarmprocessingdialog.events({
   'click .modal .cancel': function(e,t) {
      Session.set('processing_task',false);
