@@ -4,6 +4,14 @@ Template.categories.review_status = function () {
 
 Template.categories.events({
   'click #review': function (e, t) {
+    Session.set('review_status', true)
+  }
+})
+
+//Template.categories.events({
+//  'click #review': function (e, t) {
+Deps.autorun(function(){
+if (Session.equals('review_status', true)) {
 if (Taskspending.findOne({tags: "inbox"})) {
       Toast.success('Step 1: Process your inbox', 'Daily Review', {displayDuration: 5000});
       Session.set('organize_status', false);
@@ -37,6 +45,7 @@ else {
       Session.set('do_status', false);
       Session.set('process_status', false)
     }
+}})
+// },
+//});
 
- },
-});

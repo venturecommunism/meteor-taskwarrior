@@ -163,6 +163,8 @@ archivetask.tags = ["archive"]
     }
     else {
       Session.set('processing_task', false);
+      Session.set('process_status', false)
+      Session.set('review_status', true)
     }
   },
 

@@ -53,6 +53,7 @@ else {
   'click .kickstart.choosekickstart': function (e,t) {
     Taskspending.update({_id: this._id}, {$set:{tags:["mit"]}});
     Meteor.flush()
+    Session.set('review_status', true)
   },
   'click .kickstart.btn-danger': function (e,t) {
     Taskspending.update({_id: this._id}, {$unset:{tags:"mit"}})
