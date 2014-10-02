@@ -20,7 +20,7 @@ or Wget:
 
 At this point you should log out and log back in so that the mrt command works.
 
-Open up the [server/config.js](https://github.com/venturecommunism/meteor-taskwarrior/blob/master/server/config.js) file in an editor and edit the following values to match your task server configuration:
+Open up the [server/config.js](https://github.com/venturecommunism/meteor-taskwarrior/blob/master/server/config.js) file in an editor and edit the following values to match your task server configuration (the last time this file existed was [this commit](https://github.com/venturecommunism/meteor-taskwarrior/tree/4cdab380c63b801870885b69c398ebc339463c71)):
 
 - taskserver (the ip or domain of your task server)
 - port (defaults to 6544)
