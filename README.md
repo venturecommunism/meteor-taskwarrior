@@ -10,7 +10,7 @@ To attempt to use the task warrior integration you'll have to use commit [4cdab3
 
 If you want to test out the program as a stand-alone without task server integration, you can check out this version.
 
-You need to have your own [taskd server](http://taskwarrior.org/projects/taskwarrior/wiki/Server_setup) or an account on one. This has been tested on Ubuntu 12.04
+To use Task Warrior integration you need to have your own [taskd server](http://taskwarrior.org/projects/taskwarrior/wiki/Server_setup) or an account on one. This has been tested on Ubuntu 12.04
 
 ### Install script
 
