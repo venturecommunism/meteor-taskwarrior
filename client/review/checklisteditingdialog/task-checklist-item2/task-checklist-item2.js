@@ -1,10 +1,10 @@
 Session.set('editing_itemname', null);
 
-Template.task_checklist_item.editing = function () {
+Template.task_checklist_item2.editing = function () {
   return Session.equals('editing_itemname', this._id);
 };
 
-Template.task_checklist_item.events({
+Template.task_checklist_item2.events({
   'dblclick .todo-item': function (e, t) {
 //    alert('Hi');
     Session.set('editing_itemname', this._id);
@@ -31,8 +31,10 @@ console.log(uuid)
      }
   },
   'click .checklistcheckbox': function (e,t) {
-    Taskspending.update({_id:this._id},{$set:{checked: "yes"}})
+    Taskspending.update({_id:this._id},{$set:{checked: "no"}})
   },
+
+
 
 });
 

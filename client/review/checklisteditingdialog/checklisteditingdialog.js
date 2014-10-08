@@ -15,8 +15,8 @@ Template.checklisteditingdialog.events({
   },
   'keyup .newtask-checklist #add-newtask-checklist': function (e,t) {
     if (e.which === 13) {
-      var project = Taskspending.findOne({_id: Session.get('checklistediting')}).project
-      Taskspending.insert({type: "checklistitem", description: e.target.value, project: project})
+      var checklistediting = Taskspending.findOne({_id: Session.get('checklistediting')})
+      Taskspending.insert({checked: "yes", checklistid: checklistediting._id, type: "checklistitem", description: e.target.value, project: checklistediting.project})
     }  
   },
   'keyup .newtask-checklist #add-newtask-context-checklist': function (e,t) {
@@ -26,10 +26,16 @@ Template.checklisteditingdialog.events({
 });
 
 Template.checklisteditingdialog.tasks = function () {
-  var project = Taskspending.findOne({_id: Session.get('checklistediting')})
-  if (project) {
-    return Taskspending.find({project: project.project, type: "checklistitem"})
+  var checklistediting = Taskspending.findOne({_id: Session.get('checklistediting')})
+  if (checklistediting) {
+    return Taskspending.find({checked: "no", checklistid: checklistediting._id, project: checklistediting.project, type: "checklistitem"})
   }
 }
 
+Template.checklisteditingdialog.tasks2 = function () {
+  var checklistediting = Taskspending.findOne({_id: Session.get('checklistediting')})
+  if (checklistediting) {
+    return Taskspending.find({checked: "yes", checklistid: checklistediting._id, project: checklistediting.project, type: "checklistitem"})
+  }
+}
 

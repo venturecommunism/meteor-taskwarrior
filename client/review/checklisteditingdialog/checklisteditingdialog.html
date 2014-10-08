@@ -23,6 +23,14 @@
         {{> task_checklist_item}}
       {{/if}}
     {{/each}}
+
+    {{#each tasks2}}
+      {{#if waiting}}
+      {{else}}
+        {{> task_checklist_item2}}
+      {{/if}}
+    {{/each}}
+
   </ul>
 
 </div>
