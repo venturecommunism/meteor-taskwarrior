@@ -37,7 +37,7 @@ Template.alarmseteditingdialog.tasks = function () {
 
   var project = Taskspending.findOne({_id: Session.get('alarmsetediting')})
   if (project) {
-    return Taskspending.find({project: project.project, type: "alarmsetitem"})
+    return Taskspending.find({project: project.project, type: "alarmsetitem"}, {sort: {alarmorder: 1}})
   }
 }
 
