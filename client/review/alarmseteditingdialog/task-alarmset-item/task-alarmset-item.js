@@ -47,8 +47,8 @@ var seconds = clock % 60
       if (c[mathrand] == todolist.length) {
         var thisalarm = entry
         n.onclose = function () {
-          if (thisalarm.nextalarm) {
-            var nextalarm = Taskspending.findOne({_id: thisalarm.nextalarm})
+          if (Taskspending.findOne({alarmorder: thisalarm.alarmorder + 1})._id) {
+            var nextalarm = Taskspending.findOne({alarmorder: thisalarm.alarmorder + 1})
             var formattednow = formattedNow()
             var newformattednow = formattednow.substring(0,4) + "-" + formattednow.substring(4,6) + "-" + formattednow.substring(6,8) + "-" + formattednow.substring(9,11) + "-" + formattednow.substring(11,13) + " " + formattednow.substring(13,15)
             var momentone = moment(newformattednow, "YYYY-MM-DD-HH-mm-ss")
