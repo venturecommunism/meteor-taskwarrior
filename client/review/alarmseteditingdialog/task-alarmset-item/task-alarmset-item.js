@@ -3,17 +3,32 @@ if (Session.get('taskspending_dataloaded')) {
 console.log('this one works')
 cursor = Taskspending.find({status: {$ne: "completed"}, $and: [{tags: {$ne: "inbox"}}, {due: {$exists: true}}, {context: {$exists: false}}]}, {sort: {due:1}})
 
-cursor.forEach(function (entry) {
+
+cursor.forEach(function (entry) { 
+
   var clock, interval, timeLeft;
 
 var formattednow = formattedNow()
 var newstringparts = entry.due.substring(0,4) + "-" + entry.due.substring(4,6) + "-" + entry.due.substring(6,8) + "-" + entry.due.substring(9,11) + "-" + entry.due.substring(11,13) + "-" + entry.due.substring(13,15)
 var newformattednow = formattednow.substring(0,4) + "-" + formattednow.substring(4,6) + "-" + formattednow.substring(6,8) + "-" + formattednow.substring(9,11) + "-" + formattednow.substring(11,13) + " " + formattednow.substring(13,15)
-var momentone = moment(newstringparts, "YYYY-MM-DD-HH-mm-ss")
+
+if (entry.payload) {
+var cursorthingie = Taskspending.find({$and: [{checked: "no"}, {_id: {$in: entry.payload}}]}).fetch()
+}
 var momenttwo = moment(newformattednow, "YYYY-MM-DD-HH-mm-ss")
+//if (cursorthingie && (cursorthingie != []) && cursorthingie != '') {
+var momentone = moment(newstringparts, "YYYY-MM-DD-HH-mm-ss")
+console.log(cursorthingie + ' should not be equal to []')
+console.log('entry payload was ' + entry.payload)
+//} else {
+//var momentone = momenttwo.add(1,'seconds')
+//console.log('added')
+//}
+
+
 var diff = momentone.diff(momenttwo, 'seconds')
   clock = diff;
-
+console.log('clock for ' + entry.alarmorder + ' is ' + diff)
   var uuid = entry.uuid
 
   timeLeft = function() {
@@ -24,6 +39,7 @@ var hours = Math.floor((clock - days * 86400) / 3600)
 var minutes = Math.floor((clock - days * 86400 - hours * 3600) / 60)
 var seconds = clock % 60
       Session.set("timer-" + uuid, (days == 0 ? "" : days + " days ") + ((days == 0 && hours == 0) ? "" : (hours < 10 ? "0" : "") + hours + ":") + ((days == 0 && hours == 0 && minutes == 0) ? "" : ((days == 0 && hours == 0 && minutes < 10) ? "" : (minutes < 10 ? "0" : "")) + minutes + ":") + ((days == 0 && hours == 0 && minutes == 0) ? "" : (seconds < 10 ? "0" : "")) + seconds);
+
     } else {
 
 
@@ -35,7 +51,15 @@ var seconds = clock % 60
         alert('hi')
       }
     }
-    var todolist = Taskspending.find({_id: {$in: entry.payload}}).fetch()
+if (cursorthingie) {
+var todolist = cursorthingie
+} else {
+var todolist = []
+}
+console.log('the todolist was ' + cursorthingie)
+//    var todolist = Taskspending.find({$and: [{checked: "no"}, {_id: {$in: entry.payload}}]}).fetch()
+//    var newtodolist = intersection(todolist, arr)
+//console.log(newtodolist + ' is newtodolist')
     var mathrand = Math.floor((Math.random() * 100000) + 1);
     var c = {}
     c[mathrand] = 0
@@ -48,11 +72,19 @@ var seconds = clock % 60
         var thisalarm = entry
         n.onclose = function () {
           if (Taskspending.findOne({alarmorder: thisalarm.alarmorder + 1})._id) {
+console.log('foundone')
             var nextalarm = Taskspending.findOne({alarmorder: thisalarm.alarmorder + 1})
             var formattednow = formattedNow()
             var newformattednow = formattednow.substring(0,4) + "-" + formattednow.substring(4,6) + "-" + formattednow.substring(6,8) + "-" + formattednow.substring(9,11) + "-" + formattednow.substring(11,13) + " " + formattednow.substring(13,15)
             var momentone = moment(newformattednow, "YYYY-MM-DD-HH-mm-ss")
+var nextcursorthingie = Taskspending.find({$and: [{checked: "no"}, {_id: {$in: nextalarm.payload}}]}).fetch()
+if (nextcursorthingie == '' || nextcursorthingie == []) {
+            var momenttwo = momentone.add('s', 5)
+console.log('first outcome adding s')
+} else {
             var momenttwo = momentone.add('m', nextalarm.timer)
+console.log('second outcome like normal')
+}
             var formattedmomenttwo = momenttwo.format('YYYYMMDD') + 'T' + momenttwo.format('HHmmss') + 'Z'
             Taskspending.update({_id: nextalarm._id}, {$set: {due:formattedmomenttwo}})
           }
@@ -69,6 +101,7 @@ var seconds = clock % 60
   };
 
   interval = Meteor.setInterval(timeLeft, 1000);
+
 })
 
 }
