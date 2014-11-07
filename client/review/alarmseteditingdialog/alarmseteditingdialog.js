@@ -5,6 +5,13 @@ Template.alarmseteditingdialog.alarmsettitle = function () {
   }
 }
 
+Template.alarmseteditingdialog.timer = function () {
+  var timer = Taskspending.findOne({_id: Session.get('alarmsetediting')})
+  if (timer) {
+  return timer.timer
+  }
+}
+
 Template.alarmseteditingdialog.payload = function () {
   return Taskspending.findOne({_id: Session.get('alarmsetediting')}).payload
 }
