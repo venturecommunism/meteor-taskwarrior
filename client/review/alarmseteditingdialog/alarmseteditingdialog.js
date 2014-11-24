@@ -20,6 +20,17 @@ Template.alarmseteditingdialog.events({
   'click .alarmseteditclose': function (e,t) {
     Session.set('alarmsetediting',false)
   },
+  'keyup #timer-alarmset': function (e,t) {
+    if (e.which === 13) {
+
+      var project = Session.get('alarmsetediting')
+
+      if (project) {
+        Taskspending.update({_id: Session.get('alarmsetediting')}, {$set: {timer: e.target.value}})
+
+      }
+    }
+  },
   'keyup .newtask-alarmset #add-newtask-alarmset': function (e,t) {
     if (e.which === 13) {
       var uuid = guid()

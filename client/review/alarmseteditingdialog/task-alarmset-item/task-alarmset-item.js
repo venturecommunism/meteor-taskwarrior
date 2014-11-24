@@ -82,7 +82,9 @@ if (nextcursorthingie == '' || nextcursorthingie == []) {
             var momenttwo = momentone.add('s', 5)
 console.log('first outcome adding s')
 } else {
-            var momenttwo = momentone.add('m', nextalarm.timer)
+//            var momenttwo = momentone.add('m', nextalarm.timer)
+  var project = Taskspending.findOne({_id: Session.get('alarmsetediting')})
+           var momenttwo = momentone.add('m', project.timer)
 console.log('second outcome like normal')
 }
             var formattedmomenttwo = momenttwo.format('YYYYMMDD') + 'T' + momenttwo.format('HHmmss') + 'Z'
