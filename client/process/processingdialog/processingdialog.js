@@ -1,4 +1,49 @@
 Template.processingdialog.events({
+  'click .archive': function (e,t) {
+    archivetask = Taskspending.findOne({_id: Session.get('current_processedtask')})
+    var i = archivetask.tags.indexOf("inbox");
+    if(i != -1) {
+      archivetask.tags.splice(i, 1);
+    }
+    id = archivetask._id
+    delete archivetask._id
+    Tasksbacklog.insert(archivetask)
+    Taskspending.update({_id: id},{$set: archivetask})
+    Taskspending.update({_id: id},{$unset: {tags: ""}})
+    Taskspending.update({_id: id},{$set: {context: "movetoarchive"}})
+    if (Taskspending.findOne({tags:"inbox"})) {
+      Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
+      selectTaskProcessing
+    }
+    else {
+      Session.set('processing_task', false);
+      Session.set('process_status', false)
+      Session.set('review_status', true)
+    }
+  },
+  'click .somedaymaybe': function (e,t) {
+    somedaymaybetask = Taskspending.findOne({_id: Session.get('current_processedtask')})
+    var i = somedaymaybetask.tags.indexOf("inbox");
+    if(i != -1) {
+      somedaymaybetask.tags.splice(i, 1);
+    }
+    somedaymaybetask.tags.push("somedaymaybe")
+    id = somedaymaybetask._id
+    delete somedaymaybetask._id
+    Tasksbacklog.insert(somedaymaybetask)
+    Taskspending.update({_id: id},{$set: somedaymaybetask})
+    Taskspending.update({_id: id},{$unset: {tags: ""}})
+    Taskspending.update({_id: id},{$set: {context: "somedaymaybe"}})
+    if (Taskspending.findOne({tags:"inbox"})) {
+      Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
+      selectTaskProcessing
+    }
+    else {
+      Session.set('processing_task', false);
+      Session.set('process_status', false)
+      Session.set('review_status', true)
+    }
+  },
   'click .modal .cancel': function(e,t) {
      Session.set('processing_task',false);
    },
@@ -92,6 +137,8 @@ if (!Session.get('organize_status') && !Session.get('do_status')){
 }
     selectTaskProcessing
   },
+/*
+// this was a way to archive tasks by moving them into the Tasksbacklog. Should be revived at some point
   'click .archive': function() {
     archivetask = Taskspending.findOne({_id: Session.get('current_processedtask')})
     archivetask.status = 'completed'
@@ -114,20 +161,7 @@ archivetask.tags = ["archive"]
     Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
     selectTaskProcessing
   },
-  'click .somedaymaybe': function() {
-    somedaymaybetask = Taskspending.findOne({_id: Session.get('current_processedtask')})
-    var i = somedaymaybetask.tags.indexOf("inbox");
-    if(i != -1) {
-      somedaymaybetask.tags.splice(i, 1);
-    }
-    id = somedaymaybetask._id
-    delete somedaymaybetask._id
-    somedaymaybetask.tags.push("somedaymaybe")
-    Tasksbacklog.insert(somedaymaybetask)
-    Taskspending.update({_id: id},{$set: somedaymaybetask})
-    Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
-    selectTaskProcessing
-  },
+*/
   'click .do': function() {
     trashtask = Taskspending.findOne({_id: Session.get('current_processedtask')})
     trashtask.status = 'completed'
