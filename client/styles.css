@@ -226,3 +226,7 @@ z-index: 3;
 .processingdialog .modal {
 z-index: 2;
 }
+
+.projectcolor {
+background: #f7ecb5;
+}

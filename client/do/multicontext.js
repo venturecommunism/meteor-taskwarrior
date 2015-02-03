@@ -19,3 +19,6 @@ Template.multicontext.multitasks2 = function () {
   }
 }
 
+Template.multicontext.projectcolor = function () {
+  return "projectcolor"
+}

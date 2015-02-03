@@ -25,7 +25,9 @@
     {{#each multitasks2}}
 {{#if somedaymaybeproject}}
 {{else}}
-      <li class="task_item alert">
+
+      <li class="task_item alert {{projectcolor}}">
+
         <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
 
     {{#if editing}}
