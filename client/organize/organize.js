@@ -91,3 +91,10 @@ return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: projec
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, tags: {$ne: "inbox"}})
   }
 }
+
+Template.organize.project_has_largeroutcome = function () {
+  var largeroutcome_systemtask = Taskspending.findOne({project: Session.get('project_filter'), tags: "largeroutcome"})
+  var returnvalue = largeroutcome_systemtask ? largeroutcome_systemtask.description : false
+  return returnvalue
+};
+

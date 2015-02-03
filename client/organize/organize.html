@@ -2,7 +2,11 @@
 {{#if is_organizing}}
   {{> project_filter}}
   {{> processingdialog}}
-
+{{#if project_has_largeroutcome}}
+<h3><p>{{project_has_largeroutcome}}</p></h3>
+{{else}}
+else
+{{/if}}
   <ul id="task_list">
     {{#each tasks}}
       {{#if waiting}}
