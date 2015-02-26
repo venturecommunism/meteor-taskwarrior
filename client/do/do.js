@@ -1,8 +1,20 @@
+// setting the multicontext
+Template.do.rendered = function () {
+if (Taskspending.findOne({type: 'default_multicontext'})) {
+    Session.set('multicontext', Taskspending.findOne({type: 'default_multicontext'}).payload)
+} else {
+  if (navigator.appVersion == '5.0 (Android)') {
+  Session.set('multicontext', ["anywhere", "social", "outside"])
+  } else {
+  Session.set('multicontext', ["home", "internet", "phone", "projectplanning", "coding"])
+  }
+}
+}
+
 // putting the clock code into a Meteor.subscribe ready() callback
 
 Template.do.dueclock = function () {
 
-console.log(this.uuid)
   return Session.get("timer-" + this.uuid)
 }
 
