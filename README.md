@@ -30,10 +30,6 @@ Open up the [server/config.js](https://github.com/venturecommunism/meteor-taskwa
 - user (user name of your task user)
 - key (shared key looks something like 'ddea9923-fgg3-3922-c958-23cgdeaa0584')
 
-Then do:
-
-    cd meteor-taskwarrior
-
 and then to run on port 80:
 
     meteor --port 80 &

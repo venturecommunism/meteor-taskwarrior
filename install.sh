@@ -6,3 +6,4 @@ nvm alias default 0.10
 nvm use 0.10
 curl https://install.meteor.com | /bin/sh
 git clone https://github.com/venturecommunism/meteor-taskwarrior.git
+cd meteor-taskwarrior
