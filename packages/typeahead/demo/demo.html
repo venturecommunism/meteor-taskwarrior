@@ -1,0 +1,133 @@
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>demo</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<style>
+		.form-control {
+			width: 400pt;
+		}
+		.gist {
+			width: 100%;
+			font-size: 12px;
+			text-align: left;
+		}
+	</style>
+</head>
+
+<body>
+{{>demo}}
+</body>
+
+<template name="demo">
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-6">
+			{{>example1}}
+			{{>example2}}
+			{{>example3}}
+			{{>example4}}
+			{{>example5}}
+			{{>example6}}
+		</div>
+	</div>
+</template>
+
+<template name="example1">
+	<div>
+		<h2>Using data-source attribute</h2>
+		<div class="form-group">
+			<input class="form-control typeahead" name="team" type="text" placeholder="NBA teams" autocomplete="off" spellcheck="off" data-source="nba"/>
+		</div>
+		<div class="gist">
+			{{{gist sergeyt 8054081}}}
+		</div>
+		<div class="gist">
+			{{{gist sergeyt 8054591}}}
+		</div>
+	</div>
+</template>
+
+<template name="example2">
+	<div>
+		<h2>Multiple datasets</h2>
+		<div class="form-group example-sports">
+			<input class="form-control typeahead" name="team" type="text" placeholder="NBA and NHL teams"
+				   autocomplete="off" spellcheck="off"
+				   data-sets="teams"/>
+		</div>
+		<div class="gist">
+			{{{gist sergeyt 8054642}}}
+		</div>
+		<div class="gist">
+			{{{gist sergeyt 8054660}}}
+		</div>
+	</div>
+</template>
+
+<template name="team">
+	<h4><i>{{name}}</i></h4>
+</template>
+
+<template name="example3">
+	<div>
+		<h2>Using custom template</h2>
+		<div class="form-group example-twitter-oss">
+			<input class="form-control typeahead" name="repo" type="text" placeholder="open source projects by Twitter"
+				   autocomplete="off" spellcheck="off"
+				   data-source="repos" data-template="repo"/>
+		</div>
+		<div class="gist">
+			{{{gist sergeyt 8054682}}}
+		</div>
+		<div class="gist">
+			{{{gist sergeyt 8054730}}}
+		</div>
+	</div>
+</template>
+
+<template name="repo">
+	<p class="repo-language">{{language}}</p>
+	<p class="repo-name">{{name}}</p>
+	<p class="repo-description">{{description}}</p>
+</template>
+
+<template name="example4">
+	<div>
+		<h2>Async reactive data-source</h2>
+		<div class="form-group">
+			<input class="form-control typeahead" name="emails" type="text" placeholder="emails"
+				   autocomplete="off" spellcheck="off"
+				   data-source="emails"/>
+		</div>
+		<div class="gist">
+			{{{gist sergeyt 8054834}}}
+		</div>
+		<div class="gist">
+			{{{gist sergeyt 8054865}}}
+		</div>
+	</div>
+</template>
+
+<template name="example5">
+	<div>
+		<h2>Queryable data feed</h2>
+		<div class="form-group">
+			<input class="form-control typeahead" name="feed" type="text" placeholder="Type to query data feed"
+				   autocomplete="off" spellcheck="off"
+					data-source="feed"/>
+		</div>
+	</div>
+</template>
+
+<template name="example6">
+	<div>
+		<h2>Server side search</h2>
+		<div class="form-group">
+			<input class="form-control typeahead" name="search" type="text" placeholder="Type to query"
+				   autocomplete="off" spellcheck="off"
+				   data-source="search"/>
+		</div>
+	</div>
+</template>
