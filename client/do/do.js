@@ -73,7 +73,7 @@ console.log(uuid)
        }
      }
   },
-  'click #contextpicker li input': function (e,t) {
+  'click #contextpicker li .btn': function (e,t) {
     tempcontext = Session.get("multicontext")
     if (!tempcontext) {
       Session.set("multicontext", [this.context])
@@ -97,7 +97,10 @@ console.log(uuid)
 Template.do.checkedcontext = function () {
   if (Session.get("multicontext")) {
     if (Session.get("multicontext").indexOf(this.context) > -1) {
-      return 'checked';
+      return '+';
+    }
+    else {
+      return '-';
     }
   }
 }
