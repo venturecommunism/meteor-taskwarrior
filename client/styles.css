@@ -1,7 +1,7 @@
 /* CSS declarations go here */
 #task_list .task_item {
 position: relative;
-width: 775px;
+width: auto;
 }
 
 #task_list .close {
@@ -11,6 +11,7 @@ float: left;
 right: -755px;
 padding-left: 7px;
 right: -782px;
+right: -99%;
 }
 
 .kickstart, .reviewproject {
@@ -51,7 +52,9 @@ clear: all;
 float: left;
 }
 #lendlib{
-width:835px;
+//width:835px;
+width: auto;
+height: auto;
 margin:0 auto;
 }
 #categorybuttons{
@@ -186,7 +189,9 @@ font-size: 14px;
 
 #categories .twitter-typeahead {
 position: relative;
-left: 67px;
+//left: 67px;
+float: left;
+z-index: -1;
 }
 
 .tt-dropdown-menu {
@@ -223,10 +228,47 @@ left: 481px;
 z-index: 3;
 }
 
-.processingdialog .modal {
-z-index: 2;
+.processingdialog, .processingdialog .modal {
+//z-index: 2;
+height: 90%;
+width: 90%;
+margin: auto;
+left: 5%;
+top: 5%;
 }
 
 .projectcolor {
 background: #f7ecb5;
 }
+
+.processingdialog .modal-header h3 {
+line-height: 80%;
+}
+
+.processingdialog .modal-body {
+max-height: 80%;
+}
+
+.processingdialog .modal-header {
+max-height: 33%;
+}
+
+.processingdialog .modal-body {
+max-height: 67%;
+}
+
+.processingdialog .modal-footer {
+max-height: 33%;
+}
+
+#contextpicker li {
+list-style-type: none;
+}
+
+#contextpicker .btn {
+width: 20px;
+height: 20px;
+margin: 5px 0;
+font-size: 2em;
+}
+
