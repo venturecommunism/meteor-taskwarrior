@@ -13,6 +13,6 @@ Template.reviewdialog5.events({
 })
 
 Template.reviewdialog5.pastcalendar = function () {
-  return Tasksbacklog.find({status: {$in: ["completed"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}},{due: {$exists: true}}, {context: {$exists: false}}]}, {sort: {due:-1}})
-  return Taskspending.find({status: {$in: ["completed", "waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due:1}})
+  return Tasksbacklog.find({status: {$in: ["completed"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}},{due: {$exists: true}}, {context: {$exists: false}}]}, {sort: {due:-1}, limit: 10})
+  return Taskspending.find({status: {$in: ["completed", "waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due:1}}, {limit: 10})
 }
