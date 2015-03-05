@@ -20,8 +20,13 @@ if (Taskspending.findOne({tags: "inbox"})) {
       Session.set('process_status', true)
       return;
     }
+else {
+  Session.set('organize_status', false)
+  Session.set('do_status', false)
+  Session.set('process_status', false)
+}
 
-
+/*
 var index
 var real_project
 for (index = 0; index < project_infos().length; ++index) {
@@ -38,6 +43,7 @@ if (real_project != null && !Taskspending.findOne({project: real_project, $and: 
       Session.set('do_status', false);
       Session.set('process_status', false)
     }
+
 else {
       Toast.success('Ready for the Daily Review', 'Daily Review', {displayDuration: 5000});
       Session.set('organize_status', false);
@@ -45,7 +51,9 @@ else {
       Session.set('do_status', false);
       Session.set('process_status', false)
     }
+*/
 }})
+
 // },
 //});
 

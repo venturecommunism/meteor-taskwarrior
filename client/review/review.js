@@ -88,7 +88,12 @@ Template.process.waiting = function () {
   return (string > formattednow)
 }
 
+
 Template.review.tasks = function () {
+console.log(Taskspending.find({tags: "somedaymaybeproj"}).fetch())
+console.log(Taskspending.find({tags: "largeroutcome"}).fetch())
+return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {project:1}})
+
   var active_projects = []
   var all_projects = project_infos()
   var somedaymaybe_projects = somedaymaybe_infos()
@@ -108,6 +113,7 @@ Template.review.tasks = function () {
     })
 
     for (var i = 0; i < shortened_active_projects.length; i++) {
+console.log(shortened_active_projects[i])
       active_projects.push({project: shortened_active_projects[i]})
     }
   }
@@ -118,5 +124,6 @@ Template.review.tasks = function () {
 }
 
 Template.review.tasks2 = function () {
+  return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {project: 1}})
   return somedaymaybe_infos()
 }
