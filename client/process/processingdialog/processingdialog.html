@@ -13,8 +13,6 @@
 
       <div class="btn btn-primary trash">Trash/Done</div>
       <div class="btn btn-primary archive">Archive</div>
-      <div class="btn btn-primary somedaymaybe">Someday/Maybe</div>
-      <hr />
       <h6>Name of project (no spaces) if part of a project or multi-step</h6>
 {{#if has_project}}
 
@@ -54,11 +52,6 @@
 {{/if}}
 
 
-      <hr />
-      <div class="btn btn-primary do">Do it!</div>
-      <div class="btn btn-primary delegate">Delegate/Waiting for</div>
-      <div class="btn btn-primary defer">Defer</div>
-      <hr />
       <h6>Is it a task to be done in a specific context?</h6>
 {{#if has_context}}
 
@@ -78,8 +71,9 @@
 
 {{/if}}
 
-      <div class="btn btn-primary wait">Wait (amt of time)</div>
 
+      <div class="btn btn-primary somedaymaybe">Someday/Maybe</div>
+      <div class="btn btn-primary defer">Defer</div>
 
 
 
@@ -90,8 +84,6 @@
 
     <div class="modal-footer">
       <span style="font-size:1.9em; color: orange; float: left;">{{taskcounter}}</span><span style="float: left; margin-left:5px;"> in the Organize tab</span>
-      <a href="#" class="btn cancel">Cancel</a>
-      <a href="#" class="btn btn-primary save">Add party</a>
     </div>
   </div>
 </div>
