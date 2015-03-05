@@ -133,7 +133,7 @@ if (!Session.get('organize_status') && !Session.get('do_status')){
 if (!Session.get('organize_status') && !Session.get('do_status')){
     Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
 } else {
-    Session.set('current_processedtask',Taskspending.findOne({tags: {$not: "inbox"}})._id)
+    Session.set('current_processedtask',false)
 }
     selectTaskProcessing
   },
@@ -191,9 +191,12 @@ archivetask.tags = ["archive"]
     Tasksbacklog.insert(defertask)
     Taskspending.update({_id: id},{$set: defertask})
     Taskspending.update({_id: id},{$unset: {tags: ""}})
-    if (Taskspending.findOne({tags:"inbox"})) {
+    if (Taskspending.findOne({tags:"inbox"}) && Session.equals('process_status',true)) {
       Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
       selectTaskProcessing
+    }
+    else if (Session.equals('process_status',false)) {
+      Session.set('processing_task', false)
     }
     else {
       Session.set('processing_task', false);
