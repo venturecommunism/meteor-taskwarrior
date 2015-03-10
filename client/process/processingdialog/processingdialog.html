@@ -13,24 +13,11 @@
 
       <div class="btn btn-primary trash">Trash/Done</div>
       <div class="btn btn-primary archive">Archive</div>
-      <h6>Name of project (no spaces) if part of a project or multi-step</h6>
-{{#if has_project}}
-
-<form class="form-inline" role="form">
-    <div class="form-group">
-      <input class="form-control title span5" type="text" id="typeahead" placeholder="{{project}}">
-    </div>
-</form>
-
-{{else}}
-
-<form class="form-inline" role="form">
-    <div class="form-group">
-      <input class="form-control title span5" type="text" id="typeahead">
-    </div>
-</form>
-
+{{#if projwithnolargeroutcome}}
+      <div class="btn btn-primary largeroutcome">This is a Larger Outcome</div>
 {{/if}}
+      <h6>Name of project (no spaces) if part of a project or multi-step</h6>
+{{> project_picker}}
 
       <h6>Is it due on a specific date and can't be rescheduled?</h6>
 {{#if has_duedate}}

@@ -18,11 +18,30 @@
     {{> reviewdialog11}}
     {{> reviewdialog12}}
 
-    <ul id="task_list" class="main-review">
+    <ul id="project_list" class="main-review">
       {{#each tasks}}
         {{#if waiting}}
         {{else}}
+<div class="active-project">
           {{> project_item}}
+{{#if orgtasks}}
+  <ul id="task_list">
+    {{#each orgtasks}}
+      {{#if waiting}}
+      {{else}}
+        {{> task_todo_item}}
+      {{/if}}
+    {{/each}}
+  </ul>
+{{/if}}
+
+    <div class="newtask-org">
+      <input type="text" id="add-newtask-org" value="" />
+      <input type="text" id="add-newtask-context-org" value="" />
+    </div>
+
+
+</div> <!-- active project -->
         {{/if}}
       {{/each}}
     </ul>

@@ -1,10 +1,10 @@
 /* CSS declarations go here */
-#task_list .task_item {
+#task_list .task_item, #project_list .task_item {
 position: relative;
 width: auto;
 }
 
-#task_list .close {
+#task_list .close, #project_list .close {
 position: relative;
 top: 3px;
 float: left;
@@ -22,6 +22,8 @@ margin-right: 24px;
 
 .kickstart {
 width: 50px;
+position: absolute;
+right: 41px;
 }
 
 .reviewproject {
@@ -32,10 +34,10 @@ top: -30px;
 body {
 background-image: url(/texturetastic_gray.png);
 }
-#task_list li.task_item p, #task_list li.task_item:hover p{
+#task_list li.task_item p, #task_list li.task_item:hover p, #project_list li.task_item p, #project_list li.task-item:hover p {
 overflow-wrap: break-word;
 }
-#task_list li.task_item:hover #doing-project {
+#task_list li.task_item:hover #doing-project, #project_list li.task_item:hover #doing-project {
 visibility: visible;
 }
 #add-newtask, #btnNewTask {
@@ -60,16 +62,16 @@ margin:0 auto;
 #categorybuttons{
 width:100%;
 }
-#task_list{
+#task_list, #project_list{
 list-style:none;
 margin:0;
 padding:0;
 }
-#task_list li{
+#task_list li, #project_list li{
 list-style:none;
 margin:5px;
 }
-#task_list li.task_item:hover{
+#task_list li.task_item:hover, #project_list li.task_item:hover{
 background-color:#fc6;
 color:#630;
 }
@@ -191,7 +193,7 @@ font-size: 14px;
 position: relative;
 //left: 67px;
 float: left;
-z-index: -1;
+z-index: 1;
 }
 
 .tt-dropdown-menu {
@@ -204,11 +206,11 @@ width: 520px;
 min-height: 500px;
 }
 
-#task_list.checklist .task_item, #task_list.alarmset .task_item {
+#task_list.checklist .task_item, #task_list.alarmset .task_item, #project_list.checklist .task_item, #project_list.alarmset .task_item {
 width: 450px;
 }
 
-#task_list.checklist .close, #task_list.alarmset .close {
+#task_list.checklist .close, #task_list.alarmset .close, #project_list.checklist .close, #project_list.alarmset .close {
 right: -432px;
 }
 
@@ -272,3 +274,10 @@ margin: 5px 0;
 font-size: 2em;
 }
 
+#project-picker input {
+  width: 456px;
+}
+
+.newtask-org {
+clear: both;
+}

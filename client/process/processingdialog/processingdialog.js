@@ -1,4 +1,28 @@
 Template.processingdialog.events({
+
+  'click .largeroutcome': function (e,t) {
+    largeroutcome = Taskspending.findOne({_id: Session.get('current_processedtask')})
+    var i = largeroutcome.tags.indexOf("inbox");
+    if(i != -1) {
+      largeroutcome.tags.splice(i, 1);
+    }
+    id = largeroutcome._id
+    delete largeroutcome._id
+    Tasksbacklog.insert(largeroutcome)
+    Taskspending.update({_id: id},{$set: largeroutcome})
+    Taskspending.update({_id: id},{$unset: {tags: ""}})
+    Taskspending.update({_id: id},{$unset: {status: ""}})
+    Taskspending.update({_id: id},{$set: {tags: ["largeroutcome"]}})
+    if (Taskspending.findOne({tags:"inbox"})) {
+      Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
+      selectTaskProcessing
+    }
+    else {
+      Session.set('processing_task', false);
+      Session.set('process_status', false)
+      Session.set('review_status', true)
+    }
+  },
   'click .archive': function (e,t) {
     archivetask = Taskspending.findOne({_id: Session.get('current_processedtask')})
     var i = archivetask.tags.indexOf("inbox");
@@ -229,3 +253,8 @@ projectnames.forEach(function (task) {
 Template.processingdialog.taskcounter = function () {
   return project_infos()[0].count
 }
+
+Template.processingdialog.projwithnolargeroutcome = function () {
+  return (this.project && !(Taskspending.findOne({project: this.project, tags: "largeroutcome"})))
+}
+

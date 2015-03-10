@@ -54,3 +54,7 @@ var focus_field_by_id = function (id) {
     input.select();
   }
 };
+
+Template.task_todo_item.is_kickstarter = function () {
+  return (this._id == Taskspending.findOne({project: this.project, tags: "mit"})._id)
+}

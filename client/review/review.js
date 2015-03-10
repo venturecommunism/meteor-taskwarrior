@@ -92,6 +92,9 @@ Template.process.waiting = function () {
 Template.review.tasks = function () {
 console.log(Taskspending.find({tags: "somedaymaybeproj"}).fetch())
 console.log(Taskspending.find({tags: "largeroutcome"}).fetch())
+Session.set('helpsesh',true)
+Session.set('helpsesh',false)
+//toggling this helpsesh session variable to make the jquery work
 return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {project:1}})
 
   var active_projects = []
@@ -126,4 +129,18 @@ console.log(shortened_active_projects[i])
 Template.review.tasks2 = function () {
   return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {project: 1}})
   return somedaymaybe_infos()
+}
+
+Template.review.orgtasks = function () {
+  return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "mit"}})
+}
+
+Template.review.rendered = function () {
+console.log('REVIEW REVIEW REVIEW')
+//$('.active-project:not(:has(>#task_list li))').detach().prependTo('ul#project_list'))
+Deps.autorun(function(){
+Session.get('helpsesh')
+$('.active-project:has(>#task_list .kickstart)').detach().appendTo('ul#project_list')
+}
+)
 }

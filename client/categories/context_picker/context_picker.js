@@ -5,10 +5,13 @@ Template.context_picker.contexts = function(){
   return distinctValues
 };
 
+
 Template.context_picker.rendered = function() {
-$('.typeahead').data({hint:true})
-Meteor.typeahead('.typeahead');
+//$('.typeahead').data({hint:true})
+//Meteor.typeahead('.typeahead');
+Meteor.typeahead.inject()
 }
+
 
 Template.context_picker.context = function () {
   return Session.get('do_context')
@@ -22,5 +25,6 @@ Template.context_picker.events({
       }
   },
 });
+
 
 
