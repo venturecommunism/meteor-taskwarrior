@@ -22,7 +22,7 @@ Template.project_item.events({
     } else if (this.type == 'alarmset') {
       Session.set('alarmsetediting', this._id)
     }
-  }
+  },
 });
 
 Template.process.events({
@@ -54,6 +54,52 @@ Template.process.events({
 });
 
 Template.review.events({
+  'click .kickstart.choosekickstart': function (e,t) {
+    Taskspending.update({_id: this._id}, {$set:{tags:["mit"]}});
+    Meteor.flush()
+Session.set('helpsesh',true)
+Session.set('helpsesh',false)
+    Session.set('review_status', true)
+  },
+  'click .kickstart.btn-danger': function (e,t) {
+    Taskspending.update({_id: this._id}, {$unset:{tags:"mit"}})
+    Meteor.flush()
+Session.set('helpsesh',true)
+Session.set('helpsesh',false)
+  },
+  'keyup #add-newtask-org': function (e,t) {
+    if (e.which === 13) {
+      var formattednow = formattedNow()
+      var uuid = guid()
+      var context = e.target.parentElement.children[1].placeholder
+      if (e.target.parentElement.children[1].value != '') {
+        context = e.target.parentElement.children[1].value
+      }
+      if (context) {
+      Tasksbacklog.insert({project: this.project, description: e.target.value, entry: formattednow, status: "pending", context: context, uuid: uuid})
+      Taskspending.insert({project: this.project, description: e.target.value, entry: formattednow, status: "pending", context: context, uuid: uuid})
+      } else {
+        alert('no context')
+      }
+      e.target.value = ''
+      e.target.parentElement.children[1].value = ''
+    }
+  },
+  'keyup #add-newtask-context-org': function (e,t) {
+    if (e.which === 13) {
+      var formattednow = formattedNow()
+      var uuid = guid()
+      var description = e.target.parentElement.children[0].value
+      if (e.target.parentElement.children[0].value && (e.target.value != '')) {
+      Tasksbacklog.insert({project: this.project, context: e.target.value, entry: formattednow, status: "pending", description: description, uuid: uuid})
+      Taskspending.insert({project: this.project, context: e.target.value, entry: formattednow, status: "pending", description: description, uuid: uuid})
+      } else {
+        alert('missing description or context')
+      }
+      e.target.parentElement.children[0].value = ''
+      e.target.value = ''
+    }
+  },
   'click .review-btn': function(e,t) {
      Session.set('review_dialog_1',true);
    },
@@ -135,12 +181,38 @@ Template.review.orgtasks = function () {
   return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "mit"}})
 }
 
+/*
 Template.review.rendered = function () {
 console.log('REVIEW REVIEW REVIEW')
 //$('.active-project:not(:has(>#task_list li))').detach().prependTo('ul#project_list'))
 Deps.autorun(function(){
 Session.get('helpsesh')
-$('.active-project:has(>#task_list .kickstart)').detach().appendTo('ul#project_list')
+$('.active-project:has(>#task_list .btn-danger.kickstart)').detach().appendTo('ul#project_list')
+$('.active-project:has(>#task_list .choosekickstart)').detach().prependTo('ul#project_list')
 }
 )
 }
+*/
+
+Template.review.rendered = function () {
+  Deps.autorun(function() {
+    Session.get('helpsesh')
+    $('.active-project.nokickstarttask').detach().prependTo('ul#project_list')
+    $('.active-project.kickstarttask').detach().appendTo('ul#project_list')
+  }
+)
+}
+
+Template.review.projopen = function () {
+  return Session.equals('projopen', this.project)
+}
+
+Template.review.nokickstart = function () {
+  if (!Taskspending.findOne({project: this.project, tags:"mit"})) {
+    Session.set('projopen', this.project)
+    return 'nokickstarttask'
+  } else {
+    return 'kickstarttask'
+  }
+};
+
