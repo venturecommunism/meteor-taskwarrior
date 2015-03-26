@@ -41,6 +41,10 @@ Template.project_item.editing = function () {
   return Session.equals('editing_item_largeroutcome', this.project);
 };
 
+Template.project_item.editing_defaultcontext = function () {
+  return Session.equals('editing_defaultcontext',this.project)
+}
+
 Template.project_item.events({
   'dblclick .project-item': function (e, t) {
 //    alert('Hi');
@@ -132,6 +136,31 @@ console.log(Taskspending.insert({project: this.project, description: largerOutco
         Session.set('newalarmset', false);
        }
      }
+  },
+  'click #btnDefaultContext': function (e,t) {
+    Session.set('editing_defaultcontext', this.project);
+    Meteor.flush();
+    focusText(t.find("#editing-defaultcontext"));
+  },
+  'keyup #editing-defaultcontext': function (e,t) {
+    if (e.which === 13)
+    {
+      var defaultContextVal = String(e.target.value || "");
+      if (defaultContextVal)
+      {
+        var formattednow = formattedNow()
+        Taskspending.update({_id:this._id}, {$set: {defaultcontext: e.target.value}})
+        Session.set('editing_defaultcontext', false);
+       }
+     }
+  },
+  'focusout #editing-defaultcontext' : function(e,t){
+    Session.set('editing_defaultcontext',false);
+  },
+  'click #btnArchiveProject': function (e,t) {
+    var formattednow = formattedNow()
+    Tasksbacklog.insert({description: this.description, entry: formattednow, status: "completed", type:"largeroutcome", project: this.project})
+    Taskspending.remove({_id:this._id})
   },
   'focusout #add-newchecklist' : function(e,t){
     Session.set('newchecklist',false);
