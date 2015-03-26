@@ -22,14 +22,15 @@
       {{#each tasks}}
         {{#if waiting}}
         {{else}}
-<div class="active-project">
+<div class="active-project {{nokickstart}}">
           {{> project_item}}
+{{#if projopen}}
 {{#if orgtasks}}
   <ul id="task_list">
     {{#each orgtasks}}
       {{#if waiting}}
       {{else}}
-        {{> task_todo_item}}
+        {{> orgtask_todo_item}}
       {{/if}}
     {{/each}}
   </ul>
@@ -37,9 +38,9 @@
 
     <div class="newtask-org">
       <input type="text" id="add-newtask-org" value="" />
-      <input type="text" id="add-newtask-context-org" value="" />
+      <input type="text" id="add-newtask-context-org" placeholder="{{defaultcontext}}" />
     </div>
-
+{{/if}}
 
 </div> <!-- active project -->
         {{/if}}
