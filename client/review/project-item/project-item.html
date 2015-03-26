@@ -55,6 +55,15 @@
   {{else}}
   <div class="newalarmset btn btn-inverse" id="btnNewAlarmset">+ Alarm Set</div>
   {{/if}}
+ {{#if editing_defaultcontext}}
+  <div class="editing_defaultcontext">
+    <input type="text" id="editing-defaultcontext" placeholder="{{defaultcontext}}" />
+  </div>
+  {{else}}
+  <div class="defaultcontext btn btn-inverse" id="btnDefaultContext">Default Context</div>
+  {{/if}}
+  <div class="archiveproject btn btn-inverse" id="btnArchiveProject">Archive Project</div>
+
 
 
 {{/if}}
