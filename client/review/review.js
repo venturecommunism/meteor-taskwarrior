@@ -103,7 +103,7 @@ Session.set('helpsesh',false)
   'click .review-btn': function(e,t) {
      Session.set('review_dialog_1',true);
    },
-  'click .main-review .close': function (e,t){
+  'click .main-review .projclose': function (e,t){
 var tasktest = Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})
 var taskid = tasktest ? tasktest._id : ''
     if (taskid != '') {
