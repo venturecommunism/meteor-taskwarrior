@@ -281,3 +281,8 @@ font-size: 2em;
 .newtask-org {
 clear: both;
 }
+
+#toast-container {
+right: 12px;
+left: auto;
+}
