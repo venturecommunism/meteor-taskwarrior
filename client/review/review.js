@@ -216,3 +216,10 @@ Template.review.nokickstart = function () {
   }
 };
 
+Template.review.somedaymaybetasks = function () {
+  return Taskspending.find({context: "somedaymaybe"})
+}
+
+Template.review.waitingfortasks = function () {
+  return Taskspending.find({context: "waitingfor"})
+}

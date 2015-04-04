@@ -47,6 +47,10 @@
       {{/each}}
     </ul>
 <hr/>
+<h3>Waiting For</h3>
+{{#each waitingfortasks}}
+{{> orgtask_todo_item}}
+{{/each}}
 <h3>Someday/Maybe</h3>
    <ul id="task_list" class="main-review">
       {{#each tasks2}}
@@ -56,6 +60,10 @@
         {{/if}}
       {{/each}}
     </ul>
+<h4>Projectless Someday/Maybe tasks</h4>
+{{#each somedaymaybetasks}}
+{{> orgtask_todo_item}}
+{{/each}}
 
   <div class="review-btn btn btn-inverse" id="btnReview">Review</div>
 
