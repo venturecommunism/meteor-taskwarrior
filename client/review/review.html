@@ -47,6 +47,17 @@
       <input type="text" id="add-newtask-org" value="" />
       <input type="text" id="add-newtask-context-org" placeholder="{{defaultcontext}}" />
     </div>
+{{else}}
+{{#each kickstartertask}}
+  <ul id="task_list">
+      {{#if waiting}}
+      {{else}}
+        {{> orgtask_todo_item}}
+      {{/if}}
+  </ul>
+<!-- <div style="margin: 25px 0"></div> -->
+{{/each}}
+
 {{/if}}
 
 </div> <!-- active project -->

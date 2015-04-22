@@ -53,16 +53,22 @@ Template.process.events({
   'click .startprocessing-button': selectTaskProcessing
 });
 
+Template.review.kickstartertask = function () {
+  console.log('walawala')
+  console.log(Taskspending.findOne({tags: "kickstart", project: this.project}))
+  return Taskspending.find({tags: "kickstart", project: this.project})
+}
+
 Template.review.events({
   'click .kickstart.choosekickstart': function (e,t) {
-    Taskspending.update({_id: this._id}, {$set:{tags:["mit"]}});
+    Taskspending.update({_id: this._id}, {$set:{tags:["kickstart"]}});
     Meteor.flush()
 Session.set('helpsesh',true)
 Session.set('helpsesh',false)
     Session.set('review_status', true)
   },
   'click .kickstart.btn-danger': function (e,t) {
-    Taskspending.update({_id: this._id}, {$unset:{tags:"mit"}})
+    Taskspending.update({_id: this._id}, {$unset:{tags:"kickstart"}})
     Meteor.flush()
 Session.set('helpsesh',true)
 Session.set('helpsesh',false)
@@ -178,7 +184,11 @@ Template.review.tasks2 = function () {
 }
 
 Template.review.orgtasks = function () {
-  return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "mit"}})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart"}})
+}
+
+Template.review.kickstartertask = function () {
+    return Taskspending.find({project: this.project, tags: "kickstart"})
 }
 
 /*
@@ -208,7 +218,7 @@ Template.review.projopen = function () {
 }
 
 Template.review.nokickstart = function () {
-  if (!Taskspending.findOne({project: this.project, tags:"mit"})) {
+  if (!Taskspending.findOne({project: this.project, tags:"kickstart"})) {
     Session.set('projopen', this.project)
     return 'nokickstarttask'
   } else {
