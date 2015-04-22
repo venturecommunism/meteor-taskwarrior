@@ -8,7 +8,7 @@ Template.task2_todo_item.nokickstart = function () {
   if (!Session.get('project_filter')) {
     return false
   }
-  return !Taskspending.findOne({project: Session.get('project_filter'), tags:"mit"});
+  return !Taskspending.findOne({project: Session.get('project_filter'), tags:"kickstart"});
 };
 
 Template.task2_todo_item.events({

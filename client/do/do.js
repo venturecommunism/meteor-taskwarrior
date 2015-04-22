@@ -33,10 +33,10 @@ Template.do.tasks = function () {
 
 Template.do.tasks2 = function () {
   if (Session.get('do_context')){
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "mit"}, {context: Session.get('do_context')}]})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: Session.get('do_context')}]})
   }
   else {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "mit"}, {context: {$exists: false}}]}, {sort: {due:1}})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: {$exists: false}}]}, {sort: {due:1}})
   }
 }
 

@@ -51,12 +51,12 @@ else {
       }
   },
   'click .kickstart.choosekickstart': function (e,t) {
-    Taskspending.update({_id: this._id}, {$set:{tags:["mit"]}});
+    Taskspending.update({_id: this._id}, {$set:{tags:["kickstart"]}});
     Meteor.flush()
     Session.set('review_status', true)
   },
   'click .kickstart.btn-danger': function (e,t) {
-    Taskspending.update({_id: this._id}, {$unset:{tags:"mit"}})
+    Taskspending.update({_id: this._id}, {$unset:{tags:"kickstart"}})
     Meteor.flush()
   },
   'click .startprocessing-button': selectTaskProcessing,
@@ -71,7 +71,7 @@ Template.organize.tasks = function () {
   var formattednow = formattedNow()
   var project_filter = Session.get('project_filter');
   if (project_filter) {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$ne: "inbox"}}, {tags: "mit"}]})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$ne: "inbox"}}, {tags: "kickstart"}]})
   }
 }
 
@@ -79,10 +79,10 @@ Template.organize.tasks2 = function () {
   var formattednow = formattedNow()
   var project_filter = Session.get('project_filter');
   if (project_filter) {
-return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$ne: "inbox"}}, {tags: {$ne: "mit"}}, {type: {$nin: ["textfile", "checklist"]}}]})
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$not: "inbox"}}, {tags: {$not: "mit"}}, {type: {$ne: "textfile"}}], waiting: { $lt: formattednow}})
-// Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, tags: {$ne: "inbox"}, tags: "mit", waiting: { $lt: formattednow}}, {sort: {due: -1}}),
-// Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, tags: {$ne: ["inbox", "mit"]}, waiting: { $lt: formattednow}}, {sort: {due: -1}}),
+return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$ne: "inbox"}}, {tags: {$ne: "kickstart"}}, {type: {$nin: ["textfile", "checklist"]}}]})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$not: "inbox"}}, {tags: {$not: "kickstart"}}, {type: {$ne: "textfile"}}], waiting: { $lt: formattednow}})
+// Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, tags: {$ne: "inbox"}, tags: "kickstart", waiting: { $lt: formattednow}}, {sort: {due: -1}}),
+// Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, tags: {$ne: ["inbox", "kickstart"]}, waiting: { $lt: formattednow}}, {sort: {due: -1}}),
 }
   else if (project_filter === undefined) {
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: { $exists: false}, tags: {$ne: "inbox"}})

@@ -57,8 +57,8 @@ var focus_field_by_id = function (id) {
 
 Template.task_todo_item.is_kickstarter = function () {
   var truefalse = null
-  if (Taskspending.findOne({project: this.project, tags: "mit"})) {
-  truefalse = (this._id == Taskspending.findOne({project: this.project, tags: "mit"})._id)
+  if (Taskspending.findOne({project: this.project, tags: "kickstart"})) {
+  truefalse = (this._id == Taskspending.findOne({project: this.project, tags: "kickstart"})._id)
   }
   return truefalse
 }

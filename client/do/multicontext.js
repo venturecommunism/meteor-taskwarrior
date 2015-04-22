@@ -15,7 +15,7 @@ Template.multicontext.multitasks = function () {
 
 Template.multicontext.multitasks2 = function () {
   if (!Session.get('do_context')){
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "mit"}, {context: this.toString()}]}, {sort: {due:1}})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: this.toString()}]}, {sort: {due:1}})
   }
 }
 
