@@ -3,8 +3,9 @@
   {{> collect}}
   <div id="categories" class="btn-group">
     <div class="category btn btn-inverse" id="btnNewCat">+</div>
-
+{{#if inboxstuff}}
     <div class="category btn {{process_status}}" id="process">Process</div>
+{{/if}}
     <div class="category btn {{organize_status}}" id="organize">Organize</div>
     <div class="category btn {{review_status}}" id="review">Review</div>
     <div class="category btn {{do_status}}" id="do">Do</div>

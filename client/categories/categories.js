@@ -1,3 +1,7 @@
+Template.categories.inboxstuff = function () {
+  return Taskspending.findOne({tags: "inbox"})
+}
+
 Template.categories.events({
   'click #process': function (e, t) {
     Session.set('organize_status', false);
