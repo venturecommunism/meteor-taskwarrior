@@ -22,3 +22,23 @@ Template.multicontext.multitasks2 = function () {
 Template.multicontext.projectcolor = function () {
   return "projectcolor"
 }
+
+Template.multicontext.mitornot = function () {
+  if (Taskspending.findOne({_id: this._id, tags: "mit"})) {
+    return 'active'
+  }
+  else {
+    return ''
+  }
+}
+
+Template.multicontext.events({
+  'click #mit': function (e,t) {
+    if (Taskspending.findOne({_id: this._id, tags: "mit"})) {
+      Taskspending.update({_id: this._id}, {$pull: {tags: "mit"}})
+    }
+    else {
+      Taskspending.update({_id: this._id}, {$push: {tags: "mit"}})
+    }
+  }
+})

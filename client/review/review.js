@@ -59,6 +59,10 @@ Template.review.kickstartertask = function () {
   return Taskspending.find({tags: "kickstart", project: this.project})
 }
 
+Template.review.mits = function () {
+  return Taskspending.find({tags: "mit"})
+}
+
 Template.review.events({
   'click .kickstart.choosekickstart': function (e,t) {
     Taskspending.update({_id: this._id}, {$set:{tags:["kickstart"]}});

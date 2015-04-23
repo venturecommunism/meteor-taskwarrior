@@ -18,6 +18,13 @@
     {{> reviewdialog11}}
     {{> reviewdialog12}}
 
+<h3>Most Important Tasks (MITs)</h3>
+<div id="task_list">
+{{#each mits}}
+{{> orgtask_todo_item}}
+{{/each}}
+</div>
+
 <h3>Waiting For</h3>
 <div id="task_list">
 {{#each waitingfortasks}}

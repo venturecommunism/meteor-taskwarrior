@@ -12,7 +12,9 @@
         <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
       </div>
 {{else}}
-<div class="todo-item">       <p>{{description}}</p>  </div>
+<div class="todo-item">       <p>{{description}}</p>
+<p class="btn btn-inverse {{mitornot}}" id="mit">mit</p>
+</div>
 {{/if}}
 
 {{#if duedate}}
@@ -38,6 +40,8 @@
 {{else}}
 
 <div class="todo-item">       <p>{{description}}</p> </div> <p title="{{largeroutcome}}" id="doing-project">{{project}}</p>
+<p class="btn btn-inverse {{mitornot}}" id="mit">mit</p>
+
 {{/if}}
       </li>
 {{/if}}
