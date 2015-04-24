@@ -212,7 +212,9 @@ Template.review.rendered = function () {
     Session.get('helpsesh')
     $('.active-project.nokickstarttask').detach().prependTo('ul#project_list')
     $('.active-project.kickstarttask').detach().appendTo('ul#project_list')
+})
 
+Deps.autorun(function() {
 
 //jquery sortable code, using sortable meteor package
    this.$('.mit_task_list').sortable({
