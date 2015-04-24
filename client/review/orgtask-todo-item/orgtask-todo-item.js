@@ -33,19 +33,6 @@ console.log(uuid)
 
 });
 
-/*
-Template.todo_item.events[ okcancel_events('#todo-input') ] =
-  make_okcancel_handler({
-    ok: function (value) {
-      Todos.update(this._id, {$set: {text: value}});
-      Session.set('editing_itemname', null);
-    },
-    cancel: function () {
-      Session.set('editing_itemname', null);
-    }
-  });
-*/
-
 // Finds a text input in the DOM by id and focuses it.
 var focus_field_by_id = function (id) {
   var input = document.getElementById(id);
