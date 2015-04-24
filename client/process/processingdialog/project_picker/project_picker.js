@@ -20,7 +20,11 @@ Template.project_picker.events({
   'keyup .typeahead': function (e,t){
     if (e.which === 13)
       {
-        Taskspending.update({_id: this._id}, {$set: {project: e.target.value}})
+        if (e.target.value == '') {
+          Taskspending.update({_id: this._id}, {$unset: {project: 1}})
+        } else {
+          Taskspending.update({_id: this._id}, {$set: {project: e.target.value}})
+        }
       }
   },
 });
