@@ -58,7 +58,7 @@ Template.review.kickstartertask = function () {
 }
 
 Template.review.mits = function () {
-  return Taskspending.find({tags: "mit"}, {sort: {rank: 1}})
+  return Taskspending.find({tags: "mit", status: {$in: ["waiting", "pending"]}}, {sort: {rank: 1}})
 }
 
 Template.review.events({
