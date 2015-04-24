@@ -123,7 +123,22 @@ var taskid = tasktest ? tasktest._id : ''
     }
   },
   'click .reviewproject': function (e,t) {
-    Session.equals('projopen', this.project) ? Session.set('projopen',false) : Session.set('projopen', this.project);
+    if (Session.equals('projopen', this.project)) {
+    if (!$('.active-project.nokickstarttask')) {
+      Session.set('projopen',false)
+    } else {
+      var nokickstartproj = Taskspending.findOne({_id: $('.active-project.nokickstarttask .task_item button').last().attr('id')})
+      if (nokickstartproj) {
+        Session.set('projopen', nokickstartproj.project)
+      } else {
+        Session.set('projopen', false)
+      }
+    }
+    $('.active-project.nokickstarttask').detach().prependTo('ul#project_list')
+    $('.active-project.kickstarttask').detach().appendTo('ul#project_list')
+    } else {
+      Session.set('projopen', this.project);
+    }
   },
   'click .startprocessing-button': selectTaskProcessing,
 });
