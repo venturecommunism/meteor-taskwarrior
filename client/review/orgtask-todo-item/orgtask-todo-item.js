@@ -64,6 +64,10 @@ Template.orgtask_todo_item.is_kickstarter = function () {
 }
 
 Template.orgtask_todo_item.nokickstart = function () {
+  if (this.project) {
   return !Taskspending.findOne({project: this.project, tags:"kickstart"});
+  } else {
+  return false
+  }
 };
 
