@@ -125,6 +125,7 @@ var taskid = tasktest ? tasktest._id : ''
   'click .reviewproject': function (e,t) {
     Session.equals('projopen', this.project) ? Session.set('projopen',false) : Session.set('projopen', this.project);
   },
+  'click .startprocessing-button': selectTaskProcessing,
 });
 
 Template.review.is_reviewing = function () {
