@@ -1,16 +1,35 @@
-Template.alarmprocessingdialog.alarmitemsexist = function () {
-  var payload = Taskspending.findOne({_id: Session.get('current_processedtask')}).payload
-  if (payload.length > 0) {
-    return true
-  } else {
-    return false
-  }
-}
-
-Template.alarmprocessingdialog.alarmitems = function () {
-  var payload = Taskspending.findOne({_id: Session.get('current_processedtask')}).payload
-  return Taskspending.find({_id: {$in: payload}})
-}
+Template.alarmprocessingdialog.helpers({
+  tasks: function () {
+    return Taskspending.findOne({_id: Session.get('current_processedtask')})
+  },
+  has_context: function () {
+    return this.context
+  },
+  has_duedate: function () {
+    return this.timer
+  },
+  processing_task: function () {
+    return (Session.equals('processing_task',true));
+  },
+  has_project: function () {
+    return (Taskspending.findOne({_id: Session.get('current_processedtask')}).project ? 1 : 0 )
+  },
+  alarmitemsexist: function () {
+    var payload = Taskspending.findOne({_id: Session.get('current_processedtask')}).payload
+    if (payload.length > 0) {
+      return true
+    } else {
+      return false
+    }
+  },
+  alarmitems: function () {
+    var payload = Taskspending.findOne({_id: Session.get('current_processedtask')}).payload
+    return Taskspending.find({_id: {$in: payload}})
+  },
+  taskcounter: function () {
+    return project_infos()[0].count
+  },
+})
 
 Template.alarmprocessingdialog.events({
   'click .modal .cancel': function(e,t) {
@@ -52,34 +71,6 @@ else {
       Taskspending.update({_id: this._id},{$set:{timer:e.target.value}})
     }
   },
-});
-
-Template.alarmprocessingdialog.has_context = function () {
-  return this.context
-}
-
-Template.alarmprocessingdialog.has_duedate = function () {
-  return this.timer
-}
-
-Template.alarmprocessingdialog.tasks = function () {
-  return Taskspending.findOne({_id: Session.get('current_processedtask')})
-}
-
-Template.alarmprocessingdialog.processing_task = function () {
-  return (Session.equals('processing_task',true));
-};
-
-
-Template.alarmprocessingdialog.tasks = function () {
-  return Taskspending.findOne({_id: Session.get('current_processedtask')})
-}
-
-Template.alarmprocessingdialog.has_project = function () {
-  return (Taskspending.findOne({_id: Session.get('current_processedtask')}).project ? 1 : 0 )
-}
-
-Template.alarmprocessingdialog.events({
   'focusout .processingdialog': function(e,t) {
 // Session.set('processing_task',false);
   },
@@ -203,15 +194,10 @@ projectnames.forEach(function (task) {
     projects.push(task.project)
   }
   count += 1;
-});
+})
 
   $('#typeahead').typeahead({
     name: 'accounts',
     local: ["process", "organize", "project1", "project2", "project3", "project4"]
-  });
-};
-
-
-Template.alarmprocessingdialog.taskcounter = function () {
-  return project_infos()[0].count
+  })
 }

@@ -1,8 +1,24 @@
 Session.set('editing_itemname', null);
 
-Template.orgtask_todo_item.editing = function () {
-  return Session.equals('editing_itemname', this._id);
-};
+Template.orgtask_todo_item.helpers({
+  editing: function () {
+    return Session.equals('editing_itemname', this._id);
+  },
+  is_kickstarter: function () {
+    var truefalse = null
+    if (Taskspending.findOne({project: this.project, tags: "kickstart"})) {
+    truefalse = (this._id == Taskspending.findOne({project: this.project, tags: "kickstart"})._id)
+    }
+    return truefalse
+  },
+  nokickstart: function () {
+    if (this.project) {
+      return !Taskspending.findOne({project: this.project, tags:"kickstart"});
+    } else {
+      return false
+    }
+  },
+})
 
 Template.orgtask_todo_item.events({
   'dblclick .todo-item': function (e, t) {
@@ -40,21 +56,4 @@ var focus_field_by_id = function (id) {
     input.focus();
     input.select();
   }
-};
-
-Template.orgtask_todo_item.is_kickstarter = function () {
-  var truefalse = null
-  if (Taskspending.findOne({project: this.project, tags: "kickstart"})) {
-  truefalse = (this._id == Taskspending.findOne({project: this.project, tags: "kickstart"})._id)
-  }
-  return truefalse
 }
-
-Template.orgtask_todo_item.nokickstart = function () {
-  if (this.project) {
-  return !Taskspending.findOne({project: this.project, tags:"kickstart"});
-  } else {
-  return false
-  }
-};
-

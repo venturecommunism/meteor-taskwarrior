@@ -3,47 +3,40 @@ Session.set('projopen', null);
 Session.set('newdocument', null);
 Session.set('newchecklist', null);
 
-Template.project_item.documents = function () {
-  return Taskspending.find({type: "textfile", project: this.project});
-}
-
-Template.project_item.checklists = function () {
-  return Taskspending.find({type: "checklist", project: this.project});
-}
-
-Template.project_item.alarmsets = function () {
-  return Taskspending.find({type: "alarmset", project: this.project});
-}
-
-Template.project_item.new_document = function () {
-  return Session.equals('newdocument', this.project)
-}
-
-Template.project_item.new_checklist = function () {
-  return Session.equals('newchecklist', this.project)
-}
-
-Template.project_item.new_alarmset = function () {
-  return Session.equals('newalarmset', this.project)
-}
-
-Template.project_item.projopen = function () {
-  return Session.equals('projopen', this.project)
-}
-
-Template.project_item.project_has_largeroutcome = function () {
-  var largeroutcome_systemtask = Taskspending.findOne({project: this.project, tags: "largeroutcome"})
-  var returnvalue = largeroutcome_systemtask ? largeroutcome_systemtask.description : false
-  return returnvalue
-};
-
-Template.project_item.editing = function () {
-  return Session.equals('editing_item_largeroutcome', this.project);
-};
-
-Template.project_item.editing_defaultcontext = function () {
-  return Session.equals('editing_defaultcontext',this.project)
-}
+Template.project_item.helpers({
+  documents: function () {
+    return Taskspending.find({type: "textfile", project: this.project});
+  },
+  checklists: function () {
+    return Taskspending.find({type: "checklist", project: this.project});
+  },
+  alarmsets: function () {
+    return Taskspending.find({type: "alarmset", project: this.project});
+  },
+  new_document: function () {
+    return Session.equals('newdocument', this.project)
+  },
+  new_checklist: function () {
+    return Session.equals('newchecklist', this.project)
+  },
+  new_alarmset: function () {
+    return Session.equals('newalarmset', this.project)
+  },
+  projopen: function () {
+    return Session.equals('projopen', this.project)
+  },
+  project_has_largeroutcome: function () {
+    var largeroutcome_systemtask = Taskspending.findOne({project: this.project, tags: "largeroutcome"})
+    var returnvalue = largeroutcome_systemtask ? largeroutcome_systemtask.description : false
+    return returnvalue
+  },
+  editing: function () {
+    return Session.equals('editing_item_largeroutcome', this.project);
+  },
+  editing_defaultcontext: function () {
+    return Session.equals('editing_defaultcontext',this.project)
+  },
+})
 
 Template.project_item.events({
   'dblclick .project-item': function (e, t) {
@@ -171,19 +164,6 @@ console.log(Taskspending.insert({project: this.project, description: largerOutco
 
 
 });
-
-/*
-Template.todo_item.events[ okcancel_events('#todo-input') ] =
-  make_okcancel_handler({
-    ok: function (value) {
-      Todos.update(this._id, {$set: {text: value}});
-      Session.set('editing_itemname', null);
-    },
-    cancel: function () {
-      Session.set('editing_itemname', null);
-    }
-  });
-*/
 
 // Finds a text input in the DOM by id and focuses it.
 var focus_field_by_id = function (id) {
