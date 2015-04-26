@@ -6,7 +6,7 @@
     {{> checklisteditingdialog}}
     {{> alarmseteditingdialog}}
 
-<h3>Most Important Tasks (MITs)</h3>
+<h3>Most Important Tasks (MITs)</h3><p class="btn sorting_mits {{sorting_mits}}">Sort MITs</p>
 <div id="task_list" class="mit_task_list">
 {{#each mits}}
 {{> orgtask_todo_item}}
@@ -50,7 +50,6 @@
         {{> orgtask_todo_item}}
       {{/if}}
   </ul>
-<!-- <div style="margin: 25px 0"></div> -->
 {{/each}}
 
 {{/if}}
