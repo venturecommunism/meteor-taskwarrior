@@ -8,8 +8,8 @@ Template.alarmprocessingdialog.helpers({
   has_duedate: function () {
     return this.timer
   },
-  processing_task: function () {
-    return (Session.equals('processing_task',true));
+  processing_alarm: function () {
+    return (Session.equals('processing_task',true) && this.type == 'alarmset');
   },
   has_project: function () {
     return (Taskspending.findOne({_id: Session.get('current_processedtask')}).project ? 1 : 0 )
