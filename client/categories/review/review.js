@@ -13,7 +13,6 @@ Template.categories.events({
 Deps.autorun(function(){
   if (Session.equals('review_status', true)) {
     if (Taskspending.findOne({tags: "inbox"})) {
-      Toast.success('Step 1: Process your inbox', 'Daily Review', {displayDuration: 5000});
       Session.set('organize_status', false);
       Session.set('review_status', true);
       Session.set('do_status', false);

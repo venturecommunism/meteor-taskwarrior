@@ -22,10 +22,11 @@ Template.collect.events({
       {
         var formattednow = formattedNow()
         var uuid = guid()
-        Tasksbacklog.insert({description: e.target.value, entry: formattednow, status: "pending", tags: ['inbox'], uuid: uuid})
-        Taskspending.insert({description: e.target.value, entry: formattednow, status: "pending", tags: ['inbox'], uuid: uuid})
+        var rank = Taskspending.findOne({rank: {$exists: 1}}, {sort: {rank: 1}}).rank
+console.log(rank)
+        Tasksbacklog.insert({description: e.target.value, entry: formattednow, status: "pending", tags: ['inbox'], uuid: uuid, rank: rank + 1})
+        Taskspending.insert({description: e.target.value, entry: formattednow, status: "pending", tags: ['inbox'], uuid: uuid, rank: rank + 1})
         Session.set('adding_newtask', false);
-        Toast.success('Collected a task', 'Daily Review', {displayDuration: 5000});
        }
      }
   },
