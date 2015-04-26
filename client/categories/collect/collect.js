@@ -23,7 +23,6 @@ Template.collect.events({
         var formattednow = formattedNow()
         var uuid = guid()
         var rank = Taskspending.findOne({rank: {$exists: 1}}, {sort: {rank: -1}}).rank + 1
-console.log(rank)
         Tasksbacklog.insert({description: e.target.value, entry: formattednow, status: "pending", tags: ['inbox'], uuid: uuid, rank: rank})
         Taskspending.insert({description: e.target.value, entry: formattednow, status: "pending", tags: ['inbox'], uuid: uuid, rank: rank})
         Session.set('adding_newtask', false);
