@@ -7,14 +7,10 @@ Template.multicontext.helpers({
     return multicontext
   },
   multitasks: function () {
-    if (!Session.get('do_context')){
-      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: this.toString()}]}, {sort: {due:1}})
-    }
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: this.toString()}]}, {sort: {rank: -1}})
   },
   multitasks2: function () {
-    if (!Session.get('do_context')){
-      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: this.toString()}]}, {sort: {due:1}})
-    }
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: this.toString()}]}, {sort: {rank: {$exists: true}, rank: 1}})
   },
   projectcolor: function () {
     return "projectcolor"

@@ -15,20 +15,10 @@ if (Taskspending.findOne({type: 'default_multicontext'})) {
 
 Template.do.helpers({
   tasks: function () {
-    if (Session.get('do_context')){
-      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$exists: false}}, {context: Session.get('do_context')}]})
-    }
-    else {
-      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due:1}})
-    }
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: 1}})
   },
   tasks2: function () {
-    if (Session.get('do_context')){
-      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: Session.get('do_context')}]})
-    }
-    else {
-      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: {$exists: false}}]}, {sort: {due:1}})
-    }
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: {$exists: false}}]}, {sort: {rank: 1}})
   },
   dueclock: function () {
     return Session.get("timer-" + this.uuid)
