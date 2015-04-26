@@ -28,7 +28,8 @@ right: 41px;
 
 .reviewproject {
 position: relative;
-top: -30px;
+top: -33px;
+float: left;
 }
 
 body {
@@ -66,12 +67,16 @@ width:100%;
 list-style:none;
 margin:0;
 padding:0;
+clear: both;
 }
-#task_list li, #project_list li{
+#project_list #task_list {
+clear: none;
+}
+#task_list li, #active_project_list li{
 list-style:none;
 margin:5px;
 }
-#task_list li.task_item:hover, #project_list li.task_item:hover{
+#task_list li.task_item:hover, #active_project_list li.task_item:hover{
 background-color:#fc6;
 color:#630;
 }
@@ -294,4 +299,22 @@ p#mit {
   position: relative;
   top: -30px;
   margin: 0 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  float: left;
+}
+
+.active-project h4 {
+  float: none;
+}
+
+.sorting_mits {
+top: 14px;
+position: relative;
+left: 20px;
+}
+
+.active-project .project-item p {
+  margin-bottom: 37px;
 }
