@@ -286,3 +286,12 @@ clear: both;
 right: 12px;
 left: auto;
 }
+
+p#mit {
+  float: right;
+  height: 20px;
+  padding: 5px;
+  position: relative;
+  top: -30px;
+  margin: 0 10px;
+}
