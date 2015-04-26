@@ -1,6 +1,5 @@
 Deps.autorun(function () {
 if (Session.get('taskspending_dataloaded')) {
-console.log('this one works')
 cursor = Taskspending.find({status: {$ne: "completed"}, $and: [{tags: {$ne: "inbox"}}, {due: {$exists: true}}, {context: {$exists: false}}]}, {sort: {due:1}})
 
 
@@ -16,19 +15,10 @@ if (entry.payload) {
 var cursorthingie = Taskspending.find({$and: [{checked: "no"}, {_id: {$in: entry.payload}}]}).fetch()
 }
 var momenttwo = moment(newformattednow, "YYYY-MM-DD-HH-mm-ss")
-//if (cursorthingie && (cursorthingie != []) && cursorthingie != '') {
 var momentone = moment(newstringparts, "YYYY-MM-DD-HH-mm-ss")
-console.log(cursorthingie + ' should not be equal to []')
-console.log('entry payload was ' + entry.payload)
-//} else {
-//var momentone = momenttwo.add(1,'seconds')
-//console.log('added')
-//}
-
 
 var diff = momentone.diff(momenttwo, 'seconds')
   clock = diff;
-console.log('clock for ' + entry.alarmorder + ' is ' + diff)
   var uuid = entry.uuid
 
   timeLeft = function() {
@@ -56,15 +46,10 @@ var todolist = cursorthingie
 } else {
 var todolist = []
 }
-console.log('the todolist was ' + cursorthingie)
-//    var todolist = Taskspending.find({$and: [{checked: "no"}, {_id: {$in: entry.payload}}]}).fetch()
-//    var newtodolist = intersection(todolist, arr)
-//console.log(newtodolist + ' is newtodolist')
     var mathrand = Math.floor((Math.random() * 100000) + 1);
     var c = {}
     c[mathrand] = 0
     for (var i=0; i < todolist.length; i++) {
-      console.log(todolist[i])
       var options = {body: todolist[i].description}
       var n = new Notification(entry.description, options);
       c[mathrand] += 1
@@ -72,7 +57,6 @@ console.log('the todolist was ' + cursorthingie)
         var thisalarm = entry
         n.onclose = function () {
           if (Taskspending.findOne({alarmorder: thisalarm.alarmorder + 1})._id) {
-console.log('foundone')
             var nextalarm = Taskspending.findOne({alarmorder: thisalarm.alarmorder + 1})
             var formattednow = formattedNow()
             var newformattednow = formattednow.substring(0,4) + "-" + formattednow.substring(4,6) + "-" + formattednow.substring(6,8) + "-" + formattednow.substring(9,11) + "-" + formattednow.substring(11,13) + " " + formattednow.substring(13,15)
@@ -80,12 +64,9 @@ console.log('foundone')
 var nextcursorthingie = Taskspending.find({$and: [{checked: "no"}, {_id: {$in: nextalarm.payload}}]}).fetch()
 if (nextcursorthingie == '' || nextcursorthingie == []) {
             var momenttwo = momentone.add('s', 5)
-console.log('first outcome adding s')
 } else {
-//            var momenttwo = momentone.add('m', nextalarm.timer)
   var project = Taskspending.findOne({_id: Session.get('alarmsetediting')})
            var momenttwo = momentone.add('m', project.timer)
-console.log('second outcome like normal')
 }
             var formattedmomenttwo = momenttwo.format('YYYYMMDD') + 'T' + momenttwo.format('HHmmss') + 'Z'
             Taskspending.update({_id: nextalarm._id}, {$set: {due:formattedmomenttwo}})
@@ -96,7 +77,6 @@ console.log('second outcome like normal')
   }
 
 
-      console.log("That's All Folks");
       Session.set("timer-" + uuid, undefined)
       return Meteor.clearInterval(interval);
     }
@@ -132,10 +112,6 @@ Template.task_alarmset_item.editing = function () {
 
 Template.task_alarmset_item.events({
   'dblclick .todo-item': function (e, t) {
-//    alert('Hi');
-//    Session.set('editing_itemname', this._id);
-//    Meteor.flush(); // update DOM before focus
-//    focus_field_by_id("todo-input");
   },
   'focusout #todo-input': function (e, t) {
     Session.set('editing_itemname', null);
@@ -149,20 +125,11 @@ Template.task_alarmset_item.events({
       {
         var formattednow = formattedNow()
         var uuid = this.uuid
-console.log(uuid)
-        console.log(Tasksbacklog.insert({description: taskVal, entry: formattednow, uuid:uuid}))
-        console.log(Taskspending.update({_id:this._id},{$set:{description: taskVal, entry: formattednow}}))
         Session.set('editing_itemname', null);
        }
      }
   },
   'click .startprocessing-butto2': selectTaskProcessing,
-// trying to figure out how to get this event to fire along with selectTaskProcessing therefore including 'div'
-//  'click .startprocessing-button-foralarms': function (e,t) {
-//console.log('it werked')
-//    Session.set('alarmbeingprocessed', this._id)
-//selectTaskProcessing(e,t)
-//  }
 
 
 });
