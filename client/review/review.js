@@ -2,64 +2,6 @@ Session.set('processing_task', false)
 Session.set('documentediting', false)
 Session.set('sorting_mits', false)
 
-Template.documenteditingdialog.helpers({
-  documenteditingdialog: function () {
-    return Session.get('documentediting');
-  }
-})
-
-Template.checklisteditingdialog.helpers({
-  checklisteditingdialog: function () {
-    return Session.get('checklistediting');
-  }
-})
-
-Template.alarmseteditingdialog.helpers({
-  alarmseteditingdialog: function () {
-    return Session.get('alarmsetediting');
-  }
-})
-
-Template.project_item.events({
-  'click .task_item li': function (e,t) {
-    if (this.type == 'textfile') {
-      Session.set('documentediting', this._id)
-    } else if (this.type == 'checklist') {
-      Session.set('checklistediting', this._id)
-    } else if (this.type == 'alarmset') {
-      Session.set('alarmsetediting', this._id)
-    }
-  },
-});
-
-Template.process.events({
-  'click #btnAddItem': function (e,t){
-    Session.set('list_adding',true);
-    Meteor.flush();
-    focusText(t.find("#item_to_add"));
-  },
-  'keyup #item_to_add': function (e,t){
-    if (e.which === 13)
-      {
-        addItem(Session.get('current_list'),e.target.value);
-        Session.set('list_adding',false);
-      }
-  },
-  'focusout #item_to_add': function(e,t){
-//    Session.set('list_adding',false);
-  },
-  'click .delete_item': function(e,t){
-    removeItem(e.target.id);
-  },
-  'click .project': function(e,t){
-    Session.set('project_input',this.Name);
-    Meteor.flush();
-    focusText(t.find(".title"),this.project);
-
-  },
-  'click .startprocessing-button': selectTaskProcessing
-});
-
 Template.review.helpers({
   tasks: function () {
     Session.set('helpsesh',true)
@@ -107,6 +49,78 @@ Template.review.helpers({
     }
   },
 })
+
+Template.documenteditingdialog.helpers({
+  documenteditingdialog: function () {
+    return Session.get('documentediting');
+  }
+})
+
+Template.checklisteditingdialog.helpers({
+  checklisteditingdialog: function () {
+    return Session.get('checklistediting');
+  }
+})
+
+Template.alarmseteditingdialog.helpers({
+  alarmseteditingdialog: function () {
+    return Session.get('alarmsetediting');
+  }
+})
+
+Template.process.helpers({
+  waiting: function () {
+    if (!this.wait) {
+      return false
+    }
+    var formattednow = formattedNow()
+    var string = this.wait
+    var string = string.split("T")[0] + string.split("T")[1]
+    var string = string.split("Z")[0]
+    return (string > formattednow)
+  }
+})
+
+
+Template.project_item.events({
+  'click .task_item li': function (e,t) {
+    if (this.type == 'textfile') {
+      Session.set('documentediting', this._id)
+    } else if (this.type == 'checklist') {
+      Session.set('checklistediting', this._id)
+    } else if (this.type == 'alarmset') {
+      Session.set('alarmsetediting', this._id)
+    }
+  },
+});
+
+Template.process.events({
+  'click #btnAddItem': function (e,t){
+    Session.set('list_adding',true);
+    Meteor.flush();
+    focusText(t.find("#item_to_add"));
+  },
+  'keyup #item_to_add': function (e,t){
+    if (e.which === 13)
+      {
+        addItem(Session.get('current_list'),e.target.value);
+        Session.set('list_adding',false);
+      }
+  },
+  'focusout #item_to_add': function(e,t){
+//    Session.set('list_adding',false);
+  },
+  'click .delete_item': function(e,t){
+    removeItem(e.target.id);
+  },
+  'click .project': function(e,t){
+    Session.set('project_input',this.Name);
+    Meteor.flush();
+    focusText(t.find(".title"),this.project);
+
+  },
+  'click .startprocessing-button': selectTaskProcessing
+});
 
 Template.review.events({
   'click .sorting_mits': function (e,t) {
@@ -192,19 +206,6 @@ Session.set('helpsesh',false)
   },
   'click .startprocessing-button': selectTaskProcessing,
 });
-
-Template.process.helpers({
-  waiting: function () {
-    if (!this.wait) {
-      return false
-    }
-    var formattednow = formattedNow()
-    var string = this.wait
-    var string = string.split("T")[0] + string.split("T")[1]
-    var string = string.split("Z")[0]
-    return (string > formattednow)
-  }
-})
 
 Template.review.rendered = function () {
   Deps.autorun(function() {
