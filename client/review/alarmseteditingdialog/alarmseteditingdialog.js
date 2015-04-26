@@ -1,20 +1,33 @@
-Template.alarmseteditingdialog.alarmsettitle = function () {
-  var alarmsettitle = Taskspending.findOne({_id: Session.get('alarmsetediting')})
-  if (alarmsettitle) {
-  return alarmsettitle.description
-  }
-}
-
-Template.alarmseteditingdialog.timer = function () {
-  var timer = Taskspending.findOne({_id: Session.get('alarmsetediting')})
-  if (timer) {
-  return timer.timer
-  }
-}
-
-Template.alarmseteditingdialog.payload = function () {
-  return Taskspending.findOne({_id: Session.get('alarmsetediting')}).payload
-}
+Template.alarmseteditingdialog.helpers({
+  tasks: function () {
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission(function (status) {
+        if (Notification.permission !== status) {
+          Notification.permission = status;
+        }
+      })
+    }
+    var project = Taskspending.findOne({_id: Session.get('alarmsetediting')})
+    if (project) {
+      return Taskspending.find({project: project.project, type: "alarmsetitem"}, {sort: {alarmorder: 1}})
+    }
+  },
+  alarmsettitle: function () {
+    var alarmsettitle = Taskspending.findOne({_id: Session.get('alarmsetediting')})
+    if (alarmsettitle) {
+      return alarmsettitle.description
+    }
+  },
+  timer: function () {
+    var timer = Taskspending.findOne({_id: Session.get('alarmsetediting')})
+    if (timer) {
+      return timer.timer
+    }
+  },
+  payload: function () {
+    return Taskspending.findOne({_id: Session.get('alarmsetediting')}).payload
+  },
+})
 
 Template.alarmseteditingdialog.events({
   'click .alarmseteditclose': function (e,t) {
@@ -42,21 +55,4 @@ Template.alarmseteditingdialog.events({
   },
 
 
-});
-
-Template.alarmseteditingdialog.tasks = function () {
-  if (Notification.permission !== "granted") {
-    Notification.requestPermission(function (status) {
-      if (Notification.permission !== status) {
-        Notification.permission = status;
-      }
-    });
-  }
-
-  var project = Taskspending.findOne({_id: Session.get('alarmsetediting')})
-  if (project) {
-    return Taskspending.find({project: project.project, type: "alarmsetitem"}, {sort: {alarmorder: 1}})
-  }
-}
-
-
+})

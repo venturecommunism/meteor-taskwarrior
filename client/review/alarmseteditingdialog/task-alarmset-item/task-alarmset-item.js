@@ -1,3 +1,63 @@
+Session.set('editing_itemname', null)
+
+Template.task_alarmset_item.helpers({
+  dueclock: function () {
+    return Session.get("timer-" + this.uuid)
+  },
+  checkedcontext: function () {
+    if (Session.get("multicontext")) {
+      if (Session.get("multicontext").indexOf(this.context) > -1) {
+        return 'checked';
+      }
+    }
+  },
+  editing: function () {
+    return Session.equals('editing_itemname', this._id);
+  },
+})
+
+Template.task_alarmset_item.events({
+  'dblclick .todo-item': function (e, t) {
+  },
+  'focusout #todo-input': function (e, t) {
+    Session.set('editing_itemname', null);
+    Meteor.flush();
+  },
+  'keyup #todo-input': function (e,t) {
+    if (e.which === 13)
+    {
+      var taskVal = String(e.target.value || "");
+      if (taskVal)
+      {
+        var formattednow = formattedNow()
+        var uuid = this.uuid
+        Session.set('editing_itemname', null);
+       }
+     }
+  },
+  'click .startprocessing-butto2': selectTaskProcessing,
+})
+
+Template.task_alarmset_item.rendered = function () {
+  if (Notification.permission !== "granted") {
+    Notification.requestPermission(function (status) {
+      if (Notification.permission !== status) {
+        Notification.permission = status;
+      }
+    });
+  }
+}
+
+// Finds a text input in the DOM by id and focuses it.
+var focus_field_by_id = function (id) {
+  var input = document.getElementById(id);
+  if (input) {
+    input.focus();
+    input.select();
+  }
+}
+
+
 Deps.autorun(function () {
 if (Session.get('taskspending_dataloaded')) {
 cursor = Taskspending.find({status: {$ne: "completed"}, $and: [{tags: {$ne: "inbox"}}, {due: {$exists: true}}, {context: {$exists: false}}]}, {sort: {due:1}})
@@ -88,81 +148,3 @@ if (nextcursorthingie == '' || nextcursorthingie == []) {
 
 }
 })
-
-
-Template.task_alarmset_item.helpers({
-  dueclock: function () {
-    return Session.get("timer-" + this.uuid)
-  }
-})
-
-Template.task_alarmset_item.rendered = function () {
-  if (Notification.permission !== "granted") {
-    Notification.requestPermission(function (status) {
-      if (Notification.permission !== status) {
-        Notification.permission = status;
-      }
-    });
-  }
-}
-
-Session.set('editing_itemname', null);
-
-Template.task_alarmset_item.editing = function () {
-  return Session.equals('editing_itemname', this._id);
-};
-
-Template.task_alarmset_item.events({
-  'dblclick .todo-item': function (e, t) {
-  },
-  'focusout #todo-input': function (e, t) {
-    Session.set('editing_itemname', null);
-    Meteor.flush();
-  },
-  'keyup #todo-input': function (e,t) {
-    if (e.which === 13)
-    {
-      var taskVal = String(e.target.value || "");
-      if (taskVal)
-      {
-        var formattednow = formattedNow()
-        var uuid = this.uuid
-        Session.set('editing_itemname', null);
-       }
-     }
-  },
-  'click .startprocessing-butto2': selectTaskProcessing,
-
-
-});
-
-/*
-Template.todo_item.events[ okcancel_events('#todo-input') ] =
-  make_okcancel_handler({
-    ok: function (value) {
-      Todos.update(this._id, {$set: {text: value}});
-      Session.set('editing_itemname', null);
-    },
-    cancel: function () {
-      Session.set('editing_itemname', null);
-    }
-  });
-*/
-
-// Finds a text input in the DOM by id and focuses it.
-var focus_field_by_id = function (id) {
-  var input = document.getElementById(id);
-  if (input) {
-    input.focus();
-    input.select();
-  }
-};
-
-Template.task_alarmset_item.checkedcontext = function () {
-  if (Session.get("multicontext")) {
-    if (Session.get("multicontext").indexOf(this.context) > -1) {
-      return 'checked';
-    }
-  }
-}
-

@@ -1,10 +1,11 @@
-Template.documenteditingdialog.doctitle = function () {
-  return Taskspending.findOne({_id: Session.get('documentediting')}).description
-}
-
-Template.documenteditingdialog.payload = function () {
-  return Taskspending.findOne({_id: Session.get('documentediting')}).payload
-}
+Template.documenteditingdialog.helpers({
+  doctitle: function () {
+    return Taskspending.findOne({_id: Session.get('documentediting')}).description
+  },
+  payload: function () {
+    return Taskspending.findOne({_id: Session.get('documentediting')}).payload
+  },
+})
 
 Template.documenteditingdialog.events({
   'click .modal .savebutton': function (e,t) {

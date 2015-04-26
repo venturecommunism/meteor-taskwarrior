@@ -1,13 +1,26 @@
-Template.checklisteditingdialog.checklisttitle = function () {
-  var checklisttitle = Taskspending.findOne({_id: Session.get('checklistediting')})
-  if (checklisttitle) {
-  return checklisttitle.description
-  }
-}
-
-Template.checklisteditingdialog.payload = function () {
-  return Taskspending.findOne({_id: Session.get('checklistediting')}).payload
-}
+Template.checklisteditingdialog.helpers({
+  tasks: function () {
+    var checklistediting = Taskspending.findOne({_id: Session.get('checklistediting')})
+    if (checklistediting) {
+      return Taskspending.find({checked: "no", checklistid: checklistediting._id, project: checklistediting.project, type: "checklistitem"})
+    }
+  },
+  tasks2: function () {
+    var checklistediting = Taskspending.findOne({_id: Session.get('checklistediting')})
+    if (checklistediting) {
+      return Taskspending.find({checked: "yes", checklistid: checklistediting._id, project: checklistediting.project, type: "checklistitem"})
+    }
+  },
+  checklisttitle: function () {
+    var checklisttitle = Taskspending.findOne({_id: Session.get('checklistediting')})
+    if (checklisttitle) {
+    return checklisttitle.description
+    }
+  },
+  payload: function () {
+    return Taskspending.findOne({_id: Session.get('checklistediting')}).payload
+  },
+})
 
 Template.checklisteditingdialog.events({
   'click .checklisteditclose': function (e,t) {
@@ -23,19 +36,4 @@ Template.checklisteditingdialog.events({
   }
 
 
-});
-
-Template.checklisteditingdialog.tasks = function () {
-  var checklistediting = Taskspending.findOne({_id: Session.get('checklistediting')})
-  if (checklistediting) {
-    return Taskspending.find({checked: "no", checklistid: checklistediting._id, project: checklistediting.project, type: "checklistitem"})
-  }
-}
-
-Template.checklisteditingdialog.tasks2 = function () {
-  var checklistediting = Taskspending.findOne({_id: Session.get('checklistediting')})
-  if (checklistediting) {
-    return Taskspending.find({checked: "yes", checklistid: checklistediting._id, project: checklistediting.project, type: "checklistitem"})
-  }
-}
-
+})
