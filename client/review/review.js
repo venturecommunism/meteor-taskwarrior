@@ -65,10 +65,10 @@ Template.review.helpers({
     Session.set('helpsesh',true)
     Session.set('helpsesh',false)
     //toggling this helpsesh session variable to make the jquery work
-    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {rank: {$exists: 1}, rank:1}})
+    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {rank: 1}})
   },
   tasks2: function () {
-    return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {project: 1}})
+    return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {rank: 1}})
   },
   orgtasks: function () {
       return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart"}})
@@ -97,7 +97,7 @@ Template.review.helpers({
     return Taskspending.find({context: "somedaymaybe"})
   },
   waitingfortasks: function () {
-    return Taskspending.find({context: "waitingfor"})
+    return Taskspending.find({context: "waitingfor", $or: [{project: {$exists: 0}}, {project: ""}]})
   },
   sorting_mits: function () {
     if (Session.equals('sorting_mits', true)) {
