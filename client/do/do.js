@@ -71,7 +71,7 @@ Template.do.helpers({
       return ''
     }
   },
-  date = function () {
+  date: function () {
     var dt = new Date();
     var month = dt.getMonth()+1;
     var day = dt.getDate();
