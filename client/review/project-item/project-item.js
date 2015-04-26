@@ -55,10 +55,8 @@ Template.project_item.events({
       var largerOutcomeVal = String(e.target.value || "");
       if (largerOutcomeVal)
       {
-console.log("did something")
         var formattednow = formattedNow()
         var uuid = Taskspending.findOne({project: this.project, tags: "largeroutcome"}) ? Taskspending.findOne({project: this.project, tags: "largeroutcome"}).uuid : guid()
-console.log(uuid)
         console.log(Tasksbacklog.insert({project: this.project, description: largerOutcomeVal, tags: ["largeroutcome"], entry: formattednow, uuid:uuid}))
 if (Taskspending.findOne({uuid: uuid})) {
         console.log(Taskspending.update({_id:Taskspending.findOne({project: this.project, tags: "largeroutcome"})._id},{$set:{description: largerOutcomeVal, entry: formattednow}}))
