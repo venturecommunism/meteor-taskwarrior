@@ -13,43 +13,81 @@ if (Taskspending.findOne({type: 'default_multicontext'})) {
 
 // putting the clock code into a Meteor.subscribe ready() callback
 
-Template.do.dueclock = function () {
-
-  return Session.get("timer-" + this.uuid)
-}
-
-Template.do.is_doing = function () {
-  return Session.get('do_status')
-}
-
-Template.do.tasks = function () {
-  if (Session.get('do_context')){
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$exists: false}}, {context: Session.get('do_context')}]})
-  }
-  else {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due:1}})
-  }
-}
-
-Template.do.tasks2 = function () {
-  if (Session.get('do_context')){
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: Session.get('do_context')}]})
-  }
-  else {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: {$exists: false}}]}, {sort: {due:1}})
-  }
-}
-
-Template.do.editing = function () {
-  return Session.equals('editing_itemname', this._id);
-};
-
+Template.do.helpers({
+  tasks: function () {
+    if (Session.get('do_context')){
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$exists: false}}, {context: Session.get('do_context')}]})
+    }
+    else {
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due:1}})
+    }
+  },
+  tasks2: function () {
+    if (Session.get('do_context')){
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: Session.get('do_context')}]})
+    }
+    else {
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: {$exists: false}}]}, {sort: {due:1}})
+    }
+  },
+  dueclock: function () {
+    return Session.get("timer-" + this.uuid)
+  },
+  duedate: function () {
+    if (this.due) {
+      var newstringpartsT = this.due.split("T")
+      var newstringpartsZ = newstringpartsT[1].split("Z")
+      var newstringwhole = newstringpartsT[0] + newstringpartsZ[0]
+      return newstringpartsT[0].substring(4,6) +'/'+ newstringpartsT[0].substring(6,8) +'/'+ newstringpartsT[0].substring(0,4)
+    }
+    else {
+      return false
+    }
+  },
+  editing: function () {
+    return Session.equals('editing_itemname', this._id);
+  },
+  somedaymaybeproject: function () {
+    return Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})
+  },
+  checkedcontext: function () {
+    if (Session.get("multicontext")) {
+      if (Session.get("multicontext").indexOf(this.context) > -1) {
+        return '+';
+      }
+      else {
+        return '-';
+      }
+    }
+  },
+  is_doing: function () {
+    return Session.get('do_status')
+  },
+  largeroutcome: function () {
+    if (Taskspending.findOne({project: this.project, tags: "largeroutcome"})) {
+      return Taskspending.findOne({project: this.project, tags: "largeroutcome"}).description;
+    }
+    else {
+      return ''
+    }
+  },
+  date = function () {
+    var dt = new Date();
+    var month = dt.getMonth()+1;
+    var day = dt.getDate();
+    var year = dt.getFullYear();
+    var time = dt.getTime();
+    var date = new Date(time);
+    return 'Date and time is ' + date.toString();
+  },
+  contexts: function () {
+    return context_infos()
+  },
+})
 
 Template.do.events({
   'click .startprocessing-button': selectTaskProcessing,
-
   'dblclick .todo-item': function (e, t) {
-//    alert('Hi');
     Session.set('editing_itemname', this._id);
     Meteor.flush(); // update DOM before focus
     focus_field_by_id("todo-input");
@@ -91,68 +129,14 @@ console.log(uuid)
       Session.set("multicontext", tempcontext)
     }
   },
-
-});
-
-Template.do.checkedcontext = function () {
-  if (Session.get("multicontext")) {
-    if (Session.get("multicontext").indexOf(this.context) > -1) {
-      return '+';
-    }
-    else {
-      return '-';
-    }
-  }
-}
-
-Template.do.largeroutcome = function () {
-  if (Taskspending.findOne({project: this.project, tags: "largeroutcome"})) {
-    return Taskspending.findOne({project: this.project, tags: "largeroutcome"}).description;
-  }
-  else {
-    return ''
-  }
-};
-
-Template.do.somedaymaybeproject = function () {
-  return Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})
-}
-
-Template.do.contexts = function () {
-  return context_infos()
-}
-
-
-Template.do.duedate = function () {
-if (this.due) {
-var newstringpartsT = this.due.split("T")
-var newstringpartsZ = newstringpartsT[1].split("Z")
-var newstringwhole = newstringpartsT[0] + newstringpartsZ[0]
-  return newstringpartsT[0].substring(4,6) +'/'+ newstringpartsT[0].substring(6,8) +'/'+ newstringpartsT[0].substring(0,4)
-}
-else {
-return false
-}
-}
-
-Template.do.date = function () {
-var dt = new Date();
-
-// Display the month, day, and year. getMonth() returns a 0-based number.
-var month = dt.getMonth()+1;
-var day = dt.getDate();
-var year = dt.getFullYear();
-var time = dt.getTime();
-var date = new Date(time);
-return 'Date and time is ' + date.toString();
-}
+})
 
 // Finds a text input in the DOM by id and focuses it.
 var focus_field_by_id = function (id) {
   var input = document.getElementById(id);
   if (input) {
-    input.focus();
-    input.select();
+    input.focus()
+    input.select()
   }
 };
 
