@@ -65,7 +65,7 @@ Template.review.helpers({
     Session.set('helpsesh',true)
     Session.set('helpsesh',false)
     //toggling this helpsesh session variable to make the jquery work
-    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {project:1}})
+    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {rank: {$exists: 1}, rank:1}})
   },
   tasks2: function () {
     return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {project: 1}})
@@ -244,14 +244,20 @@ if (Session.equals('sorting_mits', true)) {
                    Blaze.getData(before).rank)/2
       //update the dragged Item's rank
       Taskspending.update({_id: Blaze.getData(el)._id}, {$set: {rank: newRank}})
+      proj = Taskspending.findOne({project: Blaze.getData(el).project, tags: "largeroutcome"})
+      if (!proj.rank) {
+        Taskspending.update({_id: proj._id}, {$set: {rank: newRank}})
+      }
+      if (Taskspending.findOne({project: Blaze.getData(el).project}, {sort: {rank: 1}}).rank <= newRank) {
+        Taskspending.update({_id: proj._id}, {$set: {rank: newRank}})
+      }
     }
   })
   // end of sortable code
-
+  this.$('.mit_task_list').sortable('enable')
   } else {
-    if (this.$('.mit_task_list').sortable) {
-      this.$('.mit_task_list').sortable('disable')
-    }
+    this.$('.mit_task_list').sortable()
+    this.$('.mit_task_list').sortable('disable')
   }
 })
 }
