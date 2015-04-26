@@ -13,7 +13,7 @@ Template.review.helpers({
     return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {rank: 1}})
   },
   orgtasks: function () {
-      return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart"}})
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart", rank: 1}})
   },
   kickstartertask: function () {
     return Taskspending.find({tags: "kickstart", project: this.project})
