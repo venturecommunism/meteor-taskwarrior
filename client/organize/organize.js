@@ -63,38 +63,33 @@ else {
   'click .dep-button': selectDepProcessing
 });
 
-Template.organize.is_organizing = function () {
-  return Session.get('organize_status')
-}
-
-Template.organize.tasks = function () {
-  var formattednow = formattedNow()
-  var project_filter = Session.get('project_filter');
-  if (project_filter) {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$ne: "inbox"}}, {tags: "kickstart"}]})
-  }
-}
-
-Template.organize.tasks2 = function () {
-  var formattednow = formattedNow()
-  var project_filter = Session.get('project_filter');
-  if (project_filter) {
-return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$ne: "inbox"}}, {tags: {$ne: "kickstart"}}, {type: {$nin: ["textfile", "checklist"]}}]})
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$not: "inbox"}}, {tags: {$not: "kickstart"}}, {type: {$ne: "textfile"}}], waiting: { $lt: formattednow}})
-// Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, tags: {$ne: "inbox"}, tags: "kickstart", waiting: { $lt: formattednow}}, {sort: {due: -1}}),
-// Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, tags: {$ne: ["inbox", "kickstart"]}, waiting: { $lt: formattednow}}, {sort: {due: -1}}),
-}
-  else if (project_filter === undefined) {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: { $exists: false}, tags: {$ne: "inbox"}})
-  }
-  else {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, tags: {$ne: "inbox"}})
-  }
-}
-
-Template.organize.project_has_largeroutcome = function () {
-  var largeroutcome_systemtask = Taskspending.findOne({project: Session.get('project_filter'), tags: "largeroutcome"})
-  var returnvalue = largeroutcome_systemtask ? largeroutcome_systemtask.description : false
-  return returnvalue
-};
-
+Template.organize.helpers({
+  tasks: function () {
+    var formattednow = formattedNow()
+    var project_filter = Session.get('project_filter');
+    if (project_filter) {
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$ne: "inbox"}}, {tags: "kickstart"}]})
+    }
+  },
+  tasks2: function () {
+    var formattednow = formattedNow()
+    var project_filter = Session.get('project_filter');
+    if (project_filter) {
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project_filter, $and: [{tags: {$ne: "inbox"}}, {tags: {$ne: "kickstart"}}, {type: {$nin: ["textfile", "checklist"]}}]})
+    }
+    else if (project_filter === undefined) {
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: { $exists: false}, tags: {$ne: "inbox"}})
+    }
+    else {
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, tags: {$ne: "inbox"}})
+    }
+  },
+  is_organizing: function () {
+    return Session.get('organize_status')
+  },
+  project_has_largeroutcome: function () {
+    var largeroutcome_systemtask = Taskspending.findOne({project: Session.get('project_filter'), tags: "largeroutcome"})
+    var returnvalue = largeroutcome_systemtask ? largeroutcome_systemtask.description : false
+    return returnvalue
+  },
+})

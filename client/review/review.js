@@ -1,17 +1,23 @@
 Session.set('processing_task', false);
 Session.set('documentediting', false);
 
-Template.documenteditingdialog.documenteditingdialog = function () {
-  return Session.get('documentediting');
-}
+Template.documenteditingdialog.helpers({
+  documenteditingdialog: function () {
+    return Session.get('documentediting');
+  }
+})
 
-Template.checklisteditingdialog.checklisteditingdialog = function () {
-  return Session.get('checklistediting');
-}
+Template.checklisteditingdialog.helpers({
+  checklisteditingdialog: function () {
+    return Session.get('checklistediting');
+  }
+})
 
-Template.alarmseteditingdialog.alarmseteditingdialog = function () {
-  return Session.get('alarmsetediting');
-}
+Template.alarmseteditingdialog.helpers({
+  alarmseteditingdialog: function () {
+    return Session.get('alarmsetediting');
+  }
+})
 
 Template.project_item.events({
   'click .task_item li': function (e,t) {
@@ -53,13 +59,46 @@ Template.process.events({
   'click .startprocessing-button': selectTaskProcessing
 });
 
-Template.review.kickstartertask = function () {
-  return Taskspending.find({tags: "kickstart", project: this.project})
-}
-
-Template.review.mits = function () {
-  return Taskspending.find({tags: "mit", status: {$in: ["waiting", "pending"]}}, {sort: {rank: 1}})
-}
+Template.review.helpers({
+  tasks: function () {
+    Session.set('helpsesh',true)
+    Session.set('helpsesh',false)
+    //toggling this helpsesh session variable to make the jquery work
+    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {project:1}})
+  },
+  tasks2: function () {
+    return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {project: 1}})
+  },
+  orgtasks: function () {
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart"}})
+  },
+  kickstartertask: function () {
+    return Taskspending.find({tags: "kickstart", project: this.project})
+  },
+  mits: function () {
+    return Taskspending.find({tags: "mit", status: {$in: ["waiting", "pending"]}}, {sort: {rank: 1}})
+  },
+  is_reviewing: function () {
+    return Session.get('review_status')
+  },
+  projopen: function () {
+    return Session.equals('projopen', this.project)
+  },
+  nokickstart: function () {
+    if (!Taskspending.findOne({project: this.project, tags:"kickstart"})) {
+      Session.set('projopen', this.project)
+      return 'nokickstarttask'
+    } else {
+      return 'kickstarttask'
+    }
+  },
+  somedaymaybetasks: function () {
+    return Taskspending.find({context: "somedaymaybe"})
+  },
+  waitingfortasks: function () {
+    return Taskspending.find({context: "waitingfor"})
+  },
+})
 
 Template.review.events({
   'click .kickstart.choosekickstart': function (e,t) {
@@ -72,8 +111,8 @@ Session.set('helpsesh',false)
   'click .kickstart.btn-danger': function (e,t) {
     Taskspending.update({_id: this._id}, {$unset:{tags:"kickstart"}})
     Meteor.flush()
-Session.set('helpsesh',true)
-Session.set('helpsesh',false)
+    Session.set('helpsesh',true)
+    Session.set('helpsesh',false)
   },
   'keyup #add-newtask-org': function (e,t) {
     if (e.which === 13) {
@@ -84,8 +123,8 @@ Session.set('helpsesh',false)
         context = e.target.parentElement.children[1].value
       }
       if (context) {
-      Tasksbacklog.insert({project: this.project, description: e.target.value, entry: formattednow, status: "pending", context: context, uuid: uuid})
-      Taskspending.insert({project: this.project, description: e.target.value, entry: formattednow, status: "pending", context: context, uuid: uuid})
+        Tasksbacklog.insert({project: this.project, description: e.target.value, entry: formattednow, status: "pending", context: context, uuid: uuid})
+        Taskspending.insert({project: this.project, description: e.target.value, entry: formattednow, status: "pending", context: context, uuid: uuid})
       } else {
         alert('no context')
       }
@@ -112,8 +151,8 @@ Session.set('helpsesh',false)
      Session.set('review_dialog_1',true);
    },
   'click .main-review .projclose': function (e,t){
-var tasktest = Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})
-var taskid = tasktest ? tasktest._id : ''
+    var tasktest = Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})
+    var taskid = tasktest ? tasktest._id : ''
     if (taskid != '') {
       Taskspending.update({_id: taskid}, {$pull: {tags: "somedaymaybeproj"}})
     }
@@ -143,84 +182,18 @@ var taskid = tasktest ? tasktest._id : ''
   'click .startprocessing-button': selectTaskProcessing,
 });
 
-Template.review.is_reviewing = function () {
-  return Session.get('review_status')
-}
-
-Template.process.waiting = function () {
-  if (!this.wait) {
-    return false
-  }
-  var formattednow = formattedNow()
-  var string = this.wait
-  var string = string.split("T")[0] + string.split("T")[1]
-  var string = string.split("Z")[0]
-  return (string > formattednow)
-}
-
-
-Template.review.tasks = function () {
-console.log(Taskspending.find({tags: "somedaymaybeproj"}).fetch())
-console.log(Taskspending.find({tags: "largeroutcome"}).fetch())
-Session.set('helpsesh',true)
-Session.set('helpsesh',false)
-//toggling this helpsesh session variable to make the jquery work
-return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {project:1}})
-
-  var active_projects = []
-  var all_projects = project_infos()
-  var somedaymaybe_projects = somedaymaybe_infos()
-  var shortened_all_projects = []
-  if (somedaymaybe_projects != '') {
-    var shortened_active_projects = []
-    for (i=0; i < all_projects.length; i++) {
-      shortened_all_projects[i] = all_projects[i].project
+Template.process.helpers({
+  waiting: function () {
+    if (!this.wait) {
+      return false
     }
-    var shortened_somedaymaybe_projects = []
-    for (i=0; i < somedaymaybe_projects.length; i++) {
-      shortened_somedaymaybe_projects[i] = somedaymaybe_projects[i].project
-    }
-
-    shortened_active_projects = shortened_all_projects.filter(function(n) {
-      return (shortened_somedaymaybe_projects.indexOf(n) == -1)
-    })
-
-    for (var i = 0; i < shortened_active_projects.length; i++) {
-console.log(shortened_active_projects[i])
-      active_projects.push({project: shortened_active_projects[i]})
-    }
+    var formattednow = formattedNow()
+    var string = this.wait
+    var string = string.split("T")[0] + string.split("T")[1]
+    var string = string.split("Z")[0]
+    return (string > formattednow)
   }
-  else {
-    active_projects = all_projects
-  }
-  return active_projects
-}
-
-Template.review.tasks2 = function () {
-  return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {project: 1}})
-  return somedaymaybe_infos()
-}
-
-Template.review.orgtasks = function () {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart"}})
-}
-
-Template.review.kickstartertask = function () {
-    return Taskspending.find({project: this.project, tags: "kickstart"})
-}
-
-/*
-Template.review.rendered = function () {
-console.log('REVIEW REVIEW REVIEW')
-//$('.active-project:not(:has(>#task_list li))').detach().prependTo('ul#project_list'))
-Deps.autorun(function(){
-Session.get('helpsesh')
-$('.active-project:has(>#task_list .btn-danger.kickstart)').detach().appendTo('ul#project_list')
-$('.active-project:has(>#task_list .choosekickstart)').detach().prependTo('ul#project_list')
-}
-)
-}
-*/
+})
 
 Template.review.rendered = function () {
   Deps.autorun(function() {
@@ -260,31 +233,9 @@ Deps.autorun(function() {
                        Blaze.getData(before).rank)/2
  
           //update the dragged Item's rank
-console.log(newRank)
           Taskspending.update({_id: Blaze.getData(el)._id}, {$set: {rank: newRank}})
         }
     })
 // end of sortable code
 })
-}
-
-Template.review.projopen = function () {
-  return Session.equals('projopen', this.project)
-}
-
-Template.review.nokickstart = function () {
-  if (!Taskspending.findOne({project: this.project, tags:"kickstart"})) {
-    Session.set('projopen', this.project)
-    return 'nokickstarttask'
-  } else {
-    return 'kickstarttask'
-  }
-};
-
-Template.review.somedaymaybetasks = function () {
-  return Taskspending.find({context: "somedaymaybe"})
-}
-
-Template.review.waitingfortasks = function () {
-  return Taskspending.find({context: "waitingfor"})
 }

@@ -1,5 +1,4 @@
 Template.processingdialog.events({
-
   'click .largeroutcome': function (e,t) {
     largeroutcome = Taskspending.findOne({_id: Session.get('current_processedtask')})
     var i = largeroutcome.tags.indexOf("inbox");
@@ -78,15 +77,15 @@ Template.processingdialog.events({
         projecttask.project = e.target.value
 // TODO: have to fix all these backlog inserts
 //        Tasksbacklog.insert(projecttask)
-if (e.target.value == '') {
-        Taskspending.update({_id: this._id},{$unset:{project:""}})
-}
-else {
-        Taskspending.update({_id: this._id},{$set:{project:e.target.value}})
-}
+        if (e.target.value == '') {
+          Taskspending.update({_id: this._id},{$unset:{project:""}})
+        }
+        else {
+          Taskspending.update({_id: this._id},{$set:{project:e.target.value}})
+        }
       }
-return false;
-  },
+      return false;
+    },
   'submit form': function (e,t){
     e.preventDefault()
     e.stopPropagation();
@@ -94,12 +93,12 @@ return false;
   },
   'keyup input.context': function(e,t) {
     if (e.which === 13) {
-if (e.target.value == '') {
+      if (e.target.value == '') {
         Taskspending.update({_id: this._id},{$unset:{context:""}})
-}
-else {
-      Taskspending.update({_id: this._id},{$set:{context:e.target.value}})
-}
+      }
+      else {
+        Taskspending.update({_id: this._id},{$set:{context:e.target.value}})
+      }
     }
   },
   'keyup input#duedate': function(e,t) {
@@ -109,30 +108,30 @@ else {
   },
 });
 
-Template.processingdialog.has_context = function () {
-  return this.context
-}
 
-Template.processingdialog.has_duedate = function () {
-  return this.due
-}
-
-Template.processingdialog.tasks = function () {
-  return Taskspending.findOne({_id: Session.get('current_processedtask')})
-}
-
-Template.processingdialog.processing_task = function () {
-  return (Session.equals('processing_task',true));
-};
-
-
-Template.processingdialog.tasks = function () {
-  return Taskspending.findOne({_id: Session.get('current_processedtask')})
-}
-
-Template.processingdialog.has_project = function () {
-  return (Taskspending.findOne({_id: Session.get('current_processedtask')}).project ? 1 : 0 )
-}
+Template.processingdialog.helpers({
+  tasks: function () {
+    return Taskspending.findOne({_id: Session.get('current_processedtask')})
+  },
+  processing_task: function () {
+    return (Session.equals('processing_task',true))
+  },
+  has_context: function () {
+    return this.context
+  },
+  has_duedate: function () {
+    return this.due
+  },
+  has_project: function () {
+    return (Taskspending.findOne({_id: Session.get('current_processedtask')}).project ? 1 : 0 )
+  },
+  taskcounter: function () {
+    return project_infos()[0].count
+  },
+  projwithnolargeroutcome: function () {
+    return (this.project && !(Taskspending.findOne({project: this.project, tags: "largeroutcome"})))
+  },
+})
 
 Template.processingdialog.events({
   'focusout .processingdialog': function(e,t) {
@@ -229,7 +228,7 @@ archivetask.tags = ["archive"]
     }
   },
 
-});
+})
 
 Template.processingdialog.rendered = function () {
 
@@ -241,20 +240,10 @@ projectnames.forEach(function (task) {
     projects.push(task.project)
   }
   count += 1;
-});
+})
 
   $('#typeahead').typeahead({
     name: 'accounts',
     local: ["process", "organize", "project1", "project2", "project3", "project4"]
-  });
-};
-
-
-Template.processingdialog.taskcounter = function () {
-  return project_infos()[0].count
+  })
 }
-
-Template.processingdialog.projwithnolargeroutcome = function () {
-  return (this.project && !(Taskspending.findOne({project: this.project, tags: "largeroutcome"})))
-}
-

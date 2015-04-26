@@ -1,36 +1,33 @@
-Template.multicontext.somedaymaybeproject = function () {
-  return Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})
-}
-
-Template.multicontext.multicontext = function () {
-  var multicontext = Session.get("multicontext")
-  return multicontext
-}
-
-Template.multicontext.multitasks = function () {
-  if (!Session.get('do_context')){
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: this.toString()}]}, {sort: {due:1}})
+Template.multicontext.helpers({
+  somedaymaybeproject: function () {
+    return Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})
+  },
+  multicontext: function () {
+    var multicontext = Session.get("multicontext")
+    return multicontext
+  },
+  multitasks: function () {
+    if (!Session.get('do_context')){
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: this.toString()}]}, {sort: {due:1}})
+    }
+  },
+  multitasks2: function () {
+    if (!Session.get('do_context')){
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: this.toString()}]}, {sort: {due:1}})
+    }
+  },
+  projectcolor: function () {
+    return "projectcolor"
+  },
+  mitornot: function () {
+    if (Taskspending.findOne({_id: this._id, tags: "mit"})) {
+      return 'active'
+    }
+    else {
+      return ''
+    }
   }
-}
-
-Template.multicontext.multitasks2 = function () {
-  if (!Session.get('do_context')){
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: this.toString()}]}, {sort: {due:1}})
-  }
-}
-
-Template.multicontext.projectcolor = function () {
-  return "projectcolor"
-}
-
-Template.multicontext.mitornot = function () {
-  if (Taskspending.findOne({_id: this._id, tags: "mit"})) {
-    return 'active'
-  }
-  else {
-    return ''
-  }
-}
+})
 
 Template.multicontext.events({
   'click #mit': function (e,t) {

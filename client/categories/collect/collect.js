@@ -1,9 +1,11 @@
 Session.set('adding_newtask', false);
 
 //test to see whether to render the collect input
-Template.collect.new_task = function () {
-  return Session.equals('adding_newtask',true);
-};
+Template.collect.helpers({
+  new_task: function () {
+    return Session.equals('adding_newtask',true);
+  },
+})
 
 //events for the collect template
 Template.collect.events({

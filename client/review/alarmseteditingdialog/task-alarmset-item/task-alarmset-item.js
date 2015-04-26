@@ -90,9 +90,11 @@ if (nextcursorthingie == '' || nextcursorthingie == []) {
 })
 
 
-Template.task_alarmset_item.dueclock = function () {
-  return Session.get("timer-" + this.uuid)
-}
+Template.task_alarmset_item.helpers({
+  dueclock: function () {
+    return Session.get("timer-" + this.uuid)
+  }
+})
 
 Template.task_alarmset_item.rendered = function () {
   if (Notification.permission !== "granted") {
