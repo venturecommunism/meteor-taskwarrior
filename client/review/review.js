@@ -247,9 +247,10 @@ if (Session.equals('sorting_mits', true)) {
       proj = Taskspending.findOne({project: Blaze.getData(el).project, tags: "largeroutcome"})
       if (!proj.rank) {
         Taskspending.update({_id: proj._id}, {$set: {rank: newRank}})
-      }
-      if (Taskspending.findOne({project: Blaze.getData(el).project}, {sort: {rank: 1}}).rank <= newRank) {
+      } else if (Taskspending.findOne({project: Blaze.getData(el).project}, {sort: {rank: -1}}).rank >= newRank) {
         Taskspending.update({_id: proj._id}, {$set: {rank: newRank}})
+      } else {
+        console.log(Taskspending.findOne({project: Blaze.getData(el).project}))
       }
     }
   })
