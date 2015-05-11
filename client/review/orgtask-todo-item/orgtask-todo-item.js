@@ -18,9 +18,32 @@ Template.orgtask_todo_item.helpers({
       return false
     }
   },
+  is_priority: function () {
+    if (Session.equals('projopen', this.project) && (!this.tags || this.tags.indexOf('kickstart') === -1)) {
+      return true
+    }
+  },
+  is_sequential: function () {
+    if (Session.equals('projopen', this.project) && this.tags && this.tags.indexOf('milestone') >= 0) {
+      return 'btn-primary'
+    } else {
+      return 'btn-inverse'
+    }
+  },
+  mitornot: function () {
+    if (Taskspending.findOne({_id: this._id, tags: "mit"})) {
+      return 'active'
+    }
+    else {
+      return ''
+    }
+  }
 })
 
 Template.orgtask_todo_item.events({
+  'click .choosesequential': function (e, t) {
+    Taskspending.update({_id: this._id}, {$set:{tags:["milestone"]}})
+  },
   'dblclick .todo-item': function (e, t) {
 //    alert('Hi');
     Session.set('editing_itemname', this._id);
@@ -46,7 +69,14 @@ console.log(uuid)
        }
      }
   },
-
+  'click .mit': function (e,t) {
+    if (Taskspending.findOne({_id: this._id, tags: "mit"})) {
+      Taskspending.update({_id: this._id}, {$pull: {tags: "mit"}})
+    }
+    else {
+      Taskspending.update({_id: this._id}, {$push: {tags: "mit"}})
+    }
+  }
 });
 
 // Finds a text input in the DOM by id and focuses it.
