@@ -22,8 +22,9 @@ margin-right: 24px;
 
 .kickstart {
 width: 50px;
-position: absolute;
+//position: absolute;
 right: 41px;
+float: right;
 }
 
 .reviewproject {
@@ -75,6 +76,11 @@ clear: none;
 #task_list li, #active_project_list li{
 list-style:none;
 margin:5px;
+}
+.active-project ul li {
+list-style: none;
+margin: 5px;
+clear: both;
 }
 #task_list li.task_item:hover, #active_project_list li.task_item:hover{
 background-color:#fc6;
@@ -292,7 +298,7 @@ right: 12px;
 left: auto;
 }
 
-p#mit {
+p.mit {
   float: right;
   height: 20px;
   padding: 5px;
@@ -301,7 +307,7 @@ p#mit {
   margin: 0 10px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5 {
   float: left;
 }
 
@@ -317,4 +323,20 @@ left: 20px;
 
 .active-project .project-item p {
   margin-bottom: 37px;
+}
+
+.choosesequential {
+width: 64px;
+float: right;
+}
+
+.modal-header h3, .modal-header h6 {
+float: none;
+}
+
+#task_list .mit {
+position: relative;
+top: 0;
+float: right;
+margin-right: 6px;
 }
