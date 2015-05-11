@@ -13,7 +13,7 @@ Template.review.helpers({
     return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {rank: 1}})
   },
   orgtasks: function () {
-      return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart", rank: 1}})
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart", rank: 1, tags: "milestone"}})
   },
   kickstartertask: function () {
     return Taskspending.find({tags: "kickstart", project: this.project})
@@ -83,7 +83,7 @@ Template.process.helpers({
 
 
 Template.project_item.events({
-  'click .task_item li': function (e,t) {
+  'click .project_item li': function (e,t) {
     if (this.type == 'textfile') {
       Session.set('documentediting', this._id)
     } else if (this.type == 'checklist') {
