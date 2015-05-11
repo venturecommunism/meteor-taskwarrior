@@ -22,16 +22,22 @@ Template.multicontext.helpers({
     else {
       return ''
     }
-  }
+  },
 })
 
 Template.multicontext.events({
-  'click #mit': function (e,t) {
+  'click .mit': function (e,t) {
     if (Taskspending.findOne({_id: this._id, tags: "mit"})) {
       Taskspending.update({_id: this._id}, {$pull: {tags: "mit"}})
     }
     else {
       Taskspending.update({_id: this._id}, {$push: {tags: "mit"}})
     }
-  }
+  },
+  'click .closecontext': function (e,t) {
+    var tempcontext = Session.get("multicontext")
+      var tempcontextindex = tempcontext.indexOf(String(this))
+      var splicedtempcontext = tempcontext.splice(tempcontextindex,1)
+      Session.set("multicontext", tempcontext)
+  },
 })
