@@ -37,12 +37,25 @@ Template.orgtask_todo_item.helpers({
     else {
       return ''
     }
+  },
+  is_checklistitem: function () {
+    if (Taskspending.findOne({_id: this._id, tags: "checklistitem"})) {
+      return 'active'
+    }
+    else {
+      return ''
+    }
   }
 })
 
 Template.orgtask_todo_item.events({
   'click .choosesequential': function (e, t) {
-    Taskspending.update({_id: this._id}, {$set:{tags:["milestone"]}})
+    if (Taskspending.findOne({_id: this._id, tags: "milestone"})) {
+      Taskspending.update({_id: this._id}, {$pull: {tags: "milestone"}})
+    }
+    else {
+      Taskspending.update({_id: this._id}, {$push: {tags: "milestone"}})
+    }
   },
   'dblclick .todo-item': function (e, t) {
 //    alert('Hi');
@@ -75,6 +88,14 @@ console.log(uuid)
     }
     else {
       Taskspending.update({_id: this._id}, {$push: {tags: "mit"}})
+    }
+  },
+  'click .choosechecklistitem': function (e,t) {
+    if (Taskspending.findOne({_id: this._id, tags: "mit"})) {
+      Taskspending.update({_id: this._id}, {$pull: {tags: "checklistitem"}})
+    }
+    else {
+      Taskspending.update({_id: this._id}, {$push: {tags: "checklistitem"}})
     }
   }
 });

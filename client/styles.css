@@ -18,7 +18,7 @@ right: auto;
 .kickstart, .reviewproject {
 float: right;
 height: 20px;
-margin-right: 24px;
+margin-right: 6px;
 }
 
 .kickstart {
@@ -335,14 +335,14 @@ float: right;
 float: none;
 }
 
-#task_list .mit {
+#task_list .mit, #task_list .choosechecklistitem{
 position: relative;
 top: 0;
 float: right;
 margin-right: 6px;
 }
 
-#task_list .mitproj{
+#task_list .mitproj {
 position: relative;
 top: 0;
 float: left;
