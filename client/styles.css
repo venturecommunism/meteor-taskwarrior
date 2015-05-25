@@ -7,11 +7,12 @@ width: auto;
 #task_list .close, #project_list .close {
 position: relative;
 top: 3px;
-float: left;
+float: right;
 right: -755px;
 padding-left: 7px;
 right: -782px;
 right: -99%;
+right: auto;
 }
 
 .kickstart, .reviewproject {
@@ -338,5 +339,12 @@ float: none;
 position: relative;
 top: 0;
 float: right;
+margin-right: 6px;
+}
+
+#task_list .mitproj{
+position: relative;
+top: 0;
+float: left;
 margin-right: 6px;
 }
