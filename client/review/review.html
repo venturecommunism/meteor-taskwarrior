@@ -42,7 +42,7 @@
       <input type="text" id="add-newtask-org" value="" />
       <input type="text" id="add-newtask-context-org" placeholder="{{defaultcontext}}" />
     </div>
-{{else}}
+{{else}} <!-- if proj not open -->
 {{#each kickstartertask}}
   <ul id="task_list">
       {{#if waiting}}

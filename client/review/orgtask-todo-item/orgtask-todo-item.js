@@ -9,11 +9,14 @@ Template.orgtask_todo_item.helpers({
     if (Taskspending.findOne({project: this.project, tags: "kickstart"})) {
     truefalse = (this._id == Taskspending.findOne({project: this.project, tags: "kickstart"})._id)
     }
+    else if (Taskspending.findOne({project: this.project, tags: "mit"})) {
+    truefalse = (this._id == Taskspending.findOne({project: this.project, tags: "mit"})._id)
+    }
     return truefalse
   },
   nokickstart: function () {
     if (this.project) {
-      return !Taskspending.findOne({project: this.project, tags:"kickstart"});
+      return !Taskspending.findOne({project: this.project, tags: {$in: ["kickstart", "mit"]}});
     } else {
       return false
     }

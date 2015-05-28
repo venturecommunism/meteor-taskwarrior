@@ -16,7 +16,9 @@ Template.review.helpers({
       return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart", rank: 1, tags: "milestone"}})
   },
   kickstartertask: function () {
-    return Taskspending.find({tags: "kickstart", project: this.project})
+    if (Taskspending.find({tags: {$in: ["kickstart", "mit"]}, project: this.project})) {
+      return Taskspending.find({tags: {$in: ["kickstart", "mit"]}, project: this.project})
+    }
   },
   mits: function () {
     return Taskspending.find({tags: "mit", status: {$in: ["waiting", "pending"]}}, {sort: {rank: 1}})
@@ -28,7 +30,7 @@ Template.review.helpers({
     return Session.equals('projopen', this.project)
   },
   nokickstart: function () {
-    if (!Taskspending.findOne({project: this.project, tags:"kickstart"})) {
+    if (!Taskspending.findOne({project: this.project, tags:{$in: ["kickstart", "mit"]}})) {
       Session.set('projopen', this.project)
       return 'nokickstarttask'
     } else {
