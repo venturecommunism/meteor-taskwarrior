@@ -16,8 +16,8 @@ Session.set('processing_task', false);
 
 Session.setDefault('process_status', false);
 Session.setDefault('organize_status', false);
-Session.setDefault('review_status', false);
-Session.setDefault('do_status', true);
+Session.setDefault('review_status', true);
+Session.setDefault('do_status', false);
 
 Accounts.ui.config({
   passwordSignupFields: 'USERNAME_AND_EMAIL'
