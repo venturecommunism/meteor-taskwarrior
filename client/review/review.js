@@ -13,11 +13,11 @@ Template.review.helpers({
     return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {rank: 1}})
   },
   orgtasks: function () {
-      return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart", rank: 1, tags: "milestone"}})
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart", tags: "checklistitem", tags: "milestone", rank: 1}})
   },
   kickstartertask: function () {
     if (Taskspending.find({tags: {$in: ["kickstart", "mit"]}, project: this.project})) {
-      return Taskspending.find({tags: {$in: ["kickstart", "mit"]}, project: this.project})
+      return Taskspending.find({tags: {$in: ["kickstart", "mit"]}, project: this.project}, {$sort: {rank: 1}, limit: 1})
     }
   },
   mits: function () {
