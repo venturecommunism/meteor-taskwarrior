@@ -2,13 +2,15 @@
       <li class="task_item alert">
         <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
 {{#if is_checklistitem}}
-<div class="btn btn-inverse {{mitornot}} mit">mit</div>
-<div class="btn btn-inverse checklistitem choosechecklistitem active">checklistitem</div>
+<div class="btn btn-inverse {{mitornot}} mit">done/undone</div>
+<div class="btn btn-inverse checklistitem choosechecklistitem active">checklistitem1</div>
 {{else}}
 
 {{#if mitornot}}
-<div class="btn btn-inverse checklistitem choosechecklistitem mit">checklistitem</div>
+{{#if project}}
+<div class="btn btn-inverse checklistitem choosechecklistitem mit">checklistitem2</div>
 <div class="btn btn-inverse mitproj">{{project}}</div>
+{{/if}}
 {{/if}}
 {{#if is_kickstarter}}
 <div class="btn btn-inverse active btn-danger kickstart">kickstart</div><p class="btn btn-inverse {{mitornot}} mit">mit</p>
@@ -16,8 +18,11 @@
 {{#if nokickstart}}
 <div class="btn btn-inverse kickstart choosekickstart">kickstart</div>
 {{#if mitornot}}
+<div class="btn btn-inverse checklistitem choosechecklistitem">checklistitem3</div>
 {{else}}
-<div class="btn btn-inverse checklistitem choosechecklistitem">checklistitem</div>
+{{#if project}}
+<div class="btn btn-inverse checklistitem choosechecklistitem">checklistitem4</div>
+{{/if}}
 {{/if}}
 {{/if}}
 {{/if}}
