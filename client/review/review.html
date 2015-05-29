@@ -7,6 +7,39 @@
     {{> checklisteditingdialog}}
     {{> alarmseteditingdialog}}
 
+<!-- begin calendar -->
+
+  <ul id="task_list">
+    {{#each calendartasks}}
+
+{{#if somedaymaybeproject}}
+{{else}}
+
+      <li class="task_item alert">
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+
+
+    {{#if editing}}
+      <div class="edit">
+        <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
+      </div>
+{{else}}
+<div class="todo-item">       <p>{{description}}</p>  </div>
+{{/if}}
+
+{{#if duedate}}
+<p style="">{{duedate}}</p><p style="float: right; position: relative; top: -25px;">{{dueclock}}</p>
+{{/if}}
+      </li>
+
+{{/if}}
+
+    {{/each}}
+  </ul>
+
+
+<!-- end calendar -->
+
 <h3>Most Important Tasks (MITs)</h3><p class="btn sorting_mits {{sorting_mits}}">Sort MITs</p>
 <div id="task_list" class="mit_task_list">
 {{#each mits}}
