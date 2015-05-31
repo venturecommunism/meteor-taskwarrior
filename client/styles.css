@@ -367,3 +367,12 @@ margin-right: 6px;
   display:block;
   padding: 10px;
 }
+
+.load-more-project {
+display: inline-block;
+  width: 200px;
+  text-align: center;
+}
+
+.load-more-project a {
+}

@@ -12,19 +12,20 @@
     <div class="newtask-org">
       <input type="text" id="add-newtask-org" value="" />
       <input type="text" id="add-newtask-context-org" placeholder="{{defaultcontext}}" />
-    </div>
+    
 
 
 <!-- load more -->
   {{#if Template.subscriptionsReady}}
     {{#if hasMorePosts}}
-      <p><a class="load-more-project-{{project}}">Load More</a></p>
+      <p class="load-more-project"><a class="load-more-project-{{projectid}}">Load More</a></p>
     {{/if}}
   {{else}}
     <div class="loading">{{>spinner}}</div>
   {{/if}}
 <!-- end of load more -->
 
+    </div> <!-- newtask-org end -->
 
 {{else}} <!-- if proj not open -->
 {{#each kickstartertask}}
