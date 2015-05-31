@@ -59,12 +59,14 @@ Meteor.publish("tasks", function () {
   }
 });
 
+/*
 Meteor.publish("taskspending", function () {
   var userId = this.userId
   if (adminUser(userId)) {
     return Taskspending.find()
   }
 });
+*/
 
 Meteor.publish("tasksbacklog", function () {
   var userId = this.userId
@@ -72,3 +74,27 @@ Meteor.publish("tasksbacklog", function () {
     return Tasksbacklog.find()
   }
 });
+
+Meteor.publish("taskspendingunprocessed", function(unprocessedlimit) {
+  var userId = this.userId
+  Meteor._sleepForMs(2000)
+  if (adminUser(userId)) {
+    return Taskspending.find({tags: "inbox"}, {limit: unprocessedlimit})
+  }
+})
+
+Meteor.publish("taskspending-calendar", function(calendarlimit) {
+  var userId = this.userId
+  Meteor._sleepForMs(2000)
+  if (adminUser(userId)) {
+    return Taskspending.find({due: {$exists: 1}}, {sort: {due: -1}, limit: calendarlimit})
+  }
+})
+
+Meteor.publish("taskspending-mits", function(mitslimit) {
+  var userId = this.userId
+  Meteor._sleepForMs(2000)
+  if (adminUser(userId)) {
+    return Taskspending.find({tags: "mit"}, {sort: {rank: 1}, limit: mitslimit})
+  }
+})

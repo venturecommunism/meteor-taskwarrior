@@ -111,5 +111,16 @@
 
   <div class="review-btn btn btn-inverse" id="btnReview">Review</div>
 
+<!-- load more -->
+  {{#if Template.subscriptionsReady}}
+<p>Everything is loaded</p>
+    {{#if hasMorePosts}}
+      <a class="load-more" href="#">Load More</a>
+    {{/if}}
+  {{else}}
+    <div class="loading">{{>spinner}}</div>
+  {{/if}}
+<!-- end of load more -->
+
   {{/if}}
 </template>
