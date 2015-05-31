@@ -15,6 +15,11 @@ right: -99%;
 right: auto;
 }
 
+#project_list .projclose.close {
+clear: both;
+float: left;
+}
+
 .kickstart, .reviewproject {
 float: right;
 height: 20px;
@@ -314,6 +319,7 @@ h1, h2, h3, h4, h5 {
 
 .active-project h4 {
   float: none;
+  clear: both;
 }
 
 .sorting_mits {
