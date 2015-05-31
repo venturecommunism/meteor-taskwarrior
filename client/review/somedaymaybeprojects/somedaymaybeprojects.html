@@ -1,13 +1,12 @@
-<template name="process">
-  {{#if is_processing}}
-    {{> processingdialog}}
+<template name="somedaymaybeprojects">
 
-<h3>Inbox</h3>
-    <ul id="task_list">
-      {{#each tasks}}
+<hr/>
+<h3>Someday/Maybe</h3>
+   <ul id="task_list" class="main-review">
+      {{#each tasks2}}
         {{#if waiting}}
         {{else}}
-          {{> todo_item}}
+          {{> project_item2}}
         {{/if}}
       {{/each}}
     </ul>
@@ -15,13 +14,11 @@
 <!-- load more -->
   {{#if Template.subscriptionsReady}}
     {{#if hasMorePosts}}
-      <p><a class="load-more-unprocessed">Load More</a></p>
+      <p><a class="load-more-somedaymaybeprojects">Load More</a></p>
     {{/if}}
   {{else}}
     <div class="loading">{{>spinner}}</div>
   {{/if}}
 <!-- end of load more -->
 
-
-  {{/if}}
 </template>

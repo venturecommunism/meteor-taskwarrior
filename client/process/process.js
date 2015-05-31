@@ -104,7 +104,7 @@ Template.process.helpers({
 });
 
 Template.process.events({
-  'click .load-more': function (event, instance) {
+  'click .load-more-unprocessed': function (event, instance) {
     event.preventDefault();
     
     // get current value for limit, i.e. how many posts are currently displayed

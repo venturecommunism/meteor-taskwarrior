@@ -13,32 +13,6 @@ Template.review.helpers({
   tasks2: function () {
     return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {rank: 1}})
   },
-  calendartasks: function () {
-    if (Session.equals('calendarview', "all")) {
-      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: 1}})
-    }
-    else if (Session.equals('calendarview', "closed")) {
-      return false
-    }
-    else {
-      formattedtomorrow = formattedTomorrow()
-      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {due: {$lt: formattedtomorrow}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: 1}})
-    }
-  },
-  dueclock: function () {
-    return Session.get("timer-" + this.uuid)
-  },
-  duedate: function () {
-    if (this.due) {
-      var newstringpartsT = this.due.split("T")
-      var newstringpartsZ = newstringpartsT[1].split("Z")
-      var newstringwhole = newstringpartsT[0] + newstringpartsZ[0]
-      return newstringpartsT[0].substring(4,6) +'/'+ newstringpartsT[0].substring(6,8) +'/'+ newstringpartsT[0].substring(0,4)
-    }
-    else {
-      return false
-    }
-  },
   orgtasks: function () {
       return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart", tags: "checklistitem", tags: "milestone", rank: 1}})
   },
@@ -76,15 +50,6 @@ Template.review.helpers({
     } else {
       return ''
     }
-  },
-  date: function () {
-    var dt = new Date();
-    var month = dt.getMonth()+1;
-    var day = dt.getDate();
-    var year = dt.getFullYear();
-    var time = dt.getTime();
-    var date = new Date(time);
-    return 'Date and time is ' + date.toString();
   },
 })
 

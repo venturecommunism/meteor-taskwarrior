@@ -7,38 +7,7 @@
     {{> checklisteditingdialog}}
     {{> alarmseteditingdialog}}
 
-<!-- begin calendar -->
-
-  <ul id="task_list">
-    {{#each calendartasks}}
-
-{{#if somedaymaybeproject}}
-{{else}}
-
-      <li class="task_item alert">
-        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
-
-
-    {{#if editing}}
-      <div class="edit">
-        <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
-      </div>
-{{else}}
-<div class="todo-item">       <p>{{description}}</p>  </div>
-{{/if}}
-
-{{#if duedate}}
-<p style="">{{duedate}}</p><p style="float: right; position: relative; top: -25px;">{{dueclock}}</p>
-{{/if}}
-      </li>
-
-{{/if}}
-
-    {{/each}}
-  </ul>
-
-
-<!-- end calendar -->
+{{> calendar}}
 
 <h3>Most Important Tasks (MITs)</h3><p class="btn sorting_mits {{sorting_mits}}">Sort MITs</p>
 <div id="task_list" class="mit_task_list">
@@ -93,34 +62,11 @@
       {{/each}}
     </ul>
 <hr/>
-<h3>Someday/Maybe</h3>
-   <ul id="task_list" class="main-review">
-      {{#each tasks2}}
-        {{#if waiting}}
-        {{else}}
-          {{> project_item2}}
-        {{/if}}
-      {{/each}}
-    </ul>
-<h4>Projectless Someday/Maybe tasks</h4>
-<div id="task_list">
-{{#each somedaymaybetasks}}
-{{> orgtask_todo_item}}
-{{/each}}
-</div>
+
+{{> somedaymaybeprojects}}
+{{> projectlesssomedaymaybes}}
 
   <div class="review-btn btn btn-inverse" id="btnReview">Review</div>
-
-<!-- load more -->
-  {{#if Template.subscriptionsReady}}
-<p>Everything is loaded</p>
-    {{#if hasMorePosts}}
-      <a class="load-more" href="#">Load More</a>
-    {{/if}}
-  {{else}}
-    <div class="loading">{{>spinner}}</div>
-  {{/if}}
-<!-- end of load more -->
 
   {{/if}}
 </template>

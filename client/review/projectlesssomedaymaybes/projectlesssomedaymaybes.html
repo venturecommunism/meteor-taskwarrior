@@ -1,0 +1,20 @@
+<template name="projectlesssomedaymaybes">
+
+<h4>Projectless Someday/Maybe tasks</h4>
+<div id="task_list">
+{{#each projectlesssomedaymaybes}}
+{{> orgtask_todo_item}}
+{{/each}}
+</div>
+
+<!-- load more -->
+  {{#if Template.subscriptionsReady}}
+    {{#if hasMorePosts}}
+      <p><a class="load-more-projectlesssomedaymaybes">Load More</a></p>
+    {{/if}}
+  {{else}}
+    <div class="loading">{{>spinner}}</div>
+  {{/if}}
+<!-- end of load more -->
+
+</template>

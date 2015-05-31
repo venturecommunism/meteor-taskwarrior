@@ -1,0 +1,43 @@
+<template name="calendar">
+
+<h3>Calendar</h3>
+  <ul id="task_list">
+    {{#each calendartasks}}
+
+{{#if somedaymaybeproject}}
+{{else}}
+
+      <li class="task_item alert">
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+
+
+    {{#if editing}}
+      <div class="edit">
+        <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
+      </div>
+{{else}}
+<div class="todo-item">       <p>{{description}}</p>  </div>
+{{/if}}
+
+{{#if duedate}}
+<p style="">{{duedate}}</p><p style="float: right; position: relative; top: -25px;">{{dueclock}}</p>
+{{/if}}
+      </li>
+
+{{/if}}
+
+    {{/each}}
+  </ul>
+
+<!-- load more -->
+  {{#if Template.subscriptionsReady}}
+    {{#if hasMorePosts}}
+      <p><a class="load-more-calendar">Load More</a></p>
+    {{/if}}
+  {{else}}
+    <div class="loading">{{>spinner}}</div>
+  {{/if}}
+<!-- end of load more -->
+
+</template>
+

@@ -348,3 +348,16 @@ top: 0;
 float: left;
 margin-right: 6px;
 }
+
+.loading{
+  position: relative;
+  height: 100px;
+  width: 100%;
+}
+.load-more-unprocessed, .load-more-calendar, .load-more-projectlesssomedaymaybes{
+  text-align:center;
+  background:#eee;
+  border: 1px solid #ddd;
+  display:block;
+  padding: 10px;
+}
