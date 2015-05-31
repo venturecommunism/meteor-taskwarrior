@@ -1,3 +1,13 @@
+Template.mostimportanttasks.helpers({
+  sorting_mits: function () {
+    if (Session.equals('sorting_mits', true)) {
+      return 'btn-primary'
+    } else {
+      return ''
+    }
+  },
+})
+
 // begin modular subscription loading
 
 Template.mostimportanttasks.created = function () {

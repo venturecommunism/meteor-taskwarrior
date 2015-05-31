@@ -354,7 +354,7 @@ margin-right: 6px;
   height: 100px;
   width: 100%;
 }
-.load-more-unprocessed, .load-more-calendar, .load-more-mits, .load-more-waitingfors, .load-more-somedaymaybeprojects, .load-more-projectlesssomedaymaybes{
+.load-more-unprocessed, .load-more-calendar, .load-more-mits, .load-more-waitingfors, .load-more-projects, .load-more-somedaymaybeprojects, .load-more-projectlesssomedaymaybes{
   text-align:center;
   background:#eee;
   border: 1px solid #ddd;

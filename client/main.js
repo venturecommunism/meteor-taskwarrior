@@ -5,12 +5,14 @@ Meteor.startup(function () {
 })
 
 Meteor.subscribe("tasks")
+
 /*
 Meteor.subscribe("taskspending", function () {
 
 Session.set('taskspending_dataloaded', true)
 })
 */
+
 Meteor.subscribe("tasksbacklog")
 
 Session.set('adding_newtask', false);

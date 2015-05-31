@@ -107,6 +107,14 @@ Meteor.publish("taskspendingwaitingfors", function(waitingforslimit) {
   }
 })
 
+Meteor.publish("taskspendingprojects", function(projectslimit) {
+  var userId = this.userId
+  Meteor._sleepForMs(2000)
+  if (adminUser(userId)) {
+    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {rank: 1}, limit: projectslimit})
+  }
+})
+
 Meteor.publish("taskspendingsomedaymaybeprojects", function(somedaymaybeprojectslimit) {
   var userId = this.userId
   Meteor._sleepForMs(2000)
