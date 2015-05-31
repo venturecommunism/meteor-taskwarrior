@@ -1,10 +1,5 @@
-<template name="projects">
+<template name="openproject">
 
-<h3>Projects</h3>
-    <ul id="project_list" class="main-review">
-      {{#each projects}}
-<div class="active-project {{nokickstart}}">
-          {{> project_item}}
 {{#if projopen}}
 {{#if orgtasks}}
   <ul id="task_list" class="org_task_list">
@@ -18,31 +13,26 @@
       <input type="text" id="add-newtask-org" value="" />
       <input type="text" id="add-newtask-context-org" placeholder="{{defaultcontext}}" />
     </div>
-{{else}} <!-- if proj not open -->
-{{#each kickstartertask}}
-  <ul id="task_list">
-      {{#if waiting}}
-      {{else}}
-        {{> orgtask_todo_item}}
-      {{/if}}
-  </ul>
-{{/each}}
 
-{{/if}} <!-- close projopen if/else -->
-
-</div> <!-- active project -->
-
-      {{/each}}
-    </ul>
 
 <!-- load more -->
   {{#if Template.subscriptionsReady}}
     {{#if hasMorePosts}}
-      <p><a class="load-more-projects">Load More</a></p>
+      <p><a class="load-more-project-{{project}}">Load More</a></p>
     {{/if}}
   {{else}}
     <div class="loading">{{>spinner}}</div>
   {{/if}}
 <!-- end of load more -->
+
+
+{{else}} <!-- if proj not open -->
+{{#each kickstartertask}}
+  <ul id="task_list">
+        {{> orgtask_todo_item}}
+  </ul>
+{{/each}}
+
+{{/if}} <!-- close projopen if/else -->
 
 </template>

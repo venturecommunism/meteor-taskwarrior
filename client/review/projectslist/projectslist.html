@@ -1,0 +1,25 @@
+<template name="projectslist">
+
+<h3>Projects</h3>
+    <ul id="project_list" class="main-review">
+      {{#each projects}}
+<div class="active-project {{nokickstart}}">
+          {{> project_item}}
+{{> openproject}}
+
+</div> <!-- active project -->
+
+      {{/each}}
+    </ul>
+
+<!-- load more -->
+  {{#if Template.subscriptionsReady}}
+    {{#if hasMorePosts}}
+      <p><a class="load-more-projects">Load More</a></p>
+    {{/if}}
+  {{else}}
+    <div class="loading">{{>spinner}}</div>
+  {{/if}}
+<!-- end of load more -->
+
+</template>

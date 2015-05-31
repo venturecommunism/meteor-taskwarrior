@@ -3,7 +3,7 @@ Session.set('documentediting', false)
 Session.set('sorting_mits', false)
 Session.setDefault('calendarview', "24")
 
-Template.projects.helpers({
+Template.projectslist.helpers({
   tasks: function () {
     Session.set('helpsesh',true)
     Session.set('helpsesh',false)
@@ -106,7 +106,7 @@ Template.process.events({
   'click .startprocessing-button': selectTaskProcessing
 });
 
-Template.projects.events({
+Template.projectslist.events({
   'click .sorting_mits': function (e,t) {
     Session.get('sorting_mits', true) ? Session.set('sorting_mits', false) : Session.set('sorting_mits', true)
   },
@@ -191,7 +191,7 @@ Session.set('helpsesh',false)
   'click .startprocessing-button': selectTaskProcessing,
 });
 
-Template.projects.rendered = function () {
+Template.projectslist.rendered = function () {
   Deps.autorun(function() {
     Session.get('helpsesh')
     $('.active-project.nokickstarttask').detach().prependTo('ul#project_list')
@@ -249,7 +249,7 @@ if (Session.equals('sorting_mits', true)) {
 
 // begin modular subscription loading
 
-Template.projects.created = function () {
+Template.projectslist.created = function () {
 
   // 1. Initialization
 
@@ -289,7 +289,7 @@ Template.projects.created = function () {
 
 };
 
-Template.projects.helpers({
+Template.projectslist.helpers({
   // the posts cursor
   projects: function () {
     Session.set('helpsesh',true)
@@ -303,7 +303,7 @@ Template.projects.helpers({
   }
 });
 
-Template.projects.events({
+Template.projectslist.events({
   'click .load-more-projects': function (event, instance) {
     event.preventDefault();
 

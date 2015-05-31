@@ -23,6 +23,7 @@ Template.project_item.helpers({
     return Session.equals('newalarmset', this.project)
   },
   projopen: function () {
+console.log('opened or closed a project')
     return Session.equals('projopen', this.project)
   },
   project_has_largeroutcome: function () {
