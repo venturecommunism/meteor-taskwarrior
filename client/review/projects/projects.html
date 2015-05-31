@@ -11,10 +11,7 @@
 {{#if orgtasks}}
   <ul id="task_list" class="org_task_list">
     {{#each orgtasks}}
-      {{#if waiting}}
-      {{else}}
         {{> orgtask_todo_item}}
-      {{/if}}
     {{/each}}
   </ul>
 {{/if}}
