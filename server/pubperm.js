@@ -77,7 +77,7 @@ Meteor.publish("tasksbacklog", function () {
 
 Meteor.publish("taskspendingunprocessed", function(unprocessedlimit) {
   var userId = this.userId
-  Meteor._sleepForMs(2000)
+//  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
     return Taskspending.find({tags: "inbox"}, {limit: unprocessedlimit})
   }
@@ -85,7 +85,7 @@ Meteor.publish("taskspendingunprocessed", function(unprocessedlimit) {
 
 Meteor.publish("taskspendingcalendar", function(calendarlimit) {
   var userId = this.userId
-  Meteor._sleepForMs(2000)
+//  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: 1}, limit: calendarlimit})
   }
@@ -93,7 +93,7 @@ Meteor.publish("taskspendingcalendar", function(calendarlimit) {
 
 Meteor.publish("taskspendingmits", function(mitslimit) {
   var userId = this.userId
-  Meteor._sleepForMs(2000)
+//  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
     return Taskspending.find({tags: "mit"}, {sort: {rank: 1}, limit: mitslimit})
   }
@@ -101,7 +101,7 @@ Meteor.publish("taskspendingmits", function(mitslimit) {
 
 Meteor.publish("taskspendingwaitingfors", function(waitingforslimit) {
   var userId = this.userId
-  Meteor._sleepForMs(2000)
+//  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
     return Taskspending.find({context: "waitingfor"}, {limit: waitingforslimit})
   }
@@ -109,7 +109,7 @@ Meteor.publish("taskspendingwaitingfors", function(waitingforslimit) {
 
 Meteor.publish("taskspendingprojects", function(projectslimit) {
   var userId = this.userId
-  Meteor._sleepForMs(2000)
+//  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
     return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {rank: 1}, limit: projectslimit})
   }
@@ -117,17 +117,16 @@ Meteor.publish("taskspendingprojects", function(projectslimit) {
 
 Meteor.publish("taskspendingopenproject", function(project) {
   var userId = this.userId
-  Meteor._sleepForMs(2000)
+//  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}})
-//    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {rank: 1}, limit: openprojectlimit})
   }
 })
 
 
 Meteor.publish("taskspendingsomedaymaybeprojects", function(somedaymaybeprojectslimit) {
   var userId = this.userId
-  Meteor._sleepForMs(2000)
+//  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
     return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {rank: 1}, limit: somedaymaybeprojectslimit})
   }
@@ -135,7 +134,7 @@ Meteor.publish("taskspendingsomedaymaybeprojects", function(somedaymaybeprojects
 
 Meteor.publish("taskspendingprojectlesssomedaymaybes", function(projectlesssomedaymaybeslimit) {
   var userId = this.userId
-  Meteor._sleepForMs(2000)
+//  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
     return Taskspending.find({context: "somedaymaybe"}, {limit: projectlesssomedaymaybeslimit})
   }
