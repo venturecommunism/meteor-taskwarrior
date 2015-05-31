@@ -115,6 +115,16 @@ Meteor.publish("taskspendingprojects", function(projectslimit) {
   }
 })
 
+Meteor.publish("taskspendingopenproject", function(project) {
+  var userId = this.userId
+  Meteor._sleepForMs(2000)
+  if (adminUser(userId)) {
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}})
+//    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {rank: 1}, limit: openprojectlimit})
+  }
+})
+
+
 Meteor.publish("taskspendingsomedaymaybeprojects", function(somedaymaybeprojectslimit) {
   var userId = this.userId
   Meteor._sleepForMs(2000)

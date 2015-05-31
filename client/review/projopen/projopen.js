@@ -1,8 +1,11 @@
 Template.openproject.helpers({
+  projectid: function () {
+    return Taskspending.findOne({type: "largeroutcome", project: this.project})._id 
+  },
   projopen: function () {
     return Session.equals('projopen', this.project)
   },
-  orgtasks: function () {
+  orgtasks1: function () {
       return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart", tags: "checklistitem", tags: "milestone", rank: 1}})
   },
   kickstartertask: function () {
@@ -39,12 +42,12 @@ Template.openproject.events({
 Template.openproject.created = function () {
 
   // 1. Initialization
-
+  var project = this.data.project
   var instance = this;
 
   // initialize the reactive variables
   instance.loaded = new ReactiveVar(0);
-  instance.calendarlimit = new ReactiveVar(5);
+  instance.openprojectlimit = new ReactiveVar(5);
 
   // 2. Autorun
 
@@ -52,17 +55,17 @@ Template.openproject.created = function () {
   this.autorun(function () {
 
     // get the limit
-    var calendarlimit = instance.calendarlimit.get();
+    var openprojectlimit = instance.openprojectlimit.get();
 
-    console.log("Asking for "+calendarlimit+" posts…")
+    console.log("Asking for "+openprojectlimit+" posts…")
 
     // subscribe to the posts publication
-    var subscription = instance.subscribe('taskspendingcalendar', calendarlimit)
+    var subscription = instance.subscribe('taskspendingopenproject', project)
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
-      console.log("> Received "+calendarlimit+" posts. \n\n")
-      instance.loaded.set(calendarlimit);
+      console.log("> Received "+openprojectlimit+" posts. \n\n")
+      instance.loaded.set(openprojectlimit);
     } else {
       console.log("> Subscription is not ready yet. \n\n");
     }
@@ -70,33 +73,33 @@ Template.openproject.created = function () {
 
   // 3. Cursor
 
-  instance.taskspendingcalendar = function() {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: 1}, limit: instance.loaded.get()})
+  instance.taskspendingopenproject = function() {
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart", tags: "checklistitem", tags: "milestone", rank: 1}, limit: instance.loaded.get()})
   }
 
 };
 
 Template.openproject.helpers({
   // the posts cursor
-  calendartasks: function () {
-    return Template.instance().taskspendingcalendar();
+  openprojecttasks: function () {
+    return Template.instance().taskspendingopenproject();
   },
   // are there more posts to show?
   hasMorePosts: function () {
-    return Template.instance().taskspendingcalendar().count() >= Template.instance().calendarlimit.get();
+    return Template.instance().taskspendingopenproject().count() >= Template.instance().openprojectlimit.get();
   }
 });
 
 Template.openproject.events({
-  'click .load-more-calendar': function (event, instance) {
+  'click .load-more-project': function (event, instance) {
     event.preventDefault();
 
     // get current value for limit, i.e. how many posts are currently displayed
-    var calendarlimit = instance.calendarlimit.get();
+    var openprojectlimit = instance.openprojectlimit.get();
 
     // increase limit by 5 and update it
-    calendarlimit += 5;
-    instance.calendarlimit.set(calendarlimit)
+    openprojectlimit += 5;
+    instance.openprojectlimit.set(openprojectlimit)
   }
 });
 

@@ -1,9 +1,9 @@
 <template name="openproject">
 
 {{#if projopen}}
-{{#if orgtasks}}
+{{#if openprojecttasks}}
   <ul id="task_list" class="org_task_list">
-    {{#each orgtasks}}
+    {{#each openprojecttasks}}
         {{> orgtask_todo_item}}
     {{/each}}
   </ul>
