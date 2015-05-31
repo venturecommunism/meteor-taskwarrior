@@ -8,20 +8,10 @@
     {{> alarmseteditingdialog}}
 
 {{> calendar}}
+{{> mostimportanttasks}}
 
-<h3>Most Important Tasks (MITs)</h3><p class="btn sorting_mits {{sorting_mits}}">Sort MITs</p>
-<div id="task_list" class="mit_task_list">
-{{#each mits}}
-{{> orgtask_todo_item}}
-{{/each}}
-</div>
+{{> waitingfors}}
 
-<h3>Waiting For</h3>
-<div id="task_list">
-{{#each waitingfortasks}}
-{{> orgtask_todo_item}}
-{{/each}}
-</div>
 <h3>Projects</h3>
     <ul id="project_list" class="main-review">
       {{#each tasks}}
@@ -61,7 +51,6 @@
         {{/if}}
       {{/each}}
     </ul>
-<hr/>
 
 {{> somedaymaybeprojects}}
 {{> projectlesssomedaymaybes}}

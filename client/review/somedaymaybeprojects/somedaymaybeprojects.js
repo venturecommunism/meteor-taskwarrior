@@ -1,4 +1,4 @@
-Template.projectlesssomedaymaybes.created = function () {
+Template.somedaymaybeprojects.created = function () {
 
   // 1. Initialization
 
@@ -6,7 +6,7 @@ Template.projectlesssomedaymaybes.created = function () {
 
   // initialize the reactive variables
   instance.loaded = new ReactiveVar(0);
-  instance.projectlesssomedaymaybeslimit = new ReactiveVar(5);
+  instance.somedaymaybeprojectslimit = new ReactiveVar(5);
 
   // 2. Autorun
 
@@ -14,17 +14,17 @@ Template.projectlesssomedaymaybes.created = function () {
   this.autorun(function () {
 
     // get the limit
-    var projectlesssomedaymaybeslimit = instance.projectlesssomedaymaybeslimit.get();
+    var somedaymaybeprojectslimit = instance.somedaymaybeprojectslimit.get();
 
-    console.log("Asking for "+projectlesssomedaymaybeslimit+" projectless somedaymaybes…")
+    console.log("Asking for "+somedaymaybeprojectslimit+" somedaymaybe projects…")
 
     // subscribe to the posts publication
-    var subscription = instance.subscribe('taskspendingprojectlesssomedaymaybes', projectlesssomedaymaybeslimit)
+    var subscription = instance.subscribe('taskspendingsomedaymaybeprojects', somedaymaybeprojectslimit)
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
-      console.log("> Received "+projectlesssomedaymaybeslimit+" projectless somedaymaybes. \n\n")
-      instance.loaded.set(projectlesssomedaymaybeslimit);
+      console.log("> Received "+somedaymaybeprojectslimit+" somedaymaybe projects. \n\n")
+      instance.loaded.set(somedaymaybeprojectslimit);
     } else {
       console.log("> Subscription is not ready yet. \n\n");
     }
@@ -32,22 +32,20 @@ Template.projectlesssomedaymaybes.created = function () {
 
   // 3. Cursor
 
-  instance.taskspendingprojectlesssomedaymaybes = function() {
-    return Taskspending.find({context: "somedaymaybe"}, {limit: instance.loaded.get()})
-
-//    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: 1}, limit: instance.loaded.get()})
+  instance.taskspendingsomedaymaybeprojects = function() {
+    return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {rank: 1}, limit: instance.loaded.get()})
   }
 
 };
 
-Template.projectlesssomedaymaybes.helpers({
+Template.somedaymaybeprojects.helpers({
   // the posts cursor
-  projectlesssomedaymaybes: function () {
-    return Template.instance().taskspendingprojectlesssomedaymaybes();
+  somedaymaybeprojects: function () {
+    return Template.instance().taskspendingsomedaymaybeprojects();
   },
   // are there more posts to show?
   hasMorePosts: function () {
-    return Template.instance().taskspendingprojectlesssomedaymaybes().count() >= Template.instance().projectlesssomedaymaybeslimit.get();
+    return Template.instance().taskspendingsomedaymaybeprojects().count() >= Template.instance().somedaymaybeprojectslimit.get();
   }
 });
 

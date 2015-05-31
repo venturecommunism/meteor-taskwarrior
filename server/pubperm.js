@@ -99,10 +99,26 @@ Meteor.publish("taskspendingmits", function(mitslimit) {
   }
 })
 
+Meteor.publish("taskspendingwaitingfors", function(waitingforslimit) {
+  var userId = this.userId
+  Meteor._sleepForMs(2000)
+  if (adminUser(userId)) {
+    return Taskspending.find({context: "waitingfor"}, {limit: waitingforslimit})
+  }
+})
+
+Meteor.publish("taskspendingsomedaymaybeprojects", function(somedaymaybeprojectslimit) {
+  var userId = this.userId
+  Meteor._sleepForMs(2000)
+  if (adminUser(userId)) {
+    return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {rank: 1}, limit: somedaymaybeprojectslimit})
+  }
+})
+
 Meteor.publish("taskspendingprojectlesssomedaymaybes", function(projectlesssomedaymaybeslimit) {
   var userId = this.userId
   Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
-    return Taskspending.find({tags: "somedaymaybe"})
+    return Taskspending.find({context: "somedaymaybe"}, {limit: projectlesssomedaymaybeslimit})
   }
 })

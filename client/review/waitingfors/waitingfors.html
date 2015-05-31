@@ -1,0 +1,20 @@
+<template name="waitingfors">
+
+<h4>Waiting Fors</h4>
+<div id="task_list">
+{{#each waitingfors}}
+{{> orgtask_todo_item}}
+{{/each}}
+</div>
+
+<!-- load more -->
+  {{#if Template.subscriptionsReady}}
+    {{#if hasMorePosts}}
+      <p><a class="load-more-waitingfors">Load More</a></p>
+    {{/if}}
+  {{else}}
+    <div class="loading">{{>spinner}}</div>
+  {{/if}}
+<!-- end of load more -->
+
+</template>

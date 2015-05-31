@@ -10,9 +10,6 @@ Template.review.helpers({
     //toggling this helpsesh session variable to make the jquery work
     return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {rank: 1}})
   },
-  tasks2: function () {
-    return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {rank: 1}})
-  },
   orgtasks: function () {
       return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart", tags: "checklistitem", tags: "milestone", rank: 1}})
   },

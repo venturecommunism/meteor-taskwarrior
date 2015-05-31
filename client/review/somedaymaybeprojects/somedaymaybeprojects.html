@@ -1,13 +1,9 @@
 <template name="somedaymaybeprojects">
 
-<hr/>
 <h3>Someday/Maybe</h3>
    <ul id="task_list" class="main-review">
-      {{#each tasks2}}
-        {{#if waiting}}
-        {{else}}
-          {{> project_item2}}
-        {{/if}}
+      {{#each somedaymaybeprojects}}
+        {{> project_item2}}
       {{/each}}
     </ul>
 
