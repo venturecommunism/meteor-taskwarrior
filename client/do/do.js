@@ -1,4 +1,6 @@
 // setting the multicontext
+Session.setDefault('multicontext', [])
+/*
 Template.do.rendered = function () {
 if (Taskspending.findOne({type: 'default_multicontext'})) {
     Session.set('multicontext', Taskspending.findOne({type: 'default_multicontext'}).payload)
@@ -10,6 +12,7 @@ if (Taskspending.findOne({type: 'default_multicontext'})) {
   }
 }
 }
+*/
 
 // putting the clock code into a Meteor.subscribe ready() callback
 
