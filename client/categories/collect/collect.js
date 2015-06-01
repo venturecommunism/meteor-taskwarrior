@@ -28,8 +28,8 @@ Template.collect.events({
         else {
           var rank = 0
         }
-        Tasksbacklog.insert({description: e.target.value, entry: formattednow, status: "pending", tags: ['inbox'], uuid: uuid, rank: rank})
-        Taskspending.insert({description: e.target.value, entry: formattednow, status: "pending", tags: ['inbox'], uuid: uuid, rank: rank})
+        Tasksbacklog.insert({description: e.target.value, owner: Meteor.userId(), entry: formattednow, status: "pending", tags: ['inbox'], uuid: uuid, rank: rank})
+        Taskspending.insert({description: e.target.value, owner: Meteor.userId(), entry: formattednow, status: "pending", tags: ['inbox'], uuid: uuid, rank: rank})
         Session.set('adding_newtask', false);
        }
      }
