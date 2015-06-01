@@ -380,6 +380,8 @@ display: inline-block;
 ul#contextpicker {
 display: inline-block;
 width: 100%;
+padding: 0;
+margin: 0;
 }
 
 #contextpicker li {
