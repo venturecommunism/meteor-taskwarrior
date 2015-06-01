@@ -77,7 +77,9 @@ Template.calendar.created = function () {
     console.log("Asking for "+calendarlimit+" posts…")
 
     // subscribe to the posts publication
-    var subscription = instance.subscribe('taskspendingcalendar', calendarlimit)
+    var subscription = instance.subscribe('taskspendingcalendar', calendarlimit, function () {
+      Session.set('taskspending_dataloaded', true)
+    })
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
