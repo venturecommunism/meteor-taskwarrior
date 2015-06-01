@@ -376,3 +376,12 @@ display: inline-block;
 
 .load-more-project a {
 }
+
+ul#contextpicker {
+display: inline-block;
+}
+
+#contextpicker li {
+float: left;
+padding: 20px;
+}

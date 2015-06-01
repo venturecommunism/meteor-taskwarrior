@@ -1,0 +1,9 @@
+<template name="contextpicker">
+<h3>Next Actions</h3>
+<ul id="contextpicker">
+{{#each contexts}}
+{{#if context}}<li><div class="btn btn-inverse">{{checkedcontext}}</div> {{context}} ({{count}})</li>{{/if}}
+{{/each}}
+</ul>
+
+</template>
