@@ -121,7 +121,7 @@ margin:15px 15px 15px 10px;
 margin-right:20px;
 }
 
-.tt-dropdown-menu {
+.tt-menu {
 width: 422px;
 margin-top: 12px;
 padding: 8px 0;
@@ -135,12 +135,12 @@ border-radius: 8px;
 -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
 box-shadow: 0 5px 10px rgba(0,0,0,.2);
 }
-.tt-suggestion p {
+.tt-suggestion {
 padding: 9px;
 margin:0px;
 background: #FFFD90;
 }
-.tt-is-under-cursor p {
+.tt-is-under-cursor {
 background: #007F00;
 color: #FFB;
 }
