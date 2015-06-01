@@ -22,6 +22,29 @@ Template.processingdialog.events({
       Session.set('review_status', true)
     }
   },
+  'click .largercontext': function (e,t) {
+    largercontext = Taskspending.findOne({_id: Session.get('current_processedtask')})
+    var i = largercontext.tags.indexOf("inbox");
+    if(i != -1) {
+      largeroutcome.tags.splice(i, 1);
+    }
+    id = largercontext._id
+    delete largercontext._id
+    Tasksbacklog.insert(largercontext)
+    Taskspending.update({_id: id},{$set: largercontext})
+    Taskspending.update({_id: id},{$unset: {tags: ""}})
+    Taskspending.update({_id: id},{$unset: {status: ""}})
+    Taskspending.update({_id: id},{$set: {tags: ["largercontext"]}})
+    if (Taskspending.findOne({tags:"inbox"})) {
+      Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
+      selectTaskProcessing
+    }
+    else {
+      Session.set('processing_task', false);
+      Session.set('process_status', false)
+      Session.set('review_status', true)
+    }
+  },
   'click .archive': function (e,t) {
     archivetask = Taskspending.findOne({_id: Session.get('current_processedtask')})
     var i = archivetask.tags.indexOf("inbox");
@@ -130,6 +153,9 @@ Template.processingdialog.helpers({
   },
   projwithnolargeroutcome: function () {
     return (this.project && !(Taskspending.findOne({project: this.project, tags: "largeroutcome"})))
+  },
+  contextwithnolargercontext: function () {
+    return (this.context && !(Taskspending.findOne({context: this.context, tags: "largercontext"})))
   },
 })
 
