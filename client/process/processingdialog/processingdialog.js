@@ -26,7 +26,7 @@ Template.processingdialog.events({
     largercontext = Taskspending.findOne({_id: Session.get('current_processedtask')})
     var i = largercontext.tags.indexOf("inbox");
     if(i != -1) {
-      largeroutcome.tags.splice(i, 1);
+      largercontext.tags.splice(i, 1);
     }
     id = largercontext._id
     delete largercontext._id
