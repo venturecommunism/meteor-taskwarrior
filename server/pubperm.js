@@ -164,6 +164,14 @@ Meteor.publish("taskspendingopenproject", function(project) {
 })
 
 
+Meteor.publish("taskspendingdocuments", function () {
+  var userId = this.userId
+  if (adminUser(userId)) {
+    return Taskspending.find({type: "textfile"})
+  }
+});
+
+
 Meteor.publish("taskspendingsomedaymaybeprojects", function(somedaymaybeprojectslimit) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
@@ -174,6 +182,8 @@ Meteor.publish("taskspendingsomedaymaybeprojects", function(somedaymaybeprojects
     return Taskspending.find({owner: userId, tags: "somedaymaybeproj"}, {sort: {rank: 1}, limit: somedaymaybeprojectslimit})
   }
 })
+
+
 
 Meteor.publish("taskspendingprojectlesssomedaymaybes", function(projectlesssomedaymaybeslimit) {
   var userId = this.userId
