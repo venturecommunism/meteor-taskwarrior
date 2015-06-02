@@ -297,11 +297,11 @@ max-height: 67%;
 max-height: 33%;
 }
 
-#contextpicker li {
+#contextpicker li, #inactivecontextpicker li {
 list-style-type: none;
 }
 
-#contextpicker .btn {
+#contextpicker .btn, #inactivecontextpicker .btn {
 width: 20px;
 height: 20px;
 margin: 5px 0;
@@ -385,7 +385,7 @@ float: left;
   height: 100px;
   width: 100%;
 }
-.load-more-unprocessed, .load-more-calendar, .load-more-contextpicker, .load-more-mits, .load-more-waitingfors, .load-more-projects, .load-more-somedaymaybeprojects, .load-more-projectlesssomedaymaybes{
+.load-more-unprocessed, .load-more-calendar, .load-more-contextpicker, .load-more-inactivecontextpicker , .load-more-mits, .load-more-waitingfors, .load-more-projects, .load-more-somedaymaybeprojects, .load-more-projectlesssomedaymaybes{
   text-align:center;
   background:#eee;
   border: 1px solid #ddd;
@@ -402,14 +402,14 @@ display: inline-block;
 .load-more-project a {
 }
 
-ul#contextpicker {
+ul#contextpicker, ul#inactivecontextpicker {
 display: inline-block;
 width: 100%;
 padding: 0;
 margin: 0;
 }
 
-#contextpicker li {
+#contextpicker li, #inactivecontextpicker li {
 float: left;
 padding: 20px;
 }

@@ -1,4 +1,7 @@
 Template.multicontext.helpers({
+  activecontext: function () {
+    return !Taskspending.findOne({context: this.toString(), tags: "somedaymaybecont"})
+  },
   somedaymaybeproject: function () {
     return Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})
   },
