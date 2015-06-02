@@ -355,6 +355,12 @@ float: left;
 margin-right: 6px;
 }
 
+.closecontext {
+  position: relative;
+  top: 14px;
+  left: 10px;
+}
+
 .loading{
   position: relative;
   height: 100px;
@@ -388,3 +394,5 @@ margin: 0;
 float: left;
 padding: 20px;
 }
+
+
