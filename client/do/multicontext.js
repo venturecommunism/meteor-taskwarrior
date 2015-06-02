@@ -41,13 +41,18 @@ Template.multicontext.events({
       Session.set("multicontext", tempcontext)
   },
   'click .contclose': function (e,t){
-    var tasktest = Taskspending.findOne({context: this.context, tags:"somedaymaybecont"})
+    var tasktest = Taskspending.findOne({context: this.toString(), tags:"somedaymaybecont"})
     var taskid = tasktest ? tasktest._id : ''
     if (taskid != '') {
       Taskspending.update({_id: taskid}, {$pull: {tags: "somedaymaybecont"}})
     }
     else if (tasktest) {
+console.log(tasktest._id)
       Taskspending.update({_id: tasktest._id}, {$push: {tags: "somedaymaybecont"}})
+    }
+    else {
+      var taskid = Taskspending.findOne({context: this.toString(), tags: "largercontext"})._id
+      Taskspending.update({_id: taskid}, {$push: {tags: "somedaymaybecont"}})
     }
   },
 })
