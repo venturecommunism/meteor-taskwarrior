@@ -21,7 +21,7 @@ Template.do.helpers({
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: 1}})
   },
   tasks2: function () {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: {$exists: false}}]}, {sort: {rank: 1}})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: {$in: ["kickstart", "mit"]}}, {context: {$exists: false}}]}, {sort: {rank: 1}})
   },
   dueclock: function () {
     return Session.get("timer-" + this.uuid)

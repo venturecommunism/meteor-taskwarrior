@@ -10,7 +10,7 @@ Template.multicontext.helpers({
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: this.toString()}]}, {sort: {rank: -1}})
   },
   multitasks2: function () {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: this.toString()}]}, {sort: {rank: {$exists: true}, rank: 1}})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {context: this.toString()}]}, {sort: {tags: {$in: ["kickstart", "mit"]}, rank: {$exists: true}, rank: 1}})
   },
   projectcolor: function () {
     return "projectcolor"
@@ -41,3 +41,14 @@ Template.multicontext.events({
       Session.set("multicontext", tempcontext)
   },
 })
+
+
+
+
+
+
+
+
+
+
+
