@@ -1,7 +1,6 @@
 <template name="project_item">
 {{#if project}}
       <li class="project_item">
-        <button type="button" class="projclose close" id="{{_id}}">x</button>
 
 <div class="project-item">      
     {{#if editing}}
@@ -17,6 +16,7 @@
 
 {{/if}}
  <div class="btn btn-inverse btn-danger reviewproject">{{project}}</div>
+ <button type="button" class="projclose close" id="{{_id}}">Send to background</button>
 </div>
     {{#if projopen}}
 {{/if}}

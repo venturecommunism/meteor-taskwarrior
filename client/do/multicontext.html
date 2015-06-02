@@ -1,6 +1,7 @@
 <template name="multicontext">
 {{#each multicontext}}
-<div class="btn btn-inverse closecontext">+</div><h3>{{this}}</h3>
+<button type="button" class="contclose close" id="{{_id}}">Send to background</button><div class="btn btn-inverse closecontext">+</div><h3>{{this}}</h3>
+
   <ul id="task_list">
     {{#each multitasks}}
       <li class="task_item alert">

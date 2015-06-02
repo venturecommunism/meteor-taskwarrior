@@ -40,6 +40,17 @@ Template.multicontext.events({
       var splicedtempcontext = tempcontext.splice(tempcontextindex,1)
       Session.set("multicontext", tempcontext)
   },
+  'click .contclose': function (e,t){
+    var tasktest = Taskspending.findOne({context: this.context, tags:"somedaymaybecont"})
+    var taskid = tasktest ? tasktest._id : ''
+    if (taskid != '') {
+      Taskspending.update({_id: taskid}, {$pull: {tags: "somedaymaybecont"}})
+    }
+    else {
+      taskid = Taskspending.findOne({context: this.context, tags:"largercontext"})._id
+      Taskspending.update({_id: taskid}, {$push: {tags: "somedaymaybecont"}})
+    }
+  },
 })
 
 
