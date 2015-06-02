@@ -46,9 +46,8 @@ Template.multicontext.events({
     if (taskid != '') {
       Taskspending.update({_id: taskid}, {$pull: {tags: "somedaymaybecont"}})
     }
-    else {
-      taskid = Taskspending.findOne({context: this.context, tags:"largercontext"})._id
-      Taskspending.update({_id: taskid}, {$push: {tags: "somedaymaybecont"}})
+    else if (tasktest) {
+      Taskspending.update({_id: tasktest._id}, {$push: {tags: "somedaymaybecont"}})
     }
   },
 })

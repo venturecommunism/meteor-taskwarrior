@@ -24,6 +24,12 @@ float: left;
 display: block;
 }
 
+.contclose.close {
+top: 21px;
+  left: 20px;
+  clear: none;
+}
+
 .kickstart, .reviewproject {
 float: right;
 height: 20px;
