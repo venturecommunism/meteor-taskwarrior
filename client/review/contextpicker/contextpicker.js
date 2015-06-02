@@ -1,6 +1,7 @@
 Template.contextpicker.helpers({
   count: function () {
-    return Taskspending.find({context: this.context}).count()
+    return (Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: "kickstart"}, {context: this.context}]}, {sort: {rank: {$exists: true}, rank: 1}}).count() + Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: this.context}]}, {sort: {rank: -1}}).count() + '/' + Taskspending.find({context: this.context}).count() + ' visible')
+//    return Taskspending.find({context: this.context}).count()
   },
   checkedcontext: function () {
     if (Session.get("multicontext")) {
@@ -14,6 +15,27 @@ Template.contextpicker.helpers({
   },
   contexts1: function () {
     return context_infos()
+  },
+})
+
+Template.contextpicker.events({
+  'click #contextpicker li .btn': function (e,t) {
+    tempcontext = Session.get("multicontext")
+    if (!tempcontext) {
+      Session.set("multicontext", [this.context])
+    }
+    else if (tempcontext.length == 0) {
+      Session.set("multicontext", [this.context])
+    }
+    else if (Session.get("multicontext").indexOf(this.context) < 0) {
+      tempcontext.push(this.context)
+      Session.set("multicontext", tempcontext)
+    }
+    else {
+      var tempcontextindex = tempcontext.indexOf(this.context)
+      var splicedtempcontext = tempcontext.splice(tempcontextindex,1)
+      Session.set("multicontext", tempcontext)
+    }
   },
 })
 
