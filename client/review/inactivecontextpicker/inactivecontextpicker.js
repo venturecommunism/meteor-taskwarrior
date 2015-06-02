@@ -1,4 +1,4 @@
-Template.contextpicker.helpers({
+Template.inactivecontextpicker.helpers({
   count: function () {
     return (Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: {$in: ["kickstart", "mit"]}}, {context: this.context}]}, {sort: {rank: {$exists: true}, rank: 1}}).count() + Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: this.context}]}, {sort: {rank: -1}}).count() + '/' + Taskspending.find({context: this.context, tags: {$nin: ["largercontext"]}}).count() + ' visible')
 //    return Taskspending.find({context: this.context}).count()
@@ -18,8 +18,8 @@ Template.contextpicker.helpers({
   },
 })
 
-Template.contextpicker.events({
-  'click #contextpicker li .btn': function (e,t) {
+Template.inactivecontextpicker.events({
+  'click #inactivecontextpicker li .btn': function (e,t) {
     tempcontext = Session.get("multicontext")
     if (!tempcontext) {
       Session.set("multicontext", [this.context])
@@ -41,7 +41,7 @@ Template.contextpicker.events({
 
 // begin modular subscription loading
 
-Template.contextpicker.created = function () {
+Template.inactivecontextpicker.created = function () {
 
   // 1. Initialization
 
@@ -49,7 +49,7 @@ Template.contextpicker.created = function () {
 
   // initialize the reactive variables
   instance.loaded = new ReactiveVar(0);
-  instance.contextpickerlimit = new ReactiveVar(1000);
+  instance.inactivecontextpickerlimit = new ReactiveVar(1000);
 
   // 2. Autorun
 
@@ -57,19 +57,19 @@ Template.contextpicker.created = function () {
   this.autorun(function () {
 
     // get the limit
-    var contextpickerlimit = instance.contextpickerlimit.get();
+    var inactivecontextpickerlimit = instance.inactivecontextpickerlimit.get();
 
-    console.log("Asking for "+contextpickerlimit+" posts…")
+    console.log("Asking for "+inactivecontextpickerlimit+" posts…")
 
     // subscribe to the posts publication
-    var subscription = instance.subscribe('taskspendingcontextpicker', contextpickerlimit, function () {
+    var subscription = instance.subscribe('taskspendinginactivecontextpicker', inactivecontextpickerlimit, function () {
       Session.set('taskspending_dataloaded', true)
     })
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
-      console.log("> Received "+contextpickerlimit+" posts. \n\n")
-      instance.loaded.set(contextpickerlimit);
+      console.log("> Received "+inactivecontextpickerlimit+" posts. \n\n")
+      instance.loaded.set(inactivecontextpickerlimit);
     } else {
       console.log("> Subscription is not ready yet. \n\n");
     }
@@ -77,33 +77,33 @@ Template.contextpicker.created = function () {
 
   // 3. Cursor
 
-  instance.taskspendingcontextpicker = function() {
-    return Taskspending.find({$and: [{tags: "largercontext"}, {tags: {$nin: ["somedaymaybecont"]}}]}, {sort: {rank: 1}, limit: instance.loaded.get()})
+  instance.taskspendinginactivecontextpicker = function() {
+    return Taskspending.find({tags: "somedaymaybecont"}, {sort: {rank: 1}, limit: instance.loaded.get()})
   }
 
 };
 
-Template.contextpicker.helpers({
+Template.inactivecontextpicker.helpers({
   // the posts cursor
   contexts: function () {
-    return Template.instance().taskspendingcontextpicker();
+    return Template.instance().taskspendinginactivecontextpicker();
   },
   // are there more posts to show?
   hasMorePosts: function () {
-    return Template.instance().taskspendingcontextpicker().count() >= Template.instance().contextpickerlimit.get();
+    return Template.instance().taskspendinginactivecontextpicker().count() >= Template.instance().inactivecontextpickerlimit.get();
   }
 });
 
-Template.contextpicker.events({
-  'click .load-more-contextpicker': function (event, instance) {
+Template.inactivecontextpicker.events({
+  'click .load-more-inactivecontextpicker': function (event, instance) {
     event.preventDefault();
 
     // get current value for limit, i.e. how many posts are currently displayed
-    var contextpickerlimit = instance.contextpickerlimit.get();
+    var inactivecontextpickerlimit = instance.inactivecontextpickerlimit.get();
 
     // increase limit by 5 and update it
-    contextpickerlimit += 5;
-    instance.contextpickerlimit.set(contextpickerlimit)
+    inactivecontextpickerlimit += 5;
+    instance.inactivecontextpickerlimit.set(inactivecontextpickerlimit)
   }
 });
 

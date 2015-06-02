@@ -1,0 +1,19 @@
+<template name="inactivecontextpicker">
+<h3>Someday/Maybe Contexts</h3>
+<ul id="inactivecontextpicker">
+{{#each contexts}}
+{{#if context}}<li><div class="btn btn-inverse">{{checkedcontext}}</div> {{context}} ({{count}})</li>{{/if}}
+{{/each}}
+</ul>
+
+<!-- load more -->
+  {{#if Template.subscriptionsReady}}
+    {{#if hasMorePosts}}
+      <p><a class="load-more-inactivecontextpicker">Load More</a></p>
+    {{/if}}
+  {{else}}
+    <div class="loading">{{>spinner}}</div>
+  {{/if}}
+<!-- end of load more -->
+
+</template>
