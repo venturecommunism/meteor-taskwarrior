@@ -228,10 +228,16 @@ if (Session.equals('sorting_mits', true)) {
       //update the dragged Item's rank
       Taskspending.update({_id: Blaze.getData(el)._id}, {$set: {rank: newRank}})
       proj = Taskspending.findOne({project: Blaze.getData(el).project, tags: "largeroutcome"})
+      cont = Taskspending.findOne({context: Blaze.getData(el).context, tags: "largercontext"})
       if (proj && !proj.rank) {
         Taskspending.update({_id: proj._id}, {$set: {rank: newRank}})
       } else if (proj && Taskspending.findOne({project: Blaze.getData(el).project}, {sort: {rank: -1}}).rank >= newRank) {
         Taskspending.update({_id: proj._id}, {$set: {rank: newRank}})
+      }
+      if (cont && !cont.rank) {
+        Taskspending.update({_id: cont._id}, {$set: {rank: newRank}})
+      } else if (cont && Taskspending.findOne({context: Blaze.getData(el).context}, {sort: {rank: -1}}).rank >= newRank) {
+        Taskspending.update({_id: cont._id}, {$set: {rank: newRank}})
       }
     }
   })
