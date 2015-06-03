@@ -47,6 +47,10 @@ display: inline;
 #add-newtask, #btnNewTask {
 margin: 15px 0px 15px 10px;
 float: left;
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  z-index: 50;
 }
 .title {
 float: left;
