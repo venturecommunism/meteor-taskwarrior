@@ -1,8 +1,12 @@
 <template name="contextpicker">
-<h3>Contexts (Next Actions)</h3>
+{{#unless fullmulticontext}}
+<h3>Contexts</h3>
+{{/unless}}
 <ul id="contextpicker">
 {{#each contexts}}
-<li><h6><div class="btn btn-inverse">{{checkedcontext}}</div> {{context}} ({{count}})</h6></li><button type="button" class="contclose close" id="{{_id}}">Send to background</button>
+{{#unless in_multicontext}}
+<li><h6><div class="btn btn-inverse">-</div> {{context}} ({{count}})</h6></li><button type="button" class="contclose close" id="{{_id}}">hide</button>
+{{/unless}}
 {{/each}}
 </ul>
 

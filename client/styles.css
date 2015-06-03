@@ -1,4 +1,16 @@
 /* CSS declarations go here */
+h3.multicontext-title {
+margin-right: 20px;
+}
+#loginButtons {
+float: left;
+}
+#categories-container{
+float: right;
+}
+#categories, h2.title {
+display: none;
+}
 .dueclock {
 text-align: right;
 }
@@ -7,7 +19,7 @@ position: relative;
 width: auto;
 margin: 0;
 }
-#project_list .projclose.close, .contclose.close {
+#project_list .projclose.close {
 clear: both;
 float: left;
 
@@ -16,12 +28,18 @@ float: left;
 display: block;
 }
 
+/*
 .contclose.close {
 top: 21px;
   left: 20px;
   clear: none;
 }
+*/
 
+.contclose.close {
+float: left;
+padding: 20px 0;
+}
 .kickstart {
 float: right;
 height: 20px;

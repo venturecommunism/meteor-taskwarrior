@@ -1,15 +1,20 @@
 Template.contextpicker.helpers({
+  fullmulticontext: function () {
+    if (Session.get("multicontext") && Session.get("multicontext").length == Taskspending.find({$and: [{tags: "largercontext"}, {tags: {$nin: ["somedaymaybecont"]}}]}).count()) {
+      return true
+    }
+  },
   count: function () {
     return (Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {tags: {$in: ["kickstart", "mit"]}}, {context: this.context}]}, {sort: {rank: {$exists: true}, rank: 1}}).count() + Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: this.context}]}, {sort: {rank: -1}}).count() + '/' + Taskspending.find({context: this.context, tags: {$nin: ["largercontext"]}}).count() + ' visible')
 //    return Taskspending.find({context: this.context}).count()
   },
-  checkedcontext: function () {
+  in_multicontext: function () {
     if (Session.get("multicontext")) {
       if (Session.get("multicontext").indexOf(this.context) > -1) {
-        return '+';
+        return true;
       }
       else {
-        return '-';
+        return false;
       }
     }
   },
