@@ -112,10 +112,10 @@ Meteor.publish("taskspendinginactivecontextpicker", function(inactivecontextpick
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
-    return Taskspending.find({tags: "somedaymaybecont"}, {sort: {rank: 1}, limit: inactivecontextpickerlimit})
+    return Taskspending.find({tags: "somedaymaybecont"}, {sort: {rank: 1}})
   }
   else if (userId) {
-    return Taskspending.find({owner: userId, tags: "somedaymaybecont"}, {sort: {rank: 1}, limit: inactivecontextpickerlimit})
+    return Taskspending.find({owner: userId, tags: "somedaymaybecont"}, {sort: {rank: 1}})
   }
 })
 
@@ -123,10 +123,10 @@ Meteor.publish("taskspendingmits", function(mitslimit) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
-    return Taskspending.find({tags: "mit"}, {sort: {rank: 1}, limit: mitslimit})
+    return Taskspending.find({tags: "mit"}, {sort: {rank: 1}})
   }
   else if (userId) {
-    return Taskspending.find({owner: userId, tags: "mit"}, {sort: {rank: 1}, limit: mitslimit})
+    return Taskspending.find({owner: userId, tags: "mit"}, {sort: {rank: 1}})
   }
 })
 
@@ -176,10 +176,10 @@ Meteor.publish("taskspendingsomedaymaybeprojects", function(somedaymaybeprojects
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
-    return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {rank: 1}, limit: somedaymaybeprojectslimit})
+    return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {rank: 1}})
   }
   else if (userId) {
-    return Taskspending.find({owner: userId, tags: "somedaymaybeproj"}, {sort: {rank: 1}, limit: somedaymaybeprojectslimit})
+    return Taskspending.find({owner: userId, tags: "somedaymaybeproj"}, {sort: {rank: 1}})
   }
 })
 

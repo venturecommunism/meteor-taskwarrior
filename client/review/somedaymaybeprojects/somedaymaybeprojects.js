@@ -1,3 +1,9 @@
+Template.somedaymaybeprojects.helpers({
+  somedaymaybeprojects: function () {
+    return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {rank: 1}})
+  },
+})
+
 Template.somedaymaybeprojects.created = function () {
 
   // 1. Initialization
@@ -33,14 +39,14 @@ Template.somedaymaybeprojects.created = function () {
   // 3. Cursor
 
   instance.taskspendingsomedaymaybeprojects = function() {
-    return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {rank: 1}, limit: instance.loaded.get()})
+    return Taskspending.find({tags: "somedaymaybeproj"}, {sort: {rank: 1}})
   }
 
 };
 
 Template.somedaymaybeprojects.helpers({
   // the posts cursor
-  somedaymaybeprojects: function () {
+  somedaymaybeprojects1: function () {
     return Template.instance().taskspendingsomedaymaybeprojects();
   },
   // are there more posts to show?

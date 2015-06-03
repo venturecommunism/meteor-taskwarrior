@@ -13,8 +13,8 @@ Template.inactivecontextpicker.helpers({
       }
     }
   },
-  contexts1: function () {
-    return context_infos()
+  contexts: function () {
+    return Taskspending.find({tags: "somedaymaybecont"}, {sort: {rank: 1}})
   },
 })
 
@@ -79,14 +79,14 @@ Template.inactivecontextpicker.created = function () {
   // 3. Cursor
 
   instance.taskspendinginactivecontextpicker = function() {
-    return Taskspending.find({tags: "somedaymaybecont"}, {sort: {rank: 1}, limit: instance.loaded.get()})
+    return Taskspending.find({tags: "somedaymaybecont"}, {sort: {rank: 1}})
   }
 
 };
 
 Template.inactivecontextpicker.helpers({
   // the posts cursor
-  contexts: function () {
+  contexts1: function () {
     return Template.instance().taskspendinginactivecontextpicker();
   },
   // are there more posts to show?

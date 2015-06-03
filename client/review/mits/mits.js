@@ -1,4 +1,7 @@
 Template.mostimportanttasks.helpers({
+  mits: function () {
+    return Taskspending.find({tags: "mit"}, {sort: {rank: 1}})
+  },
   somedaymaybeproject: function () {
     if (this.project && Taskspending.findOne({tags: "somedaymaybeproj", project: this.project})) {
       return true
@@ -55,7 +58,7 @@ Template.mostimportanttasks.created = function () {
   // 3. Cursor
 
   instance.taskspendingmits = function() {
-    return Taskspending.find({tags: "mit"}, {sort: {rank: 1}, limit: instance.loaded.get()})
+    return Taskspending.find({tags: "mit"}, {sort: {rank: 1}})
   }
 
 };
