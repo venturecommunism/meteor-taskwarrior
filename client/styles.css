@@ -1,20 +1,12 @@
 /* CSS declarations go here */
+.dueclock {
+text-align: right;
+}
 #task_list .task_item, #project_list .task_item {
 position: relative;
 width: auto;
+margin: 0;
 }
-
-#task_list .close, #project_list .close {
-position: relative;
-top: 3px;
-float: right;
-right: -755px;
-padding-left: 7px;
-right: -782px;
-right: -99%;
-right: auto;
-}
-
 #project_list .projclose.close, .contclose.close {
 clear: both;
 float: left;
@@ -30,7 +22,7 @@ top: 21px;
   clear: none;
 }
 
-.kickstart, .reviewproject {
+.kickstart {
 float: right;
 height: 20px;
 margin-right: 6px;
@@ -43,22 +35,14 @@ right: 41px;
 float: right;
 }
 
-.reviewproject {
-position: relative;
-top: -56px;
-float: left;
-}
-
-.reviewproject{
-float: left;
-clear: both;
-}
-
 body {
 background-image: url(/texturetastic_gray.png);
+margin: 0;
+padding: 0;
 }
-#task_list li.task_item p, #task_list li.task_item:hover p, #project_list li.task_item p, #project_list li.task-item:hover p {
+#project_list li.task_item p, #project_list li.task-item:hover p {
 overflow-wrap: break-word;
+display: inline;
 }
 #task_list li.task_item:hover #doing-project, #project_list li.task_item:hover #doing-project {
 visibility: visible;
@@ -340,7 +324,6 @@ h1, h2, h3, h4, h5 {
 }
 
 .sorting_mits {
-top: 14px;
 position: relative;
 left: 20px;
 }
@@ -358,7 +341,7 @@ float: right;
 float: none;
 }
 
-#task_list .mit, #task_list .choosechecklistitem{
+#task_list .choosechecklistitem{
 position: relative;
 top: 0;
 float: right;
@@ -410,8 +393,7 @@ margin: 0;
 }
 
 #contextpicker li, #inactivecontextpicker li {
-float: left;
-padding: 20px;
+padding: 0 20px;
 }
 
 
