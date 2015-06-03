@@ -49,7 +49,7 @@ Template.inactivecontextpicker.created = function () {
 
   // initialize the reactive variables
   instance.loaded = new ReactiveVar(0);
-  instance.inactivecontextpickerlimit = new ReactiveVar(1000);
+  instance.inactivecontextpickerlimit = new ReactiveVar(5);
 
   // 2. Autorun
 
@@ -62,9 +62,7 @@ Template.inactivecontextpicker.created = function () {
     console.log("Asking for "+inactivecontextpickerlimit+" posts…")
 
     // subscribe to the posts publication
-    var subscription = instance.subscribe('taskspendinginactivecontextpicker', inactivecontextpickerlimit, function () {
-      Session.set('taskspending_dataloaded', true)
-    })
+    var subscription = instance.subscribe('taskspendinginactivecontextpicker', inactivecontextpickerlimit)
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
