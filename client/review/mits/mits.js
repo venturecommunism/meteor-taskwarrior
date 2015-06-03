@@ -1,4 +1,14 @@
 Template.mostimportanttasks.helpers({
+  somedaymaybeproject: function () {
+    if (this.project && Taskspending.findOne({tags: "somedaymaybeproj", project: this.project})) {
+      return true
+    }
+  },
+  somedaymaybecontext: function () {
+    if (this.context && Taskspending.findOne({tags: "somedaymaybecont", context: this.context})) {
+      return true
+    }
+  },
   sorting_mits: function () {
     if (Session.equals('sorting_mits', true)) {
       return 'btn-primary'

@@ -3,7 +3,11 @@
 <h3>Most Important Tasks (MITs)</h3><p class="btn sorting_mits {{sorting_mits}}">Sort MITs</p>
 <div id="task_list" class="mit_task_list">
 {{#each mits}}
+{{#unless somedaymaybeproject}}
+{{#unless somedaymaybecontext}}
 {{> orgtask_todo_item}}
+{{/unless}}
+{{/unless}}
 {{/each}}
 </div>
 
