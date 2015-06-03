@@ -37,6 +37,24 @@ Template.contextpicker.events({
       Session.set("multicontext", tempcontext)
     }
   },
+  'click .contclose': function (e,t){
+    var tasktest = Taskspending.findOne({context: this.context, tags:"somedaymaybecont"})
+    var taskid = tasktest ? tasktest._id : ''
+    if (taskid != '') {
+      Taskspending.update({_id: taskid}, {$pull: {tags: "somedaymaybecont"}})
+    }
+    else if (tasktest) {
+      Taskspending.update({_id: tasktest._id}, {$push: {tags: "somedaymaybecont"}})
+    }
+    else {
+    var tempcontext = Session.get("multicontext")
+      var tempcontextindex = tempcontext.indexOf(this.context)
+      var splicedtempcontext = tempcontext.splice(tempcontextindex,1)
+      Session.set("multicontext", tempcontext)
+      var taskid = Taskspending.findOne({context: this.context, tags: "largercontext"})._id
+      Taskspending.update({_id: taskid}, {$push: {tags: "somedaymaybecont"}})
+    }
+  },
 })
 
 // begin modular subscription loading

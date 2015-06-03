@@ -23,13 +23,16 @@ Template.inactivecontextpicker.events({
     tempcontext = Session.get("multicontext")
     if (!tempcontext) {
       Session.set("multicontext", [this.context])
+      Taskspending.update({_id: this._id}, {$pull: {tags: "somedaymaybecont"}})
     }
     else if (tempcontext.length == 0) {
       Session.set("multicontext", [this.context])
+      Taskspending.update({_id: this._id}, {$pull: {tags: "somedaymaybecont"}})
     }
     else if (Session.get("multicontext").indexOf(this.context) < 0) {
-      tempcontext.push(this.context)
+      tempcontext.unshift(this.context)
       Session.set("multicontext", tempcontext)
+      Taskspending.update({_id: this._id}, {$pull: {tags: "somedaymaybecont"}})
     }
     else {
       var tempcontextindex = tempcontext.indexOf(this.context)

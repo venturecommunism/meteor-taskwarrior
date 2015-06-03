@@ -50,10 +50,13 @@ Template.multicontext.events({
       Taskspending.update({_id: taskid}, {$pull: {tags: "somedaymaybecont"}})
     }
     else if (tasktest) {
-console.log(tasktest._id)
       Taskspending.update({_id: tasktest._id}, {$push: {tags: "somedaymaybecont"}})
     }
     else {
+    var tempcontext = Session.get("multicontext")
+      var tempcontextindex = tempcontext.indexOf(String(this))
+      var splicedtempcontext = tempcontext.splice(tempcontextindex,1)
+      Session.set("multicontext", tempcontext)
       var taskid = Taskspending.findOne({context: this.toString(), tags: "largercontext"})._id
       Taskspending.update({_id: taskid}, {$push: {tags: "somedaymaybecont"}})
     }

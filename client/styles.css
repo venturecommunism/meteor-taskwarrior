@@ -283,6 +283,8 @@ max-height: 33%;
 
 #contextpicker li, #inactivecontextpicker li {
 list-style-type: none;
+clear: both;
+float: left;
 }
 
 #contextpicker .btn, #inactivecontextpicker .btn {
