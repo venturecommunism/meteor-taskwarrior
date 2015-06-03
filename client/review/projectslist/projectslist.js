@@ -271,7 +271,7 @@ Template.projectslist.created = function () {
     console.log("Asking for "+projectslimit+" MITs…")
 
     // subscribe to the posts publication
-    var subscription = instance.subscribe('taskspendingprojects', projectslimit)
+    var subscription = instance.subscribe('taskspendingprojects')
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {

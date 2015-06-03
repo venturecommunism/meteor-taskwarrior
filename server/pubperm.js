@@ -101,10 +101,10 @@ Meteor.publish("taskspendingcontextpicker", function(contextpickerlimit) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
-    return Taskspending.find({tags: "largercontext"}, {sort: {rank: 1}, limit: contextpickerlimit})
+    return Taskspending.find({tags: "largercontext"}, {sort: {rank: 1}})
   }
   else if (userId) {
-    return Taskspending.find({owner: userId, tags: "largercontext"}, {sort: {rank: 1}, limit: contextpickerlimit})
+    return Taskspending.find({owner: userId, tags: "largercontext"}, {sort: {rank: 1}})
   }
 })
 
