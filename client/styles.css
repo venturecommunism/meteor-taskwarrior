@@ -44,9 +44,6 @@ padding: 0;
 overflow-wrap: break-word;
 display: inline;
 }
-#task_list li.task_item:hover #doing-project, #project_list li.task_item:hover #doing-project {
-visibility: visible;
-}
 #add-newtask, #btnNewTask {
 margin: 15px 0px 15px 10px;
 float: left;
@@ -152,16 +149,6 @@ max-height:550px;
 .btn-inverse:active, .btn-inverse.active {
 background-color: #008000;
 }
-#doing-project{
-float: right;
-height: 20px;
-background-color: gray;
-padding: 5px;
-position: relative;
-top: -30px;
-visibility: hidden;
-}
-
 /* mobile css 
 #task_list .task_item{
 font-size:40px;
@@ -307,13 +294,11 @@ right: 12px;
 left: auto;
 }
 
-p.mit {
+.mit {
+/*
   float: right;
-  height: 20px;
-  padding: 5px;
-  position: relative;
-  top: -30px;
-  margin: 0 10px;
+  margin: 0 5px;
+*/
 }
 
 h1, h2, h3, h4, h5 {
@@ -399,3 +384,6 @@ padding: 0 20px;
 }
 
 
+.startprocessing-button {
+clear: both;
+}
