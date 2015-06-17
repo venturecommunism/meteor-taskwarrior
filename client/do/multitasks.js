@@ -2,6 +2,14 @@ Template.multitasks.helpers({
   multitasks0: function () {
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: this.toString()}]}, {sort: {rank: -1}})
   },
+  mitornot: function () {
+    if (Taskspending.findOne({_id: this._id, tags: "mit"})) {
+      return 'active'
+    }
+    else {
+      return ''
+    }
+  },
 })
 
 // begin modular subscription loading
