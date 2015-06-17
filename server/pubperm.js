@@ -119,6 +119,17 @@ Meteor.publish("taskspendingmultitasks", function(context) {
   }
 })
 
+Meteor.publish("taskspendingmultitasks2", function(context) {
+  var userId = this.userId
+//  Meteor._sleepForMs(2000)
+  if (adminUser(userId)) {
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, context: context, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}})
+  }
+  else if (userId) {
+    return Taskspending.find({owner: userId, status: {$in: ["waiting", "pending"]}, context: context, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}})
+  }
+})
+
 
 Meteor.publish("taskspendinginactivecontextpicker", function(inactivecontextpickerlimit) {
   var userId = this.userId

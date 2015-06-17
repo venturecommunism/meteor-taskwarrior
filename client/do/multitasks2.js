@@ -1,6 +1,9 @@
-Template.multitasks2.helpers({
+Template.multitaskstwo.helpers({
   multitasks20: function () {
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$exists: true}}, {context: this.toString()}]}, {sort: {tags: {$in: ["kickstart", "mit"]}, rank: {$exists: true}, rank: 1}})
+  },
+  projectcolor: function () {
+    return "projectcolor"
   },
   mitornot: function () {
     if (Taskspending.findOne({_id: this._id, tags: "mit"})) {
@@ -14,7 +17,7 @@ Template.multitasks2.helpers({
 
 // begin modular subscription loading
 
-Template.multitasks2.created = function () {
+Template.multitaskstwo.created = function () {
 
   // 1. Initialization
   var context = this.data
@@ -54,7 +57,7 @@ Template.multitasks2.created = function () {
 
 };
 
-Template.multitasks2.helpers({
+Template.multitaskstwo.helpers({
   // the posts cursor
   multitasks2: function () {
     return Template.instance().taskspendingmultitasks2();
@@ -65,7 +68,7 @@ Template.multitasks2.helpers({
   }
 });
 
-Template.multitasks2.events({
+Template.multitaskstwo.events({
   'click .load-more-projectedcontext': function (event, instance) {
     event.preventDefault();
 
