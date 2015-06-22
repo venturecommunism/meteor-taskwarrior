@@ -1,5 +1,5 @@
 <template name="projectlesssomedaymaybes">
-
+{{#if projectlesssomedaymaybesloaded}}
 <h4>Projectless Someday/Maybe tasks</h4>
 <div id="task_list">
 {{#each projectlesssomedaymaybes}}
@@ -16,5 +16,5 @@
     <div class="loading">{{>spinner}}</div>
   {{/if}}
 <!-- end of load more -->
-
+{{/if}}
 </template>

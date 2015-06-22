@@ -6,20 +6,38 @@
     {{> checklisteditingdialog}}
     {{> alarmseteditingdialog}}
 
+{{#if calendarloaded}}
 {{> calendar}}
+{{/if}}
 
+{{#if nextactionsloaded}}
 {{> contextpicker}}
 {{> multicontext}}
 {{> inactivecontextpicker}}
+{{/if}}
 
+{{#if mitsloaded}}
 {{> mostimportanttasks}}
+{{/if}}
 
+{{#if waitingforsloaded}}
 {{> waitingfors}}
+{{/if}}
 
+{{#if projectsloaded}}
 {{> projectslist}}
-
 {{> somedaymaybeprojects}}
+{{/if}}
+
+{{#if projectlesssomedaymaybesloaded}}
 {{> projectlesssomedaymaybes}}
+{{/if}}
+
+{{#if moreResults}}
+    <div id="showMoreResults" style="margin-left: 25px;">
+        <span class="loading">Loading...</span>
+    </div>
+{{/if}}
 
   {{/if}}
 </template>

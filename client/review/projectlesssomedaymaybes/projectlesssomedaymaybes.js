@@ -2,6 +2,9 @@ Template.projectlesssomedaymaybes.helpers({
   somedaymaybetasks1: function () {
     return Taskspending.find({context: "somedaymaybe"})
   },
+  projectlesssomedaymaybesloaded: function () {
+    return (Session.get("itemsLimit")[6] == 1)
+  },
 })
 
 // begin modular subscription loading
