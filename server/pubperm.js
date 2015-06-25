@@ -86,6 +86,17 @@ Meteor.publish("taskspendingunprocessed", function(unprocessedlimit) {
   }
 })
 
+Meteor.publish("taskspendingpreviouscalendar", function(previouscalendarlimit) {
+  var userId = this.userId
+//  Meteor._sleepForMs(2000)
+  if (adminUser(userId)) {
+    return Tasksbacklog.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: -1}, limit: previouscalendarlimit})
+  }
+  else if (userId) {
+    return Tasksbacklog.find({owner: userId, status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: -1}, limit: previouscalendarlimit})
+  }
+})
+
 Meteor.publish("taskspendingcalendar", function(calendarlimit) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)

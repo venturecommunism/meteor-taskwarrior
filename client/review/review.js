@@ -81,6 +81,9 @@ Template.review.helpers({
   moreResults: function () {
     return !(Session.get("itemsLimit").indexOf(0) == -1);
   },
+  previouscalendarloaded: function () {
+    return (Session.get("itemsLimit")[1] == 1)
+  },
   calendarloaded: function () {
     return (Session.get("itemsLimit")[1] == 1)
   },
