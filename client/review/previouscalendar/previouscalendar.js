@@ -52,6 +52,9 @@ console.log(uuid)
        }
      }
   },
+  'click .closepreviouscalendarsection': function(e,t){
+    Session.set('previouscalendarhidden', true)
+  },
 })
 
 // begin modular subscription loading

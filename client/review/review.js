@@ -105,6 +105,33 @@ Template.review.helpers({
   projectlesssomedaymaybesloaded: function () {
     return (Session.get("itemsLimit")[7] == 1)
   },
+  inboxhidden: function () {
+    return Session.equals("inboxhidden", true)
+  },
+  previouscalendarhidden: function () {
+    return Session.equals("previouscalendarhidden", true)
+  },
+  calendarhidden: function () {
+    return Session.equals("calendarhidden", true)
+  },
+  nextactionshidden: function () {
+    return Session.equals("nextactionshidden", true)
+  },
+  mitshidden: function () {
+    return Session.equals("mitshidden", true)
+  },
+  readandreviewhidden: function () {
+    return Session.equals("readandreviewhidden", true)
+  },
+  waitingforshidden: function () {
+    return Session.equals("waitingforshidden", true)
+  },
+  projectshidden: function () {
+    return Session.equals("projectshidden", true)
+  },
+  projectlesssomedaymaybeshidden: function () {
+    return Session.equals("projectlesssomedaymaybeshidden", true)
+  },
 })
 
 Template.documenteditingdialog.helpers({
@@ -244,6 +271,21 @@ Session.set('helpsesh',false)
     }
   },
   'click .startprocessing-button': selectTaskProcessing,
+  'click .openinboxsection': function(e,t){
+    Session.set('inboxhidden', false)
+  },
+  'click .openpreviouscalendarsection': function(e,t){
+    Session.set('previouscalendarhidden', false)
+  },
+  'click .opencalendarsection': function(e,t){
+    Session.set('calendarhidden', false)
+  },
+  'click .opennextactionssection': function(e,t){
+    Session.set('nextactionshidden', false)
+  },
+  'click .openmitssection': function(e,t){
+    Session.set('mitshidden', false)
+  },
 });
 
 Template.review.rendered = function () {

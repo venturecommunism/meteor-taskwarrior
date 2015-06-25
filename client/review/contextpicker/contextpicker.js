@@ -60,6 +60,9 @@ Template.contextpicker.events({
       Taskspending.update({_id: taskid}, {$push: {tags: "somedaymaybecont"}})
     }
   },
+  'click .closenextactionssection': function(e,t){
+    Session.set('nextactionshidden', true)
+  },
 })
 
 // begin modular subscription loading

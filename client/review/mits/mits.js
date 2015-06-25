@@ -84,7 +84,10 @@ Template.mostimportanttasks.events({
     // increase limit by 5 and update it
     mitslimit += 5;
     instance.mitslimit.set(mitslimit)
-  }
+  },
+  'click .closemitssection': function(e,t){
+    Session.set('mitshidden', true)
+  },
 });
 
 // end modular subscription loading

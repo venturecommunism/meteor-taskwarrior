@@ -25,7 +25,10 @@ Template.process.events({
     focusText(t.find(".title"),this.project);
 
   },
-  'click .startprocessing-button': selectTaskProcessing
+  'click .startprocessing-button': selectTaskProcessing,
+  'click .closeinboxsection': function(e,t){
+    Session.set('inboxhidden', true)
+  },
 });
 
 Template.process.helpers({
