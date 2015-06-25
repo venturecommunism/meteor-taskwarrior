@@ -33,6 +33,9 @@ Template.process.helpers({
     formattednow = formattedNow()
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, tags: "inbox"})
   },
+  inboxcount: function () {
+    return Taskspending.find({tags: "inbox"}).count()
+  },
   is_processing: function () {
     return Session.get('process_status')
   },

@@ -1,8 +1,8 @@
 <template name="process">
+<h3>Inbox ({{inboxcount}})</h3>
   {{#if is_processing}}
     {{> processingdialog}}
 
-<h3>Inbox</h3>
     <ul id="task_list">
       {{#each tasks}}
         {{#if waiting}}
