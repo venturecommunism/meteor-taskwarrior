@@ -4,7 +4,7 @@ Meteor.startup(function () {
   Session.set('tasksbacklog_dataloaded', false)
 })
 
-Meteor.subscribe("tasks")
+//Meteor.subscribe("tasks")
 
 /*
 Meteor.subscribe("taskspending", function () {
@@ -17,7 +17,7 @@ Meteor.subscribe('taskspendingcontextpicker')
 Meteor.subscribe('taskspendingprojects')
 Meteor.subscribe('taskspendingsomedaymaybeprojects')
 
-Meteor.subscribe("tasksbacklog")
+//Meteor.subscribe("tasksbacklog")
 
 Session.set('adding_newtask', false);
 Session.set('processing_task', false);

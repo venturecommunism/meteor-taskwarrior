@@ -67,13 +67,14 @@ Meteor.publish("taskspending", function () {
   }
 });
 
-
+/*
 Meteor.publish("tasksbacklog", function () {
   var userId = this.userId
   if (adminUser(userId)) {
     return Tasksbacklog.find()
   }
 });
+*/
 
 Meteor.publish("taskspendingunprocessed", function(unprocessedlimit) {
   var userId = this.userId
@@ -86,14 +87,14 @@ Meteor.publish("taskspendingunprocessed", function(unprocessedlimit) {
   }
 })
 
-Meteor.publish("taskspendingpreviouscalendar", function(previouscalendarlimit) {
+Meteor.publish("tasksbacklogpreviouscalendar", function(previouscalendarlimit) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
-    return Tasksbacklog.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: -1}, limit: previouscalendarlimit})
+    return Tasksbacklog.find({status: "completed", $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: -1}, limit: previouscalendarlimit})
   }
   else if (userId) {
-    return Tasksbacklog.find({owner: userId, status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: -1}, limit: previouscalendarlimit})
+    return Tasksbacklog.find({owner: userId, status: "completed", $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: -1}, limit: previouscalendarlimit})
   }
 })
 
