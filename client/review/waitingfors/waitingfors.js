@@ -61,7 +61,10 @@ Template.waitingfors.events({
     // increase limit by 5 and update it
     waitingforslimit += 5;
     instance.waitingforslimit.set(waitingforslimit)
-  }
+  },
+  'click .closewaitingforssection': function(e,t){
+    Session.set('waitingforshidden', true)
+  },
 });
 
 // end modular subscription loading

@@ -286,6 +286,18 @@ Session.set('helpsesh',false)
   'click .openmitssection': function(e,t){
     Session.set('mitshidden', false)
   },
+  'click .openreadandreviewsection': function(e,t){
+    Session.set('readandreviewhidden', false)
+  },
+  'click .openwaitingforssection': function(e,t){
+    Session.set('waitingforshidden', false)
+  },
+  'click .openprojectssection': function(e,t){
+    Session.set('projectshidden', false)
+  },
+  'click .openprojectlesssomedaymaybessection': function(e,t){
+    Session.set('projectlesssomedaymaybeshidden', false)
+  },
 });
 
 Template.review.rendered = function () {

@@ -72,7 +72,10 @@ Template.projectlesssomedaymaybes.events({
     // increase limit by 5 and update it
     projectlesssomedaymaybeslimit += 5;
     instance.projectlesssomedaymaybeslimit.set(projectlesssomedaymaybeslimit)
-  }
+  },
+  'click .closeprojectlesssomedaymaybessection': function(e,t){
+    Session.set('projectlesssomedaymaybeshidden', true)
+  },
 });
 
 // end modular subscription loading

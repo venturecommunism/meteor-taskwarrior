@@ -61,7 +61,10 @@ Template.readandreview.events({
     // increase limit by 5 and update it
     readandreviewlimit += 5;
     instance.readandreviewlimit.set(readandreviewlimit)
-  }
+  },
+  'click .closereadandreviewsection': function(e,t){
+    Session.set('readandreviewhidden', true)
+  },
 });
 
 // end modular subscription loading

@@ -335,6 +335,8 @@ h1, h2, h3, h4, h5 {
 .sorting_mits {
 position: relative;
 left: 20px;
+top: 15px;
+float: left;
 }
 
 .active-project .project-item p {

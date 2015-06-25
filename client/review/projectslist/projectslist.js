@@ -189,6 +189,9 @@ Session.set('helpsesh',false)
     }
   },
   'click .startprocessing-button': selectTaskProcessing,
+  'click .closeprojectssection': function(e,t){
+    Session.set('projectshidden', true)
+  },
 });
 
 Template.projectslist.rendered = function () {
