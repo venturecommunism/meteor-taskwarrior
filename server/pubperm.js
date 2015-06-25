@@ -153,14 +153,25 @@ Meteor.publish("taskspendingmits", function(mitslimit) {
   }
 })
 
+Meteor.publish("taskspendingreadandreview", function(readandreviewlimit) {
+  var userId = this.userId
+//  Meteor._sleepForMs(2000)
+  if (adminUser(userId)) {
+    return Taskspending.find({context: "readandreview", tags: {$ne: "largercontext"}}, {limit: readandreviewlimit})
+  }
+  else if (userId) {
+    return Taskspending.find({context: "readandreview", tags: {$ne: "largercontext"}}, {limit: readandreviewlimit})
+  }
+})
+
 Meteor.publish("taskspendingwaitingfors", function(waitingforslimit) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
-    return Taskspending.find({context: "waitingfor"}, {limit: waitingforslimit})
+    return Taskspending.find({context: "waitingfor", tags: {$ne: "largercontext"}}, {limit: waitingforslimit})
   }
   else if (userId) {
-    return Taskspending.find({context: "waitingfor"}, {limit: waitingforslimit})
+    return Taskspending.find({context: "waitingfor", tags: {$ne: "largercontext"}}, {limit: waitingforslimit})
   }
 })
 
@@ -212,9 +223,9 @@ Meteor.publish("taskspendingprojectlesssomedaymaybes", function(projectlesssomed
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
-    return Taskspending.find({context: "somedaymaybe"}, {limit: projectlesssomedaymaybeslimit})
+    return Taskspending.find({context: "somedaymaybe", tags: {$ne: "largercontext"}}, {limit: projectlesssomedaymaybeslimit})
   }
   else if (userId) {
-    return Taskspending.find({owner: userId, context: "somedaymaybe"}, {limit: projectlesssomedaymaybeslimit})
+    return Taskspending.find({owner: userId, context: "somedaymaybe", tags: {$ne: "largercontext"}}, {limit: projectlesssomedaymaybeslimit})
   }
 })

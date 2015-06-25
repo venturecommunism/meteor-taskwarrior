@@ -35,7 +35,7 @@ Template.waitingfors.created = function () {
   // 3. Cursor
 
   instance.taskspendingwaitingfors = function() {
-    return Taskspending.find({context: "waitingfor"}, {limit: instance.loaded.get()})
+    return Taskspending.find({context: "waitingfor", tags: {$ne: "largercontext"}}, {limit: instance.loaded.get()})
   }
 
 };

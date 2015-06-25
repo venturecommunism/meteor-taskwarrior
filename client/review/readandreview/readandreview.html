@@ -1,0 +1,20 @@
+<template name="readandreview">
+
+<h4>Read and Review</h4>
+<div id="task_list">
+{{#each readandreview}}
+{{> orgtask_todo_item}}
+{{/each}}
+</div>
+
+<!-- load more -->
+  {{#if Template.subscriptionsReady}}
+    {{#if hasMorePosts}}
+      <p><a class="load-more-readandreview">Load More</a></p>
+    {{/if}}
+  {{else}}
+    <div class="loading">{{>spinner}}</div>
+  {{/if}}
+<!-- end of load more -->
+
+</template>

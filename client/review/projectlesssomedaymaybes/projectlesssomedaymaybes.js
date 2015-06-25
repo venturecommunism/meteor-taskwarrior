@@ -44,7 +44,7 @@ Template.projectlesssomedaymaybes.created = function () {
   // 3. Cursor
 
   instance.taskspendingprojectlesssomedaymaybes = function() {
-    return Taskspending.find({context: "somedaymaybe"}, {limit: instance.loaded.get()})
+    return Taskspending.find({context: "somedaymaybe", tags: {$ne: "largercontext"}}, {limit: instance.loaded.get()})
 
 //    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: 1}, limit: instance.loaded.get()})
   }
