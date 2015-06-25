@@ -228,6 +228,10 @@ archivetask.tags = ["archive"]
   },
   'click .defer': function() {
     defertask = Taskspending.findOne({_id: Session.get('current_processedtask')})
+    if (!defertask.context) {
+      alert("Missing context")
+      return
+    }
     var i = defertask.tags.indexOf("inbox");
     if(i != -1) {
       defertask.tags.splice(i, 1);
