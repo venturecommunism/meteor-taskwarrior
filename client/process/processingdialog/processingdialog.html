@@ -43,24 +43,7 @@
 
 
       <h6>Is it a task to be done in a specific context?</h6>
-{{#if has_context}}
-
-<form class="form-inline" role="form">
-    <div class="form-group">
-      <input class="form-control context span5" type="text" id="context" placeholder="{{context}}">
-    </div>
-</form>
-
-{{else}}
-
-<form class="form-inline" role="form">
-    <div class="form-group">
-      <input class="form-control context span5" type="text" id="context">
-    </div>
-</form>
-
-{{/if}}
-
+{{> context_picker}}
 
       <div class="btn btn-primary somedaymaybe">Someday/Maybe</div>
       <div class="btn btn-primary defer">Defer</div>
