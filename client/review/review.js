@@ -27,7 +27,7 @@ function showMoreVisible() {
 // run the above func every time the user scrolls
 $(window).scroll(showMoreVisible);
 
-Session.setDefault('itemsLimit', [1, 1, 1, 0, 0, 0, 0]);
+Session.setDefault('itemsLimit', [1, 1, 1, 0, 0, 0, 0, 0]);
 Session.set('processing_task', false)
 Session.set('documentediting', false)
 Session.set('sorting_mits', false)
@@ -87,20 +87,20 @@ Template.review.helpers({
   nextactionsloaded: function () {
     return (Session.get("itemsLimit")[2] == 1)
   },
-  readandreviewloaded: function () {
-    return (Session.get("itemsLimit")[3] == 1)
-  },
-  waitingforsloaded: function () {
-    return (Session.get("itemsLimit")[3] == 1)
-  },
   mitsloaded: function () {
+    return (Session.get("itemsLimit")[3] == 1)
+  },
+  readandreviewloaded: function () {
     return (Session.get("itemsLimit")[4] == 1)
   },
-  projectsloaded: function () {
+  waitingforsloaded: function () {
     return (Session.get("itemsLimit")[5] == 1)
   },
-  projectlesssomedaymaybesloaded: function () {
+  projectsloaded: function () {
     return (Session.get("itemsLimit")[6] == 1)
+  },
+  projectlesssomedaymaybesloaded: function () {
+    return (Session.get("itemsLimit")[7] == 1)
   },
 })
 
