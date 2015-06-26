@@ -76,17 +76,17 @@ Template.process.created = function () {
     // get the limit
     var unprocessedlimit = instance.unprocessedlimit.get();
 
-    console.log("Asking for "+unprocessedlimit+" posts…")
+    // console.log("Asking for "+unprocessedlimit+" posts…")
     
     // subscribe to the posts publication
     var subscription = instance.subscribe('taskspendingunprocessed', unprocessedlimit)
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
-      console.log("> Received "+unprocessedlimit+" posts. \n\n")
+      // console.log("> Received "+unprocessedlimit+" posts. \n\n")
       instance.loaded.set(unprocessedlimit);
     } else {
-      console.log("> Subscription is not ready yet. \n\n");
+      // console.log("> Subscription is not ready yet. \n\n");
     }
   });
   

@@ -45,9 +45,9 @@ Template.previouscalendar.events({
       {
         var formattednow = formattedNow()
         var uuid = this.uuid
-console.log(uuid)
-        console.log(Tasksbacklog.insert({description: taskVal, entry: formattednow, uuid:uuid}))
-        console.log(Taskspending.update({_id:this._id},{$set:{description: taskVal, entry: formattednow}}))
+// console.log(uuid)
+        Tasksbacklog.insert({description: taskVal, entry: formattednow, uuid:uuid})
+        Taskspending.update({_id:this._id},{$set:{description: taskVal, entry: formattednow}})
         Session.set('editing_itemname', null);
        }
      }
@@ -77,7 +77,7 @@ Template.previouscalendar.created = function () {
     // get the limit
     var previouscalendarlimit = instance.previouscalendarlimit.get();
 
-    console.log("Asking for "+previouscalendarlimit+" posts…")
+    // console.log("Asking for "+previouscalendarlimit+" posts…")
 
     // subscribe to the posts publication
     var subscription = instance.subscribe('tasksbacklogpreviouscalendar', previouscalendarlimit, function () {
@@ -86,10 +86,10 @@ Template.previouscalendar.created = function () {
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
-      console.log("> Received "+previouscalendarlimit+" posts. \n\n")
+      // console.log("> Received "+previouscalendarlimit+" posts. \n\n")
       instance.loaded.set(previouscalendarlimit);
     } else {
-      console.log("> Subscription is not ready yet. \n\n");
+      // console.log("> Subscription is not ready yet. \n\n");
     }
   });
 

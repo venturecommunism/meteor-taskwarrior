@@ -18,17 +18,17 @@ Template.waitingfors.created = function () {
     // get the limit
     var waitingforslimit = instance.waitingforslimit.get();
 
-    console.log("Asking for "+waitingforslimit+" waiting fors…")
+    // console.log("Asking for "+waitingforslimit+" waiting fors…")
 
     // subscribe to the posts publication
     var subscription = instance.subscribe('taskspendingwaitingfors', waitingforslimit)
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
-      console.log("> Received "+waitingforslimit+" waiting fors. \n\n")
+      // console.log("> Received "+waitingforslimit+" waiting fors. \n\n")
       instance.loaded.set(waitingforslimit);
     } else {
-      console.log("> Subscription is not ready yet. \n\n");
+      // console.log("> Subscription is not ready yet. \n\n");
     }
   });
 

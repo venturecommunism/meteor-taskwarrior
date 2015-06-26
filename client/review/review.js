@@ -8,7 +8,7 @@ function showMoreVisible() {
  //console.log(target.offset().top + " is targ off top")
     if (target.offset().top <= threshold) {
         if (!target.data("visible")) {
-            console.log("target became visible (inside viewable area)");
+            // console.log("target became visible (inside viewable area)");
             target.data("visible", true);
             var newItemsLimit = Session.get("itemsLimit")
             var n = newItemsLimit.indexOf(0)
@@ -18,7 +18,7 @@ function showMoreVisible() {
         }
     } else {
         if (target.data("visible")) {
-            console.log("target became invisible (below viewable area)");
+            // console.log("target became invisible (below viewable area)");
             target.data("visible", false);
         }
     }        

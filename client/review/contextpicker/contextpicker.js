@@ -85,17 +85,17 @@ Template.contextpicker.created = function () {
     // get the limit
     var contextpickerlimit = instance.contextpickerlimit.get();
 
-    console.log("Asking for "+contextpickerlimit+" posts…")
+    // console.log("Asking for "+contextpickerlimit+" posts…")
 
     // subscribe to the posts publication
     var subscription = instance.subscribe('taskspendingcontextpicker', contextpickerlimit)
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
-      console.log("> Received "+contextpickerlimit+" posts. \n\n")
+      // console.log("> Received "+contextpickerlimit+" posts. \n\n")
       instance.loaded.set(contextpickerlimit);
     } else {
-      console.log("> Subscription is not ready yet. \n\n");
+      // console.log("> Subscription is not ready yet. \n\n");
     }
   });
 

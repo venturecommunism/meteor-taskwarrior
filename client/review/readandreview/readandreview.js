@@ -18,17 +18,17 @@ Template.readandreview.created = function () {
     // get the limit
     var readandreviewlimit = instance.readandreviewlimit.get();
 
-    console.log("Asking for "+readandreviewlimit+" items to read and review…")
+    // console.log("Asking for "+readandreviewlimit+" items to read and review…")
 
     // subscribe to the posts publication
     var subscription = instance.subscribe('taskspendingreadandreview', readandreviewlimit)
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
-      console.log("> Received "+readandreviewlimit+" items to read and review. \n\n")
+      // console.log("> Received "+readandreviewlimit+" items to read and review. \n\n")
       instance.loaded.set(readandreviewlimit);
     } else {
-      console.log("> Subscription is not ready yet. \n\n");
+      // console.log("> Subscription is not ready yet. \n\n");
     }
   });
 

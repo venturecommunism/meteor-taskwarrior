@@ -57,17 +57,17 @@ Template.openproject.created = function () {
     // get the limit
     var openprojectlimit = instance.openprojectlimit.get();
 
-    console.log("Asking for "+openprojectlimit+" posts…")
+    // console.log("Asking for "+openprojectlimit+" posts…")
 
     // subscribe to the posts publication
     var subscription = instance.subscribe('taskspendingopenproject', project)
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
-      console.log("> Received "+openprojectlimit+" posts. \n\n")
+      // console.log("> Received "+openprojectlimit+" posts. \n\n")
       instance.loaded.set(openprojectlimit);
     } else {
-      console.log("> Subscription is not ready yet. \n\n");
+      // console.log("> Subscription is not ready yet. \n\n");
     }
   });
 

@@ -62,17 +62,17 @@ Template.inactivecontextpicker.created = function () {
     // get the limit
     var inactivecontextpickerlimit = instance.inactivecontextpickerlimit.get();
 
-    console.log("Asking for "+inactivecontextpickerlimit+" posts…")
+    // console.log("Asking for "+inactivecontextpickerlimit+" posts…")
 
     // subscribe to the posts publication
     var subscription = instance.subscribe('taskspendinginactivecontextpicker', inactivecontextpickerlimit)
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
-      console.log("> Received "+inactivecontextpickerlimit+" posts. \n\n")
+      // console.log("> Received "+inactivecontextpickerlimit+" posts. \n\n")
       instance.loaded.set(inactivecontextpickerlimit);
     } else {
-      console.log("> Subscription is not ready yet. \n\n");
+      // console.log("> Subscription is not ready yet. \n\n");
     }
   });
 

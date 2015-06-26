@@ -41,17 +41,17 @@ Template.mostimportanttasks.created = function () {
     // get the limit
     var mitslimit = instance.mitslimit.get();
 
-    console.log("Asking for "+mitslimit+" MITs…")
+    // console.log("Asking for "+mitslimit+" MITs…")
 
     // subscribe to the posts publication
     var subscription = instance.subscribe('taskspendingmits', mitslimit)
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
-      console.log("> Received "+mitslimit+" MITs. \n\n")
+      // console.log("> Received "+mitslimit+" MITs. \n\n")
       instance.loaded.set(mitslimit);
     } else {
-      console.log("> Subscription is not ready yet. \n\n");
+      // console.log("> Subscription is not ready yet. \n\n");
     }
   });
 

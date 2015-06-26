@@ -271,17 +271,17 @@ Template.projectslist.created = function () {
     // get the limit
     var projectslimit = instance.projectslimit.get();
 
-    console.log("Asking for "+projectslimit+" MITs…")
+    // console.log("Asking for "+projectslimit+" MITs…")
 
     // subscribe to the posts publication
     var subscription = instance.subscribe('taskspendingprojects')
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
-      console.log("> Received "+projectslimit+" MITs. \n\n")
+      // console.log("> Received "+projectslimit+" MITs. \n\n")
       instance.loaded.set(projectslimit);
     } else {
-      console.log("> Subscription is not ready yet. \n\n");
+      // console.log("> Subscription is not ready yet. \n\n");
     }
   });
 

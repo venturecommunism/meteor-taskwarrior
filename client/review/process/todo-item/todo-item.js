@@ -1,8 +1,10 @@
 Session.set('editing_itemname', null);
 
-Template.todo_item.editing = function () {
-  return Session.equals('editing_itemname', this._id);
-};
+Template.todo_item.helpers({
+  editing: function () {
+    return Session.equals('editing_itemname', this._id);
+  },
+})
 
 Template.todo_item.events({
   'dblclick .todo-item': function (e, t) {
