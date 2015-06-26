@@ -27,17 +27,17 @@ Template.projectlesssomedaymaybes.created = function () {
     // get the limit
     var projectlesssomedaymaybeslimit = instance.projectlesssomedaymaybeslimit.get();
 
-    console.log("Asking for "+projectlesssomedaymaybeslimit+" projectless somedaymaybes…")
+    // console.log("Asking for "+projectlesssomedaymaybeslimit+" projectless somedaymaybes…")
 
     // subscribe to the posts publication
     var subscription = instance.subscribe('taskspendingprojectlesssomedaymaybes', projectlesssomedaymaybeslimit)
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
-      console.log("> Received "+projectlesssomedaymaybeslimit+" projectless somedaymaybes. \n\n")
+      // console.log("> Received "+projectlesssomedaymaybeslimit+" projectless somedaymaybes. \n\n")
       instance.loaded.set(projectlesssomedaymaybeslimit);
     } else {
-      console.log("> Subscription is not ready yet. \n\n");
+      // console.log("> Subscription is not ready yet. \n\n");
     }
   });
 
