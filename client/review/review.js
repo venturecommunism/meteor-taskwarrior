@@ -301,11 +301,13 @@ Session.set('helpsesh',false)
 });
 
 Template.review.rendered = function () {
+/*
   Deps.autorun(function() {
     Session.get('helpsesh')
     $('.active-project.nokickstarttask').detach().prependTo('ul#project_list')
     $('.active-project.kickstarttask').detach().appendTo('ul#project_list')
 })
+*/
 
 Deps.autorun(function() {
 if (Session.equals('sorting_mits', true)) {
@@ -360,3 +362,4 @@ if (Session.equals('sorting_mits', true)) {
   }
 })
 }
+

@@ -196,11 +196,13 @@ Session.set('helpsesh',false)
 
 Template.projectslist.rendered = function () {
 Meteor.subscribe("taskspendingdocuments")
+/*
   Deps.autorun(function() {
     Session.get('helpsesh')
     $('.active-project.nokickstarttask').detach().prependTo('ul#project_list')
     $('.active-project.kickstarttask').detach().appendTo('ul#project_list')
 })
+*/
 
 Deps.autorun(function() {
 if (Session.equals('sorting_mits', true)) {
