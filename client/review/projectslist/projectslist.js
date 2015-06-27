@@ -5,8 +5,8 @@ Session.setDefault('calendarview', "24")
 
 Template.projectslist.helpers({
   tasks: function () {
-    Session.set('helpsesh',true)
-    Session.set('helpsesh',false)
+//    Session.set('helpsesh',true)
+//    Session.set('helpsesh',false)
     //toggling this helpsesh session variable to make the jquery work
     return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {rank: 1}})
   },
