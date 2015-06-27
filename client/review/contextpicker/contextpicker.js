@@ -46,16 +46,23 @@ Template.contextpicker.events({
     var tasktest = Taskspending.findOne({context: this.context, tags:"somedaymaybecont"})
     var taskid = tasktest ? tasktest._id : ''
     if (taskid != '') {
+console.log(taskid)
       Taskspending.update({_id: taskid}, {$pull: {tags: "somedaymaybecont"}})
     }
     else if (tasktest) {
+console.log(tasktest.description)
       Taskspending.update({_id: tasktest._id}, {$push: {tags: "somedaymaybecont"}})
     }
-    else {
+    else if (Session.get("multicontext").indexOf(this.context)) {
+console.log(Session.get("multicontext"))
     var tempcontext = Session.get("multicontext")
       var tempcontextindex = tempcontext.indexOf(this.context)
       var splicedtempcontext = tempcontext.splice(tempcontextindex,1)
       Session.set("multicontext", tempcontext)
+      var taskid = Taskspending.findOne({context: this.context, tags: "largercontext"})._id
+      Taskspending.update({_id: taskid}, {$push: {tags: "somedaymaybecont"}})
+    }
+    else {
       var taskid = Taskspending.findOne({context: this.context, tags: "largercontext"})._id
       Taskspending.update({_id: taskid}, {$push: {tags: "somedaymaybecont"}})
     }
