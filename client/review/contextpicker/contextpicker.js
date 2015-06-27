@@ -53,7 +53,7 @@ console.log(taskid)
 console.log(tasktest.description)
       Taskspending.update({_id: tasktest._id}, {$push: {tags: "somedaymaybecont"}})
     }
-    else if (Session.get("multicontext").indexOf(this.context)) {
+    else if (Session.get("multicontext").indexOf(this.context) > 0) {
 console.log(Session.get("multicontext"))
     var tempcontext = Session.get("multicontext")
       var tempcontextindex = tempcontext.indexOf(this.context)
