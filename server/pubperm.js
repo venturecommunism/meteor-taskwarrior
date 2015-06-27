@@ -124,10 +124,10 @@ Meteor.publish("taskspendingmultitasks", function(context) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, context: context, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, context: context, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {rank: 1}})
   }
   else if (userId) {
-    return Taskspending.find({owner: userId, status: {$in: ["waiting", "pending"]}, context: context, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}})
+    return Taskspending.find({owner: userId, status: {$in: ["waiting", "pending"]}, context: context, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {rank: 1}})
   }
 })
 
@@ -135,10 +135,10 @@ Meteor.publish("taskspendingmultitasks2", function(context) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, context: context, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, context: context, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {rank: 1}})
   }
   else if (userId) {
-    return Taskspending.find({owner: userId, status: {$in: ["waiting", "pending"]}, context: context, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}})
+    return Taskspending.find({owner: userId, status: {$in: ["waiting", "pending"]}, context: context, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {rank: 1}})
   }
 })
 

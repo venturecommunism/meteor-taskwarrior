@@ -53,7 +53,7 @@ console.log("data context is " + context)
   // 3. Cursor
 
   instance.taskspendingmultitasks = function() {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: context}]}, {sort: {rank: -1}, limit: instance.loaded.get()})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: context}]}, {sort: {rank: 1}, limit: instance.loaded.get()})
   }
 
 };
