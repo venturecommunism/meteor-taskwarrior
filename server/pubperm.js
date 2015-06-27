@@ -235,9 +235,9 @@ Meteor.publish("taskspendingprojectlesssomedaymaybes", function(projectlesssomed
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
-    return Taskspending.find({context: "somedaymaybe", tags: {$ne: "largercontext"}}, {limit: projectlesssomedaymaybeslimit})
+    return Taskspending.find({context: "somedaymaybe", tags: {$ne: "largercontext"}}, {sort: {rank: 1}, limit: projectlesssomedaymaybeslimit})
   }
   else if (userId) {
-    return Taskspending.find({owner: userId, context: "somedaymaybe", tags: {$ne: "largercontext"}}, {limit: projectlesssomedaymaybeslimit})
+    return Taskspending.find({owner: userId, context: "somedaymaybe", tags: {$ne: "largercontext"}}, {sort: {rank: 1}, limit: projectlesssomedaymaybeslimit})
   }
 })
