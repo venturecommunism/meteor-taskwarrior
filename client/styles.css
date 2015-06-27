@@ -421,3 +421,8 @@ position: relative;
   top: -33px;
   left: 20px;
 }
+
+.newdocument, .newchecklist, .newalarmset, .defaultcontext, archiveproject {
+  position: relative;
+  top: -35px;
+}
