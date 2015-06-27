@@ -35,7 +35,7 @@ Template.readandreview.created = function () {
   // 3. Cursor
 
   instance.taskspendingreadandreview = function() {
-    return Taskspending.find({context: "readandreview", tags: {$ne: "largercontext"}}, {limit: instance.loaded.get()})
+    return Taskspending.find({context: "readandreview", tags: {$ne: "largercontext"}}, {sort: {rank: 1}, limit: instance.loaded.get()})
   }
 
 };
