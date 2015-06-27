@@ -106,17 +106,14 @@ Template.projectslist.events({
     Session.get('sorting_mits', true) ? Session.set('sorting_mits', false) : Session.set('sorting_mits', true)
   },
   'click .kickstart.choosekickstart': function (e,t) {
-    Taskspending.update({_id: this._id}, {$set:{tags:["kickstart"]}});
-    Meteor.flush()
-Session.set('helpsesh',true)
-Session.set('helpsesh',false)
-    Session.set('review_status', true)
+    Taskspending.update({_id: this._id}, {$push: {tags: "kickstart"}});
+    var projectid = Taskspending.findOne({project: this.project, tags: "largeroutcome"})._id
+    Taskspending.update({_id: projectid}, {$pull: {tags: "kickstarterless"}})
   },
   'click .kickstart.btn-danger': function (e,t) {
-    Taskspending.update({_id: this._id}, {$unset:{tags:"kickstart"}})
-    Meteor.flush()
-    Session.set('helpsesh',true)
-    Session.set('helpsesh',false)
+    Taskspending.update({_id: this._id}, {$pull: {tags: "kickstart"}})
+    var projectid = Taskspending.findOne({project: this.project, tags: "largeroutcome"})._id
+    Taskspending.update({_id: projectid}, {$push: {tags: "kickstarterless"}})
   },
   'keyup #add-newtask-org': function (e,t) {
     if (e.which === 13) {

@@ -210,19 +210,6 @@ Template.review.events({
   'click .sorting_mits': function (e,t) {
     Session.get('sorting_mits', true) ? Session.set('sorting_mits', false) : Session.set('sorting_mits', true)
   },
-  'click .kickstart.choosekickstart': function (e,t) {
-    Taskspending.update({_id: this._id}, {$set:{tags:["kickstart"]}});
-    Meteor.flush()
-Session.set('helpsesh',true)
-Session.set('helpsesh',false)
-    Session.set('review_status', true)
-  },
-  'click .kickstart.btn-danger': function (e,t) {
-    Taskspending.update({_id: this._id}, {$unset:{tags:"kickstart"}})
-    Meteor.flush()
-    Session.set('helpsesh',true)
-    Session.set('helpsesh',false)
-  },
   'keyup #add-newtask-org': function (e,t) {
     if (e.which === 13) {
       var formattednow = formattedNow()
