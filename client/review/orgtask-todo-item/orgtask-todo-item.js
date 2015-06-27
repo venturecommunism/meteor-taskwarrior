@@ -91,7 +91,7 @@ console.log(uuid)
     }
     else {
       Taskspending.update({_id: this._id}, {$push: {tags: "mit"}})
-      if (this.project && Taskspending.findOne({project: this.project, tags: "largeroutcome"}).rank) {
+      if (!this.rank && this.project && Taskspending.findOne({project: this.project, tags: "largeroutcome"}).rank) {
         var rank = Taskspending.findOne({project: this.project, tags: "largeroutcome"}).rank
         Taskspending.update({_id: this._id}, {$set: {rank: rank}})
       }
