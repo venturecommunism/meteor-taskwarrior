@@ -228,7 +228,7 @@ archivetask.tags = ["archive"]
   },
   'click .defer': function() {
     defertask = Taskspending.findOne({_id: Session.get('current_processedtask')})
-    if (!defertask.context) {
+    if (!defertask.context && !defertask.due) {
       alert("Missing context")
       return
     }
