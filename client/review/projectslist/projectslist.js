@@ -8,7 +8,10 @@ Template.projectslist.helpers({
 //    Session.set('helpsesh',true)
 //    Session.set('helpsesh',false)
     //toggling this helpsesh session variable to make the jquery work
-    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {rank: 1}})
+    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {tags: "kickstarterless", rank: 1}})
+  },
+  kickstarterlessprojects: function () {
+    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: "kickstarterless"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {rank: 1}})
   },
   orgtasks: function () {
       return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart", tags: "checklistitem", tags: "milestone", rank: 1}})
@@ -23,14 +26,6 @@ Template.projectslist.helpers({
   },
   projopen: function () {
     return Session.equals('projopen', this.project)
-  },
-  nokickstart: function () {
-    if (!Taskspending.findOne({project: this.project, tags:{$in: ["kickstart", "mit"]}})) {
-      Session.set('projopen', this.project)
-      return 'nokickstarttask'
-    } else {
-      return 'kickstarttask'
-    }
   },
 })
 
@@ -290,7 +285,7 @@ Template.projectslist.created = function () {
   // 3. Cursor
 
   instance.taskspendingprojects = function() {
-    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {rank: 1}})
+    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$nin: ["somedaymaybeproj", "kickstarterless"]}}]}, {sort: {rank: 1}})
   }
 
 };
@@ -298,8 +293,8 @@ Template.projectslist.created = function () {
 Template.projectslist.helpers({
   // the posts cursor
   projects: function () {
-    Session.set('helpsesh',true)
-    Session.set('helpsesh',false)
+    // Session.set('helpsesh',true)
+    // Session.set('helpsesh',false)
     //toggling this helpsesh session variable to make the jquery work
     return Template.instance().taskspendingprojects();
   },

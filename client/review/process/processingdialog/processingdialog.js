@@ -11,7 +11,7 @@ Template.processingdialog.events({
     Taskspending.update({_id: id},{$set: largeroutcome})
     Taskspending.update({_id: id},{$unset: {tags: ""}})
     Taskspending.update({_id: id},{$unset: {status: ""}})
-    Taskspending.update({_id: id},{$set: {tags: ["largeroutcome"]}})
+    Taskspending.update({_id: id},{$set: {tags: ["largeroutcome", "kickstarterless"]}})
     if (Taskspending.findOne({tags:"inbox"})) {
       Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
       selectTaskProcessing

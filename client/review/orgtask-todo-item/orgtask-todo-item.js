@@ -88,9 +88,15 @@ console.log(uuid)
   'click .mit': function (e,t) {
     if (Taskspending.findOne({_id: this._id, tags: "mit"})) {
       Taskspending.update({_id: this._id}, {$pull: {tags: "mit"}})
+      if (!Taskspending.findOne({project: this.project, tags: "mit"})) {
+        var projectid = Taskspending.findOne({project: this.project, tags: "largeroutcome"})._id
+        Taskspending.update({_id: projectid}, {$push: {tags: "kickstarterless"}})
+      }
     }
     else {
       Taskspending.update({_id: this._id}, {$push: {tags: "mit"}})
+      var projectid = Taskspending.findOne({project: this.project, tags: "largeroutcome"})._id
+      Taskspending.update({_id: projectid}, {$pull: {tags: "kickstarterless"}})
       if (!this.rank && this.project && Taskspending.findOne({project: this.project, tags: "largeroutcome"}).rank) {
         var rank = Taskspending.findOne({project: this.project, tags: "largeroutcome"}).rank
         Taskspending.update({_id: this._id}, {$set: {rank: rank}})
