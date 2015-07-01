@@ -169,10 +169,10 @@ Meteor.publish("taskspendingreadandreview", function(readandreviewlimit) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
-    return Taskspending.find({context: "readandreview", tags: {$ne: "largercontext"}}, {limit: readandreviewlimit})
+    return Taskspending.find({context: "readandreview", tags: {$ne: "largercontext"}}, {sort: {rank: 1}, limit: readandreviewlimit})
   }
   else if (userId) {
-    return Taskspending.find({context: "readandreview", tags: {$ne: "largercontext"}}, {limit: readandreviewlimit})
+    return Taskspending.find({context: "readandreview", tags: {$ne: "largercontext"}}, {sort: {rank: 1}, limit: readandreviewlimit})
   }
 })
 
