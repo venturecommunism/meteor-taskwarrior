@@ -21,7 +21,12 @@
 {{#unless nextactionshidden}}
 {{> contextpicker}}
 {{> multicontext}}
+{{#unless inactivecontextshidden}}
 {{> inactivecontextpicker}}
+{{/unless}}
+{{#if inactivecontextshidden}}
+<h3>Someday/Maybe Contexts</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openinactivecontextssection">-</div>
+{{/if}}
 {{/unless}}
 
 {{#unless mitshidden}}

@@ -4,6 +4,7 @@ Session.set('sorting_mits', false)
 Session.setDefault('calendarview', "24")
 Session.setDefault('previouscalendarhidden', true)
 Session.setDefault('nextactionshidden', true)
+Session.setDefault('inactivecontextshidden', true)
 Session.setDefault('mitshidden', true)
 Session.setDefault('readandreviewhidden', true)
 Session.setDefault('waitingforshidden', true)
@@ -67,6 +68,9 @@ Template.review.helpers({
   },
   nextactionshidden: function () {
     return Session.equals("nextactionshidden", true)
+  },
+  inactivecontextshidden: function () {
+    return Session.equals("inactivecontextshidden", true)
   },
   mitshidden: function () {
     return Session.equals("mitshidden", true)
@@ -223,6 +227,12 @@ Template.review.events({
   },
   'click .opennextactionssection': function(e,t){
     Session.set('nextactionshidden', false)
+  },
+  'click .openinactivecontextssection': function(e,t){
+    Session.set('inactivecontextshidden', false)
+  },
+  'click .closeinactivecontextssection': function(e,t){
+    Session.set('inactivecontextshidden', true)
   },
   'click .openmitssection': function(e,t){
     Session.set('mitshidden', false)
