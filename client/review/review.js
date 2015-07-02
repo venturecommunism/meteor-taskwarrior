@@ -1,37 +1,14 @@
-// whenever #showMoreResults becomes visible, retrieve more results
-function showMoreVisible() {
-    var threshold, target = $("#showMoreResults");
-    if (!target.length) return;
- 
-    threshold = $(window).scrollTop() + $(window).height() - target.height();
- //console.log(threshold + " is threshold")
- //console.log(target.offset().top + " is targ off top")
-    if (target.offset().top <= threshold) {
-        if (!target.data("visible")) {
-            // console.log("target became visible (inside viewable area)");
-            target.data("visible", true);
-            var newItemsLimit = Session.get("itemsLimit")
-            var n = newItemsLimit.indexOf(0)
-            newItemsLimit[n] = 1
-            Session.set("itemsLimit",
-                newItemsLimit);
-        }
-    } else {
-        if (target.data("visible")) {
-            // console.log("target became invisible (below viewable area)");
-            target.data("visible", false);
-        }
-    }        
-}
- 
-// run the above func every time the user scrolls
-$(window).scroll(showMoreVisible);
-
-Session.setDefault('itemsLimit', [1, 1, 1, 0, 0, 0, 0, 0, 0]);
 Session.set('processing_task', false)
 Session.set('documentediting', false)
 Session.set('sorting_mits', false)
 Session.setDefault('calendarview', "24")
+Session.setDefault('previouscalendarhidden', true)
+Session.setDefault('nextactionshidden', true)
+Session.setDefault('mitshidden', true)
+Session.setDefault('readandreviewhidden', true)
+Session.setDefault('waitingforshidden', true)
+Session.setDefault('projectshidden', true)
+Session.setDefault('projectlesssomedaymaybeshidden', true)
 
 Template.review.helpers({
   tasks: function () {
@@ -77,33 +54,6 @@ Template.review.helpers({
     } else {
       return ''
     }
-  },
-  moreResults: function () {
-    return !(Session.get("itemsLimit").indexOf(0) == -1);
-  },
-  previouscalendarloaded: function () {
-    return (Session.get("itemsLimit")[1] == 1)
-  },
-  calendarloaded: function () {
-    return (Session.get("itemsLimit")[1] == 1)
-  },
-  nextactionsloaded: function () {
-    return (Session.get("itemsLimit")[2] == 1)
-  },
-  mitsloaded: function () {
-    return (Session.get("itemsLimit")[3] == 1)
-  },
-  readandreviewloaded: function () {
-    return (Session.get("itemsLimit")[4] == 1)
-  },
-  waitingforsloaded: function () {
-    return (Session.get("itemsLimit")[5] == 1)
-  },
-  projectsloaded: function () {
-    return (Session.get("itemsLimit")[6] == 1)
-  },
-  projectlesssomedaymaybesloaded: function () {
-    return (Session.get("itemsLimit")[7] == 1)
   },
   inboxhidden: function () {
     return Session.equals("inboxhidden", true)

@@ -11,63 +11,39 @@
 {{/unless}}
 
 {{#unless previouscalendarhidden}}
-{{#if previouscalendarloaded}}
 {{> previouscalendar}}
-{{/if}}
 {{/unless}}
 
 {{#unless calendarhidden}}
-{{#if calendarloaded}}
 {{> calendar}}
-{{/if}}
 {{/unless}}
 
 {{#unless nextactionshidden}}
-{{#if nextactionsloaded}}
 {{> contextpicker}}
 {{> multicontext}}
 {{> inactivecontextpicker}}
-{{/if}}
 {{/unless}}
 
 {{#unless mitshidden}}
-{{#if mitsloaded}}
 {{> mostimportanttasks}}
-{{/if}}
 {{/unless}}
 
 {{#unless readandreviewhidden}}
-{{#if readandreviewloaded}}
 {{> readandreview}}
-{{/if}}
 {{/unless}}
 
 {{#unless waitingforshidden}}
-{{#if waitingforsloaded}}
 {{> waitingfors}}
-{{/if}}
 {{/unless}}
 
 {{#unless projectshidden}}
-{{#if projectsloaded}}
 {{> projectslist}}
 {{> somedaymaybeprojects}}
-{{/if}}
 {{/unless}}
 
 {{#unless projectlesssomedaymaybeshidden}}
-{{#if projectlesssomedaymaybesloaded}}
 {{> projectlesssomedaymaybes}}
-{{/if}}
 {{/unless}}
-
-{{#if moreResults}}
-    <div id="showMoreResults" style="height: 70px; width: 70px; diplay: block; text-align: center; margin: auto;">
-        <span class="loading">{{> spinner}}</span>
-    </div>
-{{/if}}
-
-  {{/if}}
 
 {{#if inboxhidden}}
 <h3>Inbox</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openinboxsection">-</div>
@@ -103,6 +79,8 @@
 
 {{#if projectlesssomedaymaybeshidden}}
 <h3>Projectless Someday/Maybes</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openprojectlesssomedaymaybessection">-</div>
+{{/if}}
+
 {{/if}}
 
 </template>
