@@ -8,7 +8,7 @@ Template.workinprogress.helpers({
     }
   },
   wipcontext: function () {
-    if (this.context) {
+    if (this.context && Taskspending.findOne({wip: "contwip", context: this.context})) {
       return true
     }
   },

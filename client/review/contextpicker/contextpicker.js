@@ -42,6 +42,11 @@ Template.contextpicker.events({
       Session.set("multicontext", tempcontext)
     }
   },
+  'click .contcip': function (e,t){
+    contid = Taskspending.findOne({context: this.context, tags:"largercontext"})._id
+    Taskspending.update({_id: contid}, {$push: {tags: "cip"}})
+    Meteor.call('pushcontwip', this.context)
+  },
   'click .contclose': function (e,t){
     var tasktest = Taskspending.findOne({context: this.context, tags:"somedaymaybecont"})
     var taskid = tasktest ? tasktest._id : ''

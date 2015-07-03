@@ -24,7 +24,7 @@ Template.focuscontextpicker.helpers({
 })
 
 Template.focuscontextpicker.events({
-  'click #contextpicker li .btn': function (e,t) {
+  'click #focuscontextpicker li .btn': function (e,t) {
     tempcontext = Session.get("multicontext")
     if (!tempcontext) {
       Session.set("multicontext", [this.context])
@@ -41,6 +41,11 @@ Template.focuscontextpicker.events({
       var splicedtempcontext = tempcontext.splice(tempcontextindex,1)
       Session.set("multicontext", tempcontext)
     }
+  },
+  'click .contcip': function (e,t){
+    contid = Taskspending.findOne({context: this.context, tags:"largercontext"})._id
+    Taskspending.update({_id: contid}, {$pull: {tags: "cip"}})
+    Meteor.call('pullcontwip', this.context)
   },
   'click .contclose': function (e,t){
     var tasktest = Taskspending.findOne({context: this.context, tags:"somedaymaybecont"})
@@ -110,7 +115,7 @@ Template.focuscontextpicker.created = function () {
 
   instance.taskspendingfocuscontextpicker = function() {
     var focuscontextpickerlimit = instance.focuscontextpickerlimit.get()
-    return Taskspending.find({$and: [{tags: "largercontext"}, {tags: {$nin: ["somedaymaybecont"]}}]}, {sort: {rank: 1}, limit: focuscontextpickerlimit})
+    return Taskspending.find({$and: [{tags: "largercontext"}, {tags: "cip"}]}, {sort: {rank: 1}, limit: focuscontextpickerlimit})
   }
 
 };
