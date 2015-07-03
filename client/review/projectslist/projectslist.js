@@ -154,7 +154,9 @@ Template.projectslist.events({
   'click .main-review .projpip': function (e,t){
     taskid = Taskspending.findOne({project: this.project, tags:"largeroutcome"})._id
     Taskspending.update({_id: taskid}, {$push: {tags: "pip"}})
-    Taskspending.update({_id: Taskspending.findOne({project: this.project, tags: "mit"}, {$sort: {tags: "kickstart"}})._id}, {$push: {wip: "projwip"}})
+    if (Taskspending.findOne({project: this.project, tags: "mit"})) {
+      Taskspending.update({_id: Taskspending.findOne({project: this.project, tags: "mit"}, {$sort: {tags: "kickstart"}})._id}, {$push: {wip: "projwip"}})
+    }
   },
   'click .main-review .projclose': function (e,t){
     var tasktest = Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})

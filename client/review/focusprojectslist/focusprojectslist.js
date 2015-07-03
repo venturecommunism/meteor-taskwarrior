@@ -78,7 +78,9 @@ Template.focusprojectslist.events({
     taskid = Taskspending.findOne({project: this.project, tags:"largeroutcome"})._id
     Taskspending.update({_id: taskid}, {$pull: {tags: "pip"}})
     var project = this.project
-    Taskspending.update({_id: Taskspending.findOne({project: this.project, wip: "projwip"}, {$sort: {tags: "kickstart"}})._id}, {$pull: {wip: "projwip"}})
+    if (Taskspending.findOne({project: this.project, tags: "mit"})) {
+      Taskspending.update({_id: Taskspending.findOne({project: this.project, wip: "projwip"}, {$sort: {tags: "kickstart"}})._id}, {$pull: {wip: "projwip"}})
+    }
   },
   'click .main-review .projclose': function (e,t){
     var tasktest = Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})
