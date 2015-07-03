@@ -115,7 +115,7 @@ Template.contextpicker.created = function () {
 
   instance.taskspendingcontextpicker = function() {
     var contextpickerlimit = instance.contextpickerlimit.get()
-    return Taskspending.find({$and: [{tags: "largercontext"}, {tags: {$nin: ["somedaymaybecont"]}}]}, {sort: {rank: 1}, limit: contextpickerlimit})
+    return Taskspending.find({$and: [{tags: "largercontext"}, {tags: {$nin: ["cip", "somedaymaybecont"]}}]}, {sort: {rank: 1}, limit: contextpickerlimit})
   }
 
 };
