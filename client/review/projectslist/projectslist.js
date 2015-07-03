@@ -155,7 +155,8 @@ Template.projectslist.events({
     taskid = Taskspending.findOne({project: this.project, tags:"largeroutcome"})._id
     Taskspending.update({_id: taskid}, {$push: {tags: "pip"}})
     if (Taskspending.findOne({project: this.project, tags: "mit"})) {
-      Taskspending.update({_id: Taskspending.findOne({project: this.project, tags: "mit"}, {$sort: {tags: "kickstart"}})._id}, {$push: {wip: "projwip"}})
+      Meteor.call('pushprojwip', this.project)
+//      Taskspending.update({_id: Taskspending.findOne({project: this.project, tags: "mit"}, {$sort: {tags: "kickstart"}})._id}, {$push: {wip: "projwip"}})
     }
   },
   'click .main-review .projclose': function (e,t){

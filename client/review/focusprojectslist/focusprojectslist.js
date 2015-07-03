@@ -79,7 +79,8 @@ Template.focusprojectslist.events({
     Taskspending.update({_id: taskid}, {$pull: {tags: "pip"}})
     var project = this.project
     if (Taskspending.findOne({project: this.project, tags: "mit"})) {
-      Taskspending.update({_id: Taskspending.findOne({project: this.project, wip: "projwip"}, {$sort: {tags: "kickstart"}})._id}, {$pull: {wip: "projwip"}})
+      Meteor.call('pullprojwip', this.project)
+//      Taskspending.update({_id: Taskspending.findOne({project: this.project, wip: "projwip"}, {$sort: {tags: "kickstart"}})._id}, {$pull: {wip: "projwip"}})
     }
   },
   'click .main-review .projclose': function (e,t){
