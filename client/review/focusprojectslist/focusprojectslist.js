@@ -210,7 +210,7 @@ Template.focusprojectslist.created = function () {
 
   instance.taskspendingfocusprojects = function() {
     var focusprojectslimit = instance.focusprojectslimit.get()
-    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: "pip"}]}, {sort: {rank: 1}, limit: focusprojectslimit})
+    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: "pip"}, {tags: {$ne: "kickstarterless"}}]}, {sort: {rank: 1}, limit: focusprojectslimit})
   }
 
 };
