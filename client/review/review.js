@@ -1,5 +1,6 @@
 Session.set('processing_task', false)
 Session.set('documentediting', false)
+Session.set('sorting_wips', false)
 Session.set('sorting_mits', false)
 Session.setDefault('calendarview', "24")
 Session.setDefault('previouscalendarhidden', true)
@@ -50,6 +51,13 @@ Template.review.helpers({
   },
   waitingfortasks: function () {
     return Taskspending.find({context: "waitingfor", $or: [{project: {$exists: 0}}, {project: ""}]})
+  },
+  sorting_wips: function () {
+    if (Session.equals('sorting_wips', true)) {
+      return 'btn-primary'
+    } else {
+      return ''
+    }
   },
   sorting_mits: function () {
     if (Session.equals('sorting_mits', true)) {
@@ -169,6 +177,9 @@ Template.process.events({
 });
 
 Template.review.events({
+  'click .sorting_wips': function (e,t) {
+    Session.get('sorting_wips', true) ? Session.set('sorting_wips', false) : Session.set('sorting_wips', true)
+  },
   'click .sorting_mits': function (e,t) {
     Session.get('sorting_mits', true) ? Session.set('sorting_mits', false) : Session.set('sorting_mits', true)
   },
@@ -272,6 +283,59 @@ Template.review.rendered = function () {
     $('.active-project.kickstarttask').detach().appendTo('ul#project_list')
 })
 */
+
+Deps.autorun(function() {
+if (Session.equals('sorting_wips', true)) {
+  //jquery sortable code, using sortable meteor package
+  this.$('.wip_task_list').sortable({
+    stop: function(e, ui) {
+      // get the dragged html element and the one before
+      //   and after it
+      el = ui.item.get(0)
+      before = ui.item.prev().get(0)
+      after = ui.item.next().get(0)
+
+      // Here is the part that blew my mind!
+      //  Blaze.getData takes as a parameter an html element
+      //    and will return the data context that was bound when
+      //    that html element was rendered!
+      if(!before) {
+        //if it was dragged into the first position grab the
+        // next element's data context and subtract one from the rank
+        newRank = Blaze.getData(after).rank - 1
+      } else if(!after) {
+        //if it was dragged into the last position grab the
+        //  previous element's data context and add one to the rank
+        newRank = Blaze.getData(before).rank + 1
+      }
+      else
+        //else take the average of the two ranks of the previous
+        // and next elements
+        newRank = (Blaze.getData(after).rank +
+                   Blaze.getData(before).rank)/2
+      //update the dragged Item's rank
+      Taskspending.update({_id: Blaze.getData(el)._id}, {$set: {rank: newRank}})
+      proj = Taskspending.findOne({project: Blaze.getData(el).project, tags: "largeroutcome"})
+      cont = Taskspending.findOne({context: Blaze.getData(el).context, tags: "largercontext"})
+      if (proj && !proj.rank) {
+        Taskspending.update({_id: proj._id}, {$set: {rank: newRank}})
+      } else if (proj && Taskspending.findOne({project: Blaze.getData(el).project}, {sort: {rank: -1}}).rank >= newRank) {
+        Taskspending.update({_id: proj._id}, {$set: {rank: newRank}})
+      }
+      if (cont && !cont.rank) {
+        Taskspending.update({_id: cont._id}, {$set: {rank: newRank}})
+      } else if (cont && Taskspending.findOne({context: Blaze.getData(el).context}, {sort: {rank: -1}}).rank >= newRank) {
+        Taskspending.update({_id: cont._id}, {$set: {rank: newRank}})
+      }
+    }
+  })
+  // end of sortable code
+  this.$('.wip_task_list').sortable('enable')
+  } else {
+    this.$('.wip_task_list').sortable()
+    this.$('.wip_task_list').sortable('disable')
+  }
+})
 
 Deps.autorun(function() {
 if (Session.equals('sorting_mits', true)) {

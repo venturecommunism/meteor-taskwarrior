@@ -332,7 +332,7 @@ h1, h2, h3, h4, h5 {
   clear: both;
 }
 
-.sorting_mits {
+.sorting_mits, .sorting_wips {
 position: relative;
 left: 20px;
 top: 15px;
