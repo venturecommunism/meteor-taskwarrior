@@ -1,0 +1,23 @@
+<template name="focuscontextpicker">
+{{#unless fullmulticontext}}
+<h3>Contexts in Progress</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse closefocusnextactionssection">+</div>
+{{/unless}}
+<ul id="focuscontextpicker">
+{{#each contexts}}
+{{#unless in_multicontext}}
+<li><h6><div class="btn btn-inverse">-</div> {{context}} ({{count}})</h6></li><button type="button" class="contclose close" id="{{_id}}">hide</button>
+{{/unless}}
+{{/each}}
+</ul>
+
+<!-- load more -->
+  {{#if Template.subscriptionsReady}}
+    {{#if hasMorePosts}}
+      <p><a class="load-more-focuscontextpicker">Load More</a></p>
+    {{/if}}
+  {{else}}
+    <div class="loading">{{>spinner}}</div>
+  {{/if}}
+<!-- end of load more -->
+
+</template>
