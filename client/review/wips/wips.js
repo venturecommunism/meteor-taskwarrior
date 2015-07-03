@@ -1,5 +1,5 @@
 Template.workinprogress.helpers({
-  wips: function () {
+  wips0: function () {
     return Taskspending.find({tags: "mit"}, {sort: {rank: 1}})
   },
   wipproject: function () {
@@ -58,7 +58,7 @@ Template.workinprogress.created = function () {
   // 3. Cursor
 
   instance.taskspendingwips = function() {
-    return Taskspending.find({tags: "mit"}, {sort: {rank: 1}})
+    return Taskspending.find({wip: {$in: ["projwip", "contwip"]}}, {sort: {rank: 1}})
   }
 
 };
