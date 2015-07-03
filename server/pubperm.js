@@ -154,6 +154,17 @@ Meteor.publish("taskspendinginactivecontextpicker", function(inactivecontextpick
   }
 })
 
+Meteor.publish("taskspendingwips", function(wipslimit) {
+  var userId = this.userId
+//  Meteor._sleepForMs(2000)
+  if (adminUser(userId)) {
+    return Taskspending.find({wip: {$in: ["projwip", "contwip"]}}, {sort: {rank: 1}})
+  }
+  else if (userId) {
+    return Taskspending.find({owner: userId, wip: {$in: ["projwip", "contwip"]}}, {sort: {rank: 1}})
+  }
+})
+
 Meteor.publish("taskspendingmits", function(mitslimit) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)

@@ -2,13 +2,13 @@ Template.workinprogress.helpers({
   wips: function () {
     return Taskspending.find({tags: "mit"}, {sort: {rank: 1}})
   },
-  somedaymaybeproject: function () {
-    if (this.project && Taskspending.findOne({tags: "somedaymaybeproj", project: this.project})) {
+  wipproject: function () {
+    if (this.project && Taskspending.findOne({wip: "projwip", project: this.project})) {
       return true
     }
   },
-  somedaymaybecontext: function () {
-    if (this.context && Taskspending.findOne({tags: "somedaymaybecont", context: this.context})) {
+  wipcontext: function () {
+    if (this.context) {
       return true
     }
   },
