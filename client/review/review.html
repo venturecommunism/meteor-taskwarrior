@@ -19,6 +19,7 @@
 {{/unless}}
 
 {{#unless nextactionshidden}}
+{{> focuscontextpicker}}
 {{> contextpicker}}
 {{> multicontext}}
 {{#unless inactivecontextshidden}}
@@ -27,6 +28,10 @@
 {{#if inactivecontextshidden}}
 <h3>Someday/Maybe Contexts</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openinactivecontextssection">-</div>
 {{/if}}
+{{/unless}}
+
+{{#unless wipshidden}}
+{{> workinprogress}}
 {{/unless}}
 
 {{#unless mitshidden}}
@@ -42,6 +47,7 @@
 {{/unless}}
 
 {{#unless projectshidden}}
+{{> focusprojectslist}}
 {{> projectslist}}
 {{#unless somedaymaybeprojectshidden}}
 {{> somedaymaybeprojects}}
@@ -69,6 +75,10 @@
 
 {{#if nextactionshidden}}
 <h3>Contexts</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse opennextactionssection">-</div>
+{{/if}}
+
+{{#if wipshidden}}
+<h3>WIPs</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openwipssection">-</div>
 {{/if}}
 
 {{#if mitshidden}}

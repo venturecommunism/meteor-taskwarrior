@@ -5,6 +5,7 @@ Session.setDefault('calendarview', "24")
 Session.setDefault('previouscalendarhidden', true)
 Session.setDefault('nextactionshidden', true)
 Session.setDefault('inactivecontextshidden', true)
+Session.setDefault('wipshidden', true)
 Session.setDefault('mitshidden', true)
 Session.setDefault('readandreviewhidden', true)
 Session.setDefault('waitingforshidden', true)
@@ -71,6 +72,9 @@ Template.review.helpers({
   },
   inactivecontextshidden: function () {
     return Session.equals("inactivecontextshidden", true)
+  },
+  wipshidden: function () {
+    return Session.equals("wipshidden", true)
   },
   mitshidden: function () {
     return Session.equals("mitshidden", true)
@@ -233,6 +237,9 @@ Template.review.events({
   },
   'click .closeinactivecontextssection': function(e,t){
     Session.set('inactivecontextshidden', true)
+  },
+  'click .openwipssection': function(e,t){
+    Session.set('wipshidden', false)
   },
   'click .openmitssection': function(e,t){
     Session.set('mitshidden', false)

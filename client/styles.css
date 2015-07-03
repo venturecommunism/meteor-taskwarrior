@@ -14,12 +14,12 @@ display: none;
 .dueclock {
 text-align: right;
 }
-#task_list .task_item, #project_list .task_item {
+#task_list .task_item, #project_list .task_item, #focusproject_list .task_item {
 position: relative;
 width: auto;
 margin: 0;
 }
-#project_list .projclose.close {
+#focusproject_list .projclose.close, #project_list .projclose.close {
 clear: both;
 float: left;
 
@@ -58,7 +58,7 @@ background-image: url(/texturetastic_gray.png);
 margin: 0;
 padding: 0;
 }
-#project_list li.task_item p, #project_list li.task-item:hover p {
+#focusproject_list li.task_item p, #project_list li.task_item p, #focusproject_list li.task-item:hover p, #project_list li.task-item:hover p {
 overflow-wrap: break-word;
 display: inline;
 }
@@ -88,13 +88,13 @@ margin:0 auto;
 #categorybuttons{
 width:100%;
 }
-#task_list, #project_list{
+#task_list, #project_list, #focusproject_list{
 list-style:none;
 margin:0;
 padding:0;
 clear: both;
 }
-#project_list #task_list {
+#focusproject_list #task_list, #project_list #task_list {
 //clear: none;
 top: -35px;
   position: relative;
@@ -233,11 +233,11 @@ width: 520px;
 min-height: 500px;
 }
 
-#task_list.checklist .task_item, #task_list.alarmset .task_item, #project_list.checklist .task_item, #project_list.alarmset .task_item {
+#task_list.checklist .task_item, #task_list.alarmset .task_item, #project_list.checklist .task_item, #project_list.alarmset .task_item, #focusproject_list.checklist .task_item, #focusproject_list.alarmset .task_item {
 width: 450px;
 }
 
-#task_list.checklist .close, #task_list.alarmset .close, #project_list.checklist .close, #project_list.alarmset .close {
+#task_list.checklist .close, #task_list.alarmset .close, #project_list.checklist .close, #project_list.alarmset .close, #focusproject_list.checklist .close, #focusproject_list.alarmset .close {
 right: -432px;
 }
 
@@ -290,13 +290,13 @@ max-height: 67%;
 max-height: 33%;
 }
 
-#contextpicker li, #inactivecontextpicker li {
+#focuscontextpicker li, #contextpicker li, #inactivecontextpicker li {
 list-style-type: none;
 clear: both;
 float: left;
 }
 
-#contextpicker .btn, #inactivecontextpicker .btn {
+#focuscontextpicker .btn, #contextpicker .btn, #inactivecontextpicker .btn {
 width: 20px;
 height: 20px;
 margin: 5px 0;
@@ -379,7 +379,7 @@ float: left;
   height: 100px;
   width: 100%;
 }
-.load-more-unprocessed, .load-more-previouscalendar, .load-more-calendar, .load-more-contextpicker, .load-more-context, .load-more-projectedcontext, .load-more-inactivecontextpicker , .load-more-mits, .load-more-readandreview, .load-more-waitingfors, .load-more-projects, .load-more-somedaymaybeprojects, .load-more-projectlesssomedaymaybes{
+.load-more-unprocessed, .load-more-previouscalendar, .load-more-calendar, .load-more-focuscontextpicker, .load-more-contextpicker, .load-more-context, .load-more-projectedcontext, .load-more-inactivecontextpicker , .load-more-mits, .load-more-readandreview, .load-more-waitingfors, .load-more-focusprojects, .load-more-projects, .load-more-somedaymaybeprojects, .load-more-projectlesssomedaymaybes{
   text-align:center;
   background:#eee;
   border: 1px solid #ddd;
@@ -396,14 +396,14 @@ display: inline-block;
 .load-more-project a {
 }
 
-ul#contextpicker, ul#inactivecontextpicker {
+ul#focuscontextpicker, ul#contextpicker, ul#inactivecontextpicker {
 display: inline-block;
 width: 100%;
 padding: 0;
 margin: 0;
 }
 
-#contextpicker li, #inactivecontextpicker li {
+#focuscontextpicker li, #contextpicker li, #inactivecontextpicker li {
 padding: 0 20px;
 }
 
@@ -416,7 +416,7 @@ h3, h4 {
 clear: both;
 }
 
-#project_list .reviewproject {
+#focusproject_list .reviewproject, #project_list .reviewproject {
 position: relative;
   top: -33px;
   left: 20px;
