@@ -6,7 +6,7 @@ Template.focusprojectslist.helpers({
     return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {tags: "kickstarterless", rank: 1}})
   },
   kickstarterlessprojects: function () {
-    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: "kickstarterless"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {rank: 1}})
+    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: "kickstarterless"}, {tags: "pip"}]}, {sort: {rank: 1}})
   },
   orgtasks: function () {
       return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart", tags: "checklistitem", tags: "milestone", rank: 1}})
@@ -74,6 +74,10 @@ Template.focusprojectslist.events({
   'click .review-btn': function(e,t) {
      Session.set('review_dialog_1',true);
    },
+  'click .main-review .projpip': function (e,t){
+    taskid = Taskspending.findOne({project: this.project, tags:"largeroutcome"})._id
+    Taskspending.update({_id: taskid}, {$pull: {tags: "pip"}})
+  },
   'click .main-review .projclose': function (e,t){
     var tasktest = Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})
     var taskid = tasktest ? tasktest._id : ''
@@ -206,7 +210,7 @@ Template.focusprojectslist.created = function () {
 
   instance.taskspendingfocusprojects = function() {
     var focusprojectslimit = instance.focusprojectslimit.get()
-    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$nin: ["somedaymaybeproj", "kickstarterless"]}}]}, {sort: {rank: 1}, limit: focusprojectslimit})
+    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: "pip"}]}, {sort: {rank: 1}, limit: focusprojectslimit})
   }
 
 };

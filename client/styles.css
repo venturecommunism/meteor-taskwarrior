@@ -19,7 +19,7 @@ position: relative;
 width: auto;
 margin: 0;
 }
-#focusproject_list .projclose.close, #project_list .projclose.close {
+#project_list .projpip.close, #focusproject_list .projclose.close, #project_list .projclose.close {
 clear: both;
 float: left;
 

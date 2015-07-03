@@ -151,6 +151,10 @@ Template.projectslist.events({
   'click .review-btn': function(e,t) {
      Session.set('review_dialog_1',true);
    },
+  'click .main-review .projpip': function (e,t){
+    taskid = Taskspending.findOne({project: this.project, tags:"largeroutcome"})._id
+    Taskspending.update({_id: taskid}, {$push: {tags: "pip"}})
+  },
   'click .main-review .projclose': function (e,t){
     var tasktest = Taskspending.findOne({project: this.project, tags:"somedaymaybeproj"})
     var taskid = tasktest ? tasktest._id : ''
