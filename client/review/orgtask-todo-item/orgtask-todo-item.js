@@ -88,6 +88,8 @@ console.log(uuid)
   'click .mit': function (e,t) {
     if (Taskspending.findOne({_id: this._id, tags: "mit"})) {
       Taskspending.update({_id: this._id}, {$pull: {tags: "mit"}})
+      Taskspending.update({_id: this._id}, {$pull: {wip: "projwip"}})
+      Taskspending.update({_id: this._id}, {$pull: {wip: "contwip"}})
       if (!Taskspending.findOne({project: this.project, tags: "mit"})) {
         var projectid = Taskspending.findOne({project: this.project, tags: "largeroutcome"})._id
         Taskspending.update({_id: projectid}, {$push: {tags: "kickstarterless"}})
@@ -95,6 +97,12 @@ console.log(uuid)
     }
     else {
       Taskspending.update({_id: this._id}, {$push: {tags: "mit"}})
+      if (Taskspending.findOne({project: this.project, tags: "pip"})) {
+        Taskspending.update({_id: this._id}, {$push: {wip: "projwip"}})
+      }
+      if (Taskspending.findOne({context: this.context, tags: "cip"})) {
+        Taskspending.update({_id: this._id}, {$push: {wip: "contwip"}})
+      }
       var projectid = Taskspending.findOne({project: this.project, tags: "largeroutcome"})._id
       Taskspending.update({_id: projectid}, {$pull: {tags: "kickstarterless"}})
       if (!this.rank && this.project && Taskspending.findOne({project: this.project, tags: "largeroutcome"}).rank) {

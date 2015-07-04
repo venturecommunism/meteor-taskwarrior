@@ -29,9 +29,17 @@ Template.multicontext.events({
   'click .mit': function (e,t) {
     if (Taskspending.findOne({_id: this._id, tags: "mit"})) {
       Taskspending.update({_id: this._id}, {$pull: {tags: "mit"}})
+      Taskspending.update({_id: this._id}, {$pull: {wip: "projwip"}})
+      Taskspending.update({_id: this._id}, {$pull: {wip: "contwip"}})
     }
     else {
       Taskspending.update({_id: this._id}, {$push: {tags: "mit"}})
+      if (Taskspending.findOne({project: this.project, tags: "pip"})) {
+        Taskspending.update({_id: this._id}, {$push: {wip: "projwip"}})
+      }
+      if (Taskspending.findOne({context: this.context, tags: "cip"})) {
+        Taskspending.update({_id: this._id}, {$push: {wip: "contwip"}})
+      }
     }
   },
   'click .closecontext': function (e,t) {

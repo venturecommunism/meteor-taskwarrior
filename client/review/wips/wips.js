@@ -3,7 +3,10 @@ Template.workinprogress.helpers({
     return Taskspending.find({tags: "mit"}, {sort: {rank: 1}})
   },
   wipproject: function () {
-    if (this.project && Taskspending.findOne({wip: "projwip", project: this.project})) {
+    if (!this.project) {
+      return true
+    }
+    else if (this.project && Taskspending.findOne({wip: "projwip", project: this.project})) {
       return true
     }
   },
