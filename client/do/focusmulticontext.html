@@ -1,0 +1,16 @@
+<template name="focusmulticontext">
+{{#if focusmulticontext}}
+<h3 style="width: 100%;">Next Actions</h3>
+{{/if}}
+{{#each focusmulticontext}}
+<div class="btn btn-inverse closecontext">+</div><h3 class="focusmulticontext-title">{{this}}</h3><button type="button" class="contclose close" id="{{_id}}">hide</button>
+
+  <ul id="task_list">
+    {{> multitasks}}
+    {{> multitaskstwo}}
+
+
+  </ul>
+{{/each}}
+</template>
+
