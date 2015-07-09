@@ -13,6 +13,7 @@
       {{> date}}
     </div>
     <div id="list">
+{{> mapview}}
       {{> organize}}
       {{> review}}
       {{> do}}
@@ -21,3 +22,12 @@
     </div>
   </div>
 </body>
+
+<template name="mapview">
+  <p><input type="button" value="Clear" id="clearButton"></p>
+
+
+  <div id="map-canvas"></div>
+  <div id="directions-panel"></div>
+
+</template>

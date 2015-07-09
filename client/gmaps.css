@@ -1,0 +1,19 @@
+/* CSS declarations go here */
+#map-canvas {
+  height: 500px;
+  width: 400px;
+  margin: 0px;
+  padding: 0px;
+  float: left;
+}
+
+#directions-panel {
+  height: 500px;
+  float: left;
+  width: 200px;
+  overflow: auto;
+}
+
+.warnbox-c1, .warnbox-c2, .warnbox-content {
+  display: none !important;
+}
