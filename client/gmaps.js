@@ -29,6 +29,7 @@ Template.mapview.events = {
 
   directionsDisplay = new google.maps.DirectionsRenderer();
 
+  $('#directions-panel').empty()
   directionsDisplay.setMap(map);
   directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
