@@ -35,24 +35,12 @@ setTimeout(function() {
 
   directionsService = new google.maps.DirectionsService();
 
-  // Add listener
-  google.maps.event.addListener(map, 'click', addLatLng);
-
   directionsDisplay = new google.maps.DirectionsRenderer();
 
   $('#directions-panel').empty()
   directionsDisplay.setMap(map);
   directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
-  function addLatLng(event) {
-
-    // Add coordinates into db
-    var point = {
-      'lat': event.latLng.lat(),
-      'lng': event.latLng.lng()
-    };
-    Coords.insert(point);
-  }
 }, 1 * 1000);
   },
   'click #clearButton': function () {
@@ -67,25 +55,11 @@ setTimeout(function() {
 
   directionsService = new google.maps.DirectionsService();
 
-  // Add listener
-  google.maps.event.addListener(map, 'click', addLatLng);
-
   directionsDisplay = new google.maps.DirectionsRenderer();
 
   $('#directions-panel').empty()
   directionsDisplay.setMap(map);
   directionsDisplay.setPanel(document.getElementById('directions-panel'));
-
-  function addLatLng(event) {
-
-    // Add coordinates into db
-    var point = {
-      'lat': event.latLng.lat(),
-      'lng': event.latLng.lng()
-    };
-    Coords.insert(point);
-  }
-
 
   }
 };
@@ -102,32 +76,31 @@ if (Session.equals('maphidden', false)) {
 
   directionsService = new google.maps.DirectionsService();
 
-  // Add listener
-  google.maps.event.addListener(map, 'click', addLatLng);
-
   directionsDisplay = new google.maps.DirectionsRenderer();
 
   directionsDisplay.setMap(map);
   directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
-  function addLatLng(event) {
-
-    // Add coordinates into db
-    var point = {
-      'lat': event.latLng.lat(),
-      'lng': event.latLng.lng()
-    };
-    Coords.insert(point);
-  }
 } // Session map hidden false
 };
 
 function drawPath() {
-  if (pointsArr.length >= 2) {
-    var origen = pointsArr[0];
+  if (pointsArr.length >= 1) {
+var origenlatlng = Geolocation.latLng()
+console.log(origenlatlng)
+
+      var origenlat = origenlatlng.lat
+      var origenlng = origenlatlng.lng
+console.log(origenlat)
+console.log(origenlng)
+      var startlatlng = new google.maps.LatLng(origenlat, origenlng);
+
+
+console.log(pointsArr[0])
+    var origen = startlatlng;
     var destino = pointsArr[pointsArr.length - 1];
     var waypointsArr = new Array();
-    if (pointsArr.length > 2) {
+    if (pointsArr.length > 1) {
 
       pointsArr.forEach(function (item) {
         if (origen != item && destino != item) {
@@ -152,7 +125,6 @@ function drawPath() {
     directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
-
   }
 }
 
@@ -161,16 +133,22 @@ function drawPath() {
 // Se declara la dependencia para que al cambiar se actualice en todos los clientes
 Tracker.autorun(function () {
   console.log('change');
-  if (Coords.find().count()) {
+  if (Taskspending.find({context: "navigation", tags: "mit"}, {$sort: {rank: -1}})) {
 //    map.setCenter(Geolocation.latLng());
-    var allCoords = Coords.find();
+    var allCoords = Taskspending.find({context: "navigation", tags: "mit"}, {$sort: {rank: -1}});
 
     pointsArr = new Array();
     allCoords.forEach(function (coord) {
       // Add coordinates into the path
-      var latlng = new google.maps.LatLng(coord.lat, coord.lng);
+      var coords = coord.contextlocation.split(',')
+      var lat = coords[0]
+      var lng = coords[1]
+console.log(lat)
+console.log(lng)
+      var latlng = new google.maps.LatLng(lat, lng);
       pointsArr.push(latlng);
     });
+console.log(pointsArr)
     drawPath();
   }
   else {

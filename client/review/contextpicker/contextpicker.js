@@ -92,7 +92,7 @@ console.log(Session.get("multicontext"))
         }
         else {
           var description = "Navigate to " + this.context
-          Taskspending.insert({navigatingto: this._id, context: "navigation", contextlocation: e.target.value, description: description})
+          Taskspending.insert({navigatingto: this._id, context: "navigation", contextlocation: e.target.value, description: description, tags: ["kickstart"]})
         }
         Session.set('editing_contextlocation', false);
        }
