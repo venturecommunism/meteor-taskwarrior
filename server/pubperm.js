@@ -154,6 +154,17 @@ Meteor.publish("taskspendinginactivecontextpicker", function(inactivecontextpick
   }
 })
 
+Meteor.publish("taskspendingnavigation", function(navigationlimit) {
+  var userId = this.userId
+//  Meteor._sleepForMs(2000)
+  if (adminUser(userId)) {
+    return Taskspending.find({context: "navigation", tags: {$ne: "largercontext"}}, {limit: navigationlimit})
+  }
+  else if (userId) {
+    return Taskspending.find({context: "navigation", tags: {$ne: "largercontext"}}, {limit: navigationlimit})
+  }
+})
+
 Meteor.publish("taskspendingwips", function(wipslimit) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)

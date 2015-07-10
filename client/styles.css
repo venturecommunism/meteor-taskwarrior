@@ -426,3 +426,12 @@ position: relative;
   position: relative;
   top: -35px;
 }
+
+#contextpicker .contextlocation, #contextpicker input {
+  position: relative;
+  top: 10px;
+  width: 150px;
+  float: left;
+  display: inline-block;
+  font-size: 1em;
+}

@@ -21,6 +21,9 @@ Template.contextpicker.helpers({
   contexts1: function () {
     return context_infos()
   },
+  editing_contextlocation: function () {
+    return Session.equals('editing_contextlocation',this._id)
+  },
 })
 
 Template.contextpicker.events({
@@ -71,6 +74,32 @@ console.log(Session.get("multicontext"))
       var taskid = Taskspending.findOne({context: this.context, tags: "largercontext"})._id
       Taskspending.update({_id: taskid}, {$push: {tags: "somedaymaybecont"}})
     }
+  },
+  'click #btnContextLocation': function (e,t) {
+    Session.set('editing_contextlocation', this._id);
+    Meteor.flush();
+    focusText(t.find("#editing-contextlocation"));
+  },
+  'keyup #editing-contextlocation': function (e,t) {
+    if (e.which === 13)
+    {
+      var contextLocationVal = String(e.target.value || "");
+      if (contextLocationVal)
+      {
+        var formattednow = formattedNow()
+        if (Taskspending.findOne({navigatingto: this._id})) {
+          Taskspending.update({navigatingto:this._id}, {$set: {contextlocation: e.target.value}})
+        }
+        else {
+          var description = "Navigate to " + this.context
+          Taskspending.insert({navigatingto: this._id, context: "navigation", contextlocation: e.target.value, description: description})
+        }
+        Session.set('editing_contextlocation', false);
+       }
+     }
+  },
+  'focusout #editing-contextlocation' : function(e,t){
+    Session.set('editing_contextlocation',false);
   },
 })
 
