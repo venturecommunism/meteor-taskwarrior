@@ -1,0 +1,22 @@
+<template name="navtask">
+      <li class="task_item alert">
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+
+  {{#if is_kickstarter}}
+<div class="btn btn-inverse active btn-danger kickstart">kickstart</div><p class="btn btn-inverse {{mitornot}} mit">mit</p>
+  {{/if}}
+  {{#if nokickstart}}
+<div class="btn btn-inverse kickstart choosekickstart">kickstart</div>
+  {{/if}}
+
+
+{{#if editing}}
+      <div class="edit">
+        <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
+      </div>
+{{else}}
+<div class="todo-item">       <p>{{description}}</p> </div>
+{{/if}}
+<p>{{rank}}</p>
+      </li>
+</template>

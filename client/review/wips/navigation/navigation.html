@@ -1,0 +1,22 @@
+<template name="navigation">
+
+<h4>Navigation</h4><div style="float: left; position: relative; top: 5px; left: 5px;" class="btn btn-inverse closenavigationsection">+</div>
+<div id="task_list">
+{{#each navigation}}
+{{> navtask}}
+{{/each}}
+</div>
+
+<hr/>
+
+<!-- load more -->
+  {{#if Template.subscriptionsReady}}
+    {{#if hasMorePosts}}
+      <p><a class="load-more-navigation">Load More</a></p>
+    {{/if}}
+  {{else}}
+    <div class="loading">{{>spinner}}</div>
+  {{/if}}
+<!-- end of load more -->
+
+</template>
