@@ -1,3 +1,4 @@
+/*
 Meteor.subscribe('Coords');
 
 Session.setDefault('maphidden', false)
@@ -159,3 +160,4 @@ console.log(pointsArr)
   }
 });
 
+*/

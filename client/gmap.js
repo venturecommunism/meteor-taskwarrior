@@ -1,4 +1,4 @@
-
+/*
 
 window.google = window.google || {};
 google.maps = google.maps || {};
@@ -21,3 +21,4 @@ google.maps = google.maps || {};
   getScript("http://maps.gstatic.com/maps-api-v3/api/js/21/6/main.js");
   getScript("http://maps.gstatic.com/maps-api-v3/api/js/21/6/geometry.js");
 })();
+*/
