@@ -435,3 +435,7 @@ position: relative;
   display: inline-block;
   font-size: 1em;
 }
+
+.active-project .project_item ul {
+margin-bottom: 40px;
+}
