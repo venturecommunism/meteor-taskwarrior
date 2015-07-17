@@ -1,7 +1,7 @@
 <head>
   <title>meteor-taskwarrior</title>
   <meta name="viewport" content="user-scalable=no, initial-scale=1, minimal-ui, maximum-scale=1, minimum-scale=1">
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={YOUR GOOGLE MAPS API KEY HERE}&sensor=false"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={GOOGLE API KEY}&sensor=false"></script>
   <script type="text/javascript">
     google.maps.event.addDomListener(window, 'load', initialize);
   </script>
@@ -32,6 +32,10 @@
 <div style="float: right; position: relative; top: 35px; right: 100px; z-index: 1;" class="btn btn-inverse closemapsection">+</div>
 
   <div id="map-canvas"></div>
+<div style="float: right; position: relative; top: 5px; right: 100px; z-index: 1;" class="btn btn-inverse choosewalking {{walking}}">W</div>
+<div style="float: right; position: relative; top: 5px; right: 100px; z-index: 1;" class="btn btn-inverse choosedriving {{driving}}">D</div>
+<div style="float: right; position: relative; top: 5px; right: 100px; z-index: 1;" class="btn btn-inverse choosepublictransportation {{publictransportation}}">PT</div>
+<div style="float: right; position: relative; top: 5px; right: 100px; z-index: 1;" class="btn btn-inverse choosebicycling {{biking}}">B</div>
   <div id="directions-panel"></div>
 {{/unless}}
 {{#if maphidden}}

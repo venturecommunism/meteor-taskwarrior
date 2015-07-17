@@ -1,6 +1,7 @@
 Meteor.subscribe('Coords');
 
 Session.setDefault('maphidden', false)
+Session.setDefault('travelmode', 'walking')
 
 var map;
 var directionsDisplay;
@@ -14,10 +15,41 @@ Template.mapview.helpers({
   maphidden: function () {
     return Session.equals("maphidden", true)
   },
-
+  walking: function () {
+    if (Session.equals('travelmode', 'walking')) {
+      return 'active'
+    }
+  },
+  driving: function () {
+    if (Session.equals('travelmode', 'driving')) {
+      return 'active'
+    }
+  },
+  biking: function () {
+    if (Session.equals('travelmode', 'biking')) {
+      return 'active'
+    }
+  },
+  publictransportation: function () {
+    if (Session.equals('travelmode', 'publictransportation')) {
+      return 'active'
+    }
+  },
 });
 
 Template.mapview.events = {
+  'click .choosebicycling': function (e,t) {
+    Session.set('travelmode', 'biking')
+  },
+  'click .choosewalking': function (e,t) {
+    Session.set('travelmode', 'walking')
+  },
+  'click .choosedriving': function (e,t) {
+    Session.set('travelmode', 'driving')
+  },
+  'click .choosepublictransportation': function (e,t) {
+    Session.set('travelmode', 'publictransportation')
+  },
   'click .closemapsection': function(e,t) {
     Session.set('maphidden', true)
   },
@@ -107,11 +139,24 @@ console.log(origenlatlng)
       });
     }
 
+if (Session.equals('travelmode', 'walking')) {
+  var travelmode = google.maps.TravelMode.WALKING
+}
+else if (Session.equals('travelmode', 'driving')) {
+  var travelmode = google.maps.TravelMode.DRIVING
+}
+else if (Session.equals('travelmode', 'publictransportation')) {
+  var travelmode = google.maps.TravelMode.TRANSIT
+} 
+else if (Session.equals('travelmode', 'biking')) {
+  var travelmode = google.maps.TravelMode.BICYCLING  
+}
+
     var request = {
       origin: origen,
       waypoints: waypointsArr,
       destination: destino,
-      travelMode: google.maps.TravelMode.WALKING
+      travelMode: travelmode
     };
     directionsService.route(request, function (response, status) {
       if (status == google.maps.DirectionsStatus.OK) {
