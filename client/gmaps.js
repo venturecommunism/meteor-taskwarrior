@@ -1,4 +1,3 @@
-/*
 Meteor.subscribe('Coords');
 
 Session.setDefault('maphidden', false)
@@ -92,12 +91,10 @@ console.log(origenlatlng)
 
       var origenlat = origenlatlng.lat
       var origenlng = origenlatlng.lng
-console.log(origenlat)
-console.log(origenlng)
+
       var startlatlng = new google.maps.LatLng(origenlat, origenlng);
 
 
-console.log(pointsArr[0])
     var origen = startlatlng;
     var destino = pointsArr[pointsArr.length - 1];
     var waypointsArr = new Array();
@@ -129,14 +126,12 @@ console.log(pointsArr[0])
   }
 }
 
-
 // Aqui esta la magia!!
 // Se declara la dependencia para que al cambiar se actualice en todos los clientes
 Tracker.autorun(function () {
   console.log('change');
-  if (Taskspending.find({context: "navigation", tags: "mit"}, {$sort: {rank: -1}})) {
-//    map.setCenter(Geolocation.latLng());
-    var allCoords = Taskspending.find({context: "navigation", tags: "mit"}, {$sort: {rank: -1}});
+  if (Taskspending.find({context: "navigation", tags: "mit"}, {sort: {rank: 1}})) {
+    var allCoords = Taskspending.find({context: "navigation", tags: "mit"}, {sort: {rank: 1}});
 
     pointsArr = new Array();
     allCoords.forEach(function (coord) {
@@ -144,12 +139,9 @@ Tracker.autorun(function () {
       var coords = coord.contextlocation.split(',')
       var lat = coords[0]
       var lng = coords[1]
-console.log(lat)
-console.log(lng)
       var latlng = new google.maps.LatLng(lat, lng);
       pointsArr.push(latlng);
     });
-console.log(pointsArr)
     drawPath();
   }
   else {
@@ -160,4 +152,3 @@ console.log(pointsArr)
   }
 });
 
-*/
