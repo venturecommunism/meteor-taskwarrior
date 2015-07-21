@@ -339,6 +339,12 @@ top: 15px;
 float: left;
 }
 
+.sorting_wips {
+margin-bottom: 10px;
+top: 5px;
+clear: both;
+}
+
 .active-project .project-item p {
   margin-bottom: 37px;
 }
