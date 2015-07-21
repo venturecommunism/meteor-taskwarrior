@@ -1,9 +1,11 @@
 <template name="workinprogress">
 
-<h3>Work in Progress (WIPs)</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse closewipssection">+</div><p class="btn sorting_wips {{sorting_wips}}">Sort WIPs</p>
+<h3>Work in Progress (WIPs)</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse closewipssection">+</div>
 
 {{> mapview}}
 {{> navigation}}
+
+<p class="btn sorting_wips {{sorting_wips}}">Sort WIPs</p>
 
 <div id="task_list" class="wip_task_list">
 {{#each wips}}
