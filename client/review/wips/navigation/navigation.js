@@ -48,7 +48,10 @@ Template.navigation.helpers({
   // are there more posts to show?
   hasMorePosts: function () {
     return Template.instance().taskspendingnavigation().count() >= Template.instance().navigationlimit.get();
-  }
+  },
+  navigationsectionhidden: function () {
+    return Session.equals('navigationhidden', true)
+  },
 });
 
 Template.navigation.events({
@@ -64,6 +67,9 @@ Template.navigation.events({
   },
   'click .closenavigationsection': function(e,t){
     Session.set('navigationhidden', true)
+  },
+  'click .opennavigationsection': function(e,t){
+    Session.set('navigationhidden', false)
   },
 });
 
