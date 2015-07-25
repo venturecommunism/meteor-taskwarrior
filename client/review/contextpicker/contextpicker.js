@@ -88,7 +88,8 @@ console.log(Session.get("multicontext"))
       {
         var formattednow = formattedNow()
         if (Taskspending.findOne({navigatingto: this._id})) {
-          Taskspending.update({navigatingto:this._id}, {$set: {contextlocation: e.target.value}})
+          var taskid = Taskspending.findOne({navigatingto: this._id})._id
+          Taskspending.update({_id:taskid}, {$set: {contextlocation: e.target.value}})
         }
         else {
           var description = "Navigate to " + this.context
