@@ -91,10 +91,10 @@ Meteor.publish("taskspendingunprocessed", function(unprocessedlimit) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
-    return Taskspending.find({tags: "inbox"}, {limit: unprocessedlimit})
+    return Taskspending.find({tags: "inbox"}, {sort: {rank: 1}, limit: unprocessedlimit})
   }
   else if (userId) {
-    return Taskspending.find({tags: "inbox", owner: userId}, {limit: unprocessedlimit})
+    return Taskspending.find({tags: "inbox", owner: userId}, {sort: {rank: 1}, limit: unprocessedlimit})
   }
 })
 

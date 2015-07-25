@@ -93,7 +93,7 @@ Template.process.created = function () {
   // 3. Cursor
   
   instance.taskspendingunprocessed = function() { 
-    return Taskspending.find({tags: "inbox"}, {limit: instance.loaded.get()});
+    return Taskspending.find({tags: "inbox"}, {sort: {rank: 1}, limit: instance.loaded.get()});
   }
   
 };
