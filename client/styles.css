@@ -445,3 +445,9 @@ position: relative;
 .active-project .project_item ul {
 margin-bottom: 40px;
 }
+
+.alert.alert-warning {
+position: fixed;
+z-index: 40;
+background-color: red;
+}
