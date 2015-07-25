@@ -11,6 +11,7 @@ Session.setDefault('mitshidden', true)
 Session.setDefault('readandreviewhidden', true)
 Session.setDefault('waitingforshidden', true)
 Session.setDefault('projectshidden', true)
+Session.setDefault('perspectivehidden', true)
 Session.setDefault('somedaymaybeprojectshidden', true)
 Session.setDefault('projectlesssomedaymaybeshidden', true)
 
@@ -95,6 +96,9 @@ Template.review.helpers({
   },
   projectshidden: function () {
     return Session.equals("projectshidden", true)
+  },
+  perspectivehidden: function() {
+    return Session.equals("perspectivehidden", true)
   },
   somedaymaybeprojectshidden: function() {
     return Session.equals("somedaymaybeprojectshidden", true)
@@ -266,6 +270,9 @@ Template.review.events({
   },
   'click .opensomedaymaybeprojectssection': function(e,t){
     Session.set('somedaymaybeprojectshidden', false)
+  },
+  'click .openperspectivesection': function(e,t){
+    Session.set('perspectivehidden', false)
   },
   'click .closesomedaymaybeprojectssection': function(e,t){
     Session.set('somedaymaybeprojectshidden', true)
