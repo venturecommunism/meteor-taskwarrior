@@ -16,6 +16,7 @@ Session.set('taskspending_dataloaded', true)
 Meteor.subscribe('taskspendingcontextpicker')
 Meteor.subscribe('taskspendingprojects')
 Meteor.subscribe('taskspendingsomedaymaybeprojects')
+Meteor.subscribe('taskspendinglowestranked')
 
 //Meteor.subscribe("tasksbacklog")
 

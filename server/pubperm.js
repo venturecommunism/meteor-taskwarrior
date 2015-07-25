@@ -76,6 +76,17 @@ Meteor.publish("tasksbacklog", function () {
 });
 */
 
+Meteor.publish("taskspendinglowestranked", function() {
+  var userId = this.userId
+//  Meteor._sleepForMs(2000)
+  if (adminUser(userId)) {
+    return Taskspending.find({rank: {$exists: 1}}, {sort: {rank: 1}, limit: 1})
+  }
+  else if (userId) {
+    return Taskspending.find({rank: {$exists: 1}}, {sort: {rank: 1}, limit: 1})
+  }
+})
+
 Meteor.publish("taskspendingunprocessed", function(unprocessedlimit) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
