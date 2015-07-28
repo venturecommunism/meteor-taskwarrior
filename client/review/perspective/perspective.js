@@ -1,4 +1,16 @@
 Template.perspective.events({
+  'change .aorselect': function (e,t) {
+    console.log(e.target.id)
+    var projid = e.target.id.slice(10)
+    console.log(projid)
+    var selectValue = t.$("#aorselect-"+projid).val()
+    console.log(selectValue)
+    Taskspending.update({_id: projid}, {$set: {aor: selectValue}})
+  },
+})
+
+
+Template.perspective.events({
   'click .closeperspectivesection': function(e,t){
     Session.set('perspectivehidden', true)
   },
@@ -54,7 +66,7 @@ Schemas.SelectAor = new SimpleSchema({
 Template.perspective.helpers({
   options: function () {
     return Taskspending.find({tags: "aor"}).map(function (c) {
-      return {label: c.description, value: c.description}
+      return {label: c.description, value: c._id}
     })
   }
 })

@@ -20,12 +20,14 @@
 
 <ul style="clear: both;">
 {{#each projects}}
-<li>
-{{description}}
+<li style="list-style-type: none;">
+<span style="clear: both; float: left;">{{description}}</span>
 
-{{#autoForm id="selectAorForm" schema="Schemas.SelectAor"}}
-  {{> afFormGroup name="aor" options=options}}
-{{/autoForm}}
+<select style="clear: both; float: left;" class="aorselect" id="aorselect-{{_id}}">
+{{#each aor}}
+<option value="{{_id}}">{{description}}</option>
+{{/each}}
+</select>
 </li>
 {{/each}}
 </ul>
