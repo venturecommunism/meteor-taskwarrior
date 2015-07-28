@@ -3,8 +3,25 @@
 
 <ul style="clear: both;">
 {{#each aor}}
-<li>
-{{description}}
+<li style="list-style-type: none;">
+<h4>{{description}}</h4><span style="float: left; position: relative; margin-left: 20px; top: 10px;" class="aortoback"> back</span><span style="float: left; position: relative; margin-left: 20px; top: 10px;" class="aortofront"> front</span>
+
+<ul style="clear: both;">
+{{#each aorprojects}}
+<li style="list-style-type: none;">
+<span style="clear: both; float: left;">{{description}}</span>
+
+<select style="clear: both; float: left;" class="aorselect" id="aorselect-{{_id}}">
+<option>Select One</option>
+{{#each aor}}
+<option value="{{_id}}">{{description}}</option>
+{{/each}}
+</select>
+</li>
+{{/each}}
+</ul>
+
+
 </li>
 {{/each}}
 </ul>
@@ -24,6 +41,7 @@
 <span style="clear: both; float: left;">{{description}}</span>
 
 <select style="clear: both; float: left;" class="aorselect" id="aorselect-{{_id}}">
+<option>Select One</option>
 {{#each aor}}
 <option value="{{_id}}">{{description}}</option>
 {{/each}}

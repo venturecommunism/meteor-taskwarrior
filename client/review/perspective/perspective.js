@@ -7,6 +7,26 @@ Template.perspective.events({
     console.log(selectValue)
     Taskspending.update({_id: projid}, {$set: {aor: selectValue}})
   },
+  'click .aortoback': function (e,t) {
+    var highestaor = Taskspending.findOne({tags: "aor"}, {sort: {rank: -1}}).rank
+    var currentaor = Taskspending.findOne({_id: this._id}).rank
+    if (currentaor >= highestaor) {
+    }
+    else {
+      var newrank = highestaor + 1
+      Taskspending.update({_id: this._id}, {$set: {rank: newrank}})
+    }
+  },
+  'click .aortofront': function (e,t) {
+    var lowestaor = Taskspending.findOne({tags: "aor"}, {sort: {rank: 1}}).rank
+    var currentaor = Taskspending.findOne({_id: this._id}).rank
+    if (currentaor <= lowestaor) {
+    }
+    else {
+      var newrank = lowestaor - 1
+      Taskspending.update({_id: this._id}, {$set: {rank: newrank}})
+    }
+  },
 })
 
 
@@ -45,13 +65,16 @@ Template.perspective.events({
 
 Template.perspective.helpers({
   projects: function () {
-    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "aor"}}]}, {sort: {rank: 1}})
+    return Taskspending.find({$and: [{tags: "largeroutcome"}, {aor: {$exists: 0}}, {tags: {$ne: "aor"}}]}, {sort: {rank: 1}})
   },
   aor: function() {
-    return Taskspending.find({tags: "aor"})
+    return Taskspending.find({tags: "aor"}, {sort: {rank: 1}})
   },
   new_aor: function() {
     return Session.equals('editingaor', true)
+  },
+  aorprojects: function () {
+    return Taskspending.find({$and: [{tags: "largeroutcome"}, {aor: this._id}, {tags: {$ne: "aor"}}]}, {sort: {rank: 1}})
   },
 })
 
