@@ -451,3 +451,8 @@ position: fixed;
 z-index: 40;
 background-color: red;
 }
+
+.newaor {
+float: left;
+clear: both;
+}

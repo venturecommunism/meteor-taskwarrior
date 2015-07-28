@@ -1,4 +1,29 @@
 <template name="perspective">
 <h3>Perspective</h3><div style="float: left; position: relative; top: 5px; left: 5px;" class="btn btn-inverse closeperspectivesection">+</div>
 
+<ul style="clear: both;">
+{{#each aor}}
+<li>
+{{description}}
+</li>
+{{/each}}
+</ul>
+
+ {{#if new_aor}}
+    <div class="newaor">
+      <input type="text" id="add-newaor" value="" />
+    </div>
+  {{else}}
+  <div class="newaor btn btn-inverse" id="btnNewAor">+ Area of Responsibility</div>
+  {{/if}}
+
+
+<ul style="clear: both;">
+{{#each projects}}
+<li>
+{{description}}
+</li>
+{{/each}}
+</ul>
+
 </template>
