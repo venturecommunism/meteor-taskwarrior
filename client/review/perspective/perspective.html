@@ -22,6 +22,10 @@
 {{#each projects}}
 <li>
 {{description}}
+
+{{#autoForm id="selectAorForm" schema="Schemas.SelectAor"}}
+  {{> afFormGroup name="aor" options=options}}
+{{/autoForm}}
 </li>
 {{/each}}
 </ul>

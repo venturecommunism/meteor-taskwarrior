@@ -42,3 +42,19 @@ Template.perspective.helpers({
     return Session.equals('editingaor', true)
   },
 })
+
+Schemas = {}
+
+Schemas.SelectAor = new SimpleSchema({
+  aor: {
+    type: String
+  }
+})
+
+Template.perspective.helpers({
+  options: function () {
+    return Taskspending.find({tags: "aor"}).map(function (c) {
+      return {label: c.description, value: c.description}
+    })
+  }
+})
