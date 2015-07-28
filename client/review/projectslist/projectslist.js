@@ -291,7 +291,7 @@ Template.projectslist.created = function () {
 
   instance.taskspendingprojects = function() {
     var projectslimit = instance.projectslimit.get()
-    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$nin: ["pip", "somedaymaybeproj", "kickstarterless"]}}]}, {sort: {rank: 1}, limit: projectslimit})
+    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$nin: ["pip", "aor", "somedaymaybeproj", "kickstarterless"]}}]}, {sort: {rank: 1}, limit: projectslimit})
   }
 
 };
