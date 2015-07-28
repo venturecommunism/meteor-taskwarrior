@@ -456,3 +456,7 @@ background-color: red;
 float: left;
 clear: both;
 }
+
+#selectAorForm label {
+display: none;
+}
