@@ -11,7 +11,7 @@ Template.projectslist.helpers({
     return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$ne: "somedaymaybeproj"}}]}, {sort: {tags: "kickstarterless", rank: 1}})
   },
   kickstarterlessprojects: function () {
-    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: "kickstarterless"}, {tags: {$nin: ["pip", "somedaymaybeproj"]}}]}, {sort: {rank: 1}})
+    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: "kickstarterless"}, {tags: {$nin: ["pip", "aor", "somedaymaybeproj"]}}]}, {sort: {rank: 1}})
   },
   orgtasks: function () {
       return Taskspending.find({status: {$in: ["waiting", "pending"]}, project: this.project, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {tags: "kickstart", tags: "checklistitem", tags: "milestone", rank: 1}})
