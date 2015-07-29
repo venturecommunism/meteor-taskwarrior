@@ -44,9 +44,16 @@ console.log("data context is " + context)
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
       console.log("> Received "+multitaskslimit+" posts. \n\n")
-      instance.loaded.set(multitaskslimit);
-    } else {
-      console.log("> Subscription is not ready yet. \n\n");
+      instance.loaded.set(multitaskslimit)
+      var nonanyaorcontext = Taskspending.findOne({context: context, tags: "largercontext", tags: {$nin: ["anyaor", "aor"]}})
+      var anyaorcontext = Taskspending.findOne({context: context, tags: "anyaor", tags: {$nin: ["aor"]}})
+      if (nonanyaorcontext && Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: context}]}).count() > 0) {
+        Taskspending.update({_id: nonanyaorcontext._id}, {$push: {tags: "anyaor"}})
+      }
+      else if (anyaorcontext && Taskspending.findOne({$and: [{context: context}, {tags: "largercontext"}, {tags: "anyaor"}, {tags: {$nin: ["aor"]}}]}) && Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: context}]}).count() == 0) {
+        Taskspending.update({_id: anyaorcontext._id}, {$pull: {tags: "anyaor"}})
+        console.log("> Subscription is not ready yet. \n\n");
+      }
     }
   });
 
