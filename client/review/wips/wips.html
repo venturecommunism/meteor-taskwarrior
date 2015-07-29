@@ -9,9 +9,11 @@
 
 <div id="task_list" class="wip_task_list">
 {{#each wips}}
+{{#if aor}}
 {{#if wipproject}}
 {{#if wipcontext}}
 {{> orgtask_todo_item}}
+{{/if}}
 {{/if}}
 {{/if}}
 {{/each}}

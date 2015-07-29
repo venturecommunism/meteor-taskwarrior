@@ -12,6 +12,24 @@ Template.mostimportanttasks.helpers({
       return true
     }
   },
+  aor: function () {
+    if (!Taskspending.findOne({tags: "aorfocus"})) {
+      return true
+    }
+    if (!this.project) {
+      return true
+    }
+    var projectaor = Taskspending.findOne({project: this.project, tags: "largeroutcome"}).aor
+    var aorfocus = Taskspending.findOne({_id: projectaor, tags: "aorfocus"})
+    if (aorfocus) {
+      return true
+    }
+    else {
+      console.log(this.project)
+      console.log(projectaor)
+      console.log(aorfocus)
+    }
+  },
   sorting_mits: function () {
     if (Session.equals('sorting_mits', true)) {
       return 'btn-primary'
