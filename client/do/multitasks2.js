@@ -47,6 +47,16 @@ Template.multitaskstwo.created = function () {
     if (subscription.ready()) {
       console.log("> Received "+multitasks2limit+" posts. \n\n")
       instance.loaded.set(multitasks2limit);
+      var thisprojlist = Taskspending.find({context: context, project: {$exists: 1}}).map( function (doc) {
+        return doc.project
+      })
+      var contextaorlist = Taskspending.find({project: {$in: thisprojlist}, aor: {$exists: 1}}).map( function (doc) {
+          return doc.aor
+      })
+      console.log(contextaorlist)
+      console.log("context is " + context)
+      var contextid = Taskspending.findOne({context: context, tags: "largercontext"})._id
+      Taskspending.update({_id: contextid}, {$set: {contextaor: contextaorlist}})
     } else {
       console.log("> Subscription is not ready yet. \n\n");
     }
