@@ -4,7 +4,7 @@
 {{/unless}}
 <ul id="contextpicker">
 {{#each contexts}}
-{{#if anyaor}}
+{{#if aor}}
 {{#unless in_multicontext}}
 <li><h6><div class="btn btn-inverse">-</div> {{context}} ({{count}})</h6></li><button type="button" class="contcip close" id="{{_id}}">focus</button><button type="button" class="contclose close" id="{{_id}}">hide</button>
  {{#if editing_contextlocation}}

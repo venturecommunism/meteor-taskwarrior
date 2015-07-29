@@ -18,8 +18,21 @@ Template.contextpicker.helpers({
       }
     }
   },
-  anyaor: function () {
-    if (!Taskspending.findOne({tags: "aorfocus"}) || Taskspending.findOne({context: this.context, tags: "anyaor"})) {
+  aor: function () {
+    var aorlist = Taskspending.findOne({context: this.context, tags: "largercontext"})
+console.log("aorlist contextaor is " + aorlist.contextaor)
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map( function (doc) {
+      return doc._id
+    })
+console.log("aorfocus is " + aorfocus)
+    if (aorlist.contextaor) {
+      var inaorfocus = aorfocus.some(function (e) {
+console.log("contextaor is " + aorlist.contextaor)
+        return aorlist.contextaor.indexOf(e) >= 0;
+      })
+console.log("inaorfocus is " + inaorfocus)
+    }
+    if (!Taskspending.findOne({tags: "aorfocus"}) || Taskspending.findOne({context: this.context, tags: "anyaor"}) || inaorfocus) {
       return true
     }
   },
