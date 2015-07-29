@@ -1,4 +1,4 @@
-Template.perspective.events({
+Template.horizoninfocus.events({
   'change .aorselect': function (e,t) {
     console.log(e.target.id)
     var projid = e.target.id.slice(10)
@@ -28,13 +28,13 @@ Template.perspective.events({
     }
   },
   'click .aorfocus': function (e,t) {
-    Taskspending.update({_id: this._id}, {$push: {tags: "aorfocus"}})
+    Taskspending.update({_id: this._id}, {$pull: {tags: "aorfocus"}})
   },
 })
 
 
-Template.perspective.events({
-  'click .closeperspectivesection': function(e,t){
+Template.horizoninfocus.events({
+  'click .closehorizoninfocussection': function(e,t){
     Session.set('perspectivehidden', true)
   },
   'click .newaor.btn': function(e,t){
@@ -66,15 +66,9 @@ Template.perspective.events({
   },
 })
 
-Template.perspective.helpers({
-  projects: function () {
-    return Taskspending.find({$and: [{tags: "largeroutcome"}, {aor: {$exists: 0}}, {tags: {$ne: "aor"}}]}, {sort: {rank: 1}})
-  },
+Template.horizoninfocus.helpers({
   aor: function() {
-    return Taskspending.find({$and: [{tags: "aor"}, {tags: {$ne: "aorfocus"}}]}, {sort: {rank: 1}})
-  },
-  new_aor: function() {
-    return Session.equals('editingaor', true)
+    return Taskspending.find({tags: "aorfocus"}, {sort: {rank: 1}})
   },
   aorprojects: function () {
     return Taskspending.find({$and: [{tags: "largeroutcome"}, {aor: this._id}, {tags: {$ne: "aor"}}]}, {sort: {rank: 1}})

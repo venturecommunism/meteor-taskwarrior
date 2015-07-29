@@ -1,8 +1,5 @@
-<template name="perspective">
-
-{{> horizoninfocus}}
-
-<h3>Perspective</h3><div style="float: left; position: relative; top: 5px; left: 5px;" class="btn btn-inverse closeperspectivesection">+</div>
+<template name="horizoninfocus">
+<h3>Horizon in Focus</h3><div style="float: left; position: relative; top: 5px; left: 5px;" class="btn btn-inverse closehorizoninfocussection">+</div>
 
 <ul style="clear: both;">
 {{#each aor}}
@@ -28,14 +25,6 @@
 </li>
 {{/each}}
 </ul>
-
- {{#if new_aor}}
-    <div class="newaor">
-      <input type="text" id="add-newaor" value="" />
-    </div>
-  {{else}}
-  <div class="newaor btn btn-inverse" id="btnNewAor">+ Area of Responsibility</div>
-  {{/if}}
 
 
 <ul style="clear: both;">
