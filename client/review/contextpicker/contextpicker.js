@@ -18,6 +18,11 @@ Template.contextpicker.helpers({
       }
     }
   },
+  anyaor: function () {
+    if (!Taskspending.findOne({tags: "aorfocus"}) || Taskspending.findOne({context: this.context, tags: "anyaor"})) {
+      return true
+    }
+  },
   contexts1: function () {
     return context_infos()
   },
