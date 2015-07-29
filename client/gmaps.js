@@ -1,6 +1,6 @@
 Meteor.subscribe('Coords');
 
-Session.setDefault('maphidden', false)
+Session.setDefault('maphidden', true)
 Session.setDefault('travelmode', 'walking')
 
 var map;

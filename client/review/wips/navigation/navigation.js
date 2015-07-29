@@ -1,3 +1,5 @@
+Session.setDefault("navigationhidden", true)
+
 // begin modular subscription loading
 
 Template.navigation.created = function () {
