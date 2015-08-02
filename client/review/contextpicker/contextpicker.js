@@ -150,11 +150,13 @@ Template.contextpicker.created = function () {
       return doc._id
     })
 console.log(aorfocus)
-    if (!aorfocus) {
-      var subscription = instance.subscribe('taskspendingcontextpicker', contextpickerlimit, [])
+    if (aorfocus == '') {
+console.log('yupyupyup')
+      var subscription = instance.subscribe('taskspendingcontextpicker', contextpickerlimit)
     }
     else {
-      var subscription = instance.subscribe('taskspendingcontextpicker', contextpickerlimit, aorfocus)
+console.log("the aorfocus is " + aorfocus)
+      var subscription = instance.subscribe('taskspendingcontextpicker', contextpickerlimit)
     }
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
@@ -172,11 +174,13 @@ console.log(aorfocus)
     var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
       return doc._id
     })
-    if (!aorfocus) {
-      return Taskspending.find({$and: [{contextaor: {$in: aorfocus}}, {tags: "largercontext"}, {tags: {$nin: ["cip", "somedaymaybecont"]}}]}, {sort: {rank: 1}, limit: contextpickerlimit})
+    if (aorfocus == '') {
+console.log("this looks okay")
+console.log(aorfocus + " is this manies")
+      return Taskspending.find({$and: [{tags: "largercontext"}, {tags: {$nin: ["cip", "somedaymaybecont"]}}]}, {sort: {rank: 1}, limit: contextpickerlimit})
     }
     else {
-      return Taskspending.find({$and: [{tags: "largercontext"}, {tags: {$nin: ["cip", "somedaymaybecont"]}}]}, {sort: {rank: 1}, limit: contextpickerlimit})
+      return Taskspending.find({$and: [{contextaor: {$in: aorfocus}}, {tags: "largercontext"}, {tags: {$nin: ["cip", "somedaymaybecont"]}}]}, {sort: {rank: 1}, limit: contextpickerlimit})
     }
   }
 

@@ -45,7 +45,7 @@ Template.multitaskstwo.created = function () {
       return doc._id
     })
 console.log(aorfocus)
-    if (!aorfocus) {
+    if (!aorfocus || aorfocus == []) {
       var subscription = instance.subscribe('taskspendingmultitasks2', context, [])
     }
     else {
