@@ -120,14 +120,14 @@ Meteor.publish("taskspendingcalendar", function(calendarlimit) {
   }
 })
 
-Meteor.publish("taskspendingcontextpicker", function(contextpickerlimit, focusaor) {
+Meteor.publish("taskspendingcontextpicker", function(contextpickerlimit, aorfocus) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
-    return Taskspending.find({contextaor: {$in: focusaor}, tags: "largercontext"}, {sort: {rank: 1}})
+    return Taskspending.find({contextaor: {$in: aorfocus}, tags: "largercontext"}, {sort: {rank: 1}})
   }
   else if (userId) {
-    return Taskspending.find({contextaor: {$in: focusaor}, owner: userId, tags: "largercontext"}, {sort: {rank: 1}})
+    return Taskspending.find({contextaor: {$in: aorfocus}, owner: userId, tags: "largercontext"}, {sort: {rank: 1}})
   }
 })
 
@@ -142,14 +142,14 @@ Meteor.publish("taskspendingmultitasks", function(context) {
   }
 })
 
-Meteor.publish("taskspendingmultitasks2", function(context) {
+Meteor.publish("taskspendingmultitasks2", function(context, aorprojects) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, context: context, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {rank: 1}})
+    return Taskspending.find({project: {$in: aorprojects}, status: {$in: ["waiting", "pending"]}, context: context, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {rank: 1}})
   }
   else if (userId) {
-    return Taskspending.find({owner: userId, status: {$in: ["waiting", "pending"]}, context: context, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {rank: 1}})
+    return Taskspending.find({project: {$in: aorprojects}, owner: userId, status: {$in: ["waiting", "pending"]}, context: context, tags: {$ne: "inbox"}, type: {$nin: ["textfile", "checklist"]}}, {sort: {rank: 1}})
   }
 })
 

@@ -41,8 +41,23 @@ Template.multitaskstwo.created = function () {
     console.log("Asking for "+multitasks2limit+" posts…")
 
     // subscribe to the posts publication
-    var subscription = instance.subscribe('taskspendingmultitasks2', context)
-
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+console.log(aorfocus)
+    if (!aorfocus) {
+      var subscription = instance.subscribe('taskspendingmultitasks2', context, [])
+    }
+    else {
+      var aorprojects = Taskspending.find({_id: {$in: aorfocus}}).map(function (doc) {
+        return Taskspending.find({tags: "largeroutcome", aor: doc._id}).map(function (doc) {
+          return '"' +  doc.project + '"'
+        })
+      })
+var aorprojects = '[' + aorprojects + ']'
+console.log("aorprojects is " + aorprojects)
+      var subscription = instance.subscribe('taskspendingmultitasks2', context, aorprojects)
+    }
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
       console.log("> Received "+multitasks2limit+" posts. \n\n")
@@ -73,7 +88,24 @@ console.log(uniquecontextaorlist[i])
   // 3. Cursor
 
   instance.taskspendingmultitasks2 = function() {
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$exists: true}}, {context: context}]}, {sort: {tags: {$in: ["kickstart", "mit"]}, rank: {$exists: true}, rank: 1}, limit: instance.loaded.get()})
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+    if (!aorfocus || aorfocus == []) {
+console.log("there's no aorfocus")
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$exists: true}}, {context: context}]}, {sort: {tags: {$in: ["kickstart", "mit"]}, rank: {$exists: true}, rank: 1}, limit: instance.loaded.get()})
+    }
+    else {
+console.log("ohairthisexists")
+      var aorprojects = new Array()
+      Taskspending.find({_id: {$in: aorfocus}}).forEach(function (doc) {
+        Taskspending.find({tags: "largeroutcome", aor: doc._id}).forEach(function (doc) {
+          aorprojects.push(doc.project)
+        })
+      })
+      console.log("o yea yea yea " + aorprojects)
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$in: aorprojects}}, {context: context}]}, {sort: {tags: {$in: ["kickstart", "mit"]}, rank: {$exists: true}, rank: 1}, limit: instance.loaded.get()})
+    }
   }
 
 };
