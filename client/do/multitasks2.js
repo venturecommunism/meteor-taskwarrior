@@ -91,7 +91,7 @@ console.log(uniquecontextaorlist[i])
     var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
       return doc._id
     })
-    if (!aorfocus || aorfocus == []) {
+    if (aorfocus == '') {
 console.log("there's no aorfocus")
       return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$exists: true}}, {context: context}]}, {sort: {tags: {$in: ["kickstart", "mit"]}, rank: {$exists: true}, rank: 1}, limit: instance.loaded.get()})
     }
