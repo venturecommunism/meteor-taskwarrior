@@ -83,7 +83,7 @@ Meteor.publish("taskspendinglowestranked", function() {
     return Taskspending.find({rank: {$exists: 1}}, {sort: {rank: 1}, limit: 1})
   }
   else if (userId) {
-    return Taskspending.find({rank: {$exists: 1}}, {sort: {rank: 1}, limit: 1})
+    return Taskspending.find({owner: userId, rank: {$exists: 1}}, {sort: {rank: 1}, limit: 1})
   }
 })
 
@@ -205,7 +205,7 @@ Meteor.publish("taskspendingreadandreview", function(readandreviewlimit) {
     return Taskspending.find({context: "readandreview", tags: {$ne: "largercontext"}}, {sort: {rank: 1}, limit: readandreviewlimit})
   }
   else if (userId) {
-    return Taskspending.find({context: "readandreview", tags: {$ne: "largercontext"}}, {sort: {rank: 1}, limit: readandreviewlimit})
+    return Taskspending.find({owner: userId, context: "readandreview", tags: {$ne: "largercontext"}}, {sort: {rank: 1}, limit: readandreviewlimit})
   }
 })
 
@@ -216,7 +216,7 @@ Meteor.publish("taskspendingwaitingfors", function(waitingforslimit) {
     return Taskspending.find({context: "waitingfor", tags: {$ne: "largercontext"}}, {limit: waitingforslimit})
   }
   else if (userId) {
-    return Taskspending.find({context: "waitingfor", tags: {$ne: "largercontext"}}, {limit: waitingforslimit})
+    return Taskspending.find({owner: userId, context: "waitingfor", tags: {$ne: "largercontext"}}, {limit: waitingforslimit})
   }
 })
 
