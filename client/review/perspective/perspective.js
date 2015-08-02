@@ -58,8 +58,8 @@ Template.perspective.events({
         else {
           var rank = 0
         }
-        Tasksbacklog.insert({description: e.target.value, owner: Meteor.userId(), entry: formattednow, tags: ['largeroutcome', 'aor'], rank: rank})
-        Taskspending.insert({description: e.target.value, owner: Meteor.userId(), entry: formattednow, tags: ['largeroutcome', 'aor'], rank: rank})
+        Tasksbacklog.insert({project: "AOR."+e.target.value, description: e.target.value, owner: Meteor.userId(), entry: formattednow, tags: ['largeroutcome', 'aor'], rank: rank})
+        Taskspending.insert({project: "AOR."+e.target.value, description: e.target.value, owner: Meteor.userId(), entry: formattednow, tags: ['largeroutcome', 'aor'], rank: rank})
         Session.set('editingaor', false);
        }
      }
