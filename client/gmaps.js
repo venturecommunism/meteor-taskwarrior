@@ -120,13 +120,11 @@ function drawPath() {
   if (pointsArr.length >= 1) {
 var origenlatlng = Geolocation.latLng()
 console.log(origenlatlng)
-
       var origenlat = origenlatlng.lat
       var origenlng = origenlatlng.lng
 
       var startlatlng = new google.maps.LatLng(origenlat, origenlng);
-
-
+    var now = new Date()
     var origen = startlatlng;
     var destino = pointsArr[pointsArr.length - 1];
     var waypointsArr = new Array();
@@ -152,15 +150,39 @@ else if (Session.equals('travelmode', 'biking')) {
   var travelmode = google.maps.TravelMode.BICYCLING  
 }
 
+
+if (travelmode == google.maps.TravelMode.TRANSIT) {
+
+var secondpoint = '(' + waypointsArr[0].location.G + ',' + waypointsArr[0].location.K + ')'
+
+    var request = {
+      origin: origen,
+      destination: secondpoint,
+      travelMode: travelmode,
+      transitOptions: {
+        departureTime: now,
+        modes: [google.maps.TransitMode.SUBWAY],
+        routingPreference: google.maps.TransitRoutePreference.LESS_WALKING
+      },
+    }
+}
+else {
     var request = {
       origin: origen,
       waypoints: waypointsArr,
       destination: destino,
-      travelMode: travelmode
+      travelMode: travelmode,
     };
+}
     directionsService.route(request, function (response, status) {
       if (status == google.maps.DirectionsStatus.OK) {
         directionsDisplay.setDirections(response);
+        console.log(response)
+        console.log(status)
+      }
+      else {
+        console.log(response)
+        console.log(status)
       }
     });
 
