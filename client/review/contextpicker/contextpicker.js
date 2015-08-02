@@ -18,6 +18,7 @@ Template.contextpicker.helpers({
       }
     }
   },
+// aor is no longer in use but it used to also pick contexts from anyaor
   aor: function () {
     var aorlist = Taskspending.findOne({context: this.context, tags: "largercontext"})
 console.log("aorlist contextaor is " + aorlist.contextaor)
@@ -145,8 +146,16 @@ Template.contextpicker.created = function () {
     // console.log("Asking for "+contextpickerlimit+" posts…")
 
     // subscribe to the posts publication
-    var subscription = instance.subscribe('taskspendingcontextpicker', contextpickerlimit)
-
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+console.log(aorfocus)
+    if (!aorfocus) {
+      var subscription = instance.subscribe('taskspendingcontextpicker', contextpickerlimit, [])
+    }
+    else {
+      var subscription = instance.subscribe('taskspendingcontextpicker', contextpickerlimit, aorfocus)
+    }
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
       // console.log("> Received "+contextpickerlimit+" posts. \n\n")
@@ -160,7 +169,15 @@ Template.contextpicker.created = function () {
 
   instance.taskspendingcontextpicker = function() {
     var contextpickerlimit = instance.contextpickerlimit.get()
-    return Taskspending.find({$and: [{tags: "largercontext"}, {tags: {$nin: ["cip", "somedaymaybecont"]}}]}, {sort: {rank: 1}, limit: contextpickerlimit})
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+    if (!aorfocus) {
+      return Taskspending.find({$and: [{contextaor: {$in: aorfocus}}, {tags: "largercontext"}, {tags: {$nin: ["cip", "somedaymaybecont"]}}]}, {sort: {rank: 1}, limit: contextpickerlimit})
+    }
+    else {
+      return Taskspending.find({$and: [{tags: "largercontext"}, {tags: {$nin: ["cip", "somedaymaybecont"]}}]}, {sort: {rank: 1}, limit: contextpickerlimit})
+    }
   }
 
 };

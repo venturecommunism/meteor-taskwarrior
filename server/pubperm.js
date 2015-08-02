@@ -120,14 +120,14 @@ Meteor.publish("taskspendingcalendar", function(calendarlimit) {
   }
 })
 
-Meteor.publish("taskspendingcontextpicker", function(contextpickerlimit) {
+Meteor.publish("taskspendingcontextpicker", function(contextpickerlimit, focusaor) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)
   if (adminUser(userId)) {
-    return Taskspending.find({tags: "largercontext"}, {sort: {rank: 1}})
+    return Taskspending.find({contextaor: {$in: focusaor}, tags: "largercontext"}, {sort: {rank: 1}})
   }
   else if (userId) {
-    return Taskspending.find({owner: userId, tags: "largercontext"}, {sort: {rank: 1}})
+    return Taskspending.find({contextaor: {$in: focusaor}, owner: userId, tags: "largercontext"}, {sort: {rank: 1}})
   }
 })
 
