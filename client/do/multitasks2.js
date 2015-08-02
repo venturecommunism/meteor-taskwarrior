@@ -53,10 +53,18 @@ Template.multitaskstwo.created = function () {
       var contextaorlist = Taskspending.find({project: {$in: thisprojlist}, aor: {$exists: 1}}).map( function (doc) {
           return doc.aor
       })
-      console.log(contextaorlist)
+console.log(contextaorlist)
+var uniquecontextaorlist = [];
+$.each(contextaorlist, function(i, el){
+    if($.inArray(el, uniquecontextaorlist) === -1) uniquecontextaorlist.push(el);
+});
+      for (i in uniquecontextaorlist) {
+console.log(uniquecontextaorlist[i])
+        console.log(Taskspending.findOne({_id: uniquecontextaorlist[i]}).description)
+      }
       console.log("context is " + context)
       var contextid = Taskspending.findOne({context: context, tags: "largercontext"})._id
-      Taskspending.update({_id: contextid}, {$set: {contextaor: contextaorlist}})
+      Taskspending.update({_id: contextid}, {$set: {contextaor: uniquecontextaorlist}})
     } else {
       console.log("> Subscription is not ready yet. \n\n");
     }
