@@ -215,7 +215,25 @@ Template.focusprojectslist.created = function () {
 
   instance.taskspendingfocusprojects = function() {
     var focusprojectslimit = instance.focusprojectslimit.get()
-    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: "pip"}, {tags: {$ne: "kickstarterless"}}]}, {sort: {rank: 1}, limit: focusprojectslimit})
+
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+    if (aorfocus == '') {
+      return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: "pip"}, {tags: {$ne: "kickstarterless"}}]}, {sort: {rank: 1}, limit: focusprojectslimit})
+    }
+    else {
+      var aorprojects = new Array()
+      Taskspending.find({_id: {$in: aorfocus}}).forEach(function (doc) {
+        aorprojects.push(doc.project)
+        Taskspending.find({tags: "largeroutcome", aor: doc._id}).forEach(function (doc) {
+          aorprojects.push(doc.project)
+        })
+      })
+console.log(aorprojects)
+      return Taskspending.find({project: {$in: aorprojects}, $and: [{tags: "largeroutcome"}, {tags: "pip"}, {tags: {$ne: "kickstarterless"}}]}, {sort: {rank: 1}, limit: focusprojectslimit})
+
+    }
   }
 
 };

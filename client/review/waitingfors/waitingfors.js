@@ -35,9 +35,26 @@ Template.waitingfors.created = function () {
   // 3. Cursor
 
   instance.taskspendingwaitingfors = function() {
-    return Taskspending.find({context: "waitingfor", tags: {$ne: "largercontext"}}, {sort: {rank: 1}, limit: instance.loaded.get()})
-  }
 
+
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+    if (aorfocus == '') {
+      return Taskspending.find({context: "waitingfor", tags: {$ne: "largercontext"}}, {sort: {rank: 1}, limit: instance.loaded.get()})
+    }
+    else {
+      var aorprojects = new Array()
+      Taskspending.find({_id: {$in: aorfocus}}).forEach(function (doc) {
+        aorprojects.push(doc.project)
+        Taskspending.find({tags: "largeroutcome", aor: doc._id}).forEach(function (doc) {
+          aorprojects.push(doc.project)
+        })
+      })
+console.log(aorprojects)
+      return Taskspending.find({project: {$in: aorprojects}, context: "waitingfor", tags: {$ne: "largercontext"}}, {sort: {rank: 1}, limit: instance.loaded.get()})
+    }
+  }
 };
 
 Template.waitingfors.helpers({

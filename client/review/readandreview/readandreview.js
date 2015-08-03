@@ -35,9 +35,25 @@ Template.readandreview.created = function () {
   // 3. Cursor
 
   instance.taskspendingreadandreview = function() {
-    return Taskspending.find({context: "readandreview", tags: {$ne: "largercontext"}}, {sort: {rank: 1}, limit: instance.loaded.get()})
-  }
 
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+    if (aorfocus == '') {
+      return Taskspending.find({context: "readandreview", tags: {$ne: "largercontext"}}, {sort: {rank: 1}, limit: instance.loaded.get()})
+    }
+    else {
+      var aorprojects = new Array()
+      Taskspending.find({_id: {$in: aorfocus}}).forEach(function (doc) {
+        aorprojects.push(doc.project)
+        Taskspending.find({tags: "largeroutcome", aor: doc._id}).forEach(function (doc) {
+          aorprojects.push(doc.project)
+        })
+      })
+console.log(aorprojects)
+      return Taskspending.find({project: {$in: aorprojects}, context: "readandreview", tags: {$ne: "largercontext"}}, {sort: {rank: 1}, limit: instance.loaded.get()})
+    }
+  }
 };
 
 Template.readandreview.helpers({

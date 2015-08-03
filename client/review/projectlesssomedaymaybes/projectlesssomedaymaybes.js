@@ -41,9 +41,25 @@ Template.projectlesssomedaymaybes.created = function () {
   // 3. Cursor
 
   instance.taskspendingprojectlesssomedaymaybes = function() {
-    return Taskspending.find({context: "somedaymaybe", tags: {$ne: "largercontext"}}, {limit: instance.loaded.get()}, {sort: {rank: 1}})
 
-//    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: 1}, limit: instance.loaded.get()})
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+    if (aorfocus == '') {
+      return Taskspending.find({context: "somedaymaybe", tags: {$ne: "largercontext"}}, {limit: instance.loaded.get()}, {sort: {rank: 1}})
+    }
+    else {
+      var aorprojects = new Array()
+      Taskspending.find({_id: {$in: aorfocus}}).forEach(function (doc) {
+        aorprojects.push(doc.project)
+        Taskspending.find({tags: "largeroutcome", aor: doc._id}).forEach(function (doc) {
+          aorprojects.push(doc.project)
+        })
+      })
+console.log(aorprojects)
+      return Taskspending.find({project: {$in: aorprojects}, context: "somedaymaybe", tags: {$ne: "largercontext"}}, {limit: instance.loaded.get()}, {sort: {rank: 1}})
+
+    }
   }
 
 };

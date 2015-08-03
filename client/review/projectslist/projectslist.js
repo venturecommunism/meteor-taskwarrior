@@ -291,7 +291,28 @@ Template.projectslist.created = function () {
 
   instance.taskspendingprojects = function() {
     var projectslimit = instance.projectslimit.get()
-    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$nin: ["pip", "aor", "somedaymaybeproj", "kickstarterless"]}}]}, {sort: {rank: 1}, limit: projectslimit})
+
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+    if (aorfocus == '') {
+      return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$nin: ["pip", "aor", "somedaymaybeproj", "kickstarterless"]}}]}, {sort: {rank: 1}, limit: projectslimit})
+    }
+    else {
+      var aorprojects = new Array()
+      Taskspending.find({_id: {$in: aorfocus}}).forEach(function (doc) {
+        aorprojects.push(doc.project)
+        Taskspending.find({tags: "largeroutcome", aor: doc._id}).forEach(function (doc) {
+          aorprojects.push(doc.project)
+        })
+      })
+console.log(aorprojects)
+      return Taskspending.find({project: {$in: aorprojects}, $and: [{tags: "largeroutcome"}, {tags: {$nin: ["pip", "aor", "somedaymaybeproj", "kickstarterless"]}}]}, {sort: {rank: 1}, limit: projectslimit})
+
+    }
+
+
+//    return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$nin: ["pip", "aor", "somedaymaybeproj", "kickstarterless"]}}]}, {sort: {rank: 1}, limit: projectslimit})
   }
 
 };
