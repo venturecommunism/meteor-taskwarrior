@@ -96,9 +96,9 @@ console.log("there's no aorfocus")
       return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$exists: true}}, {context: context}]}, {sort: {tags: {$in: ["kickstart", "mit"]}, rank: {$exists: true}, rank: 1}, limit: instance.loaded.get()})
     }
     else {
-console.log("ohairthisexists")
       var aorprojects = new Array()
       Taskspending.find({_id: {$in: aorfocus}}).forEach(function (doc) {
+        aorprojects.push(doc.project)
         Taskspending.find({tags: "largeroutcome", aor: doc._id}).forEach(function (doc) {
           aorprojects.push(doc.project)
         })
