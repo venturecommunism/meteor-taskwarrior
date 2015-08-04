@@ -58,12 +58,16 @@
 {{/if}}
 {{/unless}}
 
+{{#unless projectlesssomedaymaybeshidden}}
+{{> projectlesssomedaymaybes}}
+{{/unless}}
+
 {{#unless perspectivehidden}}
 {{> perspective}}
 {{/unless}}
 
-{{#unless projectlesssomedaymaybeshidden}}
-{{> projectlesssomedaymaybes}}
+{{#unless weeklyreviewhidden}}
+{{> weeklyreview}}
 {{/unless}}
 
 {{#if inboxhidden}}
@@ -102,12 +106,16 @@
 <h3>Projects</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openprojectssection">-</div>
 {{/if}}
 
+{{#if projectlesssomedaymaybeshidden}}
+<h3>Projectless Someday/Maybes</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openprojectlesssomedaymaybessection">-</div>
+{{/if}}
+
 {{#if perspectivehidden}}
 <h3>Perspective</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openperspectivesection">-</div>
 {{/if}}
 
-{{#if projectlesssomedaymaybeshidden}}
-<h3>Projectless Someday/Maybes</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openprojectlesssomedaymaybessection">-</div>
+{{#if weeklyreviewhidden}}
+<h3>Weekly Review</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openweeklyreviewsection">-</div>
 {{/if}}
 
 {{/if}}

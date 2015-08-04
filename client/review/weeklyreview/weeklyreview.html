@@ -1,0 +1,12 @@
+<template name="weeklyreview">
+<h3>Weekly Review</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse closeweeklyreviewsection">+</div>
+<div style="float: left; clear: both;">
+<input style="float: left; clear: both;" type="checkbox" value="settime" name="settime"/><p style="display: inline; float: left;">Set aside a block of time</p>
+<input style="float: left; clear: both;" type="checkbox" value="inbox" name="inbox"/><p style="display: inline; float: left;">Process your Inbox</p>
+<input style="float: left; clear: both;" type="checkbox" value="prevcal" name="prevcal"/><p style="display: inline; float: left;">Look at your Previous Calendar</p>
+<input style="float: left; clear: both;" type="checkbox" value="currentcal" name="currentcal"/><p style="display: inline; float: left;">Look at your Current Calendar</p>
+{{#each aor}}
+<input style="float: left; clear: both;" type="checkbox" checked="{{weeklyreviewcheck}}" value="{{_id}}" name="{{_id}}"/><div class="btn {{weeklyreviewbuttonactive}} weeklyreview weeklyreview-{{_id}}" style="display: inline; float: left;">{{description}}</div>
+{{/each}}
+</div>
+</template>
