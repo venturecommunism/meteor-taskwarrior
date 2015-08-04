@@ -21,7 +21,6 @@ Template.multitasks.created = function () {
 
   // 1. Initialization
   var context = this.data
-console.log("data context is " + context)
   var instance = this;
 
   // initialize the reactive variables
@@ -36,14 +35,14 @@ console.log("data context is " + context)
     // get the limit
     var multitaskslimit = instance.multitaskslimit.get();
 
-    console.log("Asking for "+multitaskslimit+" posts…")
+//    console.log("Asking for "+multitaskslimit+" posts…")
 
     // subscribe to the posts publication
     var subscription = instance.subscribe('taskspendingmultitasks', context)
 
     // if subscription is ready, set limit to newLimit
     if (subscription.ready()) {
-      console.log("> Received "+multitaskslimit+" posts. \n\n")
+//      console.log("> Received "+multitaskslimit+" posts. \n\n")
       instance.loaded.set(multitaskslimit)
       var nonanyaorcontext = Taskspending.findOne({context: context, tags: "largercontext", tags: {$nin: ["anyaor", "aor"]}})
       var anyaorcontext = Taskspending.findOne({context: context, tags: "anyaor", tags: {$nin: ["aor"]}})
@@ -52,7 +51,7 @@ console.log("data context is " + context)
       }
       else if (anyaorcontext && Taskspending.findOne({$and: [{context: context}, {tags: "largercontext"}, {tags: "anyaor"}, {tags: {$nin: ["aor"]}}]}) && Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: context}]}).count() == 0) {
         Taskspending.update({_id: anyaorcontext._id}, {$pull: {tags: "anyaor"}})
-        console.log("> Subscription is not ready yet. \n\n");
+//        console.log("> Subscription is not ready yet. \n\n");
       }
     }
   });
@@ -104,7 +103,6 @@ Template.multitasks.events({
       {
         var formattednow = formattedNow()
         var uuid = this.uuid
-console.log(uuid)
         console.log(Tasksbacklog.insert({description: taskVal, entry: formattednow, uuid:uuid}))
         console.log(Taskspending.update({_id:this._id},{$set:{description: taskVal, entry: formattednow}}))
         Session.set('editing_itemname', null);

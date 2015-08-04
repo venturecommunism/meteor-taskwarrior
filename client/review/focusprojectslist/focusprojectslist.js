@@ -230,7 +230,6 @@ Template.focusprojectslist.created = function () {
           aorprojects.push(doc.project)
         })
       })
-console.log(aorprojects)
       return Taskspending.find({project: {$in: aorprojects}, $and: [{tags: "largeroutcome"}, {tags: "pip"}, {tags: {$ne: "kickstarterless"}}]}, {sort: {rank: 1}, limit: focusprojectslimit})
 
     }

@@ -21,17 +21,13 @@ Template.contextpicker.helpers({
 // aor is no longer in use but it used to also pick contexts from anyaor
   aor: function () {
     var aorlist = Taskspending.findOne({context: this.context, tags: "largercontext"})
-console.log("aorlist contextaor is " + aorlist.contextaor)
     var aorfocus = Taskspending.find({tags: "aorfocus"}).map( function (doc) {
       return doc._id
     })
-console.log("aorfocus is " + aorfocus)
     if (aorlist.contextaor) {
       var inaorfocus = aorfocus.some(function (e) {
-console.log("contextaor is " + aorlist.contextaor)
         return aorlist.contextaor.indexOf(e) >= 0;
       })
-console.log("inaorfocus is " + inaorfocus)
     }
     if (!Taskspending.findOne({tags: "aorfocus"}) || Taskspending.findOne({context: this.context, tags: "anyaor"}) || inaorfocus) {
       return true
@@ -73,15 +69,12 @@ Template.contextpicker.events({
     var tasktest = Taskspending.findOne({context: this.context, tags:"somedaymaybecont"})
     var taskid = tasktest ? tasktest._id : ''
     if (taskid != '') {
-console.log(taskid)
       Taskspending.update({_id: taskid}, {$pull: {tags: "somedaymaybecont"}})
     }
     else if (tasktest) {
-console.log(tasktest.description)
       Taskspending.update({_id: tasktest._id}, {$push: {tags: "somedaymaybecont"}})
     }
     else if (Session.get("multicontext").indexOf(this.context) > 0) {
-console.log(Session.get("multicontext"))
     var tempcontext = Session.get("multicontext")
       var tempcontextindex = tempcontext.indexOf(this.context)
       var splicedtempcontext = tempcontext.splice(tempcontextindex,1)
@@ -149,13 +142,10 @@ Template.contextpicker.created = function () {
     var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
       return doc._id
     })
-console.log(aorfocus)
     if (aorfocus == '') {
-console.log('yupyupyup')
       var subscription = instance.subscribe('taskspendingcontextpicker', contextpickerlimit)
     }
     else {
-console.log("the aorfocus is " + aorfocus)
       var subscription = instance.subscribe('taskspendingcontextpicker', contextpickerlimit)
     }
     // if subscription is ready, set limit to newLimit
@@ -175,8 +165,6 @@ console.log("the aorfocus is " + aorfocus)
       return doc._id
     })
     if (aorfocus == '') {
-console.log("this looks okay")
-console.log(aorfocus + " is this manies")
       return Taskspending.find({$and: [{tags: "largercontext"}, {tags: {$nin: ["cip", "somedaymaybecont"]}}]}, {sort: {rank: 1}, limit: contextpickerlimit})
     }
     else {

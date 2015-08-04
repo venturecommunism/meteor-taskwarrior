@@ -51,7 +51,6 @@ Template.waitingfors.created = function () {
           aorprojects.push(doc.project)
         })
       })
-console.log(aorprojects)
       return Taskspending.find({project: {$in: aorprojects}, context: "waitingfor", tags: {$ne: "largercontext"}}, {sort: {rank: 1}, limit: instance.loaded.get()})
     }
   }

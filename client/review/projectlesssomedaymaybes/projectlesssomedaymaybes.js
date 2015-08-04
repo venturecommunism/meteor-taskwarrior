@@ -56,7 +56,6 @@ Template.projectlesssomedaymaybes.created = function () {
           aorprojects.push(doc.project)
         })
       })
-console.log(aorprojects)
       return Taskspending.find({project: {$in: aorprojects}, context: "somedaymaybe", tags: {$ne: "largercontext"}}, {limit: instance.loaded.get()}, {sort: {rank: 1}})
 
     }

@@ -24,11 +24,6 @@ Template.mostimportanttasks.helpers({
     if (aorfocus) {
       return true
     }
-    else {
-      console.log(this.project)
-      console.log(projectaor)
-      console.log(aorfocus)
-    }
   },
   sorting_mits: function () {
     if (Session.equals('sorting_mits', true)) {

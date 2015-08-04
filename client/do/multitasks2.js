@@ -38,13 +38,12 @@ Template.multitaskstwo.created = function () {
     // get the limit
     var multitasks2limit = instance.multitasks2limit.get();
 
-    console.log("Asking for "+multitasks2limit+" posts…")
+//    console.log("Asking for "+multitasks2limit+" posts…")
 
     // subscribe to the posts publication
     var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
       return doc._id
     })
-console.log(aorfocus)
     if (!aorfocus || aorfocus == []) {
       var subscription = instance.subscribe('taskspendingmultitasks2', context, [])
     }
@@ -55,7 +54,6 @@ console.log(aorfocus)
         })
       })
 var aorprojects = '[' + aorprojects + ']'
-console.log("aorprojects is " + aorprojects)
       var subscription = instance.subscribe('taskspendingmultitasks2', context, aorprojects)
     }
     // if subscription is ready, set limit to newLimit
@@ -64,7 +62,7 @@ console.log("aorprojects is " + aorprojects)
         return doc._id
       })
       if (aorfocus == '' || !aorfocus || aorfocus == []) {
-        console.log("> Received "+multitasks2limit+" posts. \n\n")
+//        console.log("> Received "+multitasks2limit+" posts. \n\n")
         instance.loaded.set(multitasks2limit);
         var thisprojlist = Taskspending.find({context: context, project: {$exists: 1}}).map( function (doc) {
           return doc.project
@@ -72,22 +70,23 @@ console.log("aorprojects is " + aorprojects)
         var contextaorlist = Taskspending.find({project: {$in: thisprojlist}, aor: {$exists: 1}}).map( function (doc) {
             return doc.aor
         })
-        console.log(contextaorlist)
         var uniquecontextaorlist = [];
         $.each(contextaorlist, function(i, el){
           if($.inArray(el, uniquecontextaorlist) === -1) uniquecontextaorlist.push(el);
         });
-        for (i in uniquecontextaorlist) {
-          console.log(uniquecontextaorlist[i])
-          console.log(Taskspending.findOne({_id: uniquecontextaorlist[i]}).description)
-        }
-        console.log("context is " + context)
         var contextid = Taskspending.findOne({context: context, tags: "largercontext"})._id
         Taskspending.update({_id: contextid}, {$set: {contextaor: uniquecontextaorlist}})
-        } else {
-        console.log("> Subscription is not ready yet. \n\n");
+      }
+      else {
+        if (instance.loaded.get() >= instance.multitasks2limit.get()) {
+          console.log("attached AORs to this context include " + Taskspending.findOne({context: context, tags: "largeroutcome"}).contextaor)
+        }
       }
     }
+    else {
+//      console.log("> Subscription is not ready yet. \n\n");
+    }
+
   });
 
   // 3. Cursor
@@ -97,7 +96,6 @@ console.log("aorprojects is " + aorprojects)
       return doc._id
     })
     if (aorfocus == '') {
-console.log("there's no aorfocus")
       return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$exists: true}}, {context: context}]}, {sort: {tags: {$in: ["kickstart", "mit"]}, rank: {$exists: true}, rank: 1}, limit: instance.loaded.get()})
     }
     else {
@@ -108,7 +106,6 @@ console.log("there's no aorfocus")
           aorprojects.push(doc.project)
         })
       })
-      console.log("o yea yea yea " + aorprojects)
       return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$in: aorprojects}}, {context: context}]}, {sort: {tags: {$in: ["kickstart", "mit"]}, rank: {$exists: true}, rank: 1}, limit: instance.loaded.get()})
     }
   }
@@ -154,7 +151,6 @@ Template.multitaskstwo.events({
       {
         var formattednow = formattedNow()
         var uuid = this.uuid
-console.log(uuid)
         console.log(Tasksbacklog.insert({description: taskVal, entry: formattednow, uuid:uuid}))
         console.log(Taskspending.update({_id:this._id},{$set:{description: taskVal, entry: formattednow}}))
         Session.set('editing_itemname', null);

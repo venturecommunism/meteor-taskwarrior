@@ -306,7 +306,6 @@ Template.projectslist.created = function () {
           aorprojects.push(doc.project)
         })
       })
-console.log(aorprojects)
       return Taskspending.find({project: {$in: aorprojects}, $and: [{tags: "largeroutcome"}, {tags: {$nin: ["pip", "aor", "somedaymaybeproj", "kickstarterless"]}}]}, {sort: {rank: 1}, limit: projectslimit})
 
     }
