@@ -115,7 +115,17 @@ Template.focuscontextpicker.created = function () {
 
   instance.taskspendingfocuscontextpicker = function() {
     var focuscontextpickerlimit = instance.focuscontextpickerlimit.get()
-    return Taskspending.find({$and: [{tags: "largercontext"}, {tags: "cip"}]}, {sort: {rank: 1}, limit: focuscontextpickerlimit})
+
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+
+    if (aorfocus == '' || !aorfocus || aorfocus == []) {
+      return Taskspending.find({$and: [{tags: "largercontext"}, {tags: "cip"}]}, {sort: {rank: 1}, limit: focuscontextpickerlimit})
+    }
+    else {
+      return Taskspending.find({contextaor: {$in: aorfocus}, $and: [{tags: "largercontext"}, {tags: "cip"}]}, {sort: {rank: 1}, limit: focuscontextpickerlimit})
+    }
   }
 
 };
