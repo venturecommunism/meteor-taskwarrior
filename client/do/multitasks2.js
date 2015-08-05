@@ -34,7 +34,6 @@ Template.multitaskstwo.created = function () {
 
   // will re-run when the "limit" reactive variables changes
   this.autorun(function () {
-
     // get the limit
     var multitasks2limit = instance.multitasks2limit.get();
 
@@ -54,6 +53,24 @@ Template.multitaskstwo.created = function () {
         })
       })
 var aorprojects = '[' + aorprojects + ']'
+      var aorprojects = new Array()
+      Taskspending.find({_id: {$in: aorfocus}}).forEach(function (doc) {
+        aorprojects.push(doc.project)
+        Taskspending.find({tags: "largeroutcome", aor: doc._id}).forEach(function (doc) {
+          aorprojects.push(doc.project)
+        })
+      })
+
+
+      var aorprojects = new Array()
+      Taskspending.find({_id: {$in: aorfocus}}).forEach(function (doc) {
+        aorprojects.push(doc.project)
+        Taskspending.find({tags: "largeroutcome", aor: doc._id}).forEach(function (doc) {
+          aorprojects.push(doc.project)
+        })
+      })
+
+
       var subscription = instance.subscribe('taskspendingmultitasks2', context, aorprojects)
     }
     // if subscription is ready, set limit to newLimit
@@ -67,8 +84,13 @@ var aorprojects = '[' + aorprojects + ']'
         var thisprojlist = Taskspending.find({context: context, project: {$exists: 1}}).map( function (doc) {
           return doc.project
         })
-        var contextaorlist = Taskspending.find({project: {$in: thisprojlist}, aor: {$exists: 1}}).map( function (doc) {
-            return doc.aor
+        var contextaorlist = Taskspending.find({project: {$in: thisprojlist}, tags: "largeroutcome"}).map( function (doc) {
+            if (doc.aor) {
+              return doc.aor
+            }
+            else {
+              return doc._id
+            }
         })
         var uniquecontextaorlist = [];
         $.each(contextaorlist, function(i, el){
@@ -78,8 +100,18 @@ var aorprojects = '[' + aorprojects + ']'
         Taskspending.update({_id: contextid}, {$set: {contextaor: uniquecontextaorlist}})
       }
       else {
-        if (instance.loaded.get() >= instance.multitasks2limit.get()) {
-          console.log("attached AORs to this context include " + Taskspending.findOne({context: context, tags: "largeroutcome"}).contextaor)
+        var aorprojects = new Array()
+        Taskspending.find({_id: {$in: aorfocus}}).forEach(function (doc) {
+          aorprojects.push(doc.project)
+          Taskspending.find({tags: "largeroutcome", aor: doc._id}).forEach(function (doc) {
+            aorprojects.push(doc.project)
+          })
+        })
+        if (Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$in: aorprojects}}, {context: context}]}).count() == 0) {
+          var contextid = Taskspending.findOne({context: context, tags: "largercontext"})._id
+
+var aorfocus = '"' + aorfocus + '"'
+          Taskspending.update({_id: contextid}, {$pull: {contextaor: aorfocus}})
         }
       }
     }
@@ -151,8 +183,8 @@ Template.multitaskstwo.events({
       {
         var formattednow = formattedNow()
         var uuid = this.uuid
-        console.log(Tasksbacklog.insert({description: taskVal, entry: formattednow, uuid:uuid}))
-        console.log(Taskspending.update({_id:this._id},{$set:{description: taskVal, entry: formattednow}}))
+        Tasksbacklog.insert({description: taskVal, entry: formattednow, uuid:uuid})
+        Taskspending.update({_id:this._id},{$set:{description: taskVal, entry: formattednow}})
         Session.set('editing_itemname', null);
        }
      }
