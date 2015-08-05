@@ -89,21 +89,6 @@ Template.do.events({
     Session.set('editing_itemname', null);
     Meteor.flush();
   },
-  'keyup #todo-input': function (e,t) {
-    if (e.which === 13)
-    {
-      var taskVal = String(e.target.value || "");
-      if (taskVal)
-      {
-        var formattednow = formattedNow()
-        var uuid = this.uuid
-console.log(uuid)
-        console.log(Tasksbacklog.insert({description: taskVal, entry: formattednow, uuid:uuid}))
-        console.log(Taskspending.update({_id:this._id},{$set:{description: taskVal, entry: formattednow}}))
-        Session.set('editing_itemname', null);
-       }
-     }
-  },
   'click #contextpicker li .btn': function (e,t) {
     tempcontext = Session.get("multicontext")
     if (!tempcontext) {
