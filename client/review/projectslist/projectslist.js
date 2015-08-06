@@ -124,8 +124,8 @@ Template.projectslist.events({
         context = e.target.parentElement.children[1].value
       }
       if (context) {
-        Tasksbacklog.insert({project: this.project, description: e.target.value, entry: formattednow, status: "pending", context: context, uuid: uuid})
-        Taskspending.insert({project: this.project, description: e.target.value, entry: formattednow, status: "pending", context: context, uuid: uuid})
+        Tasksbacklog.insert({owner: Meteor.userId(), project: this.project, description: e.target.value, entry: formattednow, status: "pending", context: context, uuid: uuid})
+        Taskspending.insert({owner: Meteor.userId(), project: this.project, description: e.target.value, entry: formattednow, status: "pending", context: context, uuid: uuid})
       } else {
         alert('no context')
       }
@@ -139,8 +139,8 @@ Template.projectslist.events({
       var uuid = guid()
       var description = e.target.parentElement.children[0].value
       if (e.target.parentElement.children[0].value && (e.target.value != '')) {
-      Tasksbacklog.insert({project: this.project, context: e.target.value, entry: formattednow, status: "pending", description: description, uuid: uuid})
-      Taskspending.insert({project: this.project, context: e.target.value, entry: formattednow, status: "pending", description: description, uuid: uuid})
+      Tasksbacklog.insert({owner: Meteor.userId(), project: this.project, context: e.target.value, entry: formattednow, status: "pending", description: description, uuid: uuid})
+      Taskspending.insert({owner: Meteor.userId(), project: this.project, context: e.target.value, entry: formattednow, status: "pending", description: description, uuid: uuid})
       } else {
         alert('missing description or context')
       }

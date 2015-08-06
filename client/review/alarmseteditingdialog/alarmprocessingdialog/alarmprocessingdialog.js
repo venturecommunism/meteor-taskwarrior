@@ -41,7 +41,6 @@ Template.alarmprocessingdialog.events({
         projecttask = Taskspending.findOne({_id: Session.get('current_processedtask')})
         projecttask.project = e.target.value
 // TODO: have to fix all these backlog inserts
-//        Tasksbacklog.insert(projecttask)
 if (e.target.value == '') {
         Taskspending.update({_id: this._id},{$unset:{project:""}})
 }

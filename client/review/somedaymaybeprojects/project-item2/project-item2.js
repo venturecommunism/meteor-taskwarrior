@@ -29,12 +29,12 @@ Template.project_item2.events({
       {
         var formattednow = formattedNow()
         var uuid = Taskspending.findOne({project: this.project, tags: "largeroutcome"}) ? Taskspending.findOne({project: this.project, tags: "largeroutcome"}).uuid : guid()
-        Tasksbacklog.insert({project: this.project, description: largerOutcomeVal, tags: "largeroutcome", entry: formattednow, uuid:uuid})
+        Tasksbacklog.insert({owner: Meteor.userId(), project: this.project, description: largerOutcomeVal, tags: "largeroutcome", entry: formattednow, uuid:uuid})
       if (Taskspending.findOne({uuid: uuid})) {
-        Taskspending.update({_id:Taskspending.findOne({project: this.project, tags: "largeroutcome"})._id},{$set:{description: largerOutcomeVal, entry: formattednow}})
+        Taskspending.update({_id:Taskspending.findOne({owner: Meteor.userId(), project: this.project, tags: "largeroutcome"})._id},{$set:{description: largerOutcomeVal, entry: formattednow}})
     }
     else {
-      Taskspending.insert({project: this.project, description: largerOutcomeVal, tags:"largeroutcome", entry: formattednow})
+      Taskspending.insert({owner: Meteor.userId(), project: this.project, description: largerOutcomeVal, tags:"largeroutcome", entry: formattednow})
 }
         Session.set('editing_item_largeroutcome', null);
        }

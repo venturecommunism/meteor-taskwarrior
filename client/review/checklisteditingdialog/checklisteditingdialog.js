@@ -29,7 +29,7 @@ Template.checklisteditingdialog.events({
   'keyup .newtask-checklist #add-newtask-checklist': function (e,t) {
     if (e.which === 13) {
       var checklistediting = Taskspending.findOne({_id: Session.get('checklistediting')})
-      Taskspending.insert({checked: "yes", checklistid: checklistediting._id, type: "checklistitem", description: e.target.value, project: checklistediting.project})
+      Taskspending.insert({owner: Meteor.userId(), checked: "yes", checklistid: checklistediting._id, type: "checklistitem", description: e.target.value, project: checklistediting.project})
     }  
   },
   'keyup .newtask-checklist #add-newtask-context-checklist': function (e,t) {

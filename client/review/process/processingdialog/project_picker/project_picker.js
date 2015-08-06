@@ -18,6 +18,7 @@ Template.project_picker.events({
         if (e.target.value == '') {
           Taskspending.update({_id: this._id}, {$unset: {project: 1}})
         } else {
+console.log("actually this is what's happening")
           Taskspending.update({_id: this._id}, {$set: {project: e.target.value}})
         }
       }

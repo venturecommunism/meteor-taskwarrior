@@ -104,6 +104,8 @@ Template.processingdialog.events({
           Taskspending.update({_id: this._id},{$unset:{project:""}})
         }
         else {
+
+console.log("this is what is happening")
           Taskspending.update({_id: this._id},{$set:{project:e.target.value}})
         }
       }

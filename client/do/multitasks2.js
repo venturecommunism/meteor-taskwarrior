@@ -183,7 +183,7 @@ Template.multitaskstwo.events({
       {
         var formattednow = formattedNow()
         var uuid = this.uuid
-        Tasksbacklog.insert({description: taskVal, entry: formattednow, uuid:uuid})
+        Tasksbacklog.insert({owner: Meteor.userId(), description: taskVal, entry: formattednow, uuid:uuid})
         Taskspending.update({_id:this._id},{$set:{description: taskVal, entry: formattednow}})
         Session.set('editing_itemname', null);
        }

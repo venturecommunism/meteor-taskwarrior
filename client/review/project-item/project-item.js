@@ -56,13 +56,13 @@ Template.project_item.events({
       if (largerOutcomeVal)
       {
         var formattednow = formattedNow()
-        var uuid = Taskspending.findOne({project: this.project, tags: "largeroutcome"}) ? Taskspending.findOne({project: this.project, tags: "largeroutcome"}).uuid : guid()
-        console.log(Tasksbacklog.insert({project: this.project, description: largerOutcomeVal, tags: ["largeroutcome"], entry: formattednow, uuid:uuid}))
+        var uuid = Taskspending.findOne({owner: Meteor.userId(), project: this.project, tags: "largeroutcome"}) ? Taskspending.findOne({owner: Meteor.userId(), project: this.project, tags: "largeroutcome"}).uuid : guid()
+        console.log(Tasksbacklog.insert({owner: Meteor.userId(), project: this.project, description: largerOutcomeVal, tags: ["largeroutcome"], entry: formattednow, uuid:uuid}))
 if (Taskspending.findOne({uuid: uuid})) {
-        console.log(Taskspending.update({_id:Taskspending.findOne({project: this.project, tags: "largeroutcome"})._id},{$set:{description: largerOutcomeVal, entry: formattednow}}))
+        console.log(Taskspending.update({_id:Taskspending.findOne({owner: Meteor.userId(), project: this.project, tags: "largeroutcome"})._id},{$set:{description: largerOutcomeVal, entry: formattednow}}))
 }
 else {
-console.log(Taskspending.insert({project: this.project, description: largerOutcomeVal, tags:["largeroutcome"], entry: formattednow}))
+console.log(Taskspending.insert({owner: Meteor.userId(), project: this.project, description: largerOutcomeVal, tags:["largeroutcome"], entry: formattednow}))
 }
         Session.set('editing_item_largeroutcome', null);
        }
@@ -81,8 +81,8 @@ console.log(Taskspending.insert({project: this.project, description: largerOutco
       {
         var formattednow = formattedNow()
         var uuid = guid()
-        Tasksbacklog.insert({description: e.target.value, entry: formattednow, status: "pending", type: "textfile", project: this.project, uuid: uuid})
-        Taskspending.insert({description: e.target.value, entry: formattednow, status: "pending", type: "textfile", project: this.project, uuid: uuid})
+        Tasksbacklog.insert({owner: Meteor.userId(), description: e.target.value, entry: formattednow, status: "pending", type: "textfile", project: this.project, uuid: uuid})
+        Taskspending.insert({owner: Meteor.userId(), description: e.target.value, entry: formattednow, status: "pending", type: "textfile", project: this.project, uuid: uuid})
         Session.set('newdocument', false);
        }
      }
@@ -108,8 +108,8 @@ console.log(Taskspending.insert({project: this.project, description: largerOutco
       {
         var formattednow = formattedNow()
         var uuid = guid()
-        Tasksbacklog.insert({description: e.target.value, entry: formattednow, status: "pending", type: "checklist", project: this.project, uuid: uuid})
-        Taskspending.insert({description: e.target.value, entry: formattednow, status: "pending", type: "checklist", project: this.project, uuid: uuid})
+        Tasksbacklog.insert({owner: Meteor.userId(), description: e.target.value, entry: formattednow, status: "pending", type: "checklist", project: this.project, uuid: uuid})
+        Taskspending.insert({owner: Meteor.userId(), description: e.target.value, entry: formattednow, status: "pending", type: "checklist", project: this.project, uuid: uuid})
         Session.set('newchecklist', false);
        }
      }
@@ -122,8 +122,8 @@ console.log(Taskspending.insert({project: this.project, description: largerOutco
       {
         var formattednow = formattedNow()
         var uuid = guid()
-        Tasksbacklog.insert({description: e.target.value, entry: formattednow, status: "pending", type: "alarmset", project: this.project, uuid: uuid})
-        Taskspending.insert({description: e.target.value, entry: formattednow, status: "pending", type: "alarmset", project: this.project, uuid: uuid})
+        Tasksbacklog.insert({owner: Meteor.userId(), description: e.target.value, entry: formattednow, status: "pending", type: "alarmset", project: this.project, uuid: uuid})
+        Taskspending.insert({owner: Meteor.userId(), description: e.target.value, entry: formattednow, status: "pending", type: "alarmset", project: this.project, uuid: uuid})
         Session.set('newalarmset', false);
        }
      }
@@ -150,7 +150,7 @@ console.log(Taskspending.insert({project: this.project, description: largerOutco
   },
   'click #btnArchiveProject': function (e,t) {
     var formattednow = formattedNow()
-    Tasksbacklog.insert({description: this.description, entry: formattednow, status: "completed", type:"largeroutcome", project: this.project})
+    Tasksbacklog.insert({owner: Meteor.userId(), description: this.description, entry: formattednow, status: "completed", type:"largeroutcome", project: this.project})
     Taskspending.remove({_id:this._id})
   },
   'focusout #add-newchecklist' : function(e,t){

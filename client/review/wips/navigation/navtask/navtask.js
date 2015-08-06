@@ -52,7 +52,7 @@ Template.navtask.events({
         var formattednow = formattedNow()
         var uuid = this.uuid
 console.log(uuid)
-        console.log(Tasksbacklog.insert({description: taskVal, entry: formattednow, uuid:uuid}))
+        console.log(Tasksbacklog.insert({owner: Meteor.userId(), description: taskVal, entry: formattednow, uuid:uuid}))
         console.log(Taskspending.update({_id:this._id},{$set:{description: taskVal, entry: formattednow}}))
         Session.set('editing_itemname', null);
        }
