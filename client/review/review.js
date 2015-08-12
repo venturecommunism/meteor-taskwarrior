@@ -17,6 +17,15 @@ Session.setDefault('somedaymaybeprojectshidden', true)
 Session.setDefault('projectlesssomedaymaybeshidden', true)
 
 Template.review.helpers({
+  hasaorfocus: function() {
+    return Taskspending.findOne({tags: "aorfocus"})
+  },
+  aorfocus: function() {
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map( function (doc) {
+      return doc.description
+    })
+    return aorfocus
+  },
   tasks: function () {
     Session.set('helpsesh',true)
     Session.set('helpsesh',false)

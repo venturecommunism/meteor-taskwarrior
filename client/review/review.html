@@ -6,6 +6,10 @@
     {{> checklisteditingdialog}}
     {{> alarmseteditingdialog}}
 
+{{#if hasaorfocus}}
+<div style='text-align: center; z-index: 4; left: 30%; width: 20%; padding: 20px; position: fixed; background: blue; font-size: 2em'>{{aorfocus}}</div>
+{{/if}}
+
 {{#unless inboxhidden}}
 {{> process}}
 {{/unless}}
