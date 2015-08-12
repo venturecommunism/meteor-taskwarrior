@@ -460,3 +460,8 @@ clear: both;
 #selectAorForm label {
 display: none;
 }
+
+.clearfix {
+float: left;
+clear: both;
+}

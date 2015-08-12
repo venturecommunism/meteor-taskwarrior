@@ -30,6 +30,9 @@ Template.perspective.events({
   'click .aorfocus': function (e,t) {
     Taskspending.update({_id: this._id}, {$push: {tags: "aorfocus"}})
   },
+  'click .checkeveryaor': function(e,t) {
+    Meteor.call('checkeveryaor')
+  },
 })
 
 
