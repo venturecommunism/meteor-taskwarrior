@@ -8,13 +8,23 @@ Tasks.allow({
     return (adminUser (userId) || (userId && doc.owner === userId));
   },
   update: function (userId, docs, fields, modifier){
-    return _.all(docs, function(doc) {
-      return (adminUser (userId) || doc.owner === userId);
-    });
+    for(var i=0; i<docs.length; i++ ){
+      if ( docs[i].owner != userId || !adminUser(userId)) {
+        return false;
+      }
+    }
+             
+    return true;
   },
   remove: function (userId, docs){
     return _.all(docs, function(doc) {
-      return (adminUser (userId) || doc.owner === userId);
+      for(var i=0; i<docs.length; i++ ){
+        if ( docs[i].owner != userId || !adminUser(userId)) {
+          return false;
+        }
+      }
+
+      return true;
     });
   }
 });
@@ -25,12 +35,24 @@ Taskspending.allow({
   },
   update: function (userId, docs, fields, modifier){
     return _.all(docs, function(doc) {
-      return (adminUser (userId) || doc.owner === userId);
+      for(var i=0; i<docs.length; i++ ){
+        if ( docs[i].owner != userId || !adminUser(userId)) {
+          return false;
+        }
+      }
+
+      return true;
     });
   },
   remove: function (userId, docs){
     return _.all(docs, function(doc) {
-      return (adminUser (userId) || doc.owner === userId);
+      for(var i=0; i<docs.length; i++ ){
+        if ( docs[i].owner != userId || !adminUser(userId)) {
+          return false;
+        }
+      }
+
+      return true;
     });
   }
 });
@@ -41,12 +63,24 @@ Tasksbacklog.allow({
   },
   update: function (userId, docs, fields, modifier){
     return _.all(docs, function(doc) {
-      return (adminUser (userId) || doc.owner === userId);
+      for(var i=0; i<docs.length; i++ ){
+        if ( docs[i].owner != userId || !adminUser(userId)) {
+          return false;
+        }
+      }
+
+      return true;
     });
   },
   remove: function (userId, docs){
     return _.all(docs, function(doc) {
-      return (adminUser (userId) || doc.owner === userId);
+      for(var i=0; i<docs.length; i++ ){
+        if ( docs[i].owner != userId || !adminUser(userId)) {
+          return false;
+        }
+      }
+
+      return true;
     });
   }
 });
