@@ -9,9 +9,9 @@ Template.processingdialog.events({
     delete largeroutcome._id
     Tasksbacklog.insert(largeroutcome)
     Taskspending.update({_id: id},{$set: largeroutcome})
-    Taskspending.update({_id: id},{$unset: {tags: ""}})
+    Taskspending.update({_id: id},{$pull: {tags: "inbox"}})
     Taskspending.update({_id: id},{$unset: {status: ""}})
-    Taskspending.update({_id: id},{$set: {tags: ["largeroutcome", "kickstarterless"]}})
+    Taskspending.update({_id: id},{$push: {tags: {$each: ["largeroutcome", "kickstarterless"]}}})
     if (Taskspending.findOne({tags:"inbox"})) {
       Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
       selectTaskProcessing
@@ -32,9 +32,9 @@ Template.processingdialog.events({
     delete largercontext._id
     Tasksbacklog.insert(largercontext)
     Taskspending.update({_id: id},{$set: largercontext})
-    Taskspending.update({_id: id},{$unset: {tags: ""}})
+    Taskspending.update({_id: id},{$pull: {tags: "inbox"}})
     Taskspending.update({_id: id},{$unset: {status: ""}})
-    Taskspending.update({_id: id},{$set: {tags: ["largercontext"]}})
+    Taskspending.update({_id: id},{$push: {tags: "largercontext"}})
     if (Taskspending.findOne({tags:"inbox"})) {
       Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
       selectTaskProcessing
@@ -55,7 +55,7 @@ Template.processingdialog.events({
     delete archivetask._id
     Tasksbacklog.insert(archivetask)
     Taskspending.update({_id: id},{$set: archivetask})
-    Taskspending.update({_id: id},{$unset: {tags: ""}})
+    Taskspending.update({_id: id},{$pull: {tags: "inbox"}})
     Taskspending.update({_id: id},{$set: {context: "movetoarchive"}})
     if (Taskspending.findOne({tags:"inbox"})) {
       Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
@@ -78,7 +78,7 @@ Template.processingdialog.events({
     delete somedaymaybetask._id
     Tasksbacklog.insert(somedaymaybetask)
     Taskspending.update({_id: id},{$set: somedaymaybetask})
-    Taskspending.update({_id: id},{$unset: {tags: ""}})
+    Taskspending.update({_id: id},{$pull: {tags: "inbox"}})
     Taskspending.update({_id: id},{$set: {context: "somedaymaybe"}})
     if (Taskspending.findOne({tags:"inbox"})) {
       Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
@@ -131,6 +131,13 @@ console.log("this is what is happening")
       Taskspending.update({_id: this._id},{$set:{due:e.target.value}})
     }
   },
+  'click .mit': function(e,t) {
+    if (Taskspending.findOne({_id: this._id, tags: "mit"})) {
+      Taskspending.update({_id: this._id},{$pull:{tags:"mit"}})
+    } else {
+      Taskspending.update({_id: this._id},{$push: {tags: "mit"}})
+    }
+  },
 });
 
 
@@ -158,6 +165,14 @@ Template.processingdialog.helpers({
   },
   contextwithnolargercontext: function () {
     return (this.context && !(Taskspending.findOne({context: this.context, tags: "largercontext"})))
+  },
+  mitornot: function () {
+    if (Taskspending.findOne({_id: this._id, tags: "mit"})) {
+      return 'active'
+    }
+    else {
+      return ''
+    }
   },
 })
 
@@ -245,7 +260,7 @@ archivetask.tags = ["archive"]
     delete defertask._id
     Tasksbacklog.insert(defertask)
     Taskspending.update({_id: id},{$set: defertask})
-    Taskspending.update({_id: id},{$unset: {tags: ""}})
+    Taskspending.update({_id: id},{$pull: {tags: "inbox"}})
     if (Taskspending.findOne({tags:"inbox"}) && Session.equals('process_status',true)) {
       Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
       selectTaskProcessing
