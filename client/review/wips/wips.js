@@ -74,7 +74,7 @@ Template.workinprogress.created = function () {
   // 3. Cursor
 
   instance.taskspendingwips = function() {
-    return Taskspending.find({wip: {$in: ["projwip", "contwip"]}}, {sort: {rank: 1}})
+    return Taskspending.find({wip: {$in: ["projwip", "contwip"]}, context: {$exists: 1}, project: {$exists: 1}}, {sort: {rank: 1}})
   }
 
 };

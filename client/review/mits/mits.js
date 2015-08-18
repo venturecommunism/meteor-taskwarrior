@@ -71,7 +71,7 @@ Template.mostimportanttasks.created = function () {
   // 3. Cursor
 
   instance.taskspendingmits = function() {
-    return Taskspending.find({tags: "mit"}, {sort: {rank: 1}})
+    return Taskspending.find({tags: "mit", context: {$exists: 1}, project: {$exists: 1}}, {sort: {rank: 1}})
   }
 
 };
