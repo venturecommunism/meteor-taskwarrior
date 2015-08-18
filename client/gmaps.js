@@ -1,5 +1,66 @@
 Meteor.startup(function(){
   $.getScript("https://maps.googleapis.com/maps/api/js?key={YOUR API KEY}&async=2&callback=_googleMapsLoaded");
+
+Tracker.autorun(function () {
+         function showLocation(position) {
+console.log("it's attempting to show location")
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            console.log("Latitude : " + latitude + " Longitude: " + longitude);
+         }
+
+         function errorHandler(err) {
+console.log(err.code + " is error code")
+            if(err.code == 1) {
+               console.log("Error: Access is denied!");
+            }
+            
+            else if( err.code == 2) {
+               console.log(err.message)
+               console.log("Error: Position is unavailable!");
+            }
+         }
+			
+         function getLocation(){
+
+            if(navigator.geolocation){
+console.log("navigator.geolocation works")
+               // timeout at 60000 milliseconds (60 seconds)
+if (Meteor.isCordova) {
+               var options = {timeout:60000, enableHighAccuracy: true, maximumAge: 3600000};
+} else {
+               var options = {timeout:60000}
+}
+               navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
+            }
+            
+            else{
+               console.log("Sorry, browser does not support geolocation!");
+            }
+         }
+
+getLocation()
+})
+
+
+if (navigator.geolocation) {
+console.log(JSON.stringify(navigator.geolocation))
+console.log(navigator.geolocation.getCurrentPosition(GetLocation))
+function GetLocation(location) {
+    if (!Session.get('userlatlng')) {
+console.log("there is no userlatlng")
+      var userLocation = {}
+      userLocation.lat = location.coords.latitude
+      userLocation.lng = location.coords.longitude
+      Session.set('userlatlng', userLocation)
+    } else {
+      console.log("userlatlng is " + Session.get('userlatlng'))
+    }
+}
+navigator.geolocation.getCurrentPosition(GetLocation)
+console.log(Session.get('userlatlng'))
+}
+
 });
 
 Meteor.subscribe('Coords');
@@ -64,6 +125,7 @@ if (GoogleMaps.ready()) {
 
 function GetLocation(location) {
     if (!Session.get('userlatlng')) {
+console.log("heyheyhey")
       var userLocation = {}
       userLocation.lat = location.coords.latitude
       userLocation.lng = location.coords.longitude
@@ -139,11 +201,12 @@ if (Session.equals('maphidden', false)) {
 
 function drawPath() {
   if (pointsArr.length >= 1) {
-console.log
+console.log("points arr is big enough")
+//Tracker.nonreactive( function () {
 
-Tracker.nonreactive( function () {
 function GetLocation(location) {
     if (!Session.get('userlatlng')) {
+console.log("yoyoyo")
       var userLocation = {}
       userLocation.lat = location.coords.latitude
       userLocation.lng = location.coords.longitude
@@ -151,10 +214,13 @@ function GetLocation(location) {
     }
 }
 navigator.geolocation.getCurrentPosition(GetLocation)
-})
 
+//})
+
+console.log("Session userlatlng is " + Session.get('userlatlng'))
 var origenlatlng = Session.get('userlatlng')
 //console.log(origenlatlng)
+console.log("latlng is " + origenlatlng.lat + "," + origenlatlng.lng)
       var origenlat = origenlatlng.lat
       var origenlng = origenlatlng.lng
 
@@ -231,7 +297,26 @@ else {
 // Aqui esta la magia!!
 // Se declara la dependencia para que al cambiar se actualice en todos los clientes
 Tracker.autorun(function () {
+  if (GoogleMaps.ready()) {
+console.log("google maps is ready")
+/*
+function GetLocation(location) {
+    if (!Session.get('userlatlng')) {
+console.log("there is no userlatlng")
+      var userLocation = {}
+      userLocation.lat = location.coords.latitude
+      userLocation.lng = location.coords.longitude
+      Session.set('userlatlng', userLocation)
+    } else {
+      console.log("userlatlng is " + Session.get('userlatlng'))
+    }
+}
+*/
+//navigator.geolocation.getCurrentPosition(GetLocation)
+
+
   console.log('change');
+console.log(Session.get('userlatlng'))
   if (Taskspending.find({context: "navigation", tags: "mit"}, {sort: {rank: 1}})) {
     var allCoords = Taskspending.find({context: "navigation", tags: "mit"}, {sort: {rank: 1}});
 
@@ -252,5 +337,6 @@ Tracker.autorun(function () {
       directionsDisplay.setPanel(null);
     }
   }
+}
 });
 
