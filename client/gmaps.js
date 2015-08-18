@@ -27,9 +27,9 @@ console.log(err.code + " is error code")
 console.log("navigator.geolocation works")
                // timeout at 60000 milliseconds (60 seconds)
 if (Meteor.isCordova) {
-               var options = {timeout:60000, enableHighAccuracy: true, maximumAge: 3600000};
+               var options = {timeout:10000, enableHighAccuracy: true, maximumAge: 3600000};
 } else {
-               var options = {timeout:60000}
+               var options = {timeout:10000}
 }
                navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
             }
