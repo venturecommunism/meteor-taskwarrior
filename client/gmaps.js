@@ -55,7 +55,22 @@ Template.mapview.events = {
   },
   'click .openmapsection': function(e,t) {
     Session.set('maphidden', false)
-    var latlng = Geolocation.latLng()
+//console.log(Geolocation.latLng())
+
+function GetLocation(location) {
+    if (!Session.get('userlatlng')) {
+      var userLocation = {}
+      userLocation.lat = location.coords.latitude
+      userLocation.lng = location.coords.longitude
+      Session.set('userlatlng', userLocation)
+    }
+}
+navigator.geolocation.getCurrentPosition(GetLocation)
+
+//    if (!Session.get('userlatlng')) {
+//      Session.set('userlatlng', navigator.geolocation.getCurrentPosition())
+//    }
+    var latlng = Session.get('userlatlng')
 setTimeout(function() {
       // Create map
   mapOptions = {
@@ -80,7 +95,7 @@ setTimeout(function() {
       // Create map
   mapOptions = {
     zoom: 16,
-    center: Geolocation.latLng()
+    center: Session.get('userlatlng')
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
     mapOptions);
@@ -118,8 +133,22 @@ if (Session.equals('maphidden', false)) {
 
 function drawPath() {
   if (pointsArr.length >= 1) {
-var origenlatlng = Geolocation.latLng()
-console.log(origenlatlng)
+console.log
+
+Tracker.nonreactive( function () {
+function GetLocation(location) {
+    if (!Session.get('userlatlng')) {
+      var userLocation = {}
+      userLocation.lat = location.coords.latitude
+      userLocation.lng = location.coords.longitude
+      Session.set('userlatlng', userLocation)
+    }
+}
+navigator.geolocation.getCurrentPosition(GetLocation)
+})
+
+var origenlatlng = Session.get('userlatlng')
+//console.log(origenlatlng)
       var origenlat = origenlatlng.lat
       var origenlng = origenlatlng.lng
 
