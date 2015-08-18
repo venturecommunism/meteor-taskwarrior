@@ -1,3 +1,7 @@
+Meteor.startup(function(){
+  $.getScript("https://maps.googleapis.com/maps/api/js?key={YOUR API KEY}&async=2&callback=_googleMapsLoaded");
+});
+
 Meteor.subscribe('Coords');
 
 Session.setDefault('maphidden', true)
@@ -54,6 +58,7 @@ Template.mapview.events = {
     Session.set('maphidden', true)
   },
   'click .openmapsection': function(e,t) {
+if (GoogleMaps.ready()) {
     Session.set('maphidden', false)
 //console.log(Geolocation.latLng())
 
@@ -89,6 +94,7 @@ setTimeout(function() {
   directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
 }, 1 * 1000);
+}
   },
   'click #clearButton': function () {
     Meteor.call('removeAllCoords');
