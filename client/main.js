@@ -1,3 +1,42 @@
+Meteor.subscribe("scrollpos")
+
+
+
+Tracker.autorun( function () {
+
+var scrollposcursor = Taskspending.find({type: "scrollpos"})
+var scrollpos = Taskspending.findOne({type: "scrollpos"})
+if (scrollposcursor.count() == 1) {
+window.scrollTo(0, scrollpos.yval)
+} else if (scrollposcursor.count() >= 1) {
+  Taskspending.find({type: "scrollpos"}).forEach( function (doc) {
+    Taskspending.remove({_id: doc._id})
+  })
+  window.scrollTo(0, scrollpos.yval)
+}
+
+$(window).scroll(function () {
+Meteor.setTimeout(function () {
+var ytop = window.pageYOffset || document.documentElement.scrollTop
+var scrollid = Taskspending.findOne({type: "scrollpos"}) ? Taskspending.findOne({type: "scrollpos"})._id : false
+if (scrollid) {
+  Taskspending.update({_id: scrollid}, {$set: {yval: ytop}})
+  var yval = Taskspending.findOne({_id: scrollid}).yval
+  window.scrollTo(0, yval)
+  console.log(yval)
+} else {
+  Taskspending.insert({type: "scrollpos", yval: ytop, owner: Meteor.userId()})
+  var scrollid = Taskspending.findOne({type: "scrollpos", owner: Meteor.userId()})._id
+  var yval = Taskspending.findOne({_id: scrollid}).yval
+  window.scrollTo(0, yval)
+  console.log(yval)
+}
+}, 1000)
+})
+
+})
+
+
 Meteor.startup(function () {
   Session.set('tasks_dataloaded', false)
   Session.set('taskspending_dataloaded', false)

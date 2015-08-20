@@ -85,6 +85,11 @@ Tasksbacklog.allow({
   }
 });
 
+Meteor.publish("scrollpos", function () {
+  var userId = this.userId
+  return Taskspending.find({type: "scrollpos", owner: this.userId})
+})
+
 
 Meteor.publish("tasks", function () {
   var userId = this.userId
