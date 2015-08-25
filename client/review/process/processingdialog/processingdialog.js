@@ -262,6 +262,8 @@ archivetask.tags = ["archive"]
     Taskspending.update({_id: id},{$set: defertask})
     Taskspending.update({_id: id},{$pull: {tags: "inbox"}})
     if (Taskspending.findOne({tags:"inbox"}) && Session.equals('process_status',true)) {
+      $('input.context-picker')[3].value = ''
+      $('input.project-picker')[3].value = ''
       Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
       selectTaskProcessing
     }
