@@ -1,3 +1,5 @@
+/*
+// this collaborative scroll position code was slowing down the client too much
 Meteor.subscribe("scrollpos")
 
 
@@ -36,6 +38,7 @@ if (scrollid) {
 
 })
 
+*/
 
 Meteor.startup(function () {
   Session.set('tasks_dataloaded', false)
