@@ -1,5 +1,5 @@
 Meteor.startup(function(){
-  $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyD4qm4SrZsai2e1uEFjqFXsyheMFlTDGvc&async=2&callback=_googleMapsLoaded");
+  $.getScript("https://maps.googleapis.com/maps/api/js?key={YOUR API KEY}&async=2&callback=_googleMapsLoaded");
 
 Tracker.autorun(function () {
          function showLocation(position) {
