@@ -63,6 +63,7 @@ srp@1.0.3
 standard-app-packages@1.0.5
 tap:i18n@1.5.1
 templating@1.1.1
+tmeasday:publish-counts@0.7.1
 toastjs@0.0.0
 tracker@1.0.7
 ui@1.0.6

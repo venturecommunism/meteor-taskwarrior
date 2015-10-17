@@ -15,6 +15,7 @@ Session.setDefault('perspectivehidden', true)
 Session.setDefault('weeklyreviewhidden', true)
 Session.setDefault('somedaymaybeprojectshidden', true)
 Session.setDefault('projectlesssomedaymaybeshidden', true)
+Session.setDefault('statisticshidden', true)
 
 Template.review.helpers({
   hasaorfocus: function() {
@@ -118,6 +119,9 @@ Template.review.helpers({
   },
   projectlesssomedaymaybeshidden: function () {
     return Session.equals("projectlesssomedaymaybeshidden", true)
+  },
+  statisticshidden: function () {
+    return Session.equals("statisticshidden", true)
   },
 })
 
@@ -295,6 +299,12 @@ Template.review.events({
   },
   'click .openprojectlesssomedaymaybessection': function(e,t){
     Session.set('projectlesssomedaymaybeshidden', false)
+  },
+  'click .openstatisticssection': function(e,t){
+    Session.set('statisticshidden', false)
+  },
+  'click .closestatisticssection': function(e,t){
+    Session.set('statisticshidden', true)
   },
 });
 

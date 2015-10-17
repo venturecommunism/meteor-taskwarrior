@@ -74,6 +74,10 @@
 {{> weeklyreview}}
 {{/unless}}
 
+{{#unless statisticshidden}}
+{{> statistics}}
+{{/unless}}
+
 {{#if inboxhidden}}
 <h3>Inbox</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openinboxsection">-</div>
 {{/if}}
@@ -120,6 +124,10 @@
 
 {{#if weeklyreviewhidden}}
 <h3>Weekly Review</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openweeklyreviewsection">-</div>
+{{/if}}
+
+{{#if statisticshidden}}
+<h3>Statistics</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openstatisticssection">-</div>
 {{/if}}
 
 {{/if}}

@@ -313,3 +313,19 @@ Meteor.publish("taskspendingprojectlesssomedaymaybes", function(projectlesssomed
     return Taskspending.find({owner: userId, context: "somedaymaybe", tags: {$ne: "largercontext"}}, {sort: {rank: 1}, limit: projectlesssomedaymaybeslimit})
   }
 })
+
+Meteor.publish('taskspendingcount', function () {
+  Counts.publish(this, 'taskspendingcount', Taskspending.find())
+})
+
+Meteor.publish('inboxcount', function () {
+  Counts.publish(this, 'inboxcount', Taskspending.find({tags: "inbox"}))
+})
+
+Meteor.publish('calendarcount', function () {
+  Counts.publish(this, 'calendarcount', Taskspending.find({due: {$exists: 1}}))
+})
+
+Meteor.publish('hasbothcontandprojcount', function () {
+  Counts.publish(this, 'hasbothcontandprojcount', Taskspending.find({context: {$exists: 1}, project: {$exists: 1}}))
+})
