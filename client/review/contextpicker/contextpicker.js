@@ -165,10 +165,10 @@ Template.contextpicker.created = function () {
       return doc._id
     })
     if (aorfocus == '') {
-      return Taskspending.find({$and: [{tags: "largercontext"}, {tags: {$nin: ["cip", "somedaymaybecont"]}}]}, {sort: {rank: 1}, limit: contextpickerlimit})
+      return Taskspending.find({$and: [{tags: "largercontext"}, {tags: {$nin: ["cip", "somedaymaybecont", "contextcategory"]}}]}, {sort: {rank: 1}, limit: contextpickerlimit})
     }
     else {
-      return Taskspending.find({$and: [{contextaor: {$in: aorfocus}}, {tags: "largercontext"}, {tags: {$nin: ["cip", "somedaymaybecont"]}}]}, {sort: {rank: 1}, limit: contextpickerlimit})
+      return Taskspending.find({$and: [{contextaor: {$in: aorfocus}}, {tags: "largercontext"}, {tags: {$nin: ["cip", "somedaymaybecont", "contextcategory"]}}]}, {sort: {rank: 1}, limit: contextpickerlimit})
     }
   }
 
