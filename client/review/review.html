@@ -73,6 +73,12 @@
 
 {{#unless weeklyreviewhidden}}
 {{> weeklyreview}}
+{{#if contextcategorieshidden}}
+<h3>Context Categories</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse opencontextcategoriessection">-</div>
+{{/if}}
+{{#unless contextcategorieshidden}}
+{{> contextcategories}}
+{{/unless}}
 {{#if perspectivehidden}}
 <h3>Perspective</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openperspectivesection">-</div>
 {{/if}}

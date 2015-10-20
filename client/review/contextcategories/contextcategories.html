@@ -1,0 +1,55 @@
+<template name="contextcategories">
+
+<h3>Context Categories</h3><div style="float: left; position: relative; top: 5px; left: 5px;" class="btn btn-inverse closecontextcategoriessection">+</div>
+
+<ul style="clear: both;">
+{{#each contextcategory}}
+<li style="list-style-type: none;">
+<h4>{{description}}</h4><span style="float: left; position: relative; margin-left: 20px; top: 10px;" class="contextcategoryfocus">focus</span><span style="float: left; position: relative; margin-left: 20px; top: 10px;" class="contextcategorytoback">back</span><span style="float: left; position: relative; margin-left: 20px; top: 10px;" class="contextcategorytofront">front</span>
+
+<ul style="clear: both;">
+{{#each contextcategorycontexts}}
+<li style="list-style-type: none;">
+<span style="clear: both; float: left;">{{description}}</span>
+<span style="clear: both; float: left;">{{context}}</span>
+
+<select style="clear: both; float: left;" class="contextcategoryselect" id="contextcategoryselect-{{_id}}">
+<option>Select One</option>
+{{#each contextcategory}}
+<option value="{{_id}}">{{description}}</option>
+{{/each}}
+</select>
+</li>
+{{/each}}
+</ul>
+
+
+</li>
+{{/each}}
+</ul>
+
+ {{#if new_contextcategory}}
+    <div class="newcontextcategory">
+      <input type="text" id="add-newcontextcategory" value="" />
+    </div>
+  {{else}}
+  <div class="newcontextcategory btn btn-inverse" id="btnNewContextCategory">+ Context Category</div>
+  {{/if}}
+
+
+<ul style="clear: both;">
+{{#each contexts}}
+<li style="list-style-type: none;">
+<span style="clear: both; float: left;">{{description}}</span>
+
+<select style="clear: both; float: left;" class="contextcategoryselect" id="contextcategoryselect-{{_id}}">
+<option>Select One</option>
+{{#each contextcategory}}
+<option value="{{_id}}">{{description}}</option>
+{{/each}}
+</select>
+</li>
+{{/each}}
+</ul>
+
+</template>

@@ -452,12 +452,12 @@ z-index: 40;
 background-color: red;
 }
 
-.newaor {
+.newaor, .newcontextcategory {
 float: left;
 clear: both;
 }
 
-#selectAorForm label {
+#selectAorForm label, #selectContextCategoryForm label {
 display: none;
 }
 
