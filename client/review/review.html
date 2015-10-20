@@ -23,6 +23,19 @@
 {{/unless}}
 
 {{#unless nextactionshidden}}
+{{#if wipshidden}}
+<h3>WIPs</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openwipssection">-</div>
+{{/if}}
+{{#unless wipshidden}}
+{{> workinprogress}}
+{{/unless}}
+{{#if mitshidden}}
+<h3>MITs</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openmitssection">-</div>
+{{/if}}
+{{#unless mitshidden}}
+{{> mostimportanttasks}}
+{{/unless}}
+
 {{> focuscontextpicker}}
 {{> focusmulticontext}}
 {{> contextpicker}}
@@ -33,14 +46,6 @@
 {{#if inactivecontextshidden}}
 <h3>Someday/Maybe Contexts</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openinactivecontextssection">-</div>
 {{/if}}
-{{/unless}}
-
-{{#unless wipshidden}}
-{{> workinprogress}}
-{{/unless}}
-
-{{#unless mitshidden}}
-{{> mostimportanttasks}}
 {{/unless}}
 
 {{#unless readandreviewhidden}}
@@ -54,6 +59,10 @@
 {{#unless projectshidden}}
 {{> focusprojectslist}}
 {{> projectslist}}
+{{/unless}}
+
+{{#unless projectlesssomedaymaybeshidden}}
+{{> projectlesssomedaymaybes}}
 {{#unless somedaymaybeprojectshidden}}
 {{> somedaymaybeprojects}}
 {{/unless}}
@@ -62,20 +71,20 @@
 {{/if}}
 {{/unless}}
 
-{{#unless projectlesssomedaymaybeshidden}}
-{{> projectlesssomedaymaybes}}
-{{/unless}}
-
+{{#unless weeklyreviewhidden}}
+{{> weeklyreview}}
+{{#if perspectivehidden}}
+<h3>Perspective</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openperspectivesection">-</div>
+{{/if}}
 {{#unless perspectivehidden}}
 {{> perspective}}
 {{/unless}}
-
-{{#unless weeklyreviewhidden}}
-{{> weeklyreview}}
-{{/unless}}
-
+{{#if statisticshidden}}
+<h3>Statistics</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openstatisticssection">-</div>
+{{/if}}
 {{#unless statisticshidden}}
 {{> statistics}}
+{{/unless}}
 {{/unless}}
 
 {{#if inboxhidden}}
@@ -91,15 +100,7 @@
 {{/if}}
 
 {{#if nextactionshidden}}
-<h3>Contexts</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse opennextactionssection">-</div>
-{{/if}}
-
-{{#if wipshidden}}
-<h3>WIPs</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openwipssection">-</div>
-{{/if}}
-
-{{#if mitshidden}}
-<h3>MITs</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openmitssection">-</div>
+<h3>Next Actions</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse opennextactionssection">-</div>
 {{/if}}
 
 {{#if readandreviewhidden}}
@@ -115,19 +116,11 @@
 {{/if}}
 
 {{#if projectlesssomedaymaybeshidden}}
-<h3>Projectless Someday/Maybes</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openprojectlesssomedaymaybessection">-</div>
-{{/if}}
-
-{{#if perspectivehidden}}
-<h3>Perspective</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openperspectivesection">-</div>
+<h3>Someday/Maybes</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openprojectlesssomedaymaybessection">-</div>
 {{/if}}
 
 {{#if weeklyreviewhidden}}
 <h3>Weekly Review</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openweeklyreviewsection">-</div>
-{{/if}}
-
-{{#if statisticshidden}}
-<h3>Statistics</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openstatisticssection">-</div>
 {{/if}}
 
 {{/if}}
