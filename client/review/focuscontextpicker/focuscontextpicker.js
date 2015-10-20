@@ -1,4 +1,31 @@
 Template.focuscontextpicker.helpers({
+  hascontexts: function () {
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+//console.log("THE THINGIE IS " + Object.keys(this.data) + " " + this.data._id)
+    if (aorfocus == '' || !aorfocus || aorfocus == []) {
+      return Taskspending.find({$and: [{tags: "largercontext"}, {contextcategory: this._id}, {tags: "cip"}]}, {sort: {rank: 1}}).count()
+    }
+    else {
+      return Taskspending.find({contextaor: {$in: aorfocus}, $and: [{tags: "largercontext"}, {contextcategory: this._id}, {tags: "cip"}]}, {sort: {rank: 1}}).count()
+    }
+  },
+  contexts: function () {
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+//console.log("THE THINGIE IS " + Object.keys(this.data) + " " + this.data._id)
+    if (aorfocus == '' || !aorfocus || aorfocus == []) {
+      return Taskspending.find({$and: [{tags: "largercontext"}, {contextcategory: this._id}, {tags: "cip"}]}, {sort: {rank: 1}})
+    }
+    else {
+      return Taskspending.find({contextaor: {$in: aorfocus}, $and: [{tags: "largercontext"}, {contextcategory: this._id}, {tags: "cip"}]}, {sort: {rank: 1}})
+    }
+  },
+  contextcategories: function () {
+    return Taskspending.find({tags: "contextcategory"}, {sort: {rank: 1}})
+  },
   fullfocusmulticontext: function () {
     if (Session.get("focusmulticontext") && Session.get("focusmulticontext").length == Taskspending.find({$and: [{tags: "largercontext"}, {tags: {$nin: ["somedaymaybecont"]}}]}).count()) {
       return true
@@ -79,12 +106,12 @@ console.log(Session.get("focusmulticontext"))
 
 // begin modular subscription loading
 
-Template.focuscontextpicker.created = function () {
+Template.focuscontextpickerspecificcategory.created = function () {
 
   // 1. Initialization
 
   var instance = this;
-
+console.log(Object.keys(this) + " is object keys")
   // initialize the reactive variables
   instance.loaded = new ReactiveVar(0);
   instance.focuscontextpickerlimit = new ReactiveVar(5);
@@ -119,7 +146,7 @@ Template.focuscontextpicker.created = function () {
     var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
       return doc._id
     })
-
+//console.log("THE THINGIE IS " + Object.keys(this.data) + " " + this.data._id)
     if (aorfocus == '' || !aorfocus || aorfocus == []) {
       return Taskspending.find({$and: [{tags: "largercontext"}, {tags: "cip"}]}, {sort: {rank: 1}, limit: focuscontextpickerlimit})
     }
@@ -130,7 +157,7 @@ Template.focuscontextpicker.created = function () {
 
 };
 
-Template.focuscontextpicker.helpers({
+Template.focuscontextpickerspecificcategory.helpers({
   // the posts cursor
   contexts: function () {
     return Template.instance().taskspendingfocuscontextpicker();
@@ -141,7 +168,7 @@ Template.focuscontextpicker.helpers({
   }
 });
 
-Template.focuscontextpicker.events({
+Template.focuscontextpickerspecificcategory.events({
   'click .load-more-focuscontextpicker': function (event, instance) {
     event.preventDefault();
 

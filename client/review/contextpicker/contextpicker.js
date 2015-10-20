@@ -1,4 +1,31 @@
 Template.contextpicker.helpers({
+  hascontexts: function () {
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+//console.log("THE THINGIE IS " + Object.keys(this.data) + " " + this.data._id)
+    if (aorfocus == '' || !aorfocus || aorfocus == []) {
+      return Taskspending.find({$and: [{tags: "largercontext"}, {contextcategory: this._id}, {tags: {$nin: ["cip", "somedaymaybecont", "contextcategory"]}}]}, {sort: {rank: 1}}).count()
+    }
+    else {
+      return Taskspending.find({$and: [{contextaor: {$in: aorfocus}}, {tags: "largercontext"}, {contextcategory: this._id}, {tags: {$nin: ["cip", "somedaymaybecont", "contextcategory"]}}]}, {sort: {rank: 1}}).count()
+    }
+  },
+  contexts: function () {
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+//console.log("THE THINGIE IS " + Object.keys(this.data) + " " + this.data._id)
+    if (aorfocus == '' || !aorfocus || aorfocus == []) {
+      return Taskspending.find({$and: [{tags: "largercontext"}, {contextcategory: this._id}, {tags: {$nin: ["cip", "somedaymaybecont", "contextcategory"]}}]}, {sort: {rank: 1}})
+    }
+    else {
+      return Taskspending.find({contextaor: {$in: aorfocus}, $and: [{tags: "largercontext"}, {contextcategory: this._id}, {tags: {$nin: ["cip", "somedaymaybecont", "contextcategory"]}}]}, {sort: {rank: 1}})
+    }
+  },
+  contextcategories: function () {
+    return Taskspending.find({tags: "contextcategory"}, {sort: {rank: 1}})
+  },
   fullmulticontext: function () {
     if (Session.get("multicontext") && Session.get("multicontext").length == Taskspending.find({$and: [{tags: "largercontext"}, {tags: {$nin: ["somedaymaybecont"]}}]}).count()) {
       return true
@@ -118,7 +145,7 @@ Template.contextpicker.events({
 
 // begin modular subscription loading
 
-Template.contextpicker.created = function () {
+Template.contextpickerspecificcategory.created = function () {
 
   // 1. Initialization
 
@@ -174,7 +201,7 @@ Template.contextpicker.created = function () {
 
 };
 
-Template.contextpicker.helpers({
+Template.contextpickerspecificcategory.helpers({
   // the posts cursor
   contexts: function () {
     return Template.instance().taskspendingcontextpicker();
@@ -185,7 +212,7 @@ Template.contextpicker.helpers({
   }
 });
 
-Template.contextpicker.events({
+Template.contextpickerspecificcategory.events({
   'click .load-more-contextpicker': function (event, instance) {
     event.preventDefault();
 
