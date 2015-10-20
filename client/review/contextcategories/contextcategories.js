@@ -27,9 +27,6 @@ Template.contextcategories.events({
       Taskspending.update({_id: this._id}, {$set: {rank: newrank}})
     }
   },
-  'click .contextcategoryfocus': function (e,t) {
-    Taskspending.update({_id: this._id}, {$push: {tags: "contextcategoryfocus"}})
-  },
 })
 
 
