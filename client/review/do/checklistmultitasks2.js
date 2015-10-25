@@ -1,4 +1,4 @@
-Template.multitaskstwo.helpers({
+Template.checklistmultitaskstwo.helpers({
   multitasks20: function () {
     return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$not: "inbox"}}, {project: {$exists: true}}, {context: this.toString()}]}, {sort: {tags: {$in: ["kickstart", "mit"]}, rank: {$exists: true}, rank: 1}})
   },
@@ -20,7 +20,7 @@ Template.multitaskstwo.helpers({
 
 // begin modular subscription loading
 
-Template.multitaskstwo.created = function () {
+Template.checklistmultitaskstwo.created = function () {
 
   // 1. Initialization
   var context = this.data
@@ -128,7 +128,7 @@ var aorfocus = '"' + aorfocus + '"'
       return doc._id
     })
     if (aorfocus == '') {
-      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$nin: ["inbox", "checklistitem"]}}, {project: {$exists: true}}, {context: context}]}, {sort: {tags: {$in: ["kickstart", "mit"]}, rank: {$exists: true}, rank: 1}, limit: instance.loaded.get()})
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {tags: "checklistitem"}, {project: {$exists: true}}, {context: context}]}, {sort: {tags: {$in: ["kickstart", "mit"]}, rank: {$exists: true}, rank: 1}, limit: instance.loaded.get()})
     }
     else {
       var aorprojects = new Array()
@@ -138,13 +138,13 @@ var aorfocus = '"' + aorfocus + '"'
           aorprojects.push(doc.project)
         })
       })
-      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$nin: ["inbox", "checklistitem"]}}, {project: {$in: aorprojects}}, {context: context}]}, {sort: {tags: {$in: ["kickstart", "mit"]}, rank: {$exists: true}, rank: 1}, limit: instance.loaded.get()})
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {tags: "checklistitem"}, {project: {$in: aorprojects}}, {context: context}]}, {sort: {tags: {$in: ["kickstart", "mit"]}, rank: {$exists: true}, rank: 1}, limit: instance.loaded.get()})
     }
   }
 
 };
 
-Template.multitaskstwo.helpers({
+Template.checklistmultitaskstwo.helpers({
   // the posts cursor
   multitasks2: function () {
     return Template.instance().taskspendingmultitasks2();
@@ -155,7 +155,7 @@ Template.multitaskstwo.helpers({
   }
 });
 
-Template.multitaskstwo.events({
+Template.checklistmultitaskstwo.events({
   'click .load-more-projectedcontext': function (event, instance) {
     event.preventDefault();
 

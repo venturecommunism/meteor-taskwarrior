@@ -5,6 +5,12 @@
 {{#each multicontext}}
 <div class="btn btn-inverse closecontext">+</div><h3 class="multicontext-title">{{this}}</h3><button type="button" class="contclose close" id="{{_id}}">hide</button>
 
+<h3>Checklist Items</h3>
+  <ul id="task_list">
+    {{> checklistmultitaskstwo}}
+  </ul>
+
+<h3>Non-checklist Items</h3>
   <ul id="task_list">
     {{> multitasks}}
     {{> multitaskstwo}}

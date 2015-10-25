@@ -1,0 +1,41 @@
+<template name="checklistmultitaskstwo">
+
+
+    {{#each multitasks2}}
+{{#if somedaymaybeproject}}
+{{else}}
+
+      <li class="task_item alert {{projectcolor}}">
+
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+
+    {{#if editing}}
+      <div class="edit">
+        <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
+      </div>
+
+{{else}}
+
+<div class="todo-item">       <p>{{description}}</p> </div>
+<p class="btn btn-inverse {{mitornot}} mit">mit</p>
+<p title="{{largeroutcome}}" id="doing-project">{{project}}</p>
+
+{{/if}}
+<p>{{rank}}</p>
+      </li>
+{{/if}}
+    {{/each}}
+
+<!-- load more -->
+  {{#if Template.subscriptionsReady}}
+    {{#if hasMorePosts}}
+      <p class="load-more-projectedcontext"><a class="load-more-projectedcontext-{{contextid}}">Load More Tasks from Projects in this Context</a></p>
+    {{/if}}
+  {{else}}
+    <div class="loading">{{>spinner}}</div>
+  {{/if}}
+<!-- end of load more -->
+
+
+</template>
+
