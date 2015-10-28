@@ -68,6 +68,6 @@ Template.timeview.helpers({
     var nowplusoneday = now.add(1, 'days')
     var bytomorrow = formattedMoment(nowplusoneday)
     console.log(bytomorrow)
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}, {due: {$lt: bytomorrow}}]}, {sort: {due: 1}})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}, {timerank: {$lt: bytomorrow}}]}, {sort: {timerank: 1}})
   },
 })
