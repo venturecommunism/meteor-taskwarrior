@@ -1,3 +1,51 @@
+// moved below code over from the server
+
+Timeviewdurationtasks = Taskspending.find({duration: {$exists: 1}})
+Timeviewdurationtasks.observe({
+  added: function (document) {
+    var now = moment()
+    var nowplusoneday = now.add(1, 'days')
+    var bytomorrow = formattedMoment(nowplusoneday)
+    var calendartasks = Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}, {due: {$exists :1}}]}, {sort: {timerank: 1}}).map(
+      function (somecalendardocument) {
+        return somecalendardocument.timerank
+      }
+    )
+    var starttimevar = formattedNow()
+    var endtimevar = Taskspending.findOne({due: {$gt: formattedNow()}}).timerank
+    var calendartaskslength = calendartasks.length
+    for (var i = 0; i < calendartaskslength; i++) {
+      var durations = Taskspending.find({duration: {$exists: 1}, rank: {$lte: document.rank}, timerank: {$gte: starttimevar}, timerank: {$lt: calendartasks[i]}}).map(
+        function (durationdocument) {
+          return {timerank: durationdocument.timerank, rank: durationdocument.rank}
+        }
+      )
+      var durationslength = durations.length
+      var intervalduration = moment.duration("PT0H0M0S")
+      for (var j = 0; j < durationslength; j++) {
+        var intervalduration = moment.intervalduration().add(Taskspending.findOne({_id: durations[j]}).duration)
+      }
+      var lastcalmoment = timestamptomoment(starttimevar)
+      var nextcalmoment = timestamptomoment(endtimevar)
+      var calendarintervalduration = moment.duration(nextcalmoment.diff(lastcalmoment))
+      var freeintervalduration = calendarintervalduration.subtract(intervalduration)
+      if (freeintervalduration > moment.duration(document.duration)) {
+        console.log("freecal is " + freeintervalduration + " and intervalduration is " + intervalduration)
+        break
+      }
+      if (Taskspending.findOne({due: {$gt: endtimevar}})) {
+        var starttimevar = endtimevar
+        var endtimevar = Taskspending.findOne({due: {$gt: endtimevar}}).timerank
+      } else {
+        break
+      }
+    }
+  },
+})
+
+// moved above code over from the server
+
+
 Meteor.subscribe('taskspendingcalendar', function () {
   Session.set('taskspending_dataloaded', true)
 })
