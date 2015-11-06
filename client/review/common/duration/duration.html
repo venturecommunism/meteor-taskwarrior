@@ -1,0 +1,12 @@
+<template name="duration">
+{{#if editingduration}}
+      <div class="editduration">
+        <input style="width:90%" id="duration-input" type="text" value="{{duration}}" />
+      </div>
+{{else}} {{#if iscalitem}}
+{{else}} {{#if hasduration}}
+<p class="duration-item" style="">{{duration}}</p>
+{{else}}
+<p class="duration-item" style="">No Duration</p>
+{{/if}}{{/if}}{{/if}}
+</template>

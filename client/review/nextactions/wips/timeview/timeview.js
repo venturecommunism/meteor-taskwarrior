@@ -34,6 +34,50 @@ Timeviewdurationtasks.observe({
         console.log(moment.duration(document.duration).humanize())
         console.log(timerank)
         console.log("freecal is " + freeintervalduration + " and intervalduration is " + intervalduration)
+        Taskspending.update({_id: document._id}, {$set: {timerank: timerank}})
+        break
+      }
+      if (Taskspending.findOne({due: {$gt: endtimevar}})) {
+        var starttimevar = endtimevar
+        var endtimevar = Taskspending.findOne({due: {$gt: endtimevar}}).timerank
+      } else {
+        break
+      }
+    }
+  },
+  changed: function (newDocument, oldDocument) {
+    var now = moment()
+    var nowplusoneday = now.add(1, 'days')
+    var bytomorrow = formattedMoment(nowplusoneday)
+    var calendartasks = Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}, {due: {$exists :1}}]}, {sort: {timerank: 1}}).map(
+      function (somecalendardocument) {
+        return somecalendardocument.timerank
+      }
+    )
+    var starttimevar = formattedNow()
+    var endtimevar = Taskspending.findOne({due: {$gt: formattedNow()}}).timerank
+    var calendartaskslength = calendartasks.length
+    for (var i = 0; i < calendartaskslength; i++) {
+      var durations = Taskspending.find({duration: {$exists: 1}, rank: {$lte: newDocument.rank}, timerank: {$gte: starttimevar}, timerank: {$lt: calendartasks[i]}}).map(
+        function (durationdocument) {
+          return {timerank: durationdocument.timerank, rank: durationdocument.rank}
+        }
+      )
+      var durationslength = durations.length
+      var intervalduration = moment.duration("PT0H0M0S")
+      for (var j = 0; j < durationslength; j++) {
+        var intervalduration = moment.intervalduration().add(Taskspending.findOne({_id: durations[j]}).duration)
+      }
+      var lastcalmoment = timestamptomoment(starttimevar)
+      var nextcalmoment = timestamptomoment(endtimevar)
+      var calendarintervalduration = moment.duration(nextcalmoment.diff(lastcalmoment))
+      var freeintervalduration = calendarintervalduration.subtract(intervalduration)
+      if (freeintervalduration > moment.duration(newDocument.duration)) {
+        var timerank = formattedMoment(moment(nextcalmoment).subtract(intervalduration).subtract(moment.duration(newDocument.duration)))
+        console.log(moment.duration(newDocument.duration).humanize())
+        console.log(timerank)
+        console.log("freecal is " + freeintervalduration + " and intervalduration is " + intervalduration)
+        Taskspending.update({_id: newDocument._id}, {$set: {timerank: timerank}})
         break
       }
       if (Taskspending.findOne({due: {$gt: endtimevar}})) {
@@ -116,9 +160,12 @@ Template.timeview.helpers({
   // the posts cursor
   timeviewtasks: function () {
     var now = moment()
-    var nowplusoneday = now.add(1, 'days')
-    var bytomorrow = formattedMoment(nowplusoneday)
+    var nextduedate = Taskspending.findOne({due: {$gte: formattedNow()}}).timerank
+    console.log(nextduedate + " is nextduedate")
+    var nextplusoneday = timestamptomoment(nextduedate).add(24, 'hours')
+    var bytomorrow = formattedMoment(nextplusoneday)
     console.log(bytomorrow)
-    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}, {timerank: {$lt: bytomorrow}}]}, {sort: {timerank: 1}})
+    return Taskspending.find({timerank: {$lt: bytomorrow}}, {sort: {timerank: 1}})
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {timerank: {$lt: bytomorrow}}]}, {sort: {timerank: 1}})
   },
 })
