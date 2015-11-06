@@ -30,6 +30,9 @@ Timeviewdurationtasks.observe({
       var calendarintervalduration = moment.duration(nextcalmoment.diff(lastcalmoment))
       var freeintervalduration = calendarintervalduration.subtract(intervalduration)
       if (freeintervalduration > moment.duration(document.duration)) {
+        var timerank = formattedMoment(moment(nextcalmoment).subtract(intervalduration).subtract(moment.duration(document.duration)))
+        console.log(moment.duration(document.duration).humanize())
+        console.log(timerank)
         console.log("freecal is " + freeintervalduration + " and intervalduration is " + intervalduration)
         break
       }
