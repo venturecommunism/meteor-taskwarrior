@@ -286,6 +286,8 @@ Meteor.publish("taskspendingdocuments", function () {
   var userId = this.userId
   if (adminUser(userId)) {
     return Taskspending.find({type: "textfile"})
+  } else if (userId) {
+    return Taskspending.find({owner: userId, type: "textfile"})
   }
 });
 
