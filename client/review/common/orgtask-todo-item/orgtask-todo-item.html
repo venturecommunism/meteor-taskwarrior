@@ -1,5 +1,5 @@
 <template name="orgtask_todo_item">
-      <li class="task_item alert">
+      <li class="task_item {{inboxitem}} alert">
         <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
 {{#if is_checklistitem}}
 <div class="btn btn-inverse {{mitornot}} mit">done/undone</div>

@@ -243,6 +243,9 @@ Template.timeview.helpers({
   overduetasks: function () {
     return Taskspending.find({due: {$lt: Session.get('now')}}, {sort: {due: 1}})
   },
+  reviewmodeenergylevelinboxonly: function () {
+    return (Session.equals("gtdmode", "reviewmode") && Session.equals("energylevel", "calendaronly"))
+  },
 })
 
 Template.timeview.created = function () {
@@ -300,11 +303,19 @@ Template.timeview.helpers({
     return Template.instance().taskspendingcalendar().count() > 1
   },
   calendaronly: function () {
-    return Session.equals("energylevel", "calendaronly")
+    if (Session.equals("gtdmode", "domode")) {
+      return Session.equals("energylevel", "calendaronly")
+    }
   },
-  timeviewtask: function () {
-    return Taskspending.findOne({energylevel: Session.get("energylevel")}, {sort: {rank: 1}})
+  doingdefinedworktimeviewtask: function () {
+    return Taskspending.findOne({energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: 1, rank: 1}})
   },
+  timeviewtaskinbox: function () {
+    return Taskspending.findOne({tags: "inbox"})
+  },
+  definingworktimeviewtaskkickstarterlessprojects: function () {
+    return Taskspending.findOne({tags: "kickstarterless"})
+  }
 });
 
 Template.timeview.events({

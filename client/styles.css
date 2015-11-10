@@ -469,8 +469,14 @@ clear: both;
 .overdue {
 background-image: url(/overdue.png);
 background-repeat: no-repeat;
-background-position: top right;
+background-position: bottom -20px right;
 background-color: grey;
+}
+
+.inboxmarker {
+background-image: url(/zeroinbox.png);
+background-repeat: no-repeat;
+background-position: top -108px right;
 }
 
 #task_list li.overdue:hover{

@@ -48,7 +48,12 @@ Template.orgtask_todo_item.helpers({
     else {
       return ''
     }
-  }
+  },
+  inboxitem: function () {
+    if (Taskspending.findOne({_id: this._id, tags: "inbox"})) {
+      return "inboxmarker"
+    }
+  },
 })
 
 Template.orgtask_todo_item.events({

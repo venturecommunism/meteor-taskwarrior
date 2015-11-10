@@ -1,0 +1,16 @@
+<template name="easyhard">
+{{#if hasenergylevel}}
+{{#if hasenergylevelone}}
+<p class="sendtoenergytwo btn">Harder, More like a 2</p>
+{{else}} {{#if hasenergyleveloftwo}}
+<p class="sendtoenergyone btn">Too Easy, More like a 1</p><p class="sendtoenergythree btn">Too Hard, More like a 3</p>
+{{else}} {{#if hasenergylevelsix}}
+<p class="sendtoenergyfive btn">Too Easy, More like a 5</p><p class="sendtoenergyseven btn">Too Hard, More like a 7</p>
+{{else}} {{#if hasenergylevelseven}}
+<p class="sendtoenergysix btn">Easier, More like a 6</p>
+{{else}}
+<p class="sendtoenergytwo btn">Too Easy, More like a 2</p><p class="sendtoenergysix btn">Too Hard, More like a 6</p>
+{{/if}} {{/if}} {{/if}} {{/if}} {{else}}
+<span class="organizingenergy">{{> energymeter}}</span>
+{{/if}}
+</template>

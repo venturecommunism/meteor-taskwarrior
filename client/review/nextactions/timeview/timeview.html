@@ -17,10 +17,18 @@
 
     {{#unless calendaronly}}
     {{#if domode}}
-    {{#with timeviewtask}}
+    {{#with doingdefinedworktimeviewtask}}
     {{> orgtask_todo_item}}
     {{/with}}
-    {{else}} {{#if reviewmode}}
+    {{else}} {{#if reviewmodeenergylevelinboxonly}}
+    {{#with timeviewtaskinbox}}
+    <span class="inboxmarker">{{> orgtask_todo_item}}</span>
+    {{/with}}
+    {{/if}} <!-- reviewmodeenergylevel1 -->
+    {{#if reviewmodeenergylevel1}}
+    {{#with definingworktimeviewtaskkickstarterlessprojects}}
+    {{> project_item}}
+    {{/with}}
     {{/if}} {{/if}}
     {{/unless}}
 
