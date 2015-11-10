@@ -219,12 +219,76 @@ Template.timeview.events({
   'click .closecalendarsection': function(e,t){
     Session.set('calendarhidden', true)
   },
+  'click .energy0': function () {
+    Session.set("energylevel", "calendaronly")
+  },
+  'click .energy1': function () {
+    Session.set("energylevel", 1)
+  },
+  'click .energy2': function () {
+    Session.set("energylevel", 2)
+  },
+  'click .energy3': function () {
+    Session.set("energylevel", 3)
+  },
+  'click .energy4': function () {
+    Session.set("energylevel", 4)
+  },
+  'click .energy5': function () {
+    Session.set("energylevel", 5)
+  },
+  'click .energy6': function () {
+    Session.set("energylevel", 6)
+  },
+  'click .energy7': function () {
+    Session.set("energylevel", 7)
+  },
 })
 
 Template.timeview.helpers({
   // the posts cursor
   overduetasks: function () {
     return Taskspending.find({due: {$lt: Session.get('now')}}, {sort: {due: 1}})
+  },
+  zeroselected: function () {
+    if (Session.equals("energylevel", "calendaronly")) {
+      return 'btn-primary'
+    }
+  },
+  oneselected: function () {
+    if (Session.equals("energylevel", 1)) {
+      return 'btn-primary'
+    }
+  },
+  twoselected: function () {
+    if (Session.equals("energylevel", 2)) {
+      return 'btn-primary'
+    }
+  },
+  threeselected: function () {
+    if (Session.equals("energylevel", 3)) {
+      return 'btn-primary'
+    }
+  },
+  fourselected: function () {
+    if (Session.equals("energylevel", 4)) {
+      return 'btn-primary'
+    }
+  },
+  fiveselected: function () {
+    if (Session.equals("energylevel", 5)) {
+      return 'btn-primary'
+    }
+  },
+  sixselected: function () {
+    if (Session.equals("energylevel", 6)) {
+      return 'btn-primary'
+    }
+  },
+  sevenselected: function () {
+    if (Session.equals("energylevel", 7)) {
+      return 'btn-primary'
+    }
   },
 })
 
@@ -285,7 +349,7 @@ Template.timeview.helpers({
   calendaronly: function () {
     return Session.equals("energylevel", "calendaronly")
   },
-  timeviewtasks: function () {
+  timeviewtask: function () {
     return Taskspending.findOne({energylevel: Session.get("energylevel")}, {sort: {rank: 1}})
   },
 });
