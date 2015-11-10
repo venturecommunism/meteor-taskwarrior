@@ -234,7 +234,7 @@ Template.timeview.created = function () {
 
   // initialize the reactive variables
   instance.loaded = new ReactiveVar(0);
-  instance.calendarlimit = new ReactiveVar(5);
+  instance.calendarlimit = new ReactiveVar(1);
 
   // 2. Autorun
 
@@ -275,8 +275,11 @@ Template.timeview.helpers({
   },
   // are there more posts to show?
   hasMorePosts: function () {
-    return Template.instance().taskspendingcalendar().count() >= Template.instance().calendarlimit.get();
-  }
+    return Template.instance().taskspendingcalendar().count() >= Template.instance().calendarlimit.get()
+  },
+  hasFewerPosts: function () {
+    return Template.instance().taskspendingcalendar().count() > 1
+  },
 });
 
 Template.timeview.events({
@@ -287,9 +290,23 @@ Template.timeview.events({
     var calendarlimit = instance.calendarlimit.get();
 
     // increase limit by 5 and update it
-    calendarlimit += 5;
+    if (calendarlimit != 1) {
+      calendarlimit += 5
+    } else {
+      calendarlimit += 4
+    }
     instance.calendarlimit.set(calendarlimit)
-  }
+  },
+  'click .load-fewer-calendar': function (event, instance) {
+    event.preventDefault();
+
+    // get current value for limit, i.e. how many posts are currently displayed
+    var calendarlimit = instance.calendarlimit.get();
+
+    // set calendarlimit to 1
+    calendarlimit = 1
+    instance.calendarlimit.set(calendarlimit)
+  },
 });
 
 // end modular subscription loading

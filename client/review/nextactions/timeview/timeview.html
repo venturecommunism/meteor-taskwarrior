@@ -30,6 +30,14 @@
     <div class="loading">{{>spinner}}</div>
   {{/if}}
 <!-- end of load more -->
+
+<!-- load more -->
+  {{#if Template.subscriptionsReady}}
+    {{#if hasFewerPosts}}
+      <p><a class="load-fewer-calendar">Load Fewer</a></p>
+    {{/if}}
+  {{/if}}
+<!-- end of load more -->
  
 </template>
 
