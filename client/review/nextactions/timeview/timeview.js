@@ -1,3 +1,5 @@
+Session.setDefault("energylevel", "calendaronly")
+
 // moved below code over from the server
 
 Tracker.autorun(function () {
@@ -279,6 +281,12 @@ Template.timeview.helpers({
   },
   hasFewerPosts: function () {
     return Template.instance().taskspendingcalendar().count() > 1
+  },
+  calendaronly: function () {
+    return Session.equals("energylevel", "calendaronly")
+  },
+  timeviewtasks: function () {
+    return Taskspending.findOne({energylevel: Session.get("energylevel")}, {sort: {rank: 1}})
   },
 });
 

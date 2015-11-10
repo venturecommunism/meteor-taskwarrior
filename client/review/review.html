@@ -15,6 +15,7 @@
 {{/unless}}
 
 {{#unless nextactionshidden}}
+{{> nextactions}}
 {{#if wipshidden}}
 <h3>WIPs</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openwipssection">-</div>
 {{/if}}
@@ -32,12 +33,6 @@
 {{> focusmulticontext}}
 {{> contextpicker}}
 {{> multicontext}}
-{{#unless inactivecontextshidden}}
-{{> inactivecontextpicker}}
-{{/unless}}
-{{#if inactivecontextshidden}}
-<h3>Someday/Maybe Contexts</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openinactivecontextssection">-</div>
-{{/if}}
 {{/unless}}
 
 {{#unless readandreviewhidden}}
@@ -60,6 +55,12 @@
 {{/unless}}
 {{#if somedaymaybeprojectshidden}}
 <h3>Someday/Maybe</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse opensomedaymaybeprojectssection">-</div>
+{{/if}}
+{{#unless inactivecontextshidden}}
+{{> inactivecontextpicker}}
+{{/unless}}
+{{#if inactivecontextshidden}}
+<h3>Someday/Maybe Contexts</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openinactivecontextssection">-</div>
 {{/if}}
 {{/unless}}
 

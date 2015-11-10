@@ -13,6 +13,12 @@
 
     {{/each}}
 
+    {{#unless calendaronly}}
+    {{#each timeviewtasks}}
+    {{> orgtask_todo_item}}
+    {{/each}}
+    {{/unless}}
+
     {{#each upcomingcalendartasks}}
     
     {{> calendartask}}
