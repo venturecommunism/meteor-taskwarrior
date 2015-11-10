@@ -4,27 +4,7 @@
   <ul id="task_list">
     {{#each calendartasks}}
 
-{{#if somedaymaybeproject}}
-{{else}}
-
-      <li class="task_item alert">
-        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
-
-
-    {{#if editing}}
-      <div class="edit">
-        <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
-      </div>
-{{else}}
-<div class="todo-item">       <p>{{description}}</p>  </div>
-{{/if}}
-
-{{#if duedate}}
-<p style="">{{duedate}}</p><p class="dueclock">{{dueclock}}</p>
-{{/if}}
-      </li>
-
-{{/if}}
+    {{> calendartask}}
 
     {{/each}}
   </ul>

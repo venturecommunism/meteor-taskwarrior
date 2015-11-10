@@ -465,3 +465,18 @@ display: none;
 float: left;
 clear: both;
 }
+
+.overdue {
+background-image: url(/overdue.png);
+background-repeat: no-repeat;
+background-position: top right;
+background-color: grey;
+}
+
+#task_list li.overdue:hover{
+background-color: blue;
+}
+
+.overdue p {
+color: red;
+}

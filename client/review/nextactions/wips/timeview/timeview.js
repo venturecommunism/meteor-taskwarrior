@@ -1,5 +1,63 @@
 // moved below code over from the server
 
+Tracker.autorun(function () {
+  var later = Taskspending.findOne({due: {$exists: 1}}, {sort: {due: 1}})
+  if (later) {
+    var laterdue = later.due
+  }
+  var now = Session.get('now')
+  if (laterdue <= now) {
+    var tasktomove = Taskspending.findOne({due: {$exists: 0}, timerank: {$lte: laterdue}}, {sort: {timerank: -1}})
+    if (tasktomove) {
+
+    var now = Session.get('now')
+    var calendartasks = Taskspending.find({status: {$in: ["waiting", "pending"]}, $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}, {due: {$exists :1}}]}, {sort: {timerank: 1}}).map(
+      function (somecalendardocument) {
+        return somecalendardocument.timerank
+      }
+    )
+    var starttimevar = formattedNow()
+    var endtimevar = Taskspending.findOne({due: {$gt: formattedNow()}}).timerank
+    var calendartaskslength = calendartasks.length
+    for (var i = 0; i < calendartaskslength; i++) {
+      var durations = Taskspending.find({duration: {$exists: 1}, rank: {$lte: tasktomove.rank}, timerank: {$gte: starttimevar}, timerank: {$lt: calendartasks[i]}}).map(
+        function (durationdocument) {
+          return {_id: durationdocument._id, timerank: durationdocument.timerank, rank: durationdocument.rank}
+        }
+      )
+      var durationslength = durations.length
+      var intervalduration = moment.duration("PT0H0M0S")
+      console.log(intervalduration)
+      for (var j = 0; j < durationslength; j++) {
+        console.log(durations[j])
+        var intervalduration = intervalduration.add(Taskspending.findOne({_id: durations[j]._id}).duration)
+      }
+      var lastcalmoment = timestamptomoment(starttimevar)
+      var nextcalmoment = timestamptomoment(endtimevar)
+      var calendarintervalduration = moment.duration(nextcalmoment.diff(lastcalmoment))
+      var freeintervalduration = calendarintervalduration.subtract(intervalduration)
+      if (freeintervalduration > moment.duration(tasktomove.duration)) {
+        var timerank = formattedMoment(moment(nextcalmoment).subtract(intervalduration).subtract(moment.duration(tasktomove.duration)))
+        console.log(moment.duration(tasktomove.duration).humanize())
+        console.log(timerank)
+        console.log("freecal is " + freeintervalduration + " and intervalduration is " + intervalduration)
+        Taskspending.update({_id: tasktomove._id}, {$set: {timerank: timerank}})
+        break
+      }
+      if (Taskspending.findOne({due: {$gt: endtimevar}})) {
+        var starttimevar = endtimevar
+        var endtimevar = Taskspending.findOne({due: {$gt: endtimevar}}).timerank
+      } else {
+        break
+      }
+    }
+
+
+
+    }
+  }
+})
+
 Timeviewdurationtasks = Taskspending.find({duration: {$exists: 1}})
 Timeviewdurationtasks.observe({
   added: function (document) {
@@ -98,10 +156,16 @@ Meteor.subscribe('taskspendingcalendar', function () {
 })
 
 Template.timeview.helpers({
+  overdue: function () {
+    if (this.due < Session.get("now")) {
+      return 'overdue'
+    }
+  },
   editing: function () {
     return Session.equals('editing_itemname', this._id);
   },
   dueclock: function () {
+    return countdowntimer(this.due)
     return Session.get("timer-" + this.uuid)
   },
   duedate: function () {
