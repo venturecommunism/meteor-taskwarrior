@@ -170,6 +170,16 @@ Meteor.publish("taskspendingcontextpicker", function(contextpickerlimit) {
   }
 })
 
+Meteor.publish("singletaskspendingchecklistitem", function() {
+  var userId = this.userId
+  if (adminUser(userId)) {
+    return Taskspending.find({status: {$in: ["waiting", "pending"]}, energylevel: {$exists: 0}, tags: "checklistitem"}, {sort: {rank: 1}, limit: 1})
+  }
+  else if (userId) {
+    return Taskspending.find({owner: userId, status: {$in: ["waiting", "pending"]}, energylevel: {$exists: 0}, tags: "checklistitem"}, {sort: {rank: 1}, limit: 1})
+  }
+})
+
 Meteor.publish("taskspendingmultitasks", function(context) {
   var userId = this.userId
 //  Meteor._sleepForMs(2000)

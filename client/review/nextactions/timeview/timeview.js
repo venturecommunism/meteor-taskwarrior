@@ -1,3 +1,6 @@
+Meteor.subscribe("singletaskspendingchecklistitem")
+console.log(Taskspending.findOne({tags: "checklistitem"}))
+
 Session.setDefault("gtdmode", "domode")
 Session.setDefault("energylevel", "calendaronly")
 
