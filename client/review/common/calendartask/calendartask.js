@@ -8,7 +8,7 @@ Template.calendartask.helpers({
     return Session.equals('editing_itemname', this._id);
   },
   dueclock: function () {
-    return Session.get("timer-" + this.uuid)
+    return countdowntimer(this.due)
   },
   duedate: function () {
     if (this.due) {

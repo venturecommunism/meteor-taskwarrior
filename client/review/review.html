@@ -14,10 +14,6 @@
 {{> process}}
 {{/unless}}
 
-{{#unless calendarhidden}}
-{{> calendar}}
-{{/unless}}
-
 {{#unless nextactionshidden}}
 {{#if wipshidden}}
 <h3>WIPs</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openwipssection">-</div>
@@ -91,10 +87,6 @@
 
 {{#if inboxhidden}}
 <h3>Inbox</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openinboxsection">-</div>
-{{/if}}
-
-{{#if calendarhidden}}
-<h3>Calendar</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse opencalendarsection">-</div>
 {{/if}}
 
 {{#if nextactionshidden}}

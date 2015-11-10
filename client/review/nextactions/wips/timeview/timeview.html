@@ -7,13 +7,29 @@
 {{/unless}}
 
   <ul id="task_list">
-    {{#each timeviewtasks}}
+    {{#each overduetasks}}
+
+    {{> calendartask}}
+
+    {{/each}}
+
+    {{#each upcomingcalendartasks}}
     
     {{> calendartask}}
 
     {{/each}}
 
 </ul>
+
+<!-- load more -->
+  {{#if Template.subscriptionsReady}}
+    {{#if hasMorePosts}}
+      <p><a class="load-more-calendar">Load More</a></p>
+    {{/if}}
+  {{else}}
+    <div class="loading">{{>spinner}}</div>
+  {{/if}}
+<!-- end of load more -->
  
 </template>
 
