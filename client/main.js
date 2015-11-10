@@ -1,3 +1,12 @@
+if (Notification.permission !== "granted") {
+  Notification.requestPermission(function (status) {
+    if (Notification.permission !== status) {
+      Notification.permission = status;
+    }
+  })
+}
+
+
 /*
 // this collaborative scroll position code was slowing down the client too much
 Meteor.subscribe("scrollpos")
