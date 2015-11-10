@@ -1,3 +1,4 @@
+Session.setDefault("gtdmode", "domode")
 Session.setDefault("energylevel", "calendaronly")
 
 // moved below code over from the server
@@ -243,10 +244,26 @@ Template.timeview.events({
   'click .energy7': function () {
     Session.set("energylevel", 7)
   },
+  'click .reviewmode': function () {
+    Session.set("gtdmode", "reviewmode")
+  },
+  'click .domode': function () {
+    Session.set("gtdmode", "domode")
+  },
 })
 
 Template.timeview.helpers({
   // the posts cursor
+  domode: function () {
+    if (Session.equals("gtdmode", "domode")) {
+      return 'btn-primary'
+    }
+  },
+  reviewmode: function () {
+    if (Session.equals("gtdmode", "reviewmode")) {
+      return 'btn-primary'
+    }
+  },
   overduetasks: function () {
     return Taskspending.find({due: {$lt: Session.get('now')}}, {sort: {due: 1}})
   },

@@ -2,6 +2,7 @@
 
 <h3>Time View</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse closecalendarsection">+</div>
 <h6 style="float: left; clear: both;">Energy Level: <span class="btn {{zeroselected}} energy0">Calendar</span><span class="btn {{oneselected}} energy1">1</span><span class="btn {{twoselected}} energy2">2</span><span class="btn {{threeselected}} energy3">3</span><span class="btn {{fourselected}} energy4">4</span><span class="btn {{fiveselected}} energy5">5</span><span class="btn {{sixselected}} energy6">6</span><span class="btn {{sevenselected}} energy7">7</span></h6>
+<h6 style="float: left; clear: both;">Mode: <span class="btn reviewmode {{reviewmode}}">Defining Work</span><span class="btn domode {{domode}}">Doing Defined Work</span></h6>
 
 {{#unless previouscalendarhidden}}
 {{> previouscalendar}}
@@ -15,9 +16,12 @@
     {{/each}}
 
     {{#unless calendaronly}}
+    {{#if domode}}
     {{#with timeviewtask}}
     {{> orgtask_todo_item}}
     {{/with}}
+    {{else}} {{#if reviewmode}}
+    {{/if}} {{/if}}
     {{/unless}}
 
     {{#each upcomingcalendartasks}}
