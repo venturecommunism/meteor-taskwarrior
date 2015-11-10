@@ -385,7 +385,7 @@ float: left;
   height: 100px;
   width: 100%;
 }
-.load-more-unprocessed, .load-more-previouscalendar, .load-fewer-previouscalendar, .load-more-calendar, .load-more-focuscontextpicker, .load-more-contextpicker, .load-more-context, .load-more-projectedcontext, .load-more-inactivecontextpicker , .load-more-mits, .load-more-readandreview, .load-more-waitingfors, .load-more-focusprojects, .load-more-projects, .load-more-somedaymaybeprojects, .load-more-projectlesssomedaymaybes{
+.load-more-unprocessed, .load-more-previouscalendar, .load-fewer-previouscalendar, .load-more-calendar, .load-fewer-calendar, .load-more-focuscontextpicker, .load-more-contextpicker, .load-more-context, .load-more-projectedcontext, .load-more-inactivecontextpicker , .load-more-mits, .load-more-readandreview, .load-more-waitingfors, .load-more-focusprojects, .load-more-projects, .load-more-somedaymaybeprojects, .load-more-projectlesssomedaymaybes{
   text-align:center;
   background:#eee;
   border: 1px solid #ddd;
@@ -479,4 +479,9 @@ background-color: darkgray;
 
 .overdue p {
 color: yellow;
+}
+
+.energy0, .energy1, .energy2, .energy3, .energy4, .energy5, .energy6, .energy7 {
+padding: 5px;
+margin: 5px;
 }
