@@ -1,9 +1,9 @@
 Alltasks = Taskspending.find({context: {$exists: 1}, project: {$exists: 1}})
 Alltasks.observe({
   added: function (document) {
-    var contextid = Taskspending.findOne({context: document.context, tags: "largercontext"})._id
-    var projaorid = Taskspending.findOne({project: document.project, aor: {$exists: 1}}).aor
-    if (!Taskspending.findOne({_id: contextid, contextaor: projaorid})) {
+    var contextid = Taskspending.findOne({context: document.context, tags: "largercontext"}) ? Taskspending.findOne({context: document.context, tags: "largercontext"})._id : ''
+    var projaorid = Taskspending.findOne({project: document.project, aor: {$exists: 1}}) ? Taskspending.findOne({project: document.project, aor: {$exists: 1}}).aor : ''
+    if (projaorid == '' || contextid == '' || !Taskspending.findOne({_id: contextid, contextaor: projaorid})) {
       Taskspending.update({_id: contextid}, {$push: {contextaor: projaorid}})
     }
   },
