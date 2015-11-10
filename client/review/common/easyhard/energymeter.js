@@ -1,36 +1,36 @@
 Template.energymeter.helpers({
   oneselected: function () {
-//    if (Taskspending.findOne({_id: this._id}).energylevel && Taskspending.findOne({_id: this._id}).energylevel == 1) {
+    if (Taskspending.findOne({_id: this._id}).energylevel && Taskspending.findOne({_id: this._id}).energylevel == 1) {
       return 'btn-primary'
-//    }
+    }
   },
   twoselected: function () {
-    if (Session.equals("energylevel", 2)) {
+    if (Taskspending.findOne({_id: this._id}).energylevel && Taskspending.findOne({_id: this._id}).energylevel == 2) {
       return 'btn-primary'
     }
   },
   threeselected: function () {
-    if (Session.equals("energylevel", 3)) {
+    if (Taskspending.findOne({_id: this._id}).energylevel && Taskspending.findOne({_id: this._id}).energylevel == 3) {
       return 'btn-primary'
     }
   },
   fourselected: function () {
-    if (Session.equals("energylevel", 4)) {
+    if (Taskspending.findOne({_id: this._id}).energylevel && Taskspending.findOne({_id: this._id}).energylevel == 4) {
       return 'btn-primary'
     }
   },
   fiveselected: function () {
-    if (Session.equals("energylevel", 5)) {
+    if (Taskspending.findOne({_id: this._id}).energylevel && Taskspending.findOne({_id: this._id}).energylevel == 5) {
       return 'btn-primary'
     }
   },
   sixselected: function () {
-    if (Session.equals("energylevel", 6)) {
+    if (Taskspending.findOne({_id: this._id}).energylevel && Taskspending.findOne({_id: this._id}).energylevel == 6) {
       return 'btn-primary'
     }
   },
   sevenselected: function () {
-    if (Session.equals("energylevel", 7)) {
+    if (Taskspending.findOne({_id: this._id}).energylevel && Taskspending.findOne({_id: this._id}).energylevel == 7) {
       return 'btn-primary'
     }
   },
