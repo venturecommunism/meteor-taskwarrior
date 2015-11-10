@@ -67,7 +67,7 @@ Template.previouscalendar.created = function () {
 
   // initialize the reactive variables
   instance.loaded = new ReactiveVar(0);
-  instance.previouscalendarlimit = new ReactiveVar(5);
+  instance.previouscalendarlimit = new ReactiveVar(0);
 
   // 2. Autorun
 
@@ -80,12 +80,15 @@ Template.previouscalendar.created = function () {
     // console.log("Asking for "+previouscalendarlimit+" posts…")
 
     // subscribe to the posts publication
-    var subscription = instance.subscribe('tasksbacklogpreviouscalendar', previouscalendarlimit, function () {
-      Session.set('tasksbacklog_dataloaded', true)
-    })
+
+    if (previouscalendarlimit > 0) {
+      var subscription = instance.subscribe('tasksbacklogpreviouscalendar', previouscalendarlimit, function () {
+        Session.set('tasksbacklog_dataloaded', true)
+      })
+    }
 
     // if subscription is ready, set limit to newLimit
-    if (subscription.ready()) {
+    if (subscription && subscription.ready()) {
       // console.log("> Received "+previouscalendarlimit+" posts. \n\n")
       instance.loaded.set(previouscalendarlimit);
     } else {
@@ -96,7 +99,7 @@ Template.previouscalendar.created = function () {
   // 3. Cursor
 
   instance.tasksbacklogpreviouscalendar = function() {
-    return Tasksbacklog.find({status: "completed", $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: -1}, limit: instance.loaded.get()})
+    return Tasksbacklog.find({status: "completed", $and: [{tags: {$ne: "inbox"}}, {project: {$exists: false}}, {context: {$exists: false}}]}, {sort: {due: 1}, limit: instance.loaded.get()})
   }
 
 };
@@ -109,7 +112,10 @@ Template.previouscalendar.helpers({
   // are there more posts to show?
   hasMorePosts: function () {
     return Template.instance().tasksbacklogpreviouscalendar().count() >= Template.instance().previouscalendarlimit.get();
-  }
+  },
+  hasFewerPosts: function () {
+    return Template.instance().tasksbacklogpreviouscalendar().count() > 0
+  },
 });
 
 Template.previouscalendar.events({
@@ -122,7 +128,17 @@ Template.previouscalendar.events({
     // increase limit by 5 and update it
     previouscalendarlimit += 5;
     instance.previouscalendarlimit.set(previouscalendarlimit)
-  }
+  },
+  'click .load-fewer-previouscalendar': function (event, instance) {
+    event.preventDefault();
+
+    // get current value for limit, i.e. how many posts are currently displayed
+    var previouscalendarlimit = instance.previouscalendarlimit.get();
+
+    // increase limit by 5 and update it
+    previouscalendarlimit = 0;
+    instance.previouscalendarlimit.set(previouscalendarlimit)
+  },
 });
 
 // end modular subscription loading

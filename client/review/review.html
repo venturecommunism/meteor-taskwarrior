@@ -14,10 +14,6 @@
 {{> process}}
 {{/unless}}
 
-{{#unless previouscalendarhidden}}
-{{> previouscalendar}}
-{{/unless}}
-
 {{#unless calendarhidden}}
 {{> calendar}}
 {{/unless}}
@@ -95,10 +91,6 @@
 
 {{#if inboxhidden}}
 <h3>Inbox</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openinboxsection">-</div>
-{{/if}}
-
-{{#if previouscalendarhidden}}
-<h3>Previous Calendar</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openpreviouscalendarsection">-</div>
 {{/if}}
 
 {{#if calendarhidden}}

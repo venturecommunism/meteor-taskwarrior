@@ -1,6 +1,5 @@
 <template name="previouscalendar">
 
-<h3>Previous Calendar</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse closepreviouscalendarsection">+</div>
   <ul id="task_list">
     {{#each previouscalendartasks}}
 
@@ -12,10 +11,18 @@
 <!-- load more -->
   {{#if Template.subscriptionsReady}}
     {{#if hasMorePosts}}
-      <p><a class="load-more-previouscalendar">Load More</a></p>
+      <p><a class="load-more-previouscalendar">Load Previous Calendar</a></p>
     {{/if}}
   {{else}}
     <div class="loading">{{>spinner}}</div>
+  {{/if}}
+<!-- end of load more -->
+
+<!-- load fewer -->
+  {{#if Template.subscriptionsReady}}
+    {{#if hasFewerPosts}}
+      <p><a class="load-fewer-previouscalendar">Hide Previous Calendar</a></p>
+    {{/if}}
   {{/if}}
 <!-- end of load more -->
 
