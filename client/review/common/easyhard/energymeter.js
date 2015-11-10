@@ -1,8 +1,8 @@
 Template.energymeter.helpers({
   oneselected: function () {
-    if (Session.equals("energylevel", 1)) {
+//    if (Taskspending.findOne({_id: this._id}).energylevel && Taskspending.findOne({_id: this._id}).energylevel == 1) {
       return 'btn-primary'
-    }
+//    }
   },
   twoselected: function () {
     if (Session.equals("energylevel", 2)) {

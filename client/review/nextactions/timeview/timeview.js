@@ -246,6 +246,12 @@ Template.timeview.helpers({
   reviewmodeenergylevelinboxonly: function () {
     return (Session.equals("gtdmode", "reviewmode") && Session.equals("energylevel", "calendaronly"))
   },
+  review1: function () {
+    return (Session.equals("gtdmode", "reviewmode") && Session.equals("energylevel", 1))
+  },
+  review2: function () {
+    return (Session.equals("gtdmode", "reviewmode") && Session.equals("energylevel", 2))
+  },
 })
 
 Template.timeview.created = function () {
@@ -313,9 +319,12 @@ Template.timeview.helpers({
   timeviewtaskinbox: function () {
     return Taskspending.findOne({tags: "inbox"})
   },
-  definingworktimeviewtaskkickstarterlessprojects: function () {
+  reviewchecklistitems: function () {
+    return Taskspending.findOne({tags: {$ne: "inbox"}, tags: "checklistitem"}, {sort: {rank: 1}})
+  },
+  reviewkickstarterlessprojects: function () {
     return Taskspending.findOne({tags: "kickstarterless"})
-  }
+  },
 });
 
 Template.timeview.events({
