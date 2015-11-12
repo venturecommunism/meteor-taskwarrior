@@ -317,10 +317,25 @@ Template.timeview.helpers({
     }
   },
   dotask: function () {
-    return Taskspending.findOne({status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: -1}})
+    var highestcip = Taskspending.find({tags: "cip"}, {sort: {tags: {$in: ["cip"]}, rank: 1}}).map(function (doc) {
+        return doc.context
+      }
+    )
+    var highestpip = Taskspending.find({tags: "pip"}, {sort: {tags: {$in: ["pip"]}, rank: 1}}).map(function (doc) {
+        return doc.project
+      }
+    )
+    if (Taskspending.findOne({context: {$in: highestcip}, tags: {$all: ["mit", "checklistitem"]}, status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: -1}})) {
+console.log("undone checklist items in one of the cips less than or equal to the energy level")
+console.log(Taskspending.findOne({context: {$in: highestcip}, tags: {$all: ["mit", "checklistitem"]}, status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: -1}}))
+      return Taskspending.findOne({context: {$in: highestcip}, tags: {$all: ["mit", "checklistitem"]}, status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}}, {sort: {energylevel: -1}})
+    } else {
+console.log("final condition")
+      return Taskspending.findOne({status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: -1}})
+    }
   },
   timeviewtaskinbox: function () {
-    return Taskspending.findOne({tags: "inbox"})
+    return Taskspending.findOne({tags: "inbox"}, {sort: {rank: 1}})
   },
   reviewchecklistitems: function () {
     var highestcip = Taskspending.find({tags: "cip"}, {sort: {tags: {$in: ["cip"]}, rank: 1}}).map(function (doc) {
