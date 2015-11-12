@@ -30,6 +30,8 @@ Template.collect.events({
         }
         Tasksbacklog.insert({description: e.target.value, owner: Meteor.userId(), entry: formattednow, status: "pending", tags: ['inbox'], uuid: uuid, rank: rank, energylevel: 4})
         Taskspending.insert({description: e.target.value, owner: Meteor.userId(), entry: formattednow, status: "pending", tags: ['inbox'], uuid: uuid, rank: rank, energylevel: 4})
+        Session.set("gtdmode", "reviewmode")
+        Session.set("energylevel", "calendaronly")
         Session.set('adding_newtask', false);
        }
      }
