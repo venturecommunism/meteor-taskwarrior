@@ -1,5 +1,5 @@
-Meteor.subscribe("singletaskspendingchecklistitem")
-console.log(Taskspending.findOne({tags: "checklistitem"}))
+Meteor.subscribe("taskspendingdotasks")
+Meteor.subscribe("taskspendingchecklistitems")
 
 Session.setDefault("gtdmode", "domode")
 Session.setDefault("energylevel", "calendaronly")
@@ -316,14 +316,46 @@ Template.timeview.helpers({
       return Session.equals("energylevel", "calendaronly")
     }
   },
-  doingdefinedworktimeviewtask: function () {
-    return Taskspending.findOne({energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: 1, rank: 1}})
+  dotask: function () {
+    return Taskspending.findOne({status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: -1}})
   },
   timeviewtaskinbox: function () {
     return Taskspending.findOne({tags: "inbox"})
   },
   reviewchecklistitems: function () {
-    return Taskspending.findOne({tags: {$ne: "inbox"}, tags: "checklistitem"}, {sort: {rank: 1}})
+    var highestcip = Taskspending.find({tags: "cip"}, {sort: {tags: {$in: ["cip"]}, rank: 1}}).map(function (doc) {
+        return doc.context
+      }
+    )
+    var highestpip = Taskspending.find({tags: "pip"}, {sort: {tags: {$in: ["pip"]}, rank: 1}}).map(function (doc) {
+        return doc.project
+      }
+    )
+//console.log(highestcip)
+//console.log(highestpip)
+    if (Taskspending.findOne({$and: [{project: {$in: highestpip}}, {context: {$in: highestcip}}, {duration: {$exists: 0}}, {energylevel: {$exists: 0}}], tags: {$ne: "inbox"}, tags: "checklistitem"}, {sort: {rank: 1}})) {
+//console.log("cip + pip w/ no duration or energy level")
+//console.log(Taskspending.findOne({$and: [{project: {$in: highestpip}}, {context: {$in: highestcip}}, {duration: {$exists: 0}}, {energylevel: {$exists: 0}}], tags: {$ne: "inbox"}, tags: "checklistitem"}, {sort: {rank: 1}}))
+
+      return Taskspending.findOne({$and: [{project: {$in: highestpip}}, {context: {$in: highestcip}}, {duration: {$exists: 0}}, {energylevel: {$exists: 0}}], tags: {$ne: "inbox"}, tags: "checklistitem"}, {sort: {rank: 1}})
+    }
+    else if (Taskspending.findOne({tags: "checklistitem", context: {$in: highestcip}, duration: {$exists: 0}, energylevel: {$exists: 0}}, {sort: {rank: 1}})) {
+//console.log("cip w/ no duration or energy level")
+//console.log(Taskspending.findOne({tags: "checklistitem", context: {$in: highestcip}, duration: {$exists: 0}, energylevel: {$exists: 0}}, {sort: {rank: 1}}))
+      return Taskspending.findOne({tags: "checklistitem", context: {$in: highestcip}, duration: {$exists: 0}, energylevel: {$exists: 0}}, {sort: {rank: 1}})
+    }
+    else if (Taskspending.findOne({tags: "checklistitem", project: {$in: highestpip}, duration: {$exists: 0}, energylevel: {$exists: 0}}, {sort: {rank: 1}})) {
+//console.log("pip w/ no duration or energy level")
+//console.log(Taskspending.findOne({tags: "checklistitem", project: {$in: highestpip}, duration: {$exists: 0}, energylevel: {$exists: 0}}, {sort: {rank: 1}}))
+      return Taskspending.findOne({tags: "checklistitem", project: {$in: highestpip}, duration: {$exists: 0}, energylevel: {$exists: 0}}, {sort: {rank: 1}})
+    }
+    else if (Taskspending.findOne({$or: [{project: {$in: highestpip}}, {context: {$in: highestcip}}], tags: {$ne: "inbox"}, $or: [{duration: {$exists: 0}}, {energylevel: {$exists: 0}}], tags: "checklistitem"}, {sort: {rank: 1}})) {
+//console.log("either duration or energy level not filled out")
+      return Taskspending.findOne({$or: [{project: {$in: highestpip}}, {context: {$in: highestcip}}], tags: {$ne: "inbox"}, $or: [{duration: {$exists: 0}}, {energylevel: {$exists: 0}}], tags: "checklistitem"}, {sort: {rank: 1}})
+    } else {
+//console.log("not in cips or pips now")
+      return Taskspending.findOne({tags: {$ne: "inbox"}, $or: [{duration: {$exists: 0}}, {energylevel: {$exists: 0}}], tags: "checklistitem"}, {sort: {rank: 1}})
+    }
   },
   reviewkickstarterlessprojects: function () {
     return Taskspending.findOne({tags: "kickstarterless"})
