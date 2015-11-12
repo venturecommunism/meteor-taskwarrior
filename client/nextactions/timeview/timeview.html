@@ -21,9 +21,9 @@
     {{> orgtask_todo_item}}
     {{/with}}
     {{else}} {{#if reviewmodeenergylevelinboxonly}}
-    {{#with timeviewtaskinbox}}
+    {{#each timeviewtaskinbox}}
     {{> orgtask_todo_item}}
-    {{/with}}
+    {{/each}}
     {{/if}} <!-- reviewmodeenergylevelinboxonly -->
     {{#if review1}}
     {{#with reviewchecklistitems}}

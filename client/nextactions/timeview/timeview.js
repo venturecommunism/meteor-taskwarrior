@@ -335,7 +335,10 @@ console.log("final condition")
     }
   },
   timeviewtaskinbox: function () {
-    return Taskspending.findOne({tags: "inbox"}, {sort: {rank: 1}})
+    var reviewtime = 5000
+    var limit = 100
+//    var limit = reviewlimit(reviewtime)
+    return Taskspending.find({tags: "inbox"}, {sort: {rank: 1}, limit: limit})
   },
   reviewchecklistitems: function () {
     var highestcip = Taskspending.find({tags: "cip"}, {sort: {tags: {$in: ["cip"]}, rank: 1}}).map(function (doc) {
