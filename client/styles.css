@@ -13,6 +13,7 @@ display: none;
 }
 .dueclock {
 text-align: right;
+background-color: inherit;
 }
 #task_list .task_item, #project_list .task_item, #focusproject_list .task_item {
 position: relative;
@@ -477,6 +478,13 @@ background-color: grey;
 background-image: url(/zeroinbox.png);
 background-repeat: no-repeat;
 background-position: top -108px right;
+}
+
+.bigben {
+background-image: url(/bigben.png);
+background-repeat: no-repeat;
+background-position: bottom -25px right;
+background-size: 150px auto;
 }
 
 #task_list li.overdue:hover{

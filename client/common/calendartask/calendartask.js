@@ -2,6 +2,8 @@ Template.calendartask.helpers({
   overdue: function () {
     if (this.due < Session.get("now")) {
       return 'overdue'
+    } else {
+      return 'bigben'
     }
   },
   editing: function () {
