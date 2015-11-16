@@ -128,7 +128,12 @@ console.log("this is what is happening")
   },
   'keyup input#duedate': function(e,t) {
     if (e.which === 13) {
-      Taskspending.update({_id: this._id},{$set:{due:e.target.value}})
+      if (e.target.value == '') {
+        Taskspending.update({_id: this._id},{$unset:{due: ""}})
+      }
+      else {
+        Taskspending.update({_id: this._id},{$set:{due:e.target.value}})
+      }      
     }
   },
   'click .mit': function(e,t) {
