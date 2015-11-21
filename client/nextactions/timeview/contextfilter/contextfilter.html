@@ -1,0 +1,15 @@
+<template name="contextfilter">
+<ul id="contextfilter" class="clearfix" style="margin: 0;">
+{{#each contextcategories}}
+{{#if hascontexts}}
+{{#each contexts}}
+{{#unless in_focusmulticontext}}
+<div class="btn contextfilter">{{context}}</div>
+{{/unless}}
+{{/each}}
+{{/if}}
+{{/each}}
+</ul>
+
+</template>
+

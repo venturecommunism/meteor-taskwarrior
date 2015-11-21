@@ -1,6 +1,9 @@
 <template name="timeview">
-
-<h3>Time View</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse closecalendarsection">+</div>
+{{#unless calendaronly}}
+{{#if domode}}
+{{> contextfilter}}
+{{/if}}
+{{/unless}}
 <h6 style="float: left; clear: both;">Energy: {{> energyfilter}}</h6>
 <h6 style="float: left; clear: both;">Mode: <span class="btn reviewmode {{reviewmode}}">Define Some Work</span><span class="btn domode {{domode}}">Do Defined Work</span></h6>
 
@@ -17,9 +20,12 @@
 
     {{#unless calendaronly}}
     {{#if domode}}
-    {{#with dotask}}
+    {{#each dochecklisttask}}
     {{> orgtask_todo_item}}
-    {{/with}}
+    {{/each}}
+    {{#each dononchecklisttask}}
+    {{> orgtask_todo_item}}
+    {{/each}}
     {{else}} {{#if reviewmodeenergylevelinboxonly}}
     {{#each timeviewtaskinbox}}
     {{> orgtask_todo_item}}
@@ -34,7 +40,13 @@
     {{#with reviewkickstarterlessprojects}}
     {{> project_item}}
     {{/with}}
-    {{/if}} <!-- reviewmodeenergylevel1 -->{{/if}}
+    {{/if}} <!-- reviewmodeenergylevel1 -->
+    {{#if review3}}
+    {{#with reviewnonchecklistitems}}
+    {{> orgtask_todo_item}}
+    {{/with}}
+    {{/if}}
+    {{/if}}
     {{/unless}}
 
     {{#each upcomingcalendartasks}}

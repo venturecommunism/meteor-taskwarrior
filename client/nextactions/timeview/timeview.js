@@ -255,6 +255,9 @@ Template.timeview.helpers({
   review2: function () {
     return (Session.equals("gtdmode", "reviewmode") && Session.equals("energylevel", 2))
   },
+  review3: function () {
+    return (Session.equals("gtdmode", "reviewmode") && Session.equals("energylevel", 3))
+  },
 })
 
 Template.timeview.created = function () {
@@ -316,7 +319,7 @@ Template.timeview.helpers({
       return Session.equals("energylevel", "calendaronly")
     }
   },
-  dotask: function () {
+  dochecklisttask: function () {
     var highestcip = Taskspending.find({tags: "cip"}, {sort: {tags: {$in: ["cip"]}, rank: 1}}).map(function (doc) {
         return doc.context
       }
@@ -325,13 +328,29 @@ Template.timeview.helpers({
         return doc.project
       }
     )
-    if (Taskspending.findOne({context: {$in: highestcip}, tags: {$all: ["mit", "checklistitem"]}, status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: -1}})) {
+    if (Taskspending.find({context: {$in: highestcip}, tags: {$all: ["mit", "checklistitem"]}, status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: -1}})) {
 console.log("undone checklist items in one of the cips less than or equal to the energy level")
 console.log(Taskspending.findOne({context: {$in: highestcip}, tags: {$all: ["mit", "checklistitem"]}, status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: -1}}))
-      return Taskspending.findOne({context: {$in: highestcip}, tags: {$all: ["mit", "checklistitem"]}, status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}}, {sort: {energylevel: -1}})
+      return Taskspending.find({context: {$in: highestcip}, tags: {$all: ["mit", "checklistitem"]}, status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}}, {sort: {energylevel: -1}})
     } else {
 console.log("final condition")
-      return Taskspending.findOne({status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: -1}})
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: -1}})
+    }
+  },
+  dononchecklisttask: function () {
+    var highestcip = Taskspending.find({tags: "cip"}, {sort: {tags: {$in: ["cip"]}, rank: 1}}).map(function (doc) {
+        return doc.context
+      }
+    )
+    var highestpip = Taskspending.find({tags: "pip"}, {sort: {tags: {$in: ["pip"]}, rank: 1}}).map(function (doc) {
+        return doc.project
+      }
+    )
+    if (Taskspending.find({context: {$in: highestcip}, tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}, status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: -1}})) {
+      return Taskspending.find({context: {$in: highestcip}, tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}, status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}}, {sort: {energylevel: -1}})
+    } else {
+console.log("final condition")
+      return Taskspending.find({status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}}, {sort: {energylevel: -1}})
     }
   },
   timeviewtaskinbox: function () {
@@ -377,6 +396,31 @@ console.log("final condition")
   },
   reviewkickstarterlessprojects: function () {
     return Taskspending.findOne({tags: "kickstarterless"})
+  },
+  reviewnonchecklistitems: function () {
+    var highestcip = Taskspending.find({tags: "cip"}, {sort: {tags: {$in: ["cip"]}, rank: 1}}).map(function (doc) {
+        return doc.context
+      }
+    )
+    var highestpip = Taskspending.find({tags: "pip"}, {sort: {tags: {$in: ["pip"]}, rank: 1}}).map(function (doc) {
+        return doc.project
+      }
+    )
+    if (Taskspending.findOne({$and: [{project: {$in: highestpip}}, {context: {$in: highestcip}}, {duration: {$exists: 0}}, {energylevel: {$exists: 0}}], tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}, project: {$exists: 1}}, {sort: {rank: 1}})) {
+      return Taskspending.findOne({$and: [{project: {$in: highestpip}}, {context: {$in: highestcip}}, {duration: {$exists: 0}}, {energylevel: {$exists: 0}}], tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}, project: {$exists: 1}}, {sort: {rank: 1}})
+    }
+    else if (Taskspending.findOne({tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}, context: {$in: highestcip}, duration: {$exists: 0}, energylevel: {$exists: 0}, project: {$exists: 1}}, {sort: {rank: 1}})) {
+      return Taskspending.findOne({tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}, context: {$in: highestcip}, duration: {$exists: 0}, energylevel: {$exists: 0}, project: {$exists: 1}}, {sort: {rank: 1}})
+    }
+    else if (Taskspending.findOne({tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}, project: {$in: highestpip}, duration: {$exists: 0}, energylevel: {$exists: 0}, project: {$exists: 1}}, {sort: {rank: 1}})) {
+      return Taskspending.findOne({tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}, project: {$in: highestpip}, duration: {$exists: 0}, energylevel: {$exists: 0}, project: {$exists: 1}}, {sort: {rank: 1}})
+    }
+    else if (Taskspending.findOne({$or: [{project: {$in: highestpip}}, {context: {$in: highestcip}}], $or: [{duration: {$exists: 0}}, {energylevel: {$exists: 0}}], tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}, project: {$exists: 1}}, {sort: {rank: 1}})) {
+      return Taskspending.findOne({$or: [{project: {$in: highestpip}}, {context: {$in: highestcip}}], $or: [{duration: {$exists: 0}}, {energylevel: {$exists: 0}}], tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}, project: {$exists: 1}}, {sort: {rank: 1}})
+    } else {
+console.log("down at the bottom")
+      return Taskspending.findOne({tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}, project: {$exists: 1}, $or: [{duration: {$exists: 0}}, {energylevel: {$exists: 0}}]}, {sort: {rank: 1}})
+    }
   },
 });
 
