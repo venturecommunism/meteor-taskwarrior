@@ -10,12 +10,15 @@
 <div style='text-align: center; z-index: 4; left: 30%; width: 20%; padding: 20px; position: fixed; background: blue; font-size: 2em'>{{aorfocus}}</div>
 {{/if}}
 
+{{#unless timeviewhidden}}
+{{> nextactions}}
+{{/unless}}
+
 {{#unless inboxhidden}}
 {{> process}}
 {{/unless}}
 
 {{#unless nextactionshidden}}
-{{> nextactions}}
 {{#if wipshidden}}
 <h3>WIPs</h3><div style="float: left; position: relative; top: 15px; left: 5px;" class="btn btn-inverse openwipssection">-</div>
 {{/if}}

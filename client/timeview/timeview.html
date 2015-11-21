@@ -1,11 +1,14 @@
 <template name="timeview">
 {{#unless calendaronly}}
+{{> aorfilter}}
 {{#if domode}}
 {{> contextfilter}}
+{{> profilter}}
 {{/if}}
 {{/unless}}
 <h6 style="float: left; clear: both;">Energy: {{> energyfilter}}</h6>
 <h6 style="float: left; clear: both;">Mode: <span class="btn reviewmode {{reviewmode}}">Define Some Work</span><span class="btn domode {{domode}}">Do Defined Work</span></h6>
+<div style="clear: both;">{{> dailyweeklysomeday}}</div>
 
 {{#unless previouscalendarhidden}}
 {{> previouscalendar}}

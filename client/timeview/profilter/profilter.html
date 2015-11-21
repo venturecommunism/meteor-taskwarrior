@@ -1,0 +1,12 @@
+<template name="profilter">
+<h6 style="clear: both;">Projects:</h6>
+<ul id="profilter" class="clearfix" style="margin: 0;">
+{{#if hasprojects}}
+{{#each projects}}
+<div class="btn profilter">{{project}}</div>
+{{/each}}
+{{/if}}
+</ul>
+
+</template>
+
