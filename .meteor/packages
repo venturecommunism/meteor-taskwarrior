@@ -7,7 +7,6 @@ standard-app-packages
 accounts-ui
 accounts-password
 bootstrap
-moment
 toastjs
 sergeyt:typeahead
 andruschka:jquery-ui-sortable
@@ -16,3 +15,4 @@ reactive-var
 mdg:geolocation
 francocatena:status
 tmeasday:publish-counts
+jeeeyul:moment-with-langs
