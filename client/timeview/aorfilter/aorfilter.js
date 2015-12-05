@@ -19,17 +19,11 @@ Template.aorfilter.events({
     Session.set('weeklyreviewhidden', true)
   },
   'click .weeklyreview': function(e,t) {
-    Taskspending.update({_id: this._id}, {$push: {tags: "aorfocus"}})
-    Taskspending.find({tags: "aorfocus", _id: {$ne: this._id}}).forEach( function (doc) {
-      Taskspending.update({_id: doc._id}, {$pull: {tags: "aorfocus"}})
-    })
-    Session.set("wipshidden", false)
-    Session.set("mitshidden", false)
-    Session.set("nextactionshidden", false)
-    Session.set("projectshidden", false)
-    Session.set("readandreviewhidden", false)
-    Session.set("waitingforshidden", false)
-    Session.set("projectlesssomedaymaybeshidden", false)    
+    if (Taskspending.findOne({_id: this._id, tags: "aorfocus"})) {
+      Taskspending.update({_id: this._id}, {$pull: {tags: "aorfocus"}})
+    } else {
+      Taskspending.update({_id: this._id}, {$push: {tags: "aorfocus"}})
+    }
   },
   'change [type=checkbox]': function(e,t) {
     if (this._id && Taskspending.findOne({_id: this._id, tags: "aor"})) {
@@ -37,13 +31,6 @@ Template.aorfilter.events({
         Taskspending.update({_id: this._id}, {$set: {weeklyreviewchecked: "no"}})
       }
       else {
-        Session.set("wipshidden", false)
-        Session.set("mitshidden", false)
-        Session.set("nextactionshidden", false)
-        Session.set("projectshidden", false)
-        Session.set("readandreviewhidden", false)
-        Session.set("waitingforshidden", false)
-        Session.set("projectlesssomedaymaybeshidden", false)
         var aorrank = this.rank
 console.log(aorrank)
         var nexttask = Taskspending.findOne({tags: "aor", rank: {$gt: aorrank}, _id: {$ne: this._id}})
