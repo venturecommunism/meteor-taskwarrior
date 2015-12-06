@@ -1,7 +1,11 @@
 Template.processingdialog.events({
   'click .largeroutcome': function (e,t) {
     largeroutcome = Taskspending.findOne({_id: Session.get('current_processedtask')})
-    var i = largeroutcome.tags.indexOf("inbox");
+    var i = largeroutcome.tags.indexOf("inbox")
+    if(i != -1) {
+      largeroutcome.tags.splice(i, 1);
+    }
+    var i = largeroutcome.tags.indexOf("aorinbox")
     if(i != -1) {
       largeroutcome.tags.splice(i, 1);
     }
@@ -10,6 +14,7 @@ Template.processingdialog.events({
     Tasksbacklog.insert(largeroutcome)
     Taskspending.update({_id: id},{$set: largeroutcome})
     Taskspending.update({_id: id},{$pull: {tags: "inbox"}})
+    Taskspending.update({_id: id},{$pull: {tags: "aorinbox"}})
     Taskspending.update({_id: id},{$unset: {status: ""}})
     Taskspending.update({_id: id},{$push: {tags: {$each: ["largeroutcome", "kickstarterless"]}}})
     if (Taskspending.findOne({tags:"inbox"})) {
@@ -24,15 +29,20 @@ Template.processingdialog.events({
   },
   'click .largercontext': function (e,t) {
     largercontext = Taskspending.findOne({_id: Session.get('current_processedtask')})
-    var i = largercontext.tags.indexOf("inbox");
+    var i = largercontext.tags.indexOf("inbox")
     if(i != -1) {
-      largercontext.tags.splice(i, 1);
+      largercontext.tags.splice(i, 1)
+    }
+    var i = largercontext.tags.indexOf("aorinbox")
+    if(i != -1) {
+      largercontext.tags.splice(i, 1)
     }
     id = largercontext._id
     delete largercontext._id
     Tasksbacklog.insert(largercontext)
     Taskspending.update({_id: id},{$set: largercontext})
     Taskspending.update({_id: id},{$pull: {tags: "inbox"}})
+    Taskspending.update({_id: id},{$pull: {tags: "aorinbox"}})
     Taskspending.update({_id: id},{$unset: {status: ""}})
     Taskspending.update({_id: id},{$push: {tags: "largercontext"}})
     if (Taskspending.findOne({tags:"inbox"})) {
@@ -47,15 +57,20 @@ Template.processingdialog.events({
   },
   'click .archive': function (e,t) {
     archivetask = Taskspending.findOne({_id: Session.get('current_processedtask')})
-    var i = archivetask.tags.indexOf("inbox");
+    var i = archivetask.tags.indexOf("inbox")
     if(i != -1) {
-      archivetask.tags.splice(i, 1);
+      archivetask.tags.splice(i, 1)
+    }
+    var i = archivetask.tags.indexOf("aorinbox") 
+    if(i != -1) {
+      archivetask.tags.splice(i, 1) 
     }
     id = archivetask._id
     delete archivetask._id
     Tasksbacklog.insert(archivetask)
     Taskspending.update({_id: id},{$set: archivetask})
     Taskspending.update({_id: id},{$pull: {tags: "inbox"}})
+    Taskspending.update({_id: id},{$pull: {tags: "aorinbox"}})
     Taskspending.update({_id: id},{$set: {context: "movetoarchive"}})
     if (Taskspending.findOne({tags:"inbox"})) {
       Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
@@ -69,9 +84,13 @@ Template.processingdialog.events({
   },
   'click .somedaymaybe': function (e,t) {
     somedaymaybetask = Taskspending.findOne({_id: Session.get('current_processedtask')})
-    var i = somedaymaybetask.tags.indexOf("inbox");
+    var i = somedaymaybetask.tags.indexOf("inbox")
     if(i != -1) {
-      somedaymaybetask.tags.splice(i, 1);
+      somedaymaybetask.tags.splice(i, 1)
+    }
+    var i = somedaymaybetask.tags.indexOf("aorinbox") 
+    if(i != -1) {
+      somedaymaybetask.tags.splice(i, 1) 
     }
     somedaymaybetask.tags.push("somedaymaybe")
     id = somedaymaybetask._id
@@ -79,6 +98,7 @@ Template.processingdialog.events({
     Tasksbacklog.insert(somedaymaybetask)
     Taskspending.update({_id: id},{$set: somedaymaybetask})
     Taskspending.update({_id: id},{$pull: {tags: "inbox"}})
+    Taskspending.update({_id: id},{$pull: {tags: "aorinbox"}})
     Taskspending.update({_id: id},{$set: {context: "somedaymaybe"}})
     if (Taskspending.findOne({tags:"inbox"})) {
       Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
@@ -189,9 +209,13 @@ Template.processingdialog.events({
     trashtask = Taskspending.findOne({_id: Session.get('current_processedtask')})
     trashtask.status = 'completed'
 if (!Session.get('organize_status') && !Session.get('do_status') && !Session.get('review_status')){
-    var i = trashtask.tags.indexOf("inbox");
+    var i = trashtask.tags.indexOf("inbox")
     if(i != -1) {
-      trashtask.tags.splice(i, 1);
+      trashtask.tags.splice(i, 1)
+    }
+    var i = trashtask.tags.indexOf("aorinbox") 
+    if(i != -1) {
+      trashtask.tags.splice(i, 1) 
     }
     if (trashtask.tags.length == 0) {
       delete trashtask.tags
@@ -214,9 +238,13 @@ if (!Session.get('organize_status') && !Session.get('do_status') && !Session.get
     archivetask = Taskspending.findOne({_id: Session.get('current_processedtask')})
     archivetask.status = 'completed'
 if (!Session.get('organize_status') && !Session.get('do_status')){
-    var i = archivetask.tags.indexOf("inbox");
+    var i = archivetask.tags.indexOf("inbox")
     if(i != -1) {
-      archivetask.tags.splice(i, 1);
+      archivetask.tags.splice(i, 1)
+    }
+    var i = archivetask.tags.indexOf("aorinbox") 
+    if(i != -1) {
+      archivetask.tags.splice(i, 1) 
     }
 }
 if (archivetask.tags) {
@@ -236,9 +264,13 @@ archivetask.tags = ["archive"]
   'click .do': function() {
     trashtask = Taskspending.findOne({_id: Session.get('current_processedtask')})
     trashtask.status = 'completed'
-    var i = trashtask.tags.indexOf("inbox");
+    var i = trashtask.tags.indexOf("inbox")
     if(i != -1) {
-      trashtask.tags.splice(i, 1);
+      trashtask.tags.splice(i, 1)
+    }
+    var i = trashtask.tags.indexOf("aorinbox") 
+    if(i != -1) {
+      trashtask.tags.splice(i, 1) 
     }
     if (trashtask.tags.length == 0) {
       delete trashtask.tags
@@ -250,6 +282,7 @@ archivetask.tags = ["archive"]
   },
   'click .defer': function() {
     defertask = Taskspending.findOne({_id: Session.get('current_processedtask')})
+console.log("hit defertask")
     if (!defertask.context && !defertask.due) {
       alert("Missing context")
       return
@@ -257,6 +290,10 @@ archivetask.tags = ["archive"]
     var i = defertask.tags.indexOf("inbox");
     if(i != -1) {
       defertask.tags.splice(i, 1);
+    }
+    var i = defertask.tags.indexOf("aorinbox")
+    if(i != -1) {
+      defertask.tags.splice(i, 1)
     }
     if (defertask.tags.length == 0) {
       delete defertask.tags
@@ -266,6 +303,7 @@ archivetask.tags = ["archive"]
     Tasksbacklog.insert(defertask)
     Taskspending.update({_id: id},{$set: defertask})
     Taskspending.update({_id: id},{$pull: {tags: "inbox"}})
+    Taskspending.update({_id: id},{$pull: {tags: "aorinbox"}})
     if (Taskspending.findOne({tags:"inbox"}) && Session.equals('process_status',true)) {
 //the following two lines are/were an attempt to clear the project and context when automatically selecting a new task to process
 //      $('input.context-picker')[3].value = ''

@@ -1,6 +1,6 @@
 Template.aorfilter.helpers({
   aor: function() {
-    return Taskspending.find({tags: "aor"}, {sort: {rank:1}})
+    return Taskspending.find({tags: "aor"}, {sort: {weeklyreviewchecked: 1, rank:1}})
   },
   weeklyreviewcheck: function () {
     if (this._id && (Taskspending.findOne({_id: this._id}).weeklyreviewchecked == "yes")) {
@@ -10,6 +10,11 @@ Template.aorfilter.helpers({
   weeklyreviewbuttonactive: function () {
     if (Taskspending.findOne({_id: this._id, tags: "aorfocus"})){
       return 'btn-inverse'
+    }
+  },
+  aorcount: function () {
+    if (Session.equals("energylevel", "calendaronly") && Taskspending.findOne({project: this.project, tags: "aorinbox"})) {
+      return 'btn-danger'
     }
   },
 })
