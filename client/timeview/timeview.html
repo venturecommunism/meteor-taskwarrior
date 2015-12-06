@@ -30,9 +30,15 @@
     {{> orgtask_todo_item}}
     {{/each}}
     {{else}} {{#if reviewmodeenergylevelinboxonly}}
+    {{#unless hasaorfocus}}
     {{#each timeviewtaskinbox}}
     {{> orgtask_todo_item}}
     {{/each}}
+    {{else}}
+    {{#each aortimeviewtaskinbox}}
+    {{> aortimeviewtaskinbox_item}}
+    {{/each}}
+    {{/unless}} <!-- hasaorfocus -->
     {{/if}} <!-- reviewmodeenergylevelinboxonly -->
     {{#if review1}}
     {{#with reviewchecklistitems}}

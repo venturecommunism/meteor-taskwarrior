@@ -33,9 +33,9 @@ Tracker.autorun(function () {
       )
       var durationslength = durations.length
       var intervalduration = moment.duration("PT0H0M0S")
-      console.log(intervalduration)
+//      console.log(intervalduration)
       for (var j = 0; j < durationslength; j++) {
-        console.log(durations[j])
+//        console.log(durations[j])
         var intervalduration = intervalduration.add(Taskspending.findOne({_id: durations[j]._id}).duration)
       }
       var lastcalmoment = timestamptomoment(starttimevar)
@@ -44,9 +44,9 @@ Tracker.autorun(function () {
       var freeintervalduration = calendarintervalduration.subtract(intervalduration)
       if (freeintervalduration > moment.duration(tasktomove.duration)) {
         var timerank = formattedMoment(moment(nextcalmoment).subtract(intervalduration).subtract(moment.duration(tasktomove.duration)))
-        console.log(moment.duration(tasktomove.duration).humanize())
-        console.log(timerank)
-        console.log("freecal is " + freeintervalduration + " and intervalduration is " + intervalduration)
+//        console.log(moment.duration(tasktomove.duration).humanize())
+//        console.log(timerank)
+//        console.log("freecal is " + freeintervalduration + " and intervalduration is " + intervalduration)
         Taskspending.update({_id: tasktomove._id}, {$set: {timerank: timerank}})
         break
       }
@@ -95,9 +95,9 @@ Timeviewdurationtasks.observe({
       var freeintervalduration = calendarintervalduration.subtract(intervalduration)
       if (freeintervalduration > moment.duration(document.duration)) {
         var timerank = formattedMoment(moment(nextcalmoment).subtract(intervalduration).subtract(moment.duration(document.duration)))
-        console.log(moment.duration(document.duration).humanize())
-        console.log(timerank)
-        console.log("freecal is " + freeintervalduration + " and intervalduration is " + intervalduration)
+//        console.log(moment.duration(document.duration).humanize())
+//        console.log(timerank)
+//        console.log("freecal is " + freeintervalduration + " and intervalduration is " + intervalduration)
         Taskspending.update({_id: document._id}, {$set: {timerank: timerank}})
         break
       }
@@ -138,9 +138,9 @@ Timeviewdurationtasks.observe({
       var freeintervalduration = calendarintervalduration.subtract(intervalduration)
       if (freeintervalduration > moment.duration(newDocument.duration)) {
         var timerank = formattedMoment(moment(nextcalmoment).subtract(intervalduration).subtract(moment.duration(newDocument.duration)))
-        console.log(moment.duration(newDocument.duration).humanize())
-        console.log(timerank)
-        console.log("freecal is " + freeintervalduration + " and intervalduration is " + intervalduration)
+//        console.log(moment.duration(newDocument.duration).humanize())
+//        console.log(timerank)
+//        console.log("freecal is " + freeintervalduration + " and intervalduration is " + intervalduration)
         Taskspending.update({_id: newDocument._id}, {$set: {timerank: timerank}})
         break
       }
@@ -192,6 +192,14 @@ Template.timeview.helpers({
     var time = dt.getTime();
     var date = new Date(time);
     return 'Date and time is ' + date.toString();
+  },
+  hasaorfocus: function () {
+    var aorfocus = Taskspending.findOne({tags: "aorfocus"})
+    if (aorfocus == '') {
+      return false
+    } else {
+      return true
+    }
   },
 })
 
@@ -329,11 +337,11 @@ Template.timeview.helpers({
       }
     )
     if (Taskspending.find({context: {$in: highestcip}, tags: {$all: ["mit", "checklistitem"]}, status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: -1}})) {
-console.log("undone checklist items in one of the cips less than or equal to the energy level")
-console.log(Taskspending.findOne({context: {$in: highestcip}, tags: {$all: ["mit", "checklistitem"]}, status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: -1}}))
+//console.log("undone checklist items in one of the cips less than or equal to the energy level")
+//console.log(Taskspending.findOne({context: {$in: highestcip}, tags: {$all: ["mit", "checklistitem"]}, status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: -1}}))
       return Taskspending.find({context: {$in: highestcip}, tags: {$all: ["mit", "checklistitem"]}, status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}}, {sort: {energylevel: -1}})
     } else {
-console.log("final condition")
+//console.log("final condition")
       return Taskspending.find({status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: -1}})
     }
   },
@@ -349,7 +357,7 @@ console.log("final condition")
     if (Taskspending.find({context: {$in: highestcip}, tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}, status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$ne: "inbox"}}, {sort: {energylevel: -1}})) {
       return Taskspending.find({context: {$in: highestcip}, tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}, status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}}, {sort: {energylevel: -1}})
     } else {
-console.log("final condition")
+//console.log("final condition")
       return Taskspending.find({status: {$in: ["waiting", "pending"]}, energylevel: {$lte: Session.get("energylevel")}, tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}}, {sort: {energylevel: -1}})
     }
   },
@@ -357,21 +365,22 @@ console.log("final condition")
     var reviewtime = 5000
     var limit = 100
 //    var limit = reviewlimit(reviewtime)
+    return Taskspending.find({tags: "inbox"}, {sort: {rank: 1}, limit: limit})
+  },
+  aortimeviewtaskinbox: function () {
+    var reviewtime = 5000
+    var limit = 100
+//    var limit = reviewlimit(reviewtime)
     var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
       return doc._id
     })
-    if (aorfocus == '') {
-      return Taskspending.find({tags: "inbox"}, {sort: {rank: 1}, limit: limit})
-    }
-    else {
-      var aorprojects = new Array()
-      Taskspending.find({_id: {$in: aorfocus}}).forEach(function (doc) {
+    var aorprojects = new Array()
+    Taskspending.find({_id: {$in: aorfocus}}).forEach(function (doc) {
+      aorprojects.push(doc.project)
+      Taskspending.find({tags: "largeroutcome", aor: doc._id}).forEach(function (doc) {
         aorprojects.push(doc.project)
-        Taskspending.find({tags: "largeroutcome", aor: doc._id}).forEach(function (doc) {
-          aorprojects.push(doc.project)
-        })
       })
-    }
+    })
     return Taskspending.find({project: {$in: aorprojects}, tags: "aorinbox"}, {sort: {rank: 1}, limit: limit})
   },
   reviewchecklistitems: function () {
@@ -433,7 +442,7 @@ console.log("final condition")
     else if (Taskspending.findOne({$or: [{project: {$in: highestpip}}, {context: {$in: highestcip}}], $or: [{duration: {$exists: 0}}, {energylevel: {$exists: 0}}], tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}, project: {$exists: 1}}, {sort: {rank: 1}})) {
       return Taskspending.findOne({$or: [{project: {$in: highestpip}}, {context: {$in: highestcip}}], $or: [{duration: {$exists: 0}}, {energylevel: {$exists: 0}}], tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}, project: {$exists: 1}}, {sort: {rank: 1}})
     } else {
-console.log("down at the bottom")
+//console.log("down at the bottom")
       return Taskspending.findOne({tags: {$nin: ["inbox", "largeroutcome", "largercontext", "checklistitem"]}, project: {$exists: 1}, $or: [{duration: {$exists: 0}}, {energylevel: {$exists: 0}}]}, {sort: {rank: 1}})
     }
   },

@@ -1,0 +1,11 @@
+<template name="aorunprocessor">
+<div style="display: table-row-group;">
+{{#each aor}}
+<div class="btn {{weeklyreviewbuttonactive}} weeklyreview" id="{{../_id}}" style="display: inline-block; float: left;">{{description}}</div>
+{{/each}}
+</div>
+<input class="form-control newaor span5" type="text" id="newaor">
+<div style="display: block; height: 40px;"></div>
+</template>
+
+

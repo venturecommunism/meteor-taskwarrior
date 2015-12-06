@@ -1,0 +1,52 @@
+<template name="aortimeviewtaskinbox_item">
+      <li class="task_item {{inboxitem}} alert">
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+{{#if is_checklistitem}}
+{{else}}
+
+  {{#if mitornot}}
+    {{#if project}}
+<div class="btn btn-inverse checklistitem choosechecklistitem mit">checklistitem2</div>
+<div class="btn btn-inverse mitproj">{{project}}</div>
+    {{/if}}
+  {{/if}}
+  {{#if is_kickstarter}}
+<div class="btn btn-inverse active btn-danger kickstart">kickstart</div><p class="btn btn-inverse {{mitornot}} mit">mit</p>
+  {{/if}}
+  {{#if nokickstart}}
+<div class="btn btn-inverse kickstart choosekickstart">kickstart</div>
+    {{#if mitornot}}
+<div class="btn btn-inverse checklistitem choosechecklistitem">checklistitem3</div>
+    {{else}}
+      {{#if project}}
+<div class="btn btn-inverse checklistitem choosechecklistitem">checklistitem4</div>
+      {{/if}}
+    {{/if}}
+  {{/if}}
+{{/if}}
+
+{{#if is_priority}}
+<div class="btn btn-inverse kickstart choosekickstart">kickstart</div>
+<div class="btn {{is_sequential}} kickstart choosesequential">sequential</div>
+{{else}}
+{{/if}}
+
+{{#if editing}}
+      <div class="edit">
+        <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
+      </div>
+{{else}}
+<div class="todo-item">       <p>{{description}}</p> </div>
+{{/if}}
+
+{{> projectprocessor}}
+{{> aorunprocessor}}
+
+    {{#if process}}
+      <button type="button" style="float:right;" class="processing-button">process</button>
+    {{/if}}
+{{> easyhard}}
+{{> duration}}
+<p>{{rank}}</p>
+      </li>
+</template>
