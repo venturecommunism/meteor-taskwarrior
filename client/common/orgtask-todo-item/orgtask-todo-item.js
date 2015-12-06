@@ -54,6 +54,11 @@ Template.orgtask_todo_item.helpers({
       return "inboxmarker"
     }
   },
+  is_firststageinboxitem: function () {
+    if (Taskspending.findOne({_id: this._id, tags: "inbox", project: {$exists: 0}})) {
+      return true
+    }
+  },
 })
 
 Template.orgtask_todo_item.events({
@@ -123,7 +128,15 @@ console.log(uuid)
     else {
       Taskspending.update({_id: this._id}, {$push: {tags: "checklistitem"}})
     }
-  }
+  },
+  'click .weeklyreview': function (e,t) {
+    console.log(e)
+    console.log(this)
+    if (Taskspending.findOne({_id: this._id, tags: "inbox"})) {
+      console.log(e.currentTarget)
+//      Taskspending.update({_id: this._id}, {$set: {project: }})
+    }
+  },
 });
 
 // Finds a text input in the DOM by id and focuses it.

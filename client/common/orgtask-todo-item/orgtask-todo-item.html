@@ -40,6 +40,11 @@
 {{else}}
 <div class="todo-item">       <p>{{description}}</p> </div>
 {{/if}}
+
+{{#if is_firststageinboxitem}}
+{{> aorprocessor}}
+{{/if}}
+
     {{#if process}}
       <button type="button" style="float:right;" class="processing-button">process</button>
     {{/if}}
