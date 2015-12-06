@@ -357,7 +357,22 @@ console.log("final condition")
     var reviewtime = 5000
     var limit = 100
 //    var limit = reviewlimit(reviewtime)
-    return Taskspending.find({tags: "inbox"}, {sort: {rank: 1}, limit: limit})
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+    if (aorfocus == '') {
+      return Taskspending.find({tags: "inbox"}, {sort: {rank: 1}, limit: limit})
+    }
+    else {
+      var aorprojects = new Array()
+      Taskspending.find({_id: {$in: aorfocus}}).forEach(function (doc) {
+        aorprojects.push(doc.project)
+        Taskspending.find({tags: "largeroutcome", aor: doc._id}).forEach(function (doc) {
+          aorprojects.push(doc.project)
+        })
+      })
+    }
+    return Taskspending.find({project: {$in: aorprojects}, tags: "aorinbox"}, {sort: {rank: 1}, limit: limit})
   },
   reviewchecklistitems: function () {
     var highestcip = Taskspending.find({tags: "cip"}, {sort: {tags: {$in: ["cip"]}, rank: 1}}).map(function (doc) {
