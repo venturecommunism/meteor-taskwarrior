@@ -1,5 +1,5 @@
 Template.projectprocessor.helpers({
-  project: function() {
+  largeroutcome: function() {
     var aor = this.project
     var aorid = Taskspending.findOne({project: aor, tags: "largeroutcome"})._id
     return Taskspending.find({tags: "largeroutcome", aor: aorid}, {sort: {rank:1}})
@@ -21,7 +21,7 @@ Template.projectprocessor.events({
     console.log(Taskspending.findOne({_id: e.currentTarget.id}).description)
     console.log(Taskspending.findOne({_id: this._id}).project)
   },
-  'keyup #newaor': function(e,t) {
+  'keyup #newproj': function(e,t) {
     if (e.which === 13) {
     var formattednow = formattedNow()
       if (Taskspending.findOne({rank: {$exists: 1}}, {sort: {rank: 1}})) {
@@ -31,7 +31,7 @@ Template.projectprocessor.events({
         var rank = 0
       }
       console.log(e.target.value)
-      Taskspending.insert({project: "AOR."+e.target.value, description: e.target.value, owner: Meteor.userId(), entry: formattednow, tags: ['largeroutcome', 'aor'], rank: rank})
+      Taskspending.insert({project: e.target.value, owner: Meteor.userId(), entry: formattednow, tags: "largeroutcome", rank: rank})
     }
   },
 })

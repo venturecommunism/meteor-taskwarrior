@@ -195,7 +195,7 @@ Template.timeview.helpers({
   },
   hasaorfocus: function () {
     var aorfocus = Taskspending.findOne({tags: "aorfocus"})
-    if (aorfocus == '') {
+    if (!aorfocus || aorfocus == '') {
       return false
     } else {
       return true

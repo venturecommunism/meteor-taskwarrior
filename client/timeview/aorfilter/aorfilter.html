@@ -1,7 +1,7 @@
 <template name="aorfilter">
 <h6 style="clear: both;">Areas of Responsibility:</h6><div style="clear: both;">
 {{#each aor}}
-<div class="btn {{aorcount}} {{weeklyreviewbuttonactive}} weeklyreview weeklyreview-{{_id}}" style="display: inline-block; float: left;"><input style="float: left; display: inline-block;" type="checkbox" checked="{{weeklyreviewcheck}}" value="{{_id}}" name="{{_id}}"/>{{description}}</div>
+<div class="btn {{aorinboxcount}} {{weeklyreviewbuttonactive}} weeklyreview weeklyreview-{{_id}}" style="display: inline-block; float: left;"><input style="float: left; display: inline-block;" type="checkbox" checked="{{weeklyreviewcheck}}" value="{{_id}}" name="{{_id}}"/>{{description}}</div>
 {{/each}}
 </div>
 </template>

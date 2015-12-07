@@ -4,6 +4,9 @@
 {{#if domode}}
 {{> contextfilter}}
 {{> profilter}}
+{{else}}
+{{> profilter}}
+{{> contextfilter}}
 {{/if}}
 {{/unless}}
 <h6 style="float: left; clear: both;">Energy: {{> energyfilter}}</h6>

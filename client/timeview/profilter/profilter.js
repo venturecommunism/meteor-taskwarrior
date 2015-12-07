@@ -4,7 +4,7 @@ Template.profilter.helpers({
       return doc._id
     })
     if (aorfocus == '' || !aorfocus || aorfocus == []) {
-      return Taskspending.find({$and: [{tags: "largeroutcome"}, {aor: this._id}, {tags: "pip"}]}, {sort: {rank: 1}}).count()
+      return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: "pip"}]}, {sort: {rank: 1}}).count()
     }
     else {
       return Taskspending.find({aor: {$in: aorfocus}, $and: [{tags: "largeroutcome"}, {tags: "pip"}]}, {sort: {rank: 1}}).count()
@@ -15,7 +15,7 @@ Template.profilter.helpers({
       return doc._id
     })
     if (aorfocus == '' || !aorfocus || aorfocus == []) {
-      return Taskspending.find({$and: [{tags: "largeroutcome"}, {aor: this._id}, {tags: "pip"}]}, {sort: {rank: 1}})
+      return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: "pip"}]}, {sort: {rank: 1}})
     }
     else {
       return Taskspending.find({aor: {$in: aorfocus}, $and: [{tags: "largeroutcome"}, {tags: "pip"}]}, {sort: {rank: 1}})
@@ -23,6 +23,11 @@ Template.profilter.helpers({
   },
   aors: function () {
     return Taskspending.find({tags: "aor"}, {sort: {rank: 1}})
+  },
+  projinboxcount: function () {
+    if (Session.equals("energylevel", "calendaronly") && Taskspending.findOne({project: this.project, tags: "projinbox"})) {
+      return 'btn-danger'
+    }
   },
 })
 

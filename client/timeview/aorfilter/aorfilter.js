@@ -12,7 +12,7 @@ Template.aorfilter.helpers({
       return 'btn-inverse'
     }
   },
-  aorcount: function () {
+  aorinboxcount: function () {
     if (Session.equals("energylevel", "calendaronly") && Taskspending.findOne({project: this.project, tags: "aorinbox"})) {
       return 'btn-danger'
     }
