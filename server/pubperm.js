@@ -345,9 +345,30 @@ Meteor.publish('inboxcount', function () {
 })
 
 Meteor.publish('calendarcount', function () {
-  Counts.publish(this, 'calendarcount', Taskspending.find({due: {$exists: 1}}))
+  Counts.publish(this, 'calendarcount', Taskspending.find({due: {$exists: 1}, tags: {$ne: "inbox"}}))
+})
+
+Meteor.publish('projectlesscalendarcount', function () {
+  Counts.publish(this, 'projectlesscalendarcount', Taskspending.find({due: {$exists: 1}, project: {$exists: 0}, tags: {$ne: "inbox"}}))
+})
+
+Meteor.publish('contextlesscalendarcount', function () {
+  Counts.publish(this, 'contextlesscalendarcount', Taskspending.find({due: {$exists: 1}, context: {$exists: 0}, tags: {$ne: "inbox"}}))
+})
+
+Meteor.publish('projectlesscontextlesscalendarcount', function () {
+  Counts.publish(this, 'projectlesscontextlesscalendarcount', Taskspending.find({due: {$exists: 1}, project: {$exists: 0}, context: {$exists: 0}, tags: {$ne: "inbox"}}))
 })
 
 Meteor.publish('hasbothcontandprojcount', function () {
   Counts.publish(this, 'hasbothcontandprojcount', Taskspending.find({context: {$exists: 1}, project: {$exists: 1}}))
 })
+
+Meteor.publish('hascontnotprojcount', function () {
+  Counts.publish(this, 'hascontnotprojcount', Taskspending.find({context: {$exists: 1}, project: {$exists: 0}}))
+})
+
+Meteor.publish('hasprojnotcontcount', function () {
+  Counts.publish(this, 'hasprojnotcontcount', Taskspending.find({context: {$exists: 0}, project: {$exists: 1}}))
+})
+
