@@ -1,7 +1,7 @@
 <template name="projectprocessor">
 <div style="display: table-row-group;">
 {{#each largeroutcome}}
-<div class="btn {{weeklyreviewbuttonactive}} weeklyreview" id="{{../_id}}" style="display: inline-block; float: left;">{{description}} ({{project}})</div>
+<div class="btn {{projinboxcount}} {{weeklyreviewbuttonactive}} weeklyreview" id="{{../_id}}" style="display: inline-block; float: left;">{{description}} ({{project}})</div>
 {{/each}}
 </div>
 <input class="form-control newproj span5" type="text" id="newaor">

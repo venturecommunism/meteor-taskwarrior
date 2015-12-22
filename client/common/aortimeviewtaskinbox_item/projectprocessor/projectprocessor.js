@@ -9,6 +9,11 @@ Template.projectprocessor.helpers({
       return 'btn-inverse'
     }
   },
+  projinboxcount: function () {
+    if (Session.equals("energylevel", "calendaronly") && Taskspending.findOne({project: this.project, tags: "projinbox"})) {
+      return 'btn-danger'
+    }
+  },
 })
 
 Template.projectprocessor.events({
