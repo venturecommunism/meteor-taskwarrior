@@ -266,6 +266,9 @@ Template.timeview.helpers({
   review3: function () {
     return (Session.equals("gtdmode", "reviewmode") && Session.equals("energylevel", 3))
   },
+  timeviewproject: function () {
+    return Taskspending.findOne({tags: "timeviewproject"})
+  },
 })
 
 Template.timeview.created = function () {

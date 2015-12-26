@@ -42,6 +42,11 @@
     {{> aortimeviewtaskinbox_item}}
     {{/each}}
     {{/unless}} <!-- hasaorfocus -->
+    {{#if timeviewproject}}
+    {{#with timeviewproject}}
+    {{> timeviewprojectitem}}
+    {{/with}}
+    {{/if}}
     {{/if}} <!-- reviewmodeenergylevelinboxonly -->
     {{#if review1}}
     {{#with reviewchecklistitems}}

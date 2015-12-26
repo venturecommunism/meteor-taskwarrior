@@ -26,10 +26,23 @@ Template.profilter.helpers({
       return 'btn-danger'
     }
   },
+  profilterbuttonactive: function () {
+    if (Taskspending.findOne({_id: this._id, tags: "timeviewproject"})){
+      return 'btn-inverse'
+    }
+  },
 })
 
 Template.profilter.events({
   'click .profilter': function (e,t) {
-    console.log(this.project)
+    if (Taskspending.findOne({_id: this._id, tags: "timeviewproject"})) {
+      Taskspending.update({_id: this._id}, {$pull: {tags: "timeviewproject"}})
+    } else {
+      var foundtimeviewproj = Taskspending.findOne({tags: "timeviewproject"})
+      if (foundtimeviewproj && foundtimeviewproj._id) {
+        Taskspending.update({_id: foundtimeviewproj._id}, {$pull: {tags: "timeviewproject"}})
+      }
+      Taskspending.update({_id: this._id}, {$push: {tags: "timeviewproject"}})
+    }
   },
 })
