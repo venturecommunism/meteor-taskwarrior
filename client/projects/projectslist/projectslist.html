@@ -4,16 +4,16 @@
     <ul id="project_list" class="main-review">
       {{#each kickstarterlessprojects}}
 <div class="active-project {{nokickstart}}">
-          {{> project_item}}
-{{> openproject}}
+          {{> oldproject_item}}
+{{> oldopenproject}}
 <p style="color: red;">missing kickstarter</p>
 
 </div> <!-- active project -->
       {{/each}}
       {{#each projects}}
 <div class="active-project">
-          {{> project_item}}
-{{> openproject}}
+          {{> oldproject_item}}
+{{> oldopenproject}}
 
 </div> <!-- active project -->
 

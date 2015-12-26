@@ -42,6 +42,7 @@ Template.profilter.events({
       if (foundtimeviewproj && foundtimeviewproj._id) {
         Taskspending.update({_id: foundtimeviewproj._id}, {$pull: {tags: "timeviewproject"}})
       }
+      Session.set("projopen", this.project)
       Taskspending.update({_id: this._id}, {$push: {tags: "timeviewproject"}})
     }
   },

@@ -1,0 +1,77 @@
+<template name="oldproject_item">
+{{#if project}}
+      <li class="project_item">
+
+<div class="project-item">      
+    {{#if editing}}
+      <div class="edit">
+        <input style="width:70%" id="project-input" type="text" value="{{#if project_has_largeroutcome}}{{project_has_largeroutcome}}{{else}}{{/if}}" />
+      </div>
+{{else}}
+{{#if project_has_largeroutcome}}
+ <p> <h4>{{project_has_largeroutcome}}</h4></p><span style="position: relative; top: -29px; left: -17px; float: right;">({{rank}})</span>
+{{else}}
+<span style="color: blue;"><p>What is the larger outcome of this project? </p></span>
+{{/if}}
+
+{{/if}}
+ <div class="btn btn-inverse btn-danger reviewproject">{{project}}</div>
+ <button type="button" class="projpip close" id="{{_id}}">focus</button>
+ <button type="button" class="projclose close" id="{{_id}}">hide</button>
+</div>
+    {{#if projopen}}
+{{/if}}
+
+    {{#if process}}
+      <button type="button" style="float:right;" class="processing-button">process</button>
+    {{/if}}
+
+{{#if projopen}}
+<ul>
+{{#each documents}}
+<li>{{description}} (document)</li>
+{{/each}}
+{{#each checklists}}
+<li>{{description}} (checklist)</li>
+{{/each}}
+{{#each alarmsets}}
+<li>{{description}} (alarm set)</li>
+{{/each}}
+</ul>
+ {{#if new_document}}
+    <div class="newdocument">
+      <input type="text" id="add-newdocument" value="" />
+    </div>
+  {{else}}
+  <div class="newdocument btn btn-inverse" id="btnNewDocument">+ Document</div>
+  {{/if}}
+ {{#if new_checklist}}
+    <div class="newtask">
+      <input type="text" id="add-newchecklist" value="" />
+    </div>
+  {{else}}
+  <div class="newchecklist btn btn-inverse" id="btnNewChecklist">+ Checklist</div>
+  {{/if}}
+ {{#if new_alarmset}}
+    <div class="newtask">
+      <input type="text" id="add-newalarmset" value="" />
+    </div>
+  {{else}}
+  <div class="newalarmset btn btn-inverse" id="btnNewAlarmset">+ Alarm Set</div>
+  {{/if}}
+ {{#if editing_defaultcontext}}
+  <div class="editing_defaultcontext">
+    <input type="text" id="editing-defaultcontext" placeholder="{{defaultcontext}}" />
+  </div>
+  {{else}}
+  <div class="defaultcontext btn btn-inverse" id="btnDefaultContext">Default Context</div>
+  {{/if}}
+  <div class="archiveproject btn btn-inverse" id="btnArchiveProject">Archive Project</div>
+
+
+
+{{/if}}
+
+      </li>
+{{/if}}
+</template>

@@ -1,0 +1,39 @@
+<template name="oldopenproject">
+
+{{#if projopen}}
+{{#if openprojecttasks}}
+  <ul id="task_list" class="org_task_list">
+    {{#each openprojecttasks}}
+        {{> orgtask_todo_item}}
+    {{/each}}
+  </ul>
+{{/if}}
+
+    <div class="newtask-org">
+      <input type="text" id="add-newtask-org" value="" />
+      <input type="text" id="add-newtask-context-org" placeholder="{{defaultcontext}}" />
+    
+
+
+<!-- load more -->
+  {{#if Template.subscriptionsReady}}
+    {{#if hasMorePosts}}
+      <p class="load-more-project"><a class="load-more-project-{{_id}}">Load More</a></p>
+    {{/if}}
+  {{else}}
+    <div class="loading">{{>spinner}}</div>
+  {{/if}}
+<!-- end of load more -->
+
+    </div> <!-- newtask-org end -->
+
+{{else}} <!-- if proj not open -->
+{{#each kickstartertask}}
+  <ul id="task_list">
+        {{> orgtask_todo_item}}
+  </ul>
+{{/each}}
+
+{{/if}} <!-- close projopen if/else -->
+
+</template>

@@ -1,4 +1,4 @@
-Template.openproject.helpers({
+Template.oldopenproject.helpers({
   projectid: function () {
     return Taskspending.findOne({type: "largeroutcome", project: this.project})._id 
   },
@@ -15,7 +15,7 @@ Template.openproject.helpers({
   },
 })
 
-Template.openproject.events({
+Template.oldopenproject.events({
   'click .reviewproject': function (e,t) {
     if (Session.equals('projopen', this.project)) {
     if (!$('.active-project.nokickstarttask')) {
@@ -39,7 +39,7 @@ Template.openproject.events({
 
 // begin modular subscription loading
 
-Template.openproject.created = function () {
+Template.oldopenproject.created = function () {
 
   // 1. Initialization
   var project = this.data.project
@@ -79,7 +79,7 @@ Template.openproject.created = function () {
 
 };
 
-Template.openproject.helpers({
+Template.oldopenproject.helpers({
   // the posts cursor
   openprojecttasks: function () {
     return Template.instance().taskspendingopenproject();
@@ -90,7 +90,7 @@ Template.openproject.helpers({
   }
 });
 
-Template.openproject.events({
+Template.oldopenproject.events({
   'click .load-more-project': function (event, instance) {
     event.preventDefault();
 
