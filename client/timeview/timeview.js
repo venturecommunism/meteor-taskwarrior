@@ -201,6 +201,9 @@ Template.timeview.helpers({
       return true
     }
   },
+  timeviewprojectinboxitems: function () {
+    return Taskspending.find({tags: "projinbox", project: this.project})
+  },
 })
 
 Template.timeview.events({

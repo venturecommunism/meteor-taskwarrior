@@ -1,0 +1,20 @@
+<template name="timeviewprojectinbox">
+      <li class="task_item {{inboxitem}} alert">
+        <button type="button" class="close startprocessing-button" id="{{_id}}">x</button>
+{{#if editing}}
+      <div class="edit">
+        <input style="width:90%" id="todo-input" type="text" value="{{description}}" />
+      </div>
+{{else}}
+<div class="todo-item">       <p>{{description}}</p> </div>
+{{/if}}
+
+<div class="btn missioncrit">Mission Critical (All the time)</div>
+<div class="btn sequential">Sequential (One at a time)</div>
+<div class="btn deliverable">Deliverable (Any time)</div>
+<div class="btn readreview">Read and Review (When I have time)</div>
+<div class="btn waitingfor">Waiting For (When all I have is time)</div>
+
+<p>{{rank}}</p>
+      </li>
+</template>

@@ -44,6 +44,9 @@
     {{/unless}} <!-- hasaorfocus -->
     {{#if timeviewproject}}
     {{#with timeviewproject}}
+    {{#each timeviewprojectinboxitems}}
+    {{> timeviewprojectinbox}}
+    {{/each}}
     {{> timeviewprojectitem}}
     {{/with}}
     {{/if}}
