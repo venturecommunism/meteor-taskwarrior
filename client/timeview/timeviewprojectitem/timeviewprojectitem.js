@@ -1,3 +1,5 @@
+Meteor.subscribe("taskspendingdocuments")
+
 Template.timeviewprojectitem.events({
   'click .reviewproject': function (e,t) {
     if (Session.equals('projopen', this.project)) {
