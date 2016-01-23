@@ -380,6 +380,17 @@ Template.timeview.helpers({
     var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
       return doc._id
     })
+    if (!Taskspending.findOne({project: {$in: aorprojects}, tags: "aorinbox"})) {
+      var aorinboxitem = Taskspending.findOne({tags: "aorinbox"})
+      if (aorinboxitem) {
+        var newaorfocus = Taskspending.findOne({project: aorinboxitem.project, tags: "aor"})
+        var oldaorfocus = Taskspending.findOne({tags: "aorfocus"})
+        Taskspending.update({_id: oldaorfocus._id}, {$pull: {tags: "aorfocus"}})
+        if (newaorfocus != oldaorfocus) {
+          Taskspending.update({_id: newaorfocus._id}, {$push: {tags: "aorfocus"}})
+        }
+      }
+    }
     var aorprojects = new Array()
     Taskspending.find({_id: {$in: aorfocus}}).forEach(function (doc) {
       aorprojects.push(doc.project)

@@ -27,6 +27,10 @@ Template.aorfilter.events({
     if (Taskspending.findOne({_id: this._id, tags: "aorfocus"})) {
       Taskspending.update({_id: this._id}, {$pull: {tags: "aorfocus"}})
     } else {
+      var oldtask = Taskspending.findOne({tags: "aorfocus"})
+      if (oldtask) {
+        Taskspending.update({_id: oldtask._id}, {$pull: {tags: "aorfocus"}})
+      }
       Taskspending.update({_id: this._id}, {$push: {tags: "aorfocus"}})
     }
   },

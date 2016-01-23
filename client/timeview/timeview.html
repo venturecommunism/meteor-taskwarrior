@@ -28,10 +28,10 @@
     {{#if domode}}
     {{#each dochecklisttask}}
     {{> orgtask_todo_item}}
-    {{/each}}
+    {{/each}} <!-- dochecklisttask -->
     {{#each dononchecklisttask}}
     {{> orgtask_todo_item}}
-    {{/each}}
+    {{/each}} <!-- dononchecklisttask -->
     {{else}} {{#if reviewmodeenergylevelinboxonly}}
     {{#unless hasaorfocus}}
     {{#each timeviewtaskinbox}}
@@ -48,26 +48,26 @@
     {{> timeviewprojectinbox}}
     {{/each}}
     {{> timeviewprojectitem}}
-    {{/with}}
-    {{/if}}
+    {{/with}} <!-- timeviewproject -->
+    {{/if}} <!-- timeviewproject -->
     {{/if}} <!-- reviewmodeenergylevelinboxonly -->
     {{#if review1}}
     {{#with reviewchecklistitems}}
     {{> orgtask_todo_item}}
-    {{/with}}
-    {{/if}}
+    {{/with}} <!-- reviewchecklistitems -->
+    {{/if}} <!-- review1 -->
     {{#if review2}}
     {{#with reviewkickstarterlessprojects}}
     {{> project_item}}
-    {{/with}}
-    {{/if}} <!-- reviewmodeenergylevel1 -->
+    {{/with}} <!-- reviewkickstarterlessprojects -->
+    {{/if}} <!-- review2 -->
     {{#if review3}}
     {{#with reviewnonchecklistitems}}
     {{> orgtask_todo_item}}
-    {{/with}}
-    {{/if}}
-    {{/if}}
-    {{/unless}}
+    {{/with}} <!-- reviewnonchecklistitems -->
+    {{/if}} <!-- review3 -->
+    {{/if}} <!-- domode -->
+    {{/unless}} <!-- calendaronly -->
 
     {{#each upcomingcalendartasks}}
     
