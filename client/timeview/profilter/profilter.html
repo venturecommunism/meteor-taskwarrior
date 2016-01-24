@@ -1,8 +1,16 @@
 <template name="profilter">
-<h6 style="clear: both;">Projects:</h6>
+<h6 style="clear: both;">Today Projects:</h6>
 <ul id="profilter" class="clearfix" style="margin: 0;">
 {{#if hasprojects}}
 {{#each projects}}
+<div class="btn {{profilterbuttonactive}} {{projinboxcount}} profilter">{{project}}</div>
+{{/each}}
+{{/if}}
+</ul>
+<h6 style="clear: both;">This Week Projects:</h6>
+<ul id="profilter" class="clearfix" style="margin: 0;">
+{{#if hasthisweekprojects}}
+{{#each thisweekprojects}}
 <div class="btn {{profilterbuttonactive}} {{projinboxcount}} profilter">{{project}}</div>
 {{/each}}
 {{/if}}

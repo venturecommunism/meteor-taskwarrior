@@ -10,6 +10,18 @@ Template.profilter.helpers({
       return Taskspending.find({aor: {$in: aorfocus}, $and: [{tags: "largeroutcome"}, {tags: "pip"}]}, {sort: {rank: 1}}).count()
     }
   },
+  hasthisweekprojects: function () {
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+    if (aorfocus == '' || !aorfocus || aorfocus == []) {
+      return Taskspending.find({tags: "largeroutcome"}).count()
+      return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$nin: ["aor", "pip"]}}]}, {sort: {rank: 1}}).count()
+    }
+    else {
+      return Taskspending.find({aor: {$in: aorfocus}, $and: [{tags: "largeroutcome"}, {tags: {$nin: ["aor", "pip"]}}]}, {sort: {rank: 1}}).count()
+    }
+  },
   projects: function () {
     var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
       return doc._id
@@ -19,6 +31,17 @@ Template.profilter.helpers({
     }
     else {
       return Taskspending.find({aor: {$in: aorfocus}, $and: [{tags: "largeroutcome"}, {tags: "pip"}]}, {sort: {rank: 1}})
+    }
+  },
+  thisweekprojects: function () {
+    var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
+      return doc._id
+    })
+    if (aorfocus == '' || !aorfocus || aorfocus == []) {
+      return Taskspending.find({$and: [{tags: "largeroutcome"}, {tags: {$nin: ["aor", "pip"]}}]}, {sort: {rank: 1}})
+    }
+    else {
+      return Taskspending.find({aor: {$in: aorfocus}, $and: [{tags: "largeroutcome"}, {tags: {$nin: ["aor", "pip"]}}]}, {sort: {rank: 1}})
     }
   },
   projinboxcount: function () {
