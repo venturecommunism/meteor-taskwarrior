@@ -368,6 +368,7 @@ Template.timeview.helpers({
     }
   },
   timeviewtaskinbox: function () {
+
     var reviewtime = 5000
     var limit = 100
 //    var limit = reviewlimit(reviewtime)
@@ -380,7 +381,9 @@ Template.timeview.helpers({
     var aorfocus = Taskspending.find({tags: "aorfocus"}).map(function (doc) {
       return doc._id
     })
-    if (!Taskspending.findOne({project: {$in: aorprojects}, tags: "aorinbox"})) {
+/*
+    if (!Taskspending.findOne({project: {$in: aorfocus}, tags: "aorinbox"})) {
+alert("thisway")
       var aorinboxitem = Taskspending.findOne({tags: "aorinbox"})
       if (aorinboxitem) {
         var newaorfocus = Taskspending.findOne({project: aorinboxitem.project, tags: "aor"})
@@ -390,7 +393,10 @@ Template.timeview.helpers({
           Taskspending.update({_id: newaorfocus._id}, {$push: {tags: "aorfocus"}})
         }
       }
+    } else {
+alert("thatway")
     }
+*/
     var aorprojects = new Array()
     Taskspending.find({_id: {$in: aorfocus}}).forEach(function (doc) {
       aorprojects.push(doc.project)
@@ -398,6 +404,7 @@ Template.timeview.helpers({
         aorprojects.push(doc.project)
       })
     })
+alert("heyo")
     return Taskspending.find({project: {$in: aorprojects}, tags: "aorinbox"}, {sort: {rank: 1}, limit: limit})
   },
   reviewchecklistitems: function () {
