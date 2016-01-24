@@ -41,6 +41,11 @@
 <div class="todo-item">       <p>{{description}}</p> </div>
 {{/if}}
 
+      <div class="btn btn-inverse {{mitornot}} mit">MIT</div>
+      <div class="btn btn-primary trash">Trash/Done</div>
+      <div class="btn btn-primary archive">Archive</div>
+
+
 {{#if is_firststageinboxitem}}
 {{> aorprocessor}}
 {{/if}}
