@@ -138,7 +138,7 @@ console.log(uuid)
     }
   },
   'click .somedaymaybe': function (e,t) {
-    somedaymaybetask = Taskspending.findOne({_id: Session.get('current_processedtask')})
+    somedaymaybetask = Taskspending.findOne({_id: this._id})
     var i = somedaymaybetask.tags.indexOf("inbox")
     if(i != -1) {
       somedaymaybetask.tags.splice(i, 1)
@@ -155,15 +155,6 @@ console.log(uuid)
     Taskspending.update({_id: id},{$pull: {tags: "inbox"}})
     Taskspending.update({_id: id},{$pull: {tags: "aorinbox"}})
     Taskspending.update({_id: id},{$set: {context: "somedaymaybe"}})
-    if (Taskspending.findOne({tags:"inbox"})) {
-      Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
-      selectTaskProcessing
-    }
-    else {
-      Session.set('processing_task', false);
-      Session.set('process_status', false)
-      Session.set('review_status', true)
-    }
   },
 });
 
