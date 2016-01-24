@@ -1,4 +1,4 @@
-Template.nonactionable.helpers({
+Template.nonactionable.events({
   'click .trash': function() {
     trashtask = Taskspending.findOne({_id: this._id})
     trashtask.status = 'completed'
@@ -13,10 +13,10 @@ Template.nonactionable.helpers({
     if (trashtask.tags.length == 0) {
       delete trashtask.tags
     }
-    id = trashtask._id
+    var id = trashtask._id
     delete trashtask._id
     Tasksbacklog.insert(trashtask)
-    Taskspending.remove(trashtask)
+    Taskspending.remove({_id: id})
   },
   'click .archive': function () {
     archivetask = Taskspending.findOne({_id: this._id})
@@ -29,7 +29,7 @@ Template.nonactionable.helpers({
       archivetask.tags.splice(i, 1)
     }
     archivetask.tags.push("movetoarchive")
-    id = archivetask._id
+    var id = archivetask._id
     delete archivetask._id
     Tasksbacklog.insert(archivetask)
     Taskspending.update({_id: id},{$set: archivetask})
