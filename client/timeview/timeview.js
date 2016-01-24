@@ -382,6 +382,7 @@ Template.timeview.helpers({
       return doc._id
     })
 /*
+//TODO: fix this code to cycle through AORs as aorinboxes are processed
     if (!Taskspending.findOne({project: {$in: aorfocus}, tags: "aorinbox"})) {
 alert("thisway")
       var aorinboxitem = Taskspending.findOne({tags: "aorinbox"})
@@ -393,8 +394,6 @@ alert("thisway")
           Taskspending.update({_id: newaorfocus._id}, {$push: {tags: "aorfocus"}})
         }
       }
-    } else {
-alert("thatway")
     }
 */
     var aorprojects = new Array()
@@ -404,7 +403,6 @@ alert("thatway")
         aorprojects.push(doc.project)
       })
     })
-alert("heyo")
     return Taskspending.find({project: {$in: aorprojects}, tags: "aorinbox"}, {sort: {rank: 1}, limit: limit})
   },
   reviewchecklistitems: function () {
