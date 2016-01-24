@@ -137,6 +137,34 @@ console.log(uuid)
 //      Taskspending.update({_id: this._id}, {$set: {project: }})
     }
   },
+  'click .somedaymaybe': function (e,t) {
+    somedaymaybetask = Taskspending.findOne({_id: Session.get('current_processedtask')})
+    var i = somedaymaybetask.tags.indexOf("inbox")
+    if(i != -1) {
+      somedaymaybetask.tags.splice(i, 1)
+    }
+    var i = somedaymaybetask.tags.indexOf("aorinbox")
+    if(i != -1) {
+      somedaymaybetask.tags.splice(i, 1)
+    }
+    somedaymaybetask.tags.push("somedaymaybe")
+    id = somedaymaybetask._id
+    delete somedaymaybetask._id
+    Tasksbacklog.insert(somedaymaybetask)
+    Taskspending.update({_id: id},{$set: somedaymaybetask})
+    Taskspending.update({_id: id},{$pull: {tags: "inbox"}})
+    Taskspending.update({_id: id},{$pull: {tags: "aorinbox"}})
+    Taskspending.update({_id: id},{$set: {context: "somedaymaybe"}})
+    if (Taskspending.findOne({tags:"inbox"})) {
+      Session.set('current_processedtask',Taskspending.findOne({tags: "inbox"})._id)
+      selectTaskProcessing
+    }
+    else {
+      Session.set('processing_task', false);
+      Session.set('process_status', false)
+      Session.set('review_status', true)
+    }
+  },
 });
 
 // Finds a text input in the DOM by id and focuses it.
