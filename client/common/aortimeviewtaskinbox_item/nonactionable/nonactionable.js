@@ -20,7 +20,7 @@ Template.nonactionable.events({
   },
   'click .archive': function () {
     archivetask = Taskspending.findOne({_id: this._id})
-    var i = somedaymaybetask.tags.indexOf("inbox")
+    var i = archivetask.tags.indexOf("inbox")
     if(i != -1) {
       archivetask.tags.splice(i, 1)
     }
